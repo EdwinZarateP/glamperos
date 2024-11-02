@@ -75,7 +75,16 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         onTouchStart={esPantallaPequena ? handleTouchStart : undefined} // Detecta el inicio del touch solo en pantallas pequeñas
         onTouchEnd={esPantallaPequena ? handleTouchEnd : undefined} // Detecta el final del touch solo en pantallas pequeñas
       >
-        <img src={imagenes[imagenActual]} alt={nombre} className="tarjeta-imagen" />
+        <div
+          className="carrusel"
+          style={{
+            transform: `translateX(-${imagenActual * 100}%)`,
+          }}
+        >
+          {imagenes.map((imagen, index) => (
+            <img key={index} src={imagen} alt={nombre} className="tarjeta-imagen" />
+          ))}
+        </div>
         <button
           className="tarjeta-favorito"
           onClick={handleFavoritoChange}

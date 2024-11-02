@@ -19,11 +19,18 @@
   border-radius: 8px;
 }
 
+.carrusel {
+  display: flex;
+  transition: transform 0.5s ease; /* Transición suave */
+}
+
 .tarjeta-imagen {
   width: 100%;
   height: auto;
   object-fit: cover;
   border-radius: 8px;
+  flex-shrink: 0;
+  min-width: 100%; /* Asegura que cada imagen ocupe el ancho completo del contenedor */
 }
 
 /* Flechas de navegación */
@@ -75,7 +82,7 @@
   width: 10px;
   height: 10px;
   background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
-  border: 1px solid white; /* Borde blanco para visibilidad */
+  border: 1px solid gray; /* Borde blanco para visibilidad */
   border-radius: 50%;
   transition: background-color 0.3s, transform 0.3s;
 }
