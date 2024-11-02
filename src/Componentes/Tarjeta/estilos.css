@@ -1,0 +1,103 @@
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px; /* Bordes redondeados para la tarjeta */
+  margin: 16px;
+  max-width: 280px;
+  position: relative; /* Para el posicionamiento del botón */
+}
+
+.tarjeta-imagen-container {
+  position: relative; /* Para permitir la posición absoluta del botón */
+  width: 100%; /* Asegura que ocupe el ancho completo */
+  padding-top: 100%; /* Esto establece un alto igual al ancho, creando un cuadrado */
+  overflow: hidden; /* Esconde la parte de la imagen que se sale del cuadrado */
+  border-radius: 8px; 
+}
+
+.tarjeta-imagen {
+  position: absolute; /* Permite que la imagen ocupe el contenedor */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ajusta la imagen al ancho del contenedor */
+  height: 100%; /* Ajusta la imagen al alto del contenedor */
+  object-fit: cover; /* Cubre el área del contenedor manteniendo la proporción */
+  border-radius: 8px; /* Bordes redondeados para la imagen */
+}
+
+.tarjeta-info {
+  padding: 16px;
+  background-color: #ffffff; /* Fondo blanco para la sección de información */
+  border: none; /* Sin bordes */
+  box-shadow: none; /* Sin sombras */
+}
+
+.tarjeta-contenido {
+  display: flex;
+  justify-content: space-between; /* Espacia el nombre y la calificación */
+  align-items: center; /* Alinea verticalmente */
+}
+
+.tarjeta-nombre {
+  font-size: 1.2em; /* Tamaño de fuente más pequeño */
+  margin: 0;
+  font-family: 'Arial', sans-serif; /* Fuente amigable para viajes */
+}
+
+.tarjeta-calificacion {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  font-size: 1em; 
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+.tarjeta-calificacion.efecto {
+  transform: scale(1.5); /* Aumenta el tamaño al hacer clic */
+}
+
+.estrella {
+  margin-right: 4px;
+}
+
+.tarjeta-ciudad {
+  color: #555;
+  margin: 4px 0;
+  font-family: 'Arial', sans-serif; /* Fuente amigable para viajes */
+}
+
+.tarjeta-precio {
+  font-weight: bold;
+  color: #333;
+  font-family: 'Arial', sans-serif; /* Fuente amigable para viajes */
+}
+
+.tarjeta-favorito {
+  position: absolute; /* Coloca el botón en la esquina superior derecha */
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s; /* Transición suave de color */
+}
+
+.tarjeta-favorito:hover {
+  color: red; /* Cambia el color al pasar el mouse */
+}
+
+.corazon {
+  transition: color 0.2s; /* Transición suave para el cambio de color */
+}
+
+.tarjeta-favorito.activo .corazon {
+  color: red; /* Cambia el color cuando es favorito */
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .tarjeta {
+    max-width: 100%;
+  }
+}
