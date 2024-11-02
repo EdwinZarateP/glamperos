@@ -8,7 +8,7 @@ function Inicio() {
     // Función para obtener imágenes de Pokémon usando la PokéAPI
     const fetchPokemonImages = async () => {
       try {
-        const pokemonIds = [1, 4, 7, 25, 39]; // IDs de los Pokémon (puedes cambiar estos IDs por otros)
+        const pokemonIds = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]; // IDs de los Pokémon (puedes cambiar estos IDs por otros)
         const imagenes = await Promise.all(
           pokemonIds.map(async (id) => {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -37,15 +37,6 @@ function Inicio() {
         onFavoritoChange={(nuevoEstado) => console.log('Favorito:', nuevoEstado)}
       />
 
-      <Tarjeta
-        imagenes={imagenesPokemon} // Pasa las imágenes obtenidas como prop a Tarjeta
-        nombre="Glamperos Paradise"
-        ciudad="Bogota"
-        precio={150}
-        calificacion={4.5}
-        favorito={false}
-        onFavoritoChange={(nuevoEstado) => console.log('Favorito:', nuevoEstado)}
-      />
     </div>
   );
 }

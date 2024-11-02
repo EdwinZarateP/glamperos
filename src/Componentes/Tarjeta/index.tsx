@@ -68,6 +68,18 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   // Verifica si la pantalla es pequeña
   const esPantallaPequena = window.innerWidth <= 600;
 
+  // Limita los puntos de navegación a un máximo de 4
+  const maxPuntos = 4;
+  const puntosVisibles = [];
+
+  if (imagenes.length <= maxPuntos) {
+    puntosVisibles.push(...imagenes.map((_, index) => index));
+  } else {
+    const start = Math.max(0, Math.min(imagenActual - 1, imagenes.length - maxPuntos));
+    const end = Math.min(start + maxPuntos, imagenes.length);
+    puntosVisibles.push(...Array.from({ length: end - start }, (_, i) => start + i));
+  }
+
   return (
     <div className="tarjeta">
       <div 
@@ -110,7 +122,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
         {/* Puntos de navegación */}
         <div className="puntos">
-          {imagenes.map((_, index) => (
+          {puntosVisibles.map((index) => (
             <span key={index} className={`punto ${index === imagenActual ? 'activo' : ''}`} />
           ))}
         </div>
