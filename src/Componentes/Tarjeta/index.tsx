@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiTwotoneHeart } from 'react-icons/ai';
 import { BsBalloonHeartFill } from 'react-icons/bs';
 import { FaStar } from 'react-icons/fa6';
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md"; // Importa los íconos de flechas
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import './estilos.css';
 
 interface TarjetaProps {
@@ -26,6 +26,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
+  const [esPantallaPequena, setEsPantallaPequena] = useState(window.innerWidth <= 600);
 
   const handleFavoritoChange = () => {
     const nuevoEstado = !esFavorito;
@@ -41,9 +42,36 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setImagenActual((prev) => (prev - 1 + imagenes.length) % imagenes.length);
   };
 
+  // Maneja el desplazamiento del mouse solo en pantallas pequeñas
+  const handleScroll = (event: React.WheelEvent) => {
+    if (esPantallaPequena) {
+      if (event.deltaY > 0) {
+        siguienteImagen();
+      } else if (event.deltaY < 0) {
+        anteriorImagen();
+      }
+    }
+  };
+
+  // Detecta cambios en el tamaño de la pantalla
+  useEffect(() => {
+    const actualizarTamanoPantalla = () => {
+      setEsPantallaPequena(window.innerWidth <= 600);
+    };
+
+    window.addEventListener("resize", actualizarTamanoPantalla);
+
+    return () => {
+      window.removeEventListener("resize", actualizarTamanoPantalla);
+    };
+  }, []);
+
   return (
     <div className="tarjeta">
-      <div className="tarjeta-imagen-container">
+      <div 
+        className="tarjeta-imagen-container"
+        onWheel={esPantallaPequena ? handleScroll : undefined} // Detecta el scroll solo en pantallas pequeñas
+      >
         <img src={imagenes[imagenActual]} alt={nombre} className="tarjeta-imagen" />
         <button
           className="tarjeta-favorito"
@@ -56,13 +84,17 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           )}
         </button>
 
-        {/* Flechas de navegación con íconos de react-icons */}
-        <button className="flecha izquierda" onClick={anteriorImagen}>
-          <MdOutlineKeyboardArrowLeft />
-        </button>
-        <button className="flecha derecha" onClick={siguienteImagen}>
-          <MdOutlineKeyboardArrowRight />
-        </button>
+        {/* Flechas de navegación con íconos de react-icons, solo visibles en pantallas grandes */}
+        {!esPantallaPequena && (
+          <>
+            <button className="flecha izquierda" onClick={anteriorImagen}>
+              <MdOutlineKeyboardArrowLeft />
+            </button>
+            <button className="flecha derecha" onClick={siguienteImagen}>
+              <MdOutlineKeyboardArrowRight />
+            </button>
+          </>
+        )}
 
         {/* Puntos de navegación */}
         <div className="puntos">

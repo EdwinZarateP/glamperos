@@ -30,7 +30,6 @@
 .flecha {
   position: absolute;
   top: 50%;
-  /* transform: translateY(-50%); */
   font-size: 20px;
   color: rgba(0, 0, 0, 0.6);
   background-color: white;
@@ -41,7 +40,7 @@
   width: 28px;
   height: 28px;
   opacity: 0; /* Oculta las flechas inicialmente */
-  transition: opacity 0.3s ease, background 0.3s, color 0.3s;
+  transition: opacity 0.3s ease;
   z-index: 1;
 }
 
@@ -53,17 +52,14 @@
   right: 10px;
 }
 
-/* Muestra las flechas solo cuando el mouse pasa sobre la tarjeta */
+/* Muestra las flechas solo cuando el mouse pasa sobre la tarjeta en pantallas grandes */
 .tarjeta:hover .flecha {
   opacity: 1; /* Muestra las flechas cuando el mouse está sobre la tarjeta */
 }
 
 .flecha:hover {
-  background: rgba(246, 244, 244, 0.6);
   transform: scale(1.2); /* Incrementa ligeramente el tamaño */
-  
 }
-
 
 /* Puntos de navegación */
 .puntos {
@@ -72,19 +68,21 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 5px;
+  gap: 8px;
 }
 
 .punto {
-  width: 8px;
-  height: 8px;
-  background-color: rgba(255, 255, 255, 0.5);
+  width: 10px;
+  height: 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+  border: 1px solid white; /* Borde blanco para visibilidad */
   border-radius: 50%;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .punto.activo {
-  background-color: white;
+  background-color: #fff; /* Color blanco para el punto activo */
+  transform: scale(1.2); /* Aumenta ligeramente el tamaño del punto activo */
 }
 
 /* Información de la tarjeta */
@@ -161,5 +159,27 @@
   .tarjeta {
     max-width: 100%;
     margin: 8px;
+  }
+
+  /* Oculta las flechas en pantallas pequeñas */
+  .flecha {
+    display: none;
+  }
+
+  /* Muestra los puntos de navegación solo en pantallas pequeñas */
+  .puntos {
+    display: flex;
+  }
+}
+
+@media (min-width: 601px) {
+  /* Muestra las flechas en pantallas grandes */
+  .flecha {
+    display: inline-flex;
+  }
+
+  /* Oculta los puntos en pantallas grandes */
+  .puntos {
+    display: none;
   }
 }
