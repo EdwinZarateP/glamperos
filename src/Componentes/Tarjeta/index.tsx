@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AiTwotoneHeart } from 'react-icons/ai';
 import { BsBalloonHeartFill } from 'react-icons/bs';
 import { FaStar } from 'react-icons/fa6';
@@ -26,7 +26,10 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
-  const [esPantallaPequena, setEsPantallaPequena] = useState(window.innerWidth <= 600);
+
+  // Variables para capturar la posición inicial y final del touch
+  let touchStartX = 0;
+  let touchEndX = 0;
 
   const handleFavoritoChange = () => {
     const nuevoEstado = !esFavorito;
@@ -42,35 +45,35 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setImagenActual((prev) => (prev - 1 + imagenes.length) % imagenes.length);
   };
 
-  // Maneja el desplazamiento del mouse solo en pantallas pequeñas
-  const handleScroll = (event: React.WheelEvent) => {
-    if (esPantallaPequena) {
-      if (event.deltaY > 0) {
-        siguienteImagen();
-      } else if (event.deltaY < 0) {
-        anteriorImagen();
-      }
+  // Maneja el inicio del touch
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX = e.touches[0].clientX;
+  };
+
+  // Maneja el final del touch y calcula la dirección del swipe
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipe();
+  };
+
+  // Determina la dirección del swipe
+  const handleSwipe = () => {
+    if (touchStartX - touchEndX > 50) {
+      siguienteImagen(); // Deslizar hacia la izquierda
+    } else if (touchEndX - touchStartX > 50) {
+      anteriorImagen(); // Deslizar hacia la derecha
     }
   };
 
-  // Detecta cambios en el tamaño de la pantalla
-  useEffect(() => {
-    const actualizarTamanoPantalla = () => {
-      setEsPantallaPequena(window.innerWidth <= 600);
-    };
-
-    window.addEventListener("resize", actualizarTamanoPantalla);
-
-    return () => {
-      window.removeEventListener("resize", actualizarTamanoPantalla);
-    };
-  }, []);
+  // Verifica si la pantalla es pequeña
+  const esPantallaPequena = window.innerWidth <= 600;
 
   return (
     <div className="tarjeta">
       <div 
         className="tarjeta-imagen-container"
-        onWheel={esPantallaPequena ? handleScroll : undefined} // Detecta el scroll solo en pantallas pequeñas
+        onTouchStart={esPantallaPequena ? handleTouchStart : undefined} // Detecta el inicio del touch solo en pantallas pequeñas
+        onTouchEnd={esPantallaPequena ? handleTouchEnd : undefined} // Detecta el final del touch solo en pantallas pequeñas
       >
         <img src={imagenes[imagenActual]} alt={nombre} className="tarjeta-imagen" />
         <button
@@ -84,7 +87,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           )}
         </button>
 
-        {/* Flechas de navegación con íconos de react-icons, solo visibles en pantallas grandes */}
+        {/* Flechas de navegación solo visibles en pantallas grandes */}
         {!esPantallaPequena && (
           <>
             <button className="flecha izquierda" onClick={anteriorImagen}>
