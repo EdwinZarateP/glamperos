@@ -1,103 +1,165 @@
+/* Estilos de la tarjeta */
 .tarjeta {
   display: flex;
   flex-direction: column;
-  border-radius: 8px; /* Bordes redondeados para la tarjeta */
+  border-radius: 8px;
   margin: 16px;
-  max-width: 280px;
-  position: relative; /* Para el posicionamiento del botón */
+  max-width: 230px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: 'Lato', 'Poppins', sans-serif;
 }
 
+/* Contenedor de la imagen */
 .tarjeta-imagen-container {
-  position: relative; /* Para permitir la posición absoluta del botón */
-  width: 100%; /* Asegura que ocupe el ancho completo */
-  padding-top: 100%; /* Esto establece un alto igual al ancho, creando un cuadrado */
-  overflow: hidden; /* Esconde la parte de la imagen que se sale del cuadrado */
-  border-radius: 8px; 
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .tarjeta-imagen {
-  position: absolute; /* Permite que la imagen ocupe el contenedor */
-  top: 0;
-  left: 0;
-  width: 100%; /* Ajusta la imagen al ancho del contenedor */
-  height: 100%; /* Ajusta la imagen al alto del contenedor */
-  object-fit: cover; /* Cubre el área del contenedor manteniendo la proporción */
-  border-radius: 8px; /* Bordes redondeados para la imagen */
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
+/* Flechas de navegación */
+.flecha {
+  position: absolute;
+  top: 50%;
+  /* transform: translateY(-50%); */
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.6);
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  opacity: 0; /* Oculta las flechas inicialmente */
+  transition: opacity 0.3s ease, background 0.3s, color 0.3s;
+  z-index: 1;
+}
+
+.flecha.izquierda {
+  left: 10px;
+}
+
+.flecha.derecha {
+  right: 10px;
+}
+
+/* Muestra las flechas solo cuando el mouse pasa sobre la tarjeta */
+.tarjeta:hover .flecha {
+  opacity: 1; /* Muestra las flechas cuando el mouse está sobre la tarjeta */
+}
+
+.flecha:hover {
+  background: rgba(246, 244, 244, 0.6);
+  transform: scale(1.2); /* Incrementa ligeramente el tamaño */
+  
+}
+
+
+/* Puntos de navegación */
+.puntos {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+}
+
+.punto {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.punto.activo {
+  background-color: white;
+}
+
+/* Información de la tarjeta */
 .tarjeta-info {
   padding: 16px;
-  background-color: #ffffff; /* Fondo blanco para la sección de información */
-  border: none; /* Sin bordes */
-  box-shadow: none; /* Sin sombras */
+  background-color: #ffffff;
 }
 
 .tarjeta-contenido {
   display: flex;
-  justify-content: space-between; /* Espacia el nombre y la calificación */
-  align-items: center; /* Alinea verticalmente */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .tarjeta-nombre {
-  font-size: 1.2em; /* Tamaño de fuente más pequeño */
+  font-size: 1em;
+  font-weight: bold;
   margin: 0;
-  font-family: 'Arial', sans-serif; /* Fuente amigable para viajes */
 }
 
 .tarjeta-calificacion {
   display: flex;
   align-items: center;
+  font-size: 1em;
   margin-left: 8px;
-  font-size: 1em; 
-  transition: transform 0.3s ease; /* Transición suave */
+  transition: transform 0.3s ease;
 }
 
 .tarjeta-calificacion.efecto {
-  transform: scale(1.5); /* Aumenta el tamaño al hacer clic */
+  transform: scale(1.5);
 }
 
 .estrella {
+  color: gold;
   margin-right: 4px;
 }
 
 .tarjeta-ciudad {
   color: #555;
   margin: 4px 0;
-  font-family: 'Arial', sans-serif; /* Fuente amigable para viajes */
 }
 
 .tarjeta-precio {
   font-weight: bold;
   color: #333;
-  font-family: 'Arial', sans-serif; /* Fuente amigable para viajes */
+  font-size: 1em;
+  display: block;
+  margin-top: 4px;
 }
 
+/* Botón de favorito (corazón) */
 .tarjeta-favorito {
-  position: absolute; /* Coloca el botón en la esquina superior derecha */
+  position: absolute;
   top: 8px;
   right: 8px;
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  transition: color 0.2s; /* Transición suave de color */
-}
-
-.tarjeta-favorito:hover {
-  color: red; /* Cambia el color al pasar el mouse */
+  transition: color 0.1s;
 }
 
 .corazon {
-  transition: color 0.2s; /* Transición suave para el cambio de color */
+  transition: color 0.1s, transform 0.1s;
+  color: gray;
 }
 
-.tarjeta-favorito.activo .corazon {
-  color: red; /* Cambia el color cuando es favorito */
+.corazon.activo {
+  color: red;
 }
 
 /* Responsividad */
 @media (max-width: 600px) {
   .tarjeta {
     max-width: 100%;
+    margin: 8px;
   }
 }

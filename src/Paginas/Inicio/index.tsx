@@ -1,22 +1,53 @@
-import Tarjeta from '../../Componentes/Tarjeta/index'
+import { useEffect, useState } from 'react';
+import Tarjeta from '../../Componentes/Tarjeta/index';
 
+function Inicio() {
+  const [imagenesPokemon, setImagenesPokemon] = useState<string[]>([]); // Tipo especificado como string[]
 
-function Inicio () {
-    return (
-        <div>
-            <Tarjeta
-                imagen="https://media.admagazine.com/photos/6239341e83e0740e83d095a3/16:9/w_2240,c_limit/glamping.jpg"
-                nombre="Glamperos Paradise"
-                ciudad="Medellín"
-                precio={150}
-                calificacion={4.5}
-                favorito={false}
-                onFavoritoChange={(nuevoEstado) => console.log('Favorito:', nuevoEstado)}
-            />
-            
+  useEffect(() => {
+    // Función para obtener imágenes de Pokémon usando la PokéAPI
+    const fetchPokemonImages = async () => {
+      try {
+        const pokemonIds = [1, 4, 7, 25, 39]; // IDs de los Pokémon (puedes cambiar estos IDs por otros)
+        const imagenes = await Promise.all(
+          pokemonIds.map(async (id) => {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+            const data = await response.json();
+            return data.sprites.other['official-artwork'].front_default; // Imagen oficial de alta calidad
+          })
+        );
+        setImagenesPokemon(imagenes);
+      } catch (error) {
+        console.error("Error al obtener imágenes de Pokémon:", error);
+      }
+    };
 
-        </div>
-    );
-};
+    fetchPokemonImages();
+  }, []);
+
+  return (
+    <div>
+      <Tarjeta
+        imagenes={imagenesPokemon} // Pasa las imágenes obtenidas como prop a Tarjeta
+        nombre="Glamperos Paradise"
+        ciudad="Medellín"
+        precio={150}
+        calificacion={4.5}
+        favorito={false}
+        onFavoritoChange={(nuevoEstado) => console.log('Favorito:', nuevoEstado)}
+      />
+
+      <Tarjeta
+        imagenes={imagenesPokemon} // Pasa las imágenes obtenidas como prop a Tarjeta
+        nombre="Glamperos Paradise"
+        ciudad="Bogota"
+        precio={150}
+        calificacion={4.5}
+        favorito={false}
+        onFavoritoChange={(nuevoEstado) => console.log('Favorito:', nuevoEstado)}
+      />
+    </div>
+  );
+}
 
 export default Inicio;

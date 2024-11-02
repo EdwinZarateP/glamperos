@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'; // Para el estado no favorito
+import { AiTwotoneHeart } from 'react-icons/ai';
+import { BsBalloonHeartFill } from 'react-icons/bs';
+import { FaStar } from 'react-icons/fa6';
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md"; // Importa los íconos de flechas
 import './estilos.css';
 
 interface TarjetaProps {
-  imagen: string;
+  imagenes: string[];
   nombre: string;
   ciudad: string;
   precio: number;
@@ -15,7 +16,7 @@ interface TarjetaProps {
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
-  imagen,
+  imagenes,
   nombre,
   ciudad,
   precio,
@@ -23,40 +24,63 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   favorito,
   onFavoritoChange,
 }) => {
-  const [estrellaClickada, setEstrellaClickada] = useState(false);
+  const [esFavorito, setEsFavorito] = useState(favorito);
+  const [imagenActual, setImagenActual] = useState(0);
 
   const handleFavoritoChange = () => {
-    onFavoritoChange(!favorito);
+    const nuevoEstado = !esFavorito;
+    setEsFavorito(nuevoEstado);
+    onFavoritoChange(nuevoEstado);
   };
 
-  const handleEstrellaClick = () => {
-    setEstrellaClickada(true);
-    setTimeout(() => {
-      setEstrellaClickada(false);
-    }, 300); // Duración del efecto
+  const siguienteImagen = () => {
+    setImagenActual((prev) => (prev + 1) % imagenes.length);
+  };
+
+  const anteriorImagen = () => {
+    setImagenActual((prev) => (prev - 1 + imagenes.length) % imagenes.length);
   };
 
   return (
     <div className="tarjeta">
       <div className="tarjeta-imagen-container">
-        <img src={imagen} alt={nombre} className="tarjeta-imagen" />
+        <img src={imagenes[imagenActual]} alt={nombre} className="tarjeta-imagen" />
         <button
           className="tarjeta-favorito"
           onClick={handleFavoritoChange}
         >
-          <FontAwesomeIcon icon={favorito ? faHeartSolid : faHeartRegular} className={`corazon ${favorito ? 'activo' : ''}`} />
+          {esFavorito ? (
+            <BsBalloonHeartFill className="corazon activo" />
+          ) : (
+            <AiTwotoneHeart className="corazon" />
+          )}
         </button>
+
+        {/* Flechas de navegación con íconos de react-icons */}
+        <button className="flecha izquierda" onClick={anteriorImagen}>
+          <MdOutlineKeyboardArrowLeft />
+        </button>
+        <button className="flecha derecha" onClick={siguienteImagen}>
+          <MdOutlineKeyboardArrowRight />
+        </button>
+
+        {/* Puntos de navegación */}
+        <div className="puntos">
+          {imagenes.map((_, index) => (
+            <span key={index} className={`punto ${index === imagenActual ? 'activo' : ''}`} />
+          ))}
+        </div>
       </div>
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <h2 className="tarjeta-nombre">{nombre}</h2>
-          <div className={`tarjeta-calificacion ${estrellaClickada ? 'efecto' : ''}`} onClick={handleEstrellaClick}>
-            <span className="estrella">⭐</span>
+          <span className="tarjeta-nombre">{nombre}</span>
+          <div className="tarjeta-calificacion">
+            <FaStar className="estrella" />
             <span>{calificacion}</span>
           </div>
         </div>
         <p className="tarjeta-ciudad">{ciudad}</p>
-        <p className="tarjeta-precio">${precio.toFixed(2)} por noche</p>
+        <span className="tarjeta-precio">${precio.toFixed(2)} por noche</span>
       </div>
     </div>
   );
