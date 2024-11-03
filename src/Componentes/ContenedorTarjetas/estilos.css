@@ -1,0 +1,56 @@
+/* Contenedor principal de tarjetas */
+.contenedor-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Define el tamaño mínimo de cada tarjeta */
+  gap: 6px; /* Espacio entre tarjetas */
+  justify-items: center; /* Centra las tarjetas horizontalmente */
+  padding: 0 4px; /* Reducir los márgenes laterales en pantallas móviles */
+  box-sizing: border-box;
+}
+
+/* Estilo básico para cada tarjeta */
+.contenedor-tarjetas .tarjeta {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 100%; /* Permite que cada tarjeta ocupe el ancho completo */
+}
+
+/* Para pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+  .contenedor-tarjetas {
+    grid-template-columns: 1fr; /* Una tarjeta por fila en pantallas pequeñas */
+    padding: 0; /* Sin padding para ocupar todo el ancho */
+    gap: 4px; /* Reduce el espacio entre tarjetas */
+  }
+
+  .contenedor-tarjetas .tarjeta {
+    max-width: 100%; /* Ocupa el ancho completo del contenedor */
+  }
+}
+
+/* Para pantallas medianas (tabletas) */
+@media (min-width: 600px) {
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ajuste automático en tabletas */
+  }
+
+  .contenedor-tarjetas .tarjeta {
+    max-width: 100%;
+  }
+}
+
+/* Para pantallas grandes (computadoras de escritorio) */
+@media (min-width: 1024px) {
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(4, 1fr); /* Cuatro tarjetas por fila en pantallas grandes */
+  }
+}
+
+/* Para pantallas extra grandes */
+@media (min-width: 1440px) {
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(5, 1fr); /* Cinco tarjetas por fila en pantallas extra grandes */
+  }
+}

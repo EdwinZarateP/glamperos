@@ -5,9 +5,13 @@ import { FaStar } from 'react-icons/fa6';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import './estilos.css';
 
-interface TarjetaProps {
-  imagenes: string[];
+interface PokemonData {
   nombre: string;
+  imagen: string;
+}
+
+interface TarjetaProps {
+  imagenesPokemon: PokemonData[];
   ciudad: string;
   precio: number;
   calificacion: number;
@@ -16,8 +20,7 @@ interface TarjetaProps {
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
-  imagenes,
-  nombre,
+  imagenesPokemon,
   ciudad,
   precio,
   calificacion,
@@ -27,9 +30,9 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
 
-  // Variables para capturar la posición inicial y final del touch
-  let touchStartX = 0;
-  let touchEndX = 0;
+  if (!imagenesPokemon || imagenesPokemon.length === 0) {
+    return <div>No hay imágenes para mostrar.</div>;
+  }
 
   const handleFavoritoChange = () => {
     const nuevoEstado = !esFavorito;
@@ -38,25 +41,26 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   };
 
   const siguienteImagen = () => {
-    setImagenActual((prev) => (prev + 1) % imagenes.length);
+    setImagenActual((prev) => (prev + 1) % imagenesPokemon.length);
   };
 
   const anteriorImagen = () => {
-    setImagenActual((prev) => (prev - 1 + imagenes.length) % imagenes.length);
+    setImagenActual((prev) => (prev - 1 + imagenesPokemon.length) % imagenesPokemon.length);
   };
 
-  // Maneja el inicio del touch
+  // Variables para capturar la posición inicial y final del toque
+  let touchStartX = 0;
+  let touchEndX = 0;
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX = e.touches[0].clientX;
   };
 
-  // Maneja el final del touch y calcula la dirección del swipe
   const handleTouchEnd = (e: React.TouchEvent) => {
     touchEndX = e.changedTouches[0].clientX;
     handleSwipe();
   };
 
-  // Determina la dirección del swipe
   const handleSwipe = () => {
     if (touchStartX - touchEndX > 50) {
       siguienteImagen(); // Deslizar hacia la izquierda
@@ -65,27 +69,20 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     }
   };
 
-  // Verifica si la pantalla es pequeña
   const esPantallaPequena = window.innerWidth <= 600;
 
-  // Limita los puntos de navegación a un máximo de 4
+  // Calcula el rango de puntos visibles
   const maxPuntos = 4;
-  const puntosVisibles = [];
-
-  if (imagenes.length <= maxPuntos) {
-    puntosVisibles.push(...imagenes.map((_, index) => index));
-  } else {
-    const start = Math.max(0, Math.min(imagenActual - 1, imagenes.length - maxPuntos));
-    const end = Math.min(start + maxPuntos, imagenes.length);
-    puntosVisibles.push(...Array.from({ length: end - start }, (_, i) => start + i));
-  }
+  const start = Math.max(0, imagenActual - Math.floor(maxPuntos / 2));
+  const end = Math.min(imagenesPokemon.length, start + maxPuntos);
+  const puntosVisibles = imagenesPokemon.slice(start, end);
 
   return (
     <div className="tarjeta">
       <div 
         className="tarjeta-imagen-container"
-        onTouchStart={esPantallaPequena ? handleTouchStart : undefined} // Detecta el inicio del touch solo en pantallas pequeñas
-        onTouchEnd={esPantallaPequena ? handleTouchEnd : undefined} // Detecta el final del touch solo en pantallas pequeñas
+        onTouchStart={esPantallaPequena ? handleTouchStart : undefined}
+        onTouchEnd={esPantallaPequena ? handleTouchEnd : undefined}
       >
         <div
           className="carrusel"
@@ -93,8 +90,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
             transform: `translateX(-${imagenActual * 100}%)`,
           }}
         >
-          {imagenes.map((imagen, index) => (
-            <img key={index} src={imagen} alt={nombre} className="tarjeta-imagen" />
+          {imagenesPokemon.map((pokemon, index) => (
+            <img key={index} src={pokemon.imagen} alt={pokemon.nombre} className="tarjeta-imagen" />
           ))}
         </div>
         <button
@@ -108,7 +105,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           )}
         </button>
 
-        {/* Flechas de navegación solo visibles en pantallas grandes */}
         {!esPantallaPequena && (
           <>
             <button className="flecha izquierda" onClick={anteriorImagen}>
@@ -120,16 +116,16 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           </>
         )}
 
-        {/* Puntos de navegación */}
+        {/* Puntos de navegación con límite de 4 puntos */}
         <div className="puntos">
-          {puntosVisibles.map((index) => (
-            <span key={index} className={`punto ${index === imagenActual ? 'activo' : ''}`} />
+          {puntosVisibles.map((_, index) => (
+            <span key={start + index} className={`punto ${start + index === imagenActual ? 'activo' : ''}`} />
           ))}
         </div>
       </div>
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">{nombre}</span>
+          <span className="tarjeta-nombre">{imagenesPokemon[imagenActual]?.nombre}</span>
           <div className="tarjeta-calificacion">
             <FaStar className="estrella" />
             <span>{calificacion}</span>
