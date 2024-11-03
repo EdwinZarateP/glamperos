@@ -173,11 +173,11 @@
     flex-direction: row-reverse; /* Invierte el orden en pantallas pequeñas */
   }
 
-  .boton-busqueda {
+  /* .boton-busqueda {
     margin-right: 50px;
     margin-left: 0px;
     padding: 0px;
-  }
+  } */
 
 
   .icono-menu {
