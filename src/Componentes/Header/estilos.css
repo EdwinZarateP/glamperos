@@ -37,7 +37,7 @@
   border-radius: 24px;
   padding: 8px 12px;
   gap: 8px;
-  max-width: 400px;
+  max-width: 450px;
   flex-grow: 1;
   margin: 8px 0;
 }
@@ -152,6 +152,7 @@
   }
 }
 
+/* Pantallas pequeñas (móviles) */
 @media (max-width: 600px) {
   /* Solo muestra la barra de búsqueda centrada y el icono del menú */
   .header-izquierda .nombre-marca,
@@ -166,9 +167,10 @@
 
   .barra-busqueda {
     flex-grow: 1;
-    justify-content: center;
+    justify-content: space-around;
     max-width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
     margin: 0 auto; /* Centra horizontalmente */
+    flex-direction: row-reverse; /* Invierte el orden en pantallas pequeñas */
   }
 
   .icono-menu {
