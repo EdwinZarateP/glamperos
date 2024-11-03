@@ -143,8 +143,8 @@
 /* Botón de favorito (corazón) */
 .tarjeta-favorito {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 15px;
+  right: 15px;
   background: none;
   border: none;
   font-size: 32px;
