@@ -89,8 +89,8 @@
 }
 
 .punto {
-  width: 4px; /* Tamaño reducido */
-  height: 4px;
+  width: 5px; /* Tamaño reducido */
+  height: 5px;
   background-color: rgba(199, 194, 194, 0.7); /* Fondo oscuro */
   border: 1px solid gray; /* Borde gris para visibilidad */
   border-radius: 50%;
