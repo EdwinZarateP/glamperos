@@ -140,7 +140,7 @@
 
   .barra-busqueda {
     flex-grow: 1;
-    justify-content: center;
+    justify-content: space-around;
   }
 
   .boton-anfitrion {
@@ -167,11 +167,18 @@
 
   .barra-busqueda {
     flex-grow: 1;
-    justify-content: space-around;
+    /* justify-content: space-between; */
     max-width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
     margin: 0 auto; /* Centra horizontalmente */
     flex-direction: row-reverse; /* Invierte el orden en pantallas pequeñas */
   }
+
+  .boton-busqueda {
+    margin-right: 50px;
+    margin-left: 0px;
+    padding: 0px;
+  }
+
 
   .icono-menu {
     font-size: 1.8rem;
@@ -179,6 +186,7 @@
 
   .header-derecha {
     flex-grow: 1;
+    width: 1%;
     justify-content: flex-end;
   }
 }
