@@ -9,6 +9,7 @@
   font-family: 'Lato', 'Poppins', sans-serif;
   box-sizing: border-box;
   background-color: #fff;
+  position: relative;
 }
 
 /* Contenedor de la imagen con borde delgado */
@@ -30,15 +31,16 @@
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 8px;
   flex-shrink: 0;
   min-width: 100%; /* Asegura que cada imagen ocupe el ancho completo del contenedor */
+  border-radius: 8px;
 }
 
 /* Flechas de navegación */
 .flecha {
   position: absolute;
   top: 50%;
+  transform: translateY(-50%);
   font-size: 20px;
   color: rgba(0, 0, 0, 0.6);
   background-color: white;
@@ -81,8 +83,8 @@
 }
 
 .punto {
-  width: 4px; /* Tamaño reducido */
-  height: 4px;
+  width: 6px; /* Tamaño reducido */
+  height: 6px;
   background-color: rgba(199, 194, 194, 0.7); /* Fondo oscuro */
   border: 1px solid gray; /* Borde gris para visibilidad */
   border-radius: 50%;
@@ -145,13 +147,14 @@
 /* Botón de favorito (corazón) */
 .tarjeta-favorito {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
-  font-size: 32px;
+  font-size: 24px;
   cursor: pointer;
   transition: color 0.1s;
+  z-index: 2; /* Asegura que esté sobre la imagen */
 }
 
 .corazon {
