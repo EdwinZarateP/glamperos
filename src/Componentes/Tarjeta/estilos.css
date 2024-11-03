@@ -1,22 +1,25 @@
-/* Estilos de la tarjeta */
+/* Contenedor principal de la tarjeta */
 .tarjeta {
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  margin: 16px;
-  max-width: 230px;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 8px;
+  max-width: 100%; /* Para ocupar todo el espacio disponible en dispositivos pequeños */
   overflow: hidden;
   font-family: 'Lato', 'Poppins', sans-serif;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
-/* Contenedor de la imagen */
+/* Contenedor de la imagen con borde delgado */
 .tarjeta-imagen-container {
   position: relative;
   width: 100%;
   overflow: hidden;
   border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Borde delgado y uniforme */
+  box-sizing: border-box;
 }
 
 .carrusel {
@@ -75,20 +78,20 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 
 .punto {
-  width: 10px;
-  height: 10px;
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
-  border: 1px solid gray; /* Borde blanco para visibilidad */
+  width: 4px; /* Tamaño reducido */
+  height: 4px;
+  background-color: rgba(199, 194, 194, 0.7); /* Fondo oscuro */
+  border: 1px solid gray; /* Borde gris para visibilidad */
   border-radius: 50%;
   transition: background-color 0.3s, transform 0.3s;
 }
 
 .punto.activo {
-  background-color: #fff; /* Color blanco para el punto activo */
+  background-color: #d7d2d2; /* Color blanco para el punto activo */
   transform: scale(1.2); /* Aumenta ligeramente el tamaño del punto activo */
 }
 

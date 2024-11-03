@@ -71,10 +71,18 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
   const esPantallaPequena = window.innerWidth <= 600;
 
-  // Calcula el rango de puntos visibles
-  const maxPuntos = 4;
-  const start = Math.max(0, imagenActual - Math.floor(maxPuntos / 2));
-  const end = Math.min(imagenesPokemon.length, start + maxPuntos);
+  // Calcula el rango de puntos visibles alrededor de la imagen actual
+  const maxPuntos = 5;
+  const halfMaxPuntos = Math.floor(maxPuntos / 2);
+  
+  let start = Math.max(0, imagenActual - halfMaxPuntos);
+  let end = start + maxPuntos;
+  
+  if (end > imagenesPokemon.length) {
+    end = imagenesPokemon.length;
+    start = Math.max(0, end - maxPuntos);
+  }
+
   const puntosVisibles = imagenesPokemon.slice(start, end);
 
   return (
@@ -116,7 +124,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           </>
         )}
 
-        {/* Puntos de navegación con límite de 4 puntos */}
+        {/* Puntos de navegación con límite de 5 puntos */}
         <div className="puntos">
           {puntosVisibles.map((_, index) => (
             <span key={start + index} className={`punto ${start + index === imagenActual ? 'activo' : ''}`} />

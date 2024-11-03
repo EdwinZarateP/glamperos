@@ -2,9 +2,9 @@
 .contenedor-tarjetas {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Define el tamaño mínimo de cada tarjeta */
-  gap: 6px; /* Espacio entre tarjetas */
-  justify-items: center; /* Centra las tarjetas horizontalmente */
-  padding: 0 4px; /* Reducir los márgenes laterales en pantallas móviles */
+  justify-items: center;
+  gap: 6px;
+  padding: 0 4px; 
   box-sizing: border-box;
 }
 
@@ -12,7 +12,6 @@
 .contenedor-tarjetas .tarjeta {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 100%; /* Permite que cada tarjeta ocupe el ancho completo */
 }
