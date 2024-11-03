@@ -1,3 +1,9 @@
+/* Asegura que todos los elementos usen box-sizing: border-box */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 /* Contenedor principal de la tarjeta */
 .tarjeta {
   display: flex;
@@ -10,6 +16,7 @@
   box-sizing: border-box;
   background-color: #fff;
   position: relative;
+  padding: 0; 
 }
 
 /* Contenedor de la imagen con borde delgado */
@@ -82,8 +89,8 @@
 }
 
 .punto {
-  width: 6px; /* Tamaño reducido */
-  height: 6px;
+  width: 4px; /* Tamaño reducido */
+  height: 4px;
   background-color: rgba(199, 194, 194, 0.7); /* Fondo oscuro */
   border: 1px solid gray; /* Borde gris para visibilidad */
   border-radius: 50%;
@@ -146,11 +153,11 @@
 /* Botón de favorito (corazón) */
 .tarjeta-favorito {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 32px;
   cursor: pointer;
   transition: color 0.1s;
   z-index: 2; /* Asegura que esté sobre la imagen */
