@@ -41,11 +41,15 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   };
 
   const siguienteImagen = () => {
-    setImagenActual((prev) => (prev + 1) % imagenesPokemon.length);
+    if (imagenActual < imagenesPokemon.length - 1) {
+      setImagenActual((prev) => prev + 1);
+    }
   };
 
   const anteriorImagen = () => {
-    setImagenActual((prev) => (prev - 1 + imagenesPokemon.length) % imagenesPokemon.length);
+    if (imagenActual > 0) {
+      setImagenActual((prev) => prev - 1);
+    }
   };
 
   // Variables para capturar la posición inicial y final del toque
@@ -115,10 +119,10 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
         {!esPantallaPequena && (
           <>
-            <button className="flecha izquierda" onClick={anteriorImagen}>
+            <button className="flecha izquierda" onClick={anteriorImagen} disabled={imagenActual === 0}>
               <MdOutlineKeyboardArrowLeft />
             </button>
-            <button className="flecha derecha" onClick={siguienteImagen}>
+            <button className="flecha derecha" onClick={siguienteImagen} disabled={imagenActual === imagenesPokemon.length - 1}>
               <MdOutlineKeyboardArrowRight />
             </button>
           </>
