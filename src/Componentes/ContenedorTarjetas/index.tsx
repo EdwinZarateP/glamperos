@@ -35,7 +35,7 @@ const ContenedorTarjetas: React.FC = () => {
 
   // Verifica que `imagenesPokemon` tenga datos antes de renderizar las tarjetas
   if (imagenesPokemon.length === 0) {
-    return <div>Cargando Pokémon...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
+    return <div>Cargando glamping...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
   }
 
   return (
