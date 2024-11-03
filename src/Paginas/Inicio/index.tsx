@@ -1,10 +1,13 @@
-import ContenedorTarjetas from '../../Componentes/ContenedorTarjetas/index';
+import Header from '../../Componentes/Header'; // Importa el componente Header
+import ContenedorTarjetas from '../../Componentes/ContenedorTarjetas'; // Importa ContenedorTarjetas
 
 function Inicio() {
   return (
     <div>
-      <h1>Glamperos</h1>
-      <ContenedorTarjetas /> {/* Usa el componente ContenedorTarjetas */}
+      <Header /> {/* Renderiza el encabezado al inicio */}
+      <main>
+        <ContenedorTarjetas /> {/* Renderiza el contenedor de tarjetas */}
+      </main>
     </div>
   );
 }

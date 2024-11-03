@@ -1,0 +1,182 @@
+/* Estilos generales del Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: #F5E9DA; /* Fondo beige claro */
+  border-bottom: 1px solid #A68A64; /* Línea divisoria */
+  font-family: 'Arial', sans-serif;
+  flex-wrap: wrap; /* Permite que los elementos se muevan a la siguiente línea en pantallas pequeñas */
+}
+
+/* Logo y nombre de la marca */
+.header-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  width: 40px;
+  height: auto;
+}
+
+.nombre-marca {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2F6B3E; /* Verde bosque */
+}
+
+/* Barra de búsqueda */
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #f7f7f7;
+  border-radius: 24px;
+  padding: 8px 12px;
+  gap: 8px;
+  max-width: 400px;
+  flex-grow: 1;
+  margin: 8px 0;
+}
+
+.opcion-busqueda {
+  color: #2F6B3E; /* Verde bosque */
+  font-size: 0.9rem;
+  white-space: nowrap; /* Evita que el texto se divida en dos líneas */
+}
+
+.divisor {
+  color: #A68A64; /* Tono terroso */
+}
+
+.boton-busqueda {
+  background-color: #F2A900; /* Amarillo mostaza */
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Header derecho (opciones de usuario) */
+.header-derecha {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.boton-anfitrion {
+  font-size: 0.9rem;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.icono {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.menu-usuario {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.icono-menu {
+  font-size: 1.5rem;
+  color: #555;
+  margin-right: 8px;
+}
+
+.notificacion {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inicial-usuario {
+  width: 24px;
+  height: 24px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.badge-notificacion {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ff385c;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+/* Responsividad */
+
+/* Pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .barra-busqueda {
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .boton-anfitrion {
+    display: none; /* Oculta el botón 'Pon tu espacio' en tabletas */
+  }
+
+  .icono-menu {
+    font-size: 1.8rem;
+  }
+}
+
+/* Pantallas pequeñas (móviles) */
+@media (max-width: 600px) {
+  /* Solo muestra el logo, la barra de búsqueda centrada y el icono del menú */
+  .header-izquierda .nombre-marca,
+  .boton-anfitrion,
+  .header-derecha > .icono-globo,
+  .opcion-busqueda:not(:first-child),
+  .divisor:not(:first-child),
+  .notificacion {
+    display: none;
+  }
+
+  .barra-busqueda {
+    flex-grow: 1;
+    justify-content: space-between;
+    max-width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+    margin: 0 auto; /* Centra horizontalmente */
+  }
+
+  .icono-menu {
+    font-size: 1.8rem;
+  }
+
+  .header-derecha {
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+}
