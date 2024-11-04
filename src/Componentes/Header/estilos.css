@@ -201,6 +201,7 @@
   /* Muestra el contenedor circular para icono-settings en pantallas pequeñas */
   .icono-settings-wrapper {
     display: flex; /* Muestra el contenedor circular en pantallas pequeñas */
+    margin-right: 5px;
   }
 
   .opcion-busqueda {
