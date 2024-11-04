@@ -1,0 +1,92 @@
+/* Contenedor principal del menú */
+.contenedor-menu {
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-family: inherit; /* Usa la fuente predeterminada de la página */
+}
+
+/* Contenedor de iconos con desplazamiento horizontal */
+.lista-iconos {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 10px;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  flex: 1;
+}
+
+.lista-iconos::-webkit-scrollbar {
+  display: none;
+}
+
+.lista-iconos {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Estilo para cada ítem de icono */
+.icono-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  color: #333;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  font-family: inherit; /* Usa la fuente predeterminada de la página */
+}
+
+.icono-item .icono {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.icono-item:hover {
+  transform: scale(1.1);
+}
+
+/* Estilo para el icono seleccionado */
+.icono-seleccionado {
+  color: #000;
+  font-weight: bold;
+}
+
+/* Estilo para las flechas de navegación */
+.flecha-izquierda, .flecha-derecha {
+  position: absolute;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.6);
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.flecha-izquierda {
+  left: 10px;
+}
+
+.flecha-derecha {
+  right: 10px;
+}
+
+.flecha-izquierda:hover, .flecha-derecha:hover {
+  transform: scale(1.2); /* Incrementa ligeramente el tamaño */
+}
+
+/* Responsividad: Oculta las flechas en pantallas pequeñas */
+@media (max-width: 767px) {
+  .flecha-izquierda, .flecha-derecha {
+    display: none;
+  }
+}

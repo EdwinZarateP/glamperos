@@ -1,3 +1,4 @@
 *, *::before, *::after {
     box-sizing: border-box;
+    font-family: 'Lato','Open Sans','Montserrat','Pacifico','Merriweather',  'sans-serif', 'Playfair Display';
 }
