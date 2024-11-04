@@ -13,7 +13,7 @@ const Header: React.FC = () => {
       </div>
 
       <div className="barra-busqueda">
-        <span className="opcion-busqueda"> Busca tu rinconcito colombiano</span>
+        <span className="opcion-busqueda">Busca tu rinconcito colombiano</span>
         <span className="divisor">|</span>
         <span className="opcion-busqueda opcion-invitados">¿Cuántos?</span>
         <button className="boton-busqueda">
@@ -24,10 +24,14 @@ const Header: React.FC = () => {
       <div className="header-derecha">
         <button className="boton-anfitrion">Publica tu Glamping</button>
         <div className="menu-usuario">
-          {/* Íconos alternativos */}
+          {/* Icono de menú para pantallas grandes */}
           <FiMenu className="icono icono-menu" />
-          <VscSettings className="icono icono-settings" />
-          
+
+          {/* Icono de configuración para pantallas pequeñas */}
+          <div className="icono-settings-wrapper">
+            <VscSettings className="icono icono-settings" />
+          </div>
+
           <div className="notificacion">
             <span className="inicial-usuario">E</span>
             <div className="badge-notificacion">1</div>
