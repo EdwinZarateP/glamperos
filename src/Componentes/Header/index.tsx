@@ -1,8 +1,7 @@
-// Header.tsx
 import React from 'react';
-import { AiOutlineSearch, AiOutlineMenu } from 'react-icons/ai';
-import logo from '../../Imagenes/icono.png'; // Importa la imagen desde la carpeta
-
+import logo from '../../Imagenes/icono.png';
+import { FiMenu, FiSearch } from "react-icons/fi";
+import { VscSettings } from "react-icons/vsc";
 import './estilos.css';
 
 const Header: React.FC = () => {
@@ -14,18 +13,21 @@ const Header: React.FC = () => {
       </div>
 
       <div className="barra-busqueda">
-        <span className="opcion-busqueda">Busca un lindo lugar</span>
+        <span className="opcion-busqueda"> Busca tu rinconcito colombiano</span>
         <span className="divisor">|</span>
         <span className="opcion-busqueda opcion-invitados">¿Cuántos?</span>
         <button className="boton-busqueda">
-          <AiOutlineSearch className="icono-busqueda" />
+          <FiSearch className="icono-busqueda" />
         </button>
       </div>
 
       <div className="header-derecha">
         <button className="boton-anfitrion">Publica tu Glamping</button>
         <div className="menu-usuario">
-          <AiOutlineMenu className="icono icono-menu" />
+          {/* Íconos alternativos */}
+          <FiMenu className="icono icono-menu" />
+          <VscSettings className="icono icono-settings" />
+          
           <div className="notificacion">
             <span className="inicial-usuario">E</span>
             <div className="badge-notificacion">1</div>

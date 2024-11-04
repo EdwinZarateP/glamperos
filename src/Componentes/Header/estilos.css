@@ -3,11 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
-  background-color: #F5E9DA; /* Fondo beige claro */
-  border-bottom: 1px solid #A68A64; /* Línea divisoria */
+  border-bottom: 1px solid #e6e3df;
   font-family: 'Arial', sans-serif;
-  flex-wrap: wrap; /* Permite que los elementos se muevan a la siguiente línea en pantallas pequeñas */
+  flex-wrap: wrap;
+  height: 70px;
 }
 
 /* Logo y nombre de la marca */
@@ -25,35 +24,42 @@
 .nombre-marca {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #2F6B3E; /* Verde bosque */
+  color: #2F6B3E;
 }
 
 /* Barra de búsqueda */
 .barra-busqueda {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  background-color: #f7f7f7;
+  justify-content: space-between;
   border-radius: 24px;
   padding: 8px 12px;
   gap: 8px;
   max-width: 450px;
   flex-grow: 1;
   margin: 8px 0;
+  border: 1px solid #d3d3d3;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .opcion-busqueda {
-  color: #2F6B3E; /* Verde bosque */
-  font-size: 0.9rem;
-  white-space: nowrap; /* Evita que el texto se divida en dos líneas */
+  color: #2F6B3E;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.opcion-busqueda.opcion-invitados {
+  color: #aca8a2;
+  font-weight: normal;
 }
 
 .divisor {
-  color: #A68A64; /* Tono terroso */
+  color: #A68A64;
 }
 
 .boton-busqueda {
-  background-color: #F2A900; /* Amarillo mostaza */
+  background-color: #F2A900;
   border: none;
   color: #fff;
   border-radius: 50%;
@@ -93,6 +99,13 @@
 }
 
 .icono-menu {
+  font-size: 1.5rem;
+  color: #555;
+  margin-right: 8px;
+}
+
+.icono-settings {
+  display: none;
   font-size: 1.5rem;
   color: #555;
   margin-right: 8px;
@@ -140,7 +153,7 @@
 
   .barra-busqueda {
     flex-grow: 1;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 
   .boton-anfitrion {
@@ -154,9 +167,9 @@
 
 /* Pantallas pequeñas (móviles) */
 @media (max-width: 600px) {
-  /* Solo muestra la barra de búsqueda centrada y el icono del menú */
+  /* Oculta ciertos elementos y ajusta otros para pantallas pequeñas */
   .header-izquierda .nombre-marca,
-  .header-izquierda .logo, /* Oculta el logo en pantallas pequeñas */
+  .header-izquierda .logo,
   .boton-anfitrion,
   .header-derecha > .icono-globo,
   .opcion-busqueda:not(:first-child),
@@ -167,20 +180,18 @@
 
   .barra-busqueda {
     flex-grow: 1;
-    /* justify-content: space-between; */
-    max-width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
-    margin: 0 auto; /* Centra horizontalmente */
-    flex-direction: row-reverse; /* Invierte el orden en pantallas pequeñas */
+    justify-content: space-around;
+    max-width: 100%;
+    flex-direction: row-reverse;
+    margin-left: 10px;
   }
 
-  /* .boton-busqueda {
-    margin-right: 50px;
-    margin-left: 0px;
-    padding: 0px;
-  } */
-
-
   .icono-menu {
+    display: none; /* Oculta FiMenu en pantallas pequeñas */
+  }
+
+  .icono-settings {
+    display: block; /* Muestra VscSettings en pantallas pequeñas */
     font-size: 1.8rem;
   }
 
