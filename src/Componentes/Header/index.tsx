@@ -13,7 +13,7 @@ const Header: React.FC = () => {
       </div>
 
       <div className="barra-busqueda">
-        <span className="opcion-busqueda">Busca tu rinconcito colombiano</span>
+        <span className="opcion-busqueda">Busca un refugio encantador</span>
         <span className="divisor">|</span>
         <span className="opcion-busqueda opcion-invitados">¿Cuántos?</span>
         <button className="boton-busqueda">
