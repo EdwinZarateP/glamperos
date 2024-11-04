@@ -15,6 +15,8 @@ const Header: React.FC = () => {
       <div className="barra-busqueda">
         <span className="opcion-busqueda">Busca un refugio encantador</span>
         <span className="divisor">|</span>
+        <span className="opcion-cuando">¿Cuándo?</span>
+        <span className="divisor">|</span>
         <span className="opcion-busqueda opcion-invitados">¿Cuántos?</span>
         <button className="boton-busqueda">
           <FiSearch className="icono-busqueda" />

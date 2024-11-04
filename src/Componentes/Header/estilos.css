@@ -42,6 +42,7 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Opciones de búsqueda */
 .opcion-busqueda {
   color: #2F6B3E;
   font-size: 0.8rem;
@@ -54,10 +55,19 @@
   font-weight: normal;
 }
 
+/* Nueva opción para "¿Cuándo?" */
+.opcion-cuando {
+  color: #2F6B3E;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
 .divisor {
   color: #A68A64;
 }
 
+/* Botón de búsqueda */
 .boton-busqueda {
   background-color: #F2A900;
   border: none;
@@ -180,6 +190,8 @@
   .header-izquierda .nombre-marca,
   .header-izquierda .logo,
   .boton-anfitrion,
+  .opcion-cuando, /* Oculta la opción "¿Cuándo?" en pantallas pequeñas */
+  .opcion-cuando + .divisor, /* Oculta el divisor siguiente a "¿Cuándo?" */
   .header-derecha > .icono-globo,
   .opcion-busqueda:not(:first-child),
   .divisor:not(:first-child),
