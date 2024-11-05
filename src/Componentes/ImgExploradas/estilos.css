@@ -14,15 +14,18 @@
   grid-column: 1 / 2;   /* Ocupa la primera columna */
   grid-row: 1 / 3;      /* Ocupa ambas filas */
   overflow: hidden;
-  border-radius: 8px;
   border-radius: 15px 0 0 15px;  /* Bordes redondeados solo a la izquierda */
 }
 
 .imagenes-principal img {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
-  
+  object-fit: cover;
+  transition: filter 0.3s ease; /* Transición suave para el efecto de oscurecimiento */
+}
+
+.imagenes-principal img:hover {
+  filter: brightness(0.8); /* Oscurece la imagen al pasar el cursor */
 }
 
 .imagenes-secundarias {
@@ -40,7 +43,12 @@
 .imagenes-secundarias img {
   width: 100%;
   height: 100%;
-  object-fit: cover;  
+  object-fit: cover;
+  transition: filter 0.3s ease; /* Transición suave para el efecto de oscurecimiento */
+}
+
+.imagenes-secundarias img:hover {
+  filter: brightness(0.8); /* Oscurece la imagen al pasar el cursor */
 }
 
 .mostrar-fotos-boton {
