@@ -106,6 +106,13 @@ const Tarjeta: React.FC<TarjetaProps> = ({
               <img key={index} src={pokemon.imagen} alt={pokemon.nombre} className="tarjeta-imagen" />
             ))}
           </div>
+
+          {/* Puntos de navegación, ahora dentro del contenedor de la imagen */}
+          <div className="puntos">
+            {puntosVisibles.map((_, index) => (
+              <span key={start + index} className={`punto ${start + index === imagenActual ? 'activo' : ''}`} />
+            ))}
+          </div>
         </div>
       </Link>
       <button
@@ -139,13 +146,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         </>
       )}
 
-      {/* Puntos de navegación con límite de 5 puntos */}
-      <div className="puntos">
-        {puntosVisibles.map((_, index) => (
-          <span key={start + index} className={`punto ${start + index === imagenActual ? 'activo' : ''}`} />
-        ))}
-      </div>
-      
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
           <span className="tarjeta-nombre">{imagenesPokemon[imagenActual]?.nombre}</span>
