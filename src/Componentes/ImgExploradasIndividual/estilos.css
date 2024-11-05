@@ -54,7 +54,7 @@
   cursor: pointer;
   background-color: white; /* Fondo blanco */
   border-radius: 50%; /* Hace que el fondo sea circular */
-  padding: 4px; /* Ajusta el tamaño del fondo alrededor del ícono */
+  padding: 2px; /* Ajusta el tamaño del fondo alrededor del ícono */
   border: 0.5px solid black; /* Borde negro */
   display: flex;
   align-items: center;

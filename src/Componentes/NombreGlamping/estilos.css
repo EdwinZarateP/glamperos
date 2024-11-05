@@ -1,7 +1,13 @@
 .titulo-glamping {
     font-size: 24px;
-    font-weight: 500;
+    font-weight: 700;
     color: #1a1a1a;
     margin: 0;
   }
   
+/* Aplica margin-left de 10px en pantallas pequeñas */
+@media (max-width: 600px) {
+  .titulo-glamping {
+    margin: 10px;
+  }
+}
