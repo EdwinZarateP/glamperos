@@ -1,12 +1,12 @@
 import React from 'react';
 import './estilos.css';
 
-interface TituloGlampingProps {
+interface NombreGlampingProps {
   nombreGlamping: string;
 }
 
-const TituloGlamping: React.FC<TituloGlampingProps> = ({ nombreGlamping }) => {
+const NombreGlamping: React.FC<NombreGlampingProps> = ({ nombreGlamping }) => {
   return <h1 className="titulo-glamping">{nombreGlamping}</h1>;
 };
 
-export default TituloGlamping;
+export default NombreGlamping;

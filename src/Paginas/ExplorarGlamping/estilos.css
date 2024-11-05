@@ -1,28 +1,36 @@
-/* Oculta Header, ImagenesExploradas, y EncabezadoExplorado en pantallas pequeñas */
+/* Configuración básica del contenedor principal */
 .contenedor-principal-exploracion {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   width: 90%;
-  margin: 0 auto;
   box-sizing: border-box;
 }
 
-
+/* Ajustes específicos para pantallas pequeñas */
 @media (max-width: 600px) {
-    .header-container,
-    .imagenes-exploradas-container,
-    .encabezado-explorado-container {
-      display: none;
-    }
-    .contenedor-principal-exploracion{
-      width: 100%;
-    }
+  .header-container,
+  .imagenes-exploradas-container,
+  .encabezado-explorado-container {
+    display: none;
   }
   
-  /* Oculta ImgExploradasIndividual en pantallas grandes */
-  @media (min-width: 601px) {
-    .img-exploradas-individual-container {
-      display: none;
-    }
+  .contenedor-principal-exploracion {
+    width: 100%;
   }
-  
+
+  /* Muestra NombreGlamping solo en pantallas pequeñas */
+  .nombre-glamping-container {
+    display: block;
+  }
+}
+
+/* Oculta el nombre del glamping en pantallas grandes */
+@media (min-width: 601px) {
+  .img-exploradas-individual-container {
+    display: none;
+  }
+
+  .nombre-glamping-container {
+    display: none;
+  }
+}
