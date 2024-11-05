@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AiTwotoneHeart } from 'react-icons/ai';
+import { BsBalloonHeartFill } from 'react-icons/bs';
 import { FiShare2 } from 'react-icons/fi';
 import './estilos.css';
 
@@ -9,6 +10,7 @@ interface ImgExploradasIndividualProps {
 
 const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ imagenes }) => {
   const [indiceActual, setIndiceActual] = useState(0);
+  const [esFavorito, setEsFavorito] = useState(false); // Estado para controlar el ícono de favorito
   let touchStartX = 0;
   let touchEndX = 0;
 
@@ -23,10 +25,8 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
 
   const handleSwipe = () => {
     if (touchStartX - touchEndX > 50) {
-      // Deslizar hacia la izquierda
       siguienteImagen();
     } else if (touchEndX - touchStartX > 50) {
-      // Deslizar hacia la derecha
       anteriorImagen();
     }
   };
@@ -37,6 +37,10 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
 
   const anteriorImagen = () => {
     setIndiceActual((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+  };
+
+  const toggleFavorito = () => {
+    setEsFavorito(!esFavorito); // Alterna el estado de favorito
   };
 
   return (
@@ -55,7 +59,9 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
       </div>
 
       <div className="imgExp-controles">
-        <AiTwotoneHeart className="imgExp-corazon" />
+        <button onClick={toggleFavorito} className="imgExp-corazon">
+          {esFavorito ? <BsBalloonHeartFill /> : <AiTwotoneHeart />}
+        </button>
         <FiShare2 className="imgExp-compartir" />
       </div>
 

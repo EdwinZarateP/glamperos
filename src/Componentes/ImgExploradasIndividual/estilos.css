@@ -48,12 +48,30 @@
   color: white;
 }
 
-.imgExp-corazon,
 .imgExp-compartir {
-  font-size: 24px;
+  font-size: 32px;
+  color: black;
+  cursor: pointer;
+  background-color: white; /* Fondo blanco */
+  border-radius: 50%; /* Hace que el fondo sea circular */
+  padding: 4px; /* Ajusta el tamaño del fondo alrededor del ícono */
+  border: 0.5px solid black; /* Borde negro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.imgExp-corazon {
+  font-size: 32px;
   color: white;
   cursor: pointer;
+  color: red;
+  background: none;
+  border: none;
+  outline: none;
 }
+
 
 /* Contador en la esquina inferior derecha */
 .imgExp-contador {
