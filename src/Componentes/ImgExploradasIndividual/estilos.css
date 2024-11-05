@@ -1,0 +1,90 @@
+/* Contenedor principal del componente que ocupa todo el espacio disponible */
+.img-exploradas-individual-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Contenedor del carrusel */
+.imgExp-carrusel {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 0;
+}
+
+/* Contenedor de imágenes en fila para el deslizamiento */
+.imgExp-imagenes {
+  display: flex;
+  transition: transform 0.5s ease; /* Transición suave para el deslizamiento */
+  width: 100%;
+  height: 100%;
+}
+
+/* Cada imagen ocupa todo el contenedor del carrusel */
+.imgExp-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen sin distorsionar, recortando si es necesario */
+  flex-shrink: 0; /* Evita que las imágenes se reduzcan más allá del ancho del contenedor */
+}
+
+/* Controles superiores (corazón y compartir) */
+.imgExp-controles {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 15px;
+  color: white;
+}
+
+.imgExp-corazon,
+.imgExp-compartir {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Contador en la esquina inferior derecha */
+.imgExp-contador {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: white;
+}
+
+/* Puntos de navegación en la parte inferior central */
+.imgExp-puntos {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.imgExp-punto {
+  width: 5px;
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.imgExp-punto.imgExp-activo {
+  background-color: white; /* Cambia el color del punto activo */
+}

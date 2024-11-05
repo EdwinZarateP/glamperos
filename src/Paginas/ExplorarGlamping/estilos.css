@@ -1,0 +1,28 @@
+/* Oculta Header, ImagenesExploradas, y EncabezadoExplorado en pantallas pequeñas */
+.contenedor-principal-exploracion {
+  margin: 0;
+  padding: 0;
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+
+@media (max-width: 600px) {
+    .header-container,
+    .imagenes-exploradas-container,
+    .encabezado-explorado-container {
+      display: none;
+    }
+    .contenedor-principal-exploracion{
+      width: 100%;
+    }
+  }
+  
+  /* Oculta ImgExploradasIndividual en pantallas grandes */
+  @media (min-width: 601px) {
+    .img-exploradas-individual-container {
+      display: none;
+    }
+  }
+  

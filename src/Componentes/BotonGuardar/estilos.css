@@ -1,0 +1,25 @@
+.boton-guardar {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  gap: 6px;
+}
+
+.boton-guardar:hover {
+  background-color: #f7f4f4;
+}
+
+.icono-compartir {
+  font-size: 16px;
+}
+
+.texto-compartir {
+  text-decoration: underline;
+}

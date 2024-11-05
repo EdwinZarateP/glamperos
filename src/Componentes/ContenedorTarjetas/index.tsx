@@ -13,7 +13,7 @@ const ContenedorTarjetas: React.FC = () => {
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
-        const pokemonIds = Array.from({ length: 16 }, (_, index) => index + 1);
+        const pokemonIds = Array.from({ length: 25 }, (_, index) => index + 1);
         const data = await Promise.all(
           pokemonIds.map(async (id) => {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
