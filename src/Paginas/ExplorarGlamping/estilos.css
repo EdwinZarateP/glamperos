@@ -2,21 +2,47 @@
 .contenedor-principal-exploracion {
   margin: 0 auto;
   padding: 0;
-  width: 90%;
+  width: 85%;
   box-sizing: border-box;
+}
+
+.contenedor-descripcion-glamping{
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.contenedor-descripcion-glamping-izq{
+  width: 60%;
+}
+
+.contenedor-descripcion-glamping-der{
+  display: flex;
+  justify-content: right;
+  width: 35%;
+}
+
+.encabezado-explorado{
+  border-bottom: none;
 }
 
 /* Ajustes específicos para pantallas pequeñas */
 @media (max-width: 600px) {
   .header-container,
   .imagenes-exploradas-container,
-  .encabezado-explorado-container {
+  .encabezado-explorado-container,
+  .contenedor-descripcion-glamping-der {
     display: none;
   }
   
   .contenedor-principal-exploracion {
     width: 100%;
   }
+
+  .contenedor-descripcion-glamping-izq{
+    width: 100%;
+  }
+
 
   /* Muestra NombreGlamping solo en pantallas pequeñas */
   .nombre-glamping-container {

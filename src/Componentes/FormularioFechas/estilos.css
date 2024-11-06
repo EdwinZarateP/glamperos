@@ -1,0 +1,100 @@
+/* FormularioFechas.css */
+
+.FormularioFechas-contenedor {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .FormularioFechas-precio {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .FormularioFechas-precioNoche {
+    color: #333;
+  }
+  
+  .FormularioFechas-fechas {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .FormularioFechas-fecha {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .FormularioFechas-fechaTitulo {
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .FormularioFechas-huespedes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 1em;
+  }
+  
+  .FormularioFechas-botonReserva {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #2F6B3E;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  
+  .FormularioFechas-botonReserva:hover {
+    background-color: #255531;
+  }
+  
+  .FormularioFechas-info {
+    font-size: 0.85em;
+    color: #666;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .FormularioFechas-detalleCosto {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .FormularioFechas-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95em;
+    margin-bottom: 8px;
+  }
+  
+  .FormularioFechas-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+  }
+  
