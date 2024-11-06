@@ -3,6 +3,7 @@ import ImagenesExploradas from '../../Componentes/ImgExploradas/index'; // Impor
 import EncabezadoExplorado from '../../Componentes/EncabezadoExplorado/index';
 import ImgExploradasIndividual from '../../Componentes/ImgExploradasIndividual'; // Importa ImgExploradasIndividual
 import NombreGlamping from '../../Componentes/NombreGlamping/index';
+import Calificacion from '../../Componentes/Calificacion/index';
 import './estilos.css';
 
 function ExplorarGlamping() {
@@ -32,6 +33,9 @@ function ExplorarGlamping() {
         {/* Solo visible en pantallas pequeñas */}
         <div className="nombre-glamping-container">
           <NombreGlamping nombreGlamping="Casa del árbol - Utica" />
+        </div>
+        <div className="calificacion-container">
+          <Calificacion calificacionNumero={5} />
         </div>
       </main>
     </div>
