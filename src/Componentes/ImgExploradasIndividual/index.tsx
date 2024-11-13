@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiTwotoneHeart } from 'react-icons/ai';
 import { BsBalloonHeartFill } from 'react-icons/bs';
 import { FiShare2 } from 'react-icons/fi';
+import { IoShareSocialSharp } from "react-icons/io5";
 import './estilos.css';
 
 interface ImgExploradasIndividualProps {
@@ -62,7 +63,7 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
         <button onClick={toggleFavorito} className="imgExp-corazon">
           {esFavorito ? <BsBalloonHeartFill /> : <AiTwotoneHeart />}
         </button>
-        <FiShare2 className="imgExp-compartir" />
+        <IoShareSocialSharp className="imgExp-compartir" />
       </div>
 
       <div className="imgExp-contador">

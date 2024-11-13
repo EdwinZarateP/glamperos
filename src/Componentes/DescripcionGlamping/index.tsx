@@ -1,24 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Calificacion from '../Calificacion/index';
+import DetalleAmpliado from '../DetalleAmpliado';
 import './estilos.css';
 
 interface DescripcionGlampingProps {
   calificacionNumero: number;
   calificacionEvaluaciones: number;
   calificacionMasAlta: string;
+  descripcion_glamping: string;
 }
 
-const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({ calificacionNumero, calificacionEvaluaciones, calificacionMasAlta }) => {
+const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
+  calificacionNumero,
+  calificacionEvaluaciones,
+  calificacionMasAlta,
+  descripcion_glamping
+}) => {
+  const [mostrarDetalle, setMostrarDetalle] = useState(false);
+
+  const handleMostrarMas = () => {
+    setMostrarDetalle(true);
+  };
+
+  const handleCerrar = () => {
+    setMostrarDetalle(false);
+  };
+
   return (
     <div className="descripcion-glamping-contenedor">
-      <Calificacion calificacionNumero={calificacionNumero}
+      <Calificacion 
+        calificacionNumero={calificacionNumero}
         calificacionEvaluaciones={calificacionEvaluaciones}
         calificacionMasAlta={calificacionMasAlta}
       />
       <p className="descripcion-glamping-detalle">
-        Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
+        {descripcion_glamping}
       </p>
+      <p className="mostrar-mas-texto" onClick={handleMostrarMas}>
+        Mostrar más ►
+      </p>
+      
+      {mostrarDetalle && (
+        <DetalleAmpliado descripcion_glamping={descripcion_glamping} onClose={handleCerrar} />
+      )}
     </div>
   );
 };

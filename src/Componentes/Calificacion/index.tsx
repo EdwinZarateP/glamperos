@@ -19,7 +19,7 @@ const Calificacion: React.FC<CalificacionProps> = ({ calificacionNumero, calific
   };
 
   const getTextoCalificacion = () => {
-    if (calificacionNumero >= 4.9 && calificacionNumero <= 5) return "Todos aman este sitio";
+    if (calificacionNumero >= 4.9 && calificacionNumero <= 5) return "Tiene una calificación perfecta";
     if (calificacionNumero >= 3 && calificacionNumero < 4.9) return "Favorito entre glampistas";
     return "Descubre este sitio";
   };

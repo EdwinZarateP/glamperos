@@ -46,7 +46,24 @@ function ExplorarGlamping() {
         </div>
           <div className='contenedor-descripcion-glamping'>
             <div className='contenedor-descripcion-glamping-izq'>
-              <DescripcionGlamping calificacionNumero ={5} calificacionEvaluaciones ={2} calificacionMasAlta="Su piscina fué lo mejor calificado"/>
+              <DescripcionGlamping calificacionNumero ={5} calificacionEvaluaciones ={2} calificacionMasAlta="Su piscina fué lo mejor calificado" descripcion_glamping='Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable,Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable
+        Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura.
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable
+        Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable'/>
             </div>
             <div className='contenedor-descripcion-glamping-der'>
             <FormularioFechas

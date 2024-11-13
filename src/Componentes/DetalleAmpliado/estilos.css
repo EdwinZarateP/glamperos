@@ -1,0 +1,46 @@
+.detalle-ampliado-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* Alta prioridad para mostrar encima */
+}
+
+.detalle-ampliado-contenedor {
+  position: relative;
+  width: 55%;
+  height: 90%;
+  border-radius: 15px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 1000; /* Colocado sobre el fondo oscuro */
+}
+
+.detalle-ampliado-cerrar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.detalle-ampliado-texto {
+  text-align: justify;
+  margin-top: 40px;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 600px) {
+  .detalle-ampliado-contenedor {
+    width: 98%; /* Ancho del 100% en pantallas pequeñas */
+    height: 90%; /* Ocupar el 100% de la pantalla si es necesario */
+  }
+}
