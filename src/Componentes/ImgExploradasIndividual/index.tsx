@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AiTwotoneHeart } from 'react-icons/ai';
 import { BsBalloonHeartFill } from 'react-icons/bs';
-import { FiShare2 } from 'react-icons/fi';
 import { IoShareSocialSharp } from "react-icons/io5";
 import './estilos.css';
 
