@@ -1,0 +1,79 @@
+.lo-que-ofrece {
+  margin-top: 30px;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.lista-caracteristicas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas por defecto */
+  gap: 24px 24px;
+}
+
+.item-caracteristica {
+  display: flex;
+  align-items: center;
+}
+
+.icono {
+  width: 32px;
+  height: 32px;
+  margin-right: 24px;
+}
+
+.descripcion {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.boton-mostrar {
+  margin-top: 16px;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 1rem;
+  font-weight: 650;
+  cursor: pointer;
+  color: #333;
+  width: 100%;
+}
+
+.boton-mostrar:hover {
+  background-color: #f2f2f2;
+}
+
+/* Ajustes específicos para pantallas pequeñas */
+@media (max-width: 600px) {
+
+  .lo-que-ofrece {
+    margin-left: 10px;
+    margin-right: 10px;
+
+  }
+
+  .lista-caracteristicas {
+    grid-template-columns: 1fr; /* Cambiar a una sola columna */
+    gap: 16px 0; /* Espaciado vertical más reducido */
+  }
+
+  .icono {
+    width: 24px; /* Íconos más pequeños */
+    height: 24px;
+    margin-right: 16px;
+  }
+
+  .descripcion {
+    font-size: 1rem; /* Texto más pequeño */
+  }
+}

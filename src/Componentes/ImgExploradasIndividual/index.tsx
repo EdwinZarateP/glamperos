@@ -10,7 +10,7 @@ interface ImgExploradasIndividualProps {
 
 const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ imagenes }) => {
   const [indiceActual, setIndiceActual] = useState(0);
-  const [esFavorito, setEsFavorito] = useState(false); // Estado para controlar el ícono de favorito
+  const [esFavorito, setEsFavorito] = useState(false); 
   let touchStartX = 0;
   let touchEndX = 0;
 

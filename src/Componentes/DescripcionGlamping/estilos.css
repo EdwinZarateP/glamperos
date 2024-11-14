@@ -1,8 +1,7 @@
 .descripcion-glamping-contenedor {
     border-radius: 8px;
     margin: 0;
-    font-family: inherit;
-    
+    font-family: inherit;    
   }
   
   .descripcion-glamping-titulo {
@@ -16,18 +15,16 @@
     color: #555;
     margin: 10px 0;
     font-weight: bold;
-
   }
   
   .descripcion-glamping-detalle {
     display: -webkit-box;
-    -webkit-line-clamp: 6; /* Works in WebKit browsers like Chrome, Safari, and Edge */
-    line-clamp: 6;         /* Standard, but not widely supported yet */
+    -webkit-line-clamp: 3; /* Works in WebKit browsers like Chrome, Safari, and Edge */
+    line-clamp: 3;         /* Standard, but not widely supported yet */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-align: justify;
-    margin-top: 20px;
-
+    margin-top: 30px;
   }  
   
   .mostrar-mas-texto {
@@ -41,9 +38,13 @@
   .descripcion-glamping-contenedor {
     width: 100%;
   }
+
   .descripcion-glamping-detalle{
-    margin:10px;
+    margin-top:20px;
+    margin-left:10px;
+    margin-right:10px;
   }
+
   .mostrar-mas-texto {
     padding-left: 10px;
   }

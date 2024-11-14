@@ -42,7 +42,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
       </div>
 
       <button className="FormularioFechas-botonReserva">Reserva</button>
-      <p className="FormularioFechas-info">No se hará ningún cargo por el momento</p>
+      <p className="FormularioFechas-info">No se hará ningún cargo por ahora</p>
 
       <div className="FormularioFechas-detalleCosto">
         <div className="FormularioFechas-item">
@@ -50,7 +50,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
           <span>${(precioPorNoche * totalNoches).toLocaleString()} COP</span>
         </div>
         <div className="FormularioFechas-item">
-          <span>Tarifa por servicio de Airbnb</span>
+          <span>Tarifa por servicio de Glamperos</span>
           <span>${tarifaServicio.toLocaleString()} COP</span>
         </div>
       </div>

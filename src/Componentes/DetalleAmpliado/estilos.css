@@ -13,20 +13,23 @@
 
 .detalle-ampliado-contenedor {
   position: relative;
-  width: 55%;
+  width: 55%; /* Ancho por defecto para pantallas grandes */
   height: 90%;
   border-radius: 15px;
   background-color: #f9f9f9;
   padding: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  overflow-y: auto;
   z-index: 1000; /* Colocado sobre el fondo oscuro */
 }
 
+.detalle-ampliado-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .detalle-ampliado-cerrar {
-  position: absolute;
-  top: 15px;
-  right: 15px;
   font-size: 24px;
   color: #333;
   cursor: pointer;
@@ -34,13 +37,15 @@
 
 .detalle-ampliado-texto {
   text-align: justify;
-  margin-top: 40px;
+  max-height: 90%; /* Limitar la altura para permitir desplazamiento */
+  overflow-y: auto; /* Mostrar barra de desplazamiento solo cuando sea necesario */
+  padding-right: 10px; /* Agregar un poco de espacio para la barra de desplazamiento */
 }
 
 /* Media Query para pantallas pequeñas */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .detalle-ampliado-contenedor {
-    width: 98%; /* Ancho del 100% en pantallas pequeñas */
+    width: 100%; /* Ancho del 100% en pantallas pequeñas */
     height: 90%; /* Ocupar el 100% de la pantalla si es necesario */
   }
 }

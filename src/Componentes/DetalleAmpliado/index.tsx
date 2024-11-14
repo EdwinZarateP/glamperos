@@ -11,8 +11,13 @@ const DetalleAmpliado: React.FC<DetalleAmpliadoProps> = ({ descripcion_glamping,
   return (
     <div className="detalle-ampliado-fondo">
       <div className="detalle-ampliado-contenedor">
-        <AiOutlineClose className="detalle-ampliado-cerrar" onClick={onClose} />
-        <h2>Detalles de este lindo lugar </h2>
+        {/* Contenedor superior con el título y el ícono de cerrar */}
+        <div className="detalle-ampliado-header">
+          <h2>Detalles de este lindo lugar</h2>
+          <AiOutlineClose className="detalle-ampliado-cerrar" onClick={onClose} />
+        </div>
+
+        {/* Contenedor principal con la descripción */}
         <p className="detalle-ampliado-texto">{descripcion_glamping}</p>
       </div>
     </div>

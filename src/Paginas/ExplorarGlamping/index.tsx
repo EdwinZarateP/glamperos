@@ -5,6 +5,7 @@ import ImgExploradasIndividual from '../../Componentes/ImgExploradasIndividual';
 import NombreGlamping from '../../Componentes/NombreGlamping/index';
 import DescripcionGlamping from '../../Componentes/DescripcionGlamping/index'
 import FormularioFechas from '../../Componentes/FormularioFechas/index'
+import LoQueOfrece from '../../Componentes/LoQueOfrece'; // Importa el nuevo componente
 
 import './estilos.css';
 
@@ -17,13 +18,28 @@ function ExplorarGlamping() {
     'https://entrepinosglamping.com/wp-content/uploads/2022/11/22-tipi-sin-jacuzzi-glamping-1.jpeg'
   ];
 
-    // Ejemplo de datos que pasarás como props al componente FormularioFechas
-    const precioPorNoche = 41400;
-    const tarifaServicio = 6955;
-    const totalNoches = 1;
-    const fechaLlegada = "7/11/2024";
-    const fechaSalida = "8/11/2024";
-    const huespedes = 1;
+  const caracteristicas = [
+    { icono: 'https://miscelandia.vtexassets.com/arquivos/ids/236292-800-auto?v=637776269051930000&width=800&height=auto&aspect=true', descripcion: 'Secadora de pelo' },
+    { icono: 'https://miscelandia.vtexassets.com/arquivos/ids/236292-800-auto?v=637776269051930000&width=800&height=auto&aspect=true', descripcion: 'Secadora de pelo' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Champú' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Jabón corporal' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Agua caliente' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Gel de ducha' },
+    { icono: 'https://miscelandia.vtexassets.com/arquivos/ids/236292-800-auto?v=637776269051930000&width=800&height=auto&aspect=true', descripcion: 'Secadora de pelo' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Productos de limpieza' },
+    { icono: 'https://miscelandia.vtexassets.com/arquivos/ids/236292-800-auto?v=637776269051930000&width=800&height=auto&aspect=true', descripcion: 'Secadora de pelo' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Champú' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Jabón corporal' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Agua caliente' },
+    { icono: 'https://via.placeholder.com/24', descripcion: 'Gel de ducha' },
+  ];
+
+  const precioPorNoche = 41400;
+  const tarifaServicio = 6955;
+  const totalNoches = 1;
+  const fechaLlegada = "7/11/2024";
+  const fechaSalida = "8/11/2024";
+  const huespedes = 1;
 
   return (
     <div className='contenedor-principal-exploracion'>
@@ -38,34 +54,43 @@ function ExplorarGlamping() {
           <ImagenesExploradas imagenes={imagenes} /> 
         </div>
         <div className="img-exploradas-individual-container">
-          <ImgExploradasIndividual imagenes={imagenes} /> {/* Agrega el carrusel de fotos aquí */}
+          <ImgExploradasIndividual imagenes={imagenes} />
         </div>
-        {/* Solo visible en pantallas pequeñas */}
         <div className="nombre-glamping-container">
           <NombreGlamping nombreGlamping="Casa del árbol - Utica" />
         </div>
-          <div className='contenedor-descripcion-glamping'>
-            <div className='contenedor-descripcion-glamping-izq'>
-              <DescripcionGlamping calificacionNumero ={5} calificacionEvaluaciones ={2} calificacionMasAlta="Su piscina fué lo mejor calificado" descripcion_glamping='Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable,Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable
-        Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura.
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable
-        Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable, Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-        Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable'/>
+        <div className='contenedor-descripcion-glamping'>
+          <div className='contenedor-descripcion-glamping-izq'>
+            <DescripcionGlamping 
+              calificacionNumero={5} 
+              calificacionEvaluaciones={2} 
+              calificacionMasAlta="Su piscina fue lo mejor calificado" 
+              descripcion_glamping='Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
+              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
+              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
+              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
+              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
+              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
+              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
+              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.'
+            />
+            
+            {/* Nuevo componente LoQueOfrece */}
+            <div className='contenedor-lo-que-ofrece'>
+              <LoQueOfrece 
+                titulo="Lo que este lugar ofrece"
+                caracteristicas={caracteristicas}
+              />
             </div>
-            <div className='contenedor-descripcion-glamping-der'>
+            
+          </div>
+          <div className='contenedor-descripcion-glamping-der'>
             <FormularioFechas
               precioPorNoche={precioPorNoche}
               tarifaServicio={tarifaServicio}
@@ -74,9 +99,8 @@ function ExplorarGlamping() {
               fechaSalida={fechaSalida}
               huespedes={huespedes}
             />
-            </div>
           </div>
-          
+        </div>
       </main>
     </div>
   );

@@ -16,15 +16,29 @@
   width: 60%;
 }
 
-.contenedor-descripcion-glamping-der{
+.contenedor-descripcion-glamping-der {
   display: flex;
-  justify-content: right;
+  justify-content: flex-start; /* Asegura que los elementos hijos comiencen desde la parte superior */
+  align-items: center; /* Centra verticalmente */
+  flex-direction: column; /* Alinea los hijos en una columna */
   width: 35%;
+  position: relative; /* Necesario para que `sticky` funcione en el hijo */
+  height: auto; /* Asegura que el padre ajuste su altura al contenido */
+  padding-top: 0; /* Elimina posibles espacios superiores */
 }
+
+
+
 
 .encabezado-explorado{
   border-bottom: none;
 }
+
+.contenedor-lo-que-ofrece {
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
 
 /* Ajustes específicos para pantallas pequeñas */
 @media (max-width: 600px) {
