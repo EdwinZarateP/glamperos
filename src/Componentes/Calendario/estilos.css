@@ -1,0 +1,158 @@
+.calendario {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.calendario h1 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.calendario-subtitulo {
+  font-size: 1rem; /* Tamaño ajustado para el subtítulo */
+  color: #666; /* Color más claro para menor peso visual */
+  margin-top: -10px; /* Reduce el espacio entre el título y subtítulo */
+  margin-bottom: 20px; /* Espacio para separarlo del contenido */
+  text-align: left;
+  font-weight: 500;
+}
+
+.calendario-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendario-columnas {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.calendario-columna {
+  flex: 1;
+}
+
+.calendario-columna h2 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* Columnas dinámicas */
+  gap: 10px;
+  width: 100%;
+}
+
+.calendario-dia {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.calendario-dia:hover {
+  background-color: #e0e0e0;
+}
+
+.calendario-dia-seleccionado {
+  background-color: #2F6B3E;
+  color: white;
+  border-color: #F2A900;
+}
+
+.calendario-dia-deshabilitado {
+  background-color: #e0e0e0;
+  color: #aaa;
+  cursor: not-allowed;
+  border-color: #ccc;
+}
+
+.calendario-dia-vacio {
+  background-color: transparent;
+  border: none;
+  cursor: default;
+}
+
+.calendario-fechas-seleccionadas {
+  margin-top: 1rem;
+}
+
+.calendario-fechas-seleccionadas p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.calendario-navegacion {
+  background-color:#2F6B3E;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.calendario-navegacion:hover {
+  background-color:#F2A900;
+}
+
+.calendario-boton-borrar {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.calendario-borrar {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.calendario-borrar:hover {
+  background-color: #cc0000;
+}
+
+
+/* Ocultar el calendario completamente en pantallas menores a 600px */
+@media (max-width: 600px) {
+  .calendario {
+    display: none; /* Ocultar el calendario */
+  }
+}
+
+/* Mostrar solo una columna en pantallas entre 600px y 960px */
+@media (max-width: 960px) and (min-width: 601px) {
+  .calendario-columnas {
+    flex-direction: column; /* Apilar las columnas */
+    gap: 0; /* Eliminar espacio adicional entre las columnas */
+  }
+
+  .calendario-columnas .calendario-columna:nth-child(2) {
+    display: none; /* Ocultar la segunda columna */
+  }
+}
+
+/* Configuración predeterminada: Mostrar dos columnas en pantallas mayores a 960px */
+@media (min-width: 961px) {
+  .calendario-columnas {
+    flex-direction: row; /* Mostrar columnas lado a lado */
+  }
+}

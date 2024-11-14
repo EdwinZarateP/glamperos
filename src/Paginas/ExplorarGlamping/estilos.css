@@ -10,10 +10,12 @@
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
+
 }
 
 .contenedor-descripcion-glamping-izq{
   width: 60%;
+  /* background-color: aqua; */
 }
 
 .contenedor-descripcion-glamping-der {

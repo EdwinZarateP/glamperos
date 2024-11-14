@@ -6,6 +6,7 @@ import NombreGlamping from '../../Componentes/NombreGlamping/index';
 import DescripcionGlamping from '../../Componentes/DescripcionGlamping/index'
 import FormularioFechas from '../../Componentes/FormularioFechas/index'
 import LoQueOfrece from '../../Componentes/LoQueOfrece'; // Importa el nuevo componente
+import Calendario from '../../Componentes/Calendario/index'
 
 import './estilos.css';
 
@@ -66,18 +67,6 @@ function ExplorarGlamping() {
               calificacionEvaluaciones={2} 
               calificacionMasAlta="Su piscina fue lo mejor calificado" 
               descripcion_glamping='Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
-              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
-              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
-              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
-              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
-              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.
-              Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
               Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.'
             />
             
@@ -87,6 +76,11 @@ function ExplorarGlamping() {
                 titulo="Lo que este lugar ofrece"
                 caracteristicas={caracteristicas}
               />
+            </div>
+
+            {/* Nuevo componente Calendario */}
+            <div className='contenedor-calendario'>
+              <Calendario nombreGlamping="Casa del árbol - Utica" />
             </div>
             
           </div>

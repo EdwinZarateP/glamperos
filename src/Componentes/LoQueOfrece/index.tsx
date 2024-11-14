@@ -15,7 +15,7 @@ const LoQueOfrece: React.FC<LoQueOfreceProps> = ({ titulo, caracteristicas }) =>
   const [mostrarTodo, setMostrarTodo] = useState(false);
 
   // Determina el número máximo de elementos visibles en función del tamaño de pantalla.
-  const maxVisible = window.innerWidth < 600 ? 6 : 4; 
+  const maxVisible = window.innerWidth < 600 ? 4 : 6; 
   const caracteristicasVisibles = mostrarTodo ? caracteristicas : caracteristicas.slice(0, maxVisible);
 
   const toggleMostrarTodo = () => setMostrarTodo(!mostrarTodo);
