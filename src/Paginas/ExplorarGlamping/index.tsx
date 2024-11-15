@@ -9,8 +9,7 @@ import FormularioFechas from '../../Componentes/FormularioFechas/index'
 import LoQueOfrece from '../../Componentes/LoQueOfrece'; // Importa el nuevo componente
 import Calendario from '../../Componentes/Calendario/index'
 import MapaGlampings from '../../Componentes/Mapa/index'
-
-
+import Comentarios from '../../Componentes/Comentarios/index'
 import './estilos.css';
 
 function ExplorarGlamping() {
@@ -24,7 +23,7 @@ function ExplorarGlamping() {
 
   const imagenes = [
     'https://a0.muscache.com/im/pictures/miso/Hosting-33556265/original/934a550a-17ea-46c2-a25e-86751d5c6bf8.jpeg?im_w=1200',
-    'https://rumbonaturaleza.com/wp-content/uploads/2023/08/glamping_megaGuia_furimufilms.jpg',
+    'https://www.dosisverde.com/cmsd/wp-content/uploads/2022/05/casa_en_el_arbol_utica_n_0.jpeg',
     'https://media.admagazine.com/photos/666a5173a0a09ff28cdff9e6/16:9/w_2560%2Cc_limit/GettyImages-1740469306.jpg',
     'https://cf.bstatic.com/xdata/images/hotel/max1024x768/529183840.jpg?k=fe86b8b2731b17900d37b685f368a06cabcf8d7aa823c823b2e50df1f912d81a&o=&hp=1',
     'https://entrepinosglamping.com/wp-content/uploads/2022/11/22-tipi-sin-jacuzzi-glamping-1.jpeg'
@@ -67,6 +66,31 @@ function ExplorarGlamping() {
       region: 'Boyacá',
       ubicacion: [5.5353, -73.3677] as [number, number],
       puntosTuristicosCercanos: ['Lago de Tota', 'Villa de Leyva'],
+    },
+  ];
+
+  const datosComentarios = [
+    {
+      nombre: 'Luisa Fernanda',
+      calificacionNumero: 5,
+      comentario: 'Fue una experiencia que repetiría, ideal para una escapada de fin de semana.',
+      fotoPerfil: 'https://via.placeholder.com/48',
+    },
+    {
+      nombre: 'Carlos Pérez',
+      calificacionNumero: 4.3,
+      comentario: 'Muy buena experiencia, aunque podrían mejorar en los servicios ofrecidos.Muy buena experiencia, aunque podrían mejorar en los servicios ofrecidos.Muy buena experiencia, aunque podrían mejorar en los servicios ofrecidos.',
+    },
+    {
+      nombre: 'Ana',
+      calificacionNumero: 3.8,
+      comentario: 'La estadía fue buena, pero el lugar no cumplió todas mis expectativas.',
+    },
+    {
+      nombre: 'Sofía López',
+      calificacionNumero: 4.8,
+      comentario: 'El lugar es hermoso, y la atención fue excepcional. Definitivamente regresaré.',
+      fotoPerfil: 'https://via.placeholder.com/48',
     },
   ];
 
@@ -125,6 +149,7 @@ function ExplorarGlamping() {
           
         </div>
         <MapaGlampings glampings={glampingsData} />
+        <Comentarios comentarios={datosComentarios} />
       </main>
     </div>
   );
