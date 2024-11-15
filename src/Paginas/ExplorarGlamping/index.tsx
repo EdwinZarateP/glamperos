@@ -7,6 +7,8 @@ import DescripcionGlamping from '../../Componentes/DescripcionGlamping/index'
 import FormularioFechas from '../../Componentes/FormularioFechas/index'
 import LoQueOfrece from '../../Componentes/LoQueOfrece'; // Importa el nuevo componente
 import Calendario from '../../Componentes/Calendario/index'
+import MapaGlampings from '../../Componentes/Mapa/index'
+
 
 import './estilos.css';
 
@@ -41,6 +43,23 @@ function ExplorarGlamping() {
   const fechaLlegada = "7/11/2024";
   const fechaSalida = "8/11/2024";
   const huespedes = 1;
+
+  const glampingsData = [
+    {
+      id: 1,
+      nombre: 'Casa del Árbol - Utica',
+      region: 'Cundinamarca',
+      ubicacion: [5.1543, -74.5234] as [number, number],
+      puntosTuristicosCercanos: ['Río Magdalena', 'Cascadas de Tobia'],
+    },
+    {
+      id: 3,
+      nombre: 'Bubble Glamping',
+      region: 'Boyacá',
+      ubicacion: [5.5353, -73.3677] as [number, number],
+      puntosTuristicosCercanos: ['Lago de Tota', 'Villa de Leyva'],
+    },
+  ];
 
   return (
     <div className='contenedor-principal-exploracion'>
@@ -92,9 +111,11 @@ function ExplorarGlamping() {
               fechaLlegada={fechaLlegada}
               fechaSalida={fechaSalida}
               huespedes={huespedes}
-            />
+            />  
           </div>
+          
         </div>
+        <MapaGlampings glampings={glampingsData} />
       </main>
     </div>
   );

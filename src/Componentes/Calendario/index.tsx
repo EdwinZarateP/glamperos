@@ -78,7 +78,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
       return "Ahora selecciona una fecha de salida";
     }
     if (fechaInicio && fechaFin) {
-      return `Del ${formatearFecha(fechaInicio)} al ${formatearFecha(fechaFin)}`;
+      return `${formatearFecha(fechaInicio)} - ${formatearFecha(fechaFin)}`;
     }
     return "";
   };

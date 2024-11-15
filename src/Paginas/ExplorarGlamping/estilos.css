@@ -15,21 +15,18 @@
 
 .contenedor-descripcion-glamping-izq{
   width: 60%;
-  /* background-color: aqua; */
 }
 
 .contenedor-descripcion-glamping-der {
   display: flex;
   justify-content: flex-start; /* Asegura que los elementos hijos comiencen desde la parte superior */
-  align-items: center; /* Centra verticalmente */
   flex-direction: column; /* Alinea los hijos en una columna */
   width: 35%;
   position: relative; /* Necesario para que `sticky` funcione en el hijo */
   height: auto; /* Asegura que el padre ajuste su altura al contenido */
-  padding-top: 0; /* Elimina posibles espacios superiores */
+  padding-top: 0; 
+  align-items:end; 
 }
-
-
 
 
 .encabezado-explorado{

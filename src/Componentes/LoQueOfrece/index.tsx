@@ -21,18 +21,18 @@ const LoQueOfrece: React.FC<LoQueOfreceProps> = ({ titulo, caracteristicas }) =>
   const toggleMostrarTodo = () => setMostrarTodo(!mostrarTodo);
 
   return (
-    <div className="lo-que-ofrece">
-      <h2 className="titulo">{titulo}</h2>
-      <div className="lista-caracteristicas">
+    <div className="loQueOfrece-contenedor">
+      <h2 className="loQueOfrece-titulo">{titulo}</h2>
+      <div className="loQueOfrece-lista">
         {caracteristicasVisibles.map((caracteristica, index) => (
-          <div key={index} className="item-caracteristica">
-            <img src={caracteristica.icono} alt="" className="icono" />
-            <span className="descripcion">{caracteristica.descripcion}</span>
+          <div key={index} className="loQueOfrece-item">
+            <img src={caracteristica.icono} alt="" className="loQueOfrece-icono" />
+            <span className="loQueOfrece-descripcion">{caracteristica.descripcion}</span>
           </div>
         ))}
       </div>
       {caracteristicas.length > maxVisible && (
-        <button className="boton-mostrar" onClick={toggleMostrarTodo}>
+        <button className="loQueOfrece-boton" onClick={toggleMostrarTodo}>
           {mostrarTodo ? 'Mostrar menos' : `Mostrar los ${caracteristicas.length - maxVisible} servicios`}
         </button>
       )}

@@ -1,4 +1,5 @@
-.lo-que-ofrece {
+/* Contenedor principal */
+.loQueOfrece-contenedor {
   margin-top: 30px;
   border-top: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
@@ -7,36 +8,43 @@
   margin-bottom: 30px;
 }
 
-.titulo {
+/* Título del componente */
+.loQueOfrece-titulo {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 16px;
   color: #333;
 }
 
-.lista-caracteristicas {
+/* Lista de características */
+.loQueOfrece-lista {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Dos columnas por defecto */
   gap: 24px 24px;
+  margin-left: 10px;
 }
 
-.item-caracteristica {
+/* Cada ítem de la lista */
+.loQueOfrece-item {
   display: flex;
   align-items: center;
 }
 
-.icono {
+/* Ícono de cada característica */
+.loQueOfrece-icono {
   width: 32px;
   height: 32px;
   margin-right: 24px;
 }
 
-.descripcion {
+/* Descripción de cada característica */
+.loQueOfrece-descripcion {
   font-size: 1.2rem;
   color: #555;
 }
 
-.boton-mostrar {
+/* Botón para mostrar más/menos */
+.loQueOfrece-boton {
   margin-top: 16px;
   padding: 10px 16px;
   border: 1px solid #ccc;
@@ -49,31 +57,29 @@
   width: 100%;
 }
 
-.boton-mostrar:hover {
+.loQueOfrece-boton:hover {
   background-color: #f2f2f2;
 }
 
 /* Ajustes específicos para pantallas pequeñas */
 @media (max-width: 600px) {
-
-  .lo-que-ofrece {
+  .loQueOfrece-contenedor {
     margin-left: 10px;
     margin-right: 10px;
-
   }
 
-  .lista-caracteristicas {
+  .loQueOfrece-lista {
     grid-template-columns: 1fr; /* Cambiar a una sola columna */
     gap: 16px 0; /* Espaciado vertical más reducido */
   }
 
-  .icono {
+  .loQueOfrece-icono {
     width: 24px; /* Íconos más pequeños */
     height: 24px;
     margin-right: 16px;
   }
 
-  .descripcion {
+  .loQueOfrece-descripcion {
     font-size: 1rem; /* Texto más pequeño */
   }
 }

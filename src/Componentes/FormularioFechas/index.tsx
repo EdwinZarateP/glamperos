@@ -1,4 +1,5 @@
-import './estilos.css';
+import React from "react";
+import "./estilos.css";
 
 interface FormularioFechasProps {
   precioPorNoche: number;
@@ -41,7 +42,10 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
         <span>{huespedes} huésped{huespedes > 1 ? 'es' : ''}</span>
       </div>
 
-      <button className="FormularioFechas-botonReserva">Reserva</button>
+      <button className="FormularioFechas-botonReserva">
+        <span className="FormularioFechas-botonReserva-icono">🗓️</span>
+        Reserva
+      </button>
       <p className="FormularioFechas-info">No se hará ningún cargo por ahora</p>
 
       <div className="FormularioFechas-detalleCosto">

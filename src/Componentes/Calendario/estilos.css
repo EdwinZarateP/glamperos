@@ -111,12 +111,12 @@
 }
 
 .calendario-boton-borrar {
-  text-align: center;
+  text-align: right;
   margin-top: 20px;
 }
 
 .calendario-borrar {
-  background-color: #ff4d4d;
+  background-color: #555;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -127,7 +127,7 @@
 }
 
 .calendario-borrar:hover {
-  background-color: #cc0000;
+  background-color: #b3b6b4;
 }
 
 

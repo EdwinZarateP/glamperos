@@ -1,5 +1,8 @@
 /* FormularioFechas.css */
 .FormularioFechas-contenedor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   max-width: 400px;
   padding: 20px;
@@ -11,9 +14,9 @@
   top: 20px; /* Siempre en la parte superior */
   margin: 0; /* Elimina márgenes adicionales */
   z-index: 10; 
-  height: auto; 
-}
+  margin-bottom: 30px; /* Elimina márgenes adicionales */
 
+}
 
 .FormularioFechas-precio {
   font-size: 1.5em;
@@ -56,22 +59,31 @@
   margin-bottom: 15px;
   font-size: 1em;
 }
-
 .FormularioFechas-botonReserva {
   width: 100%;
   padding: 12px;
   font-size: 1em;
   font-weight: bold;
   color: #fff;
-  background-color: #2F6B3E;
+  background-color: #28a745; /* Verde más vibrante */
   border: none;
   border-radius: 8px;
   cursor: pointer;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Espacio entre el texto y el ícono */
+  transition: transform 0.2s ease, background-color 0.2s ease; /* Transición suave */
 }
 
 .FormularioFechas-botonReserva:hover {
-  background-color: #255531;
+  background-color: #218838; /* Verde más oscuro */
+  transform: scale(1.05); /* Crece ligeramente */
+}
+
+.FormularioFechas-botonReserva-icono {
+  font-size: 1.2em; /* Ajusta el tamaño del ícono */
 }
 
 .FormularioFechas-info {

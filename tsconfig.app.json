@@ -20,7 +20,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Configuración adicional para Leaflet */
+    "typeRoots": ["node_modules/@types"], // Asegúrate de que reconozca los tipos instalados
+    "types": ["leaflet"]                  // Agrega Leaflet explícitamente
   },
   "include": ["src"]
 }

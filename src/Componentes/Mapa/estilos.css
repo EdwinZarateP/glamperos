@@ -1,0 +1,51 @@
+.mapa-contenedor {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 200px;
+}
+
+.mapa-titulo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.mapa-wrapper {
+  width: 100%;
+  height: 350px; /* Máximo de 350px */
+  max-height: 350px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
+}
+
+.mapa-interactivo {
+  width: 100%;
+  height: 100%; /* Ocupa todo el alto del padre */
+  position: absolute;
+}
+
+/* Ícono personalizado en el marcador */
+.custom-leaflet-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f57c00; /* Fondo del ícono */
+  color: white; /* Color del ícono */
+  font-size: 24px; /* Tamaño del ícono */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.marcador-icono {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
