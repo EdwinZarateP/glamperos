@@ -1,3 +1,4 @@
+import { useEffect } from 'react'; // Agrega useEffect
 import Header from '../../Componentes/Header'; // Importa el componente Header
 import ImagenesExploradas from '../../Componentes/ImgExploradas/index'; // Importa ImagenesExploradas
 import EncabezadoExplorado from '../../Componentes/EncabezadoExplorado/index';
@@ -13,6 +14,14 @@ import MapaGlampings from '../../Componentes/Mapa/index'
 import './estilos.css';
 
 function ExplorarGlamping() {
+
+    // Scroll hacia la parte superior al cargar el componente
+    useEffect(() => {
+      window.scrollTo({
+        top: 0,
+      });
+    }, []);
+
   const imagenes = [
     'https://a0.muscache.com/im/pictures/miso/Hosting-33556265/original/934a550a-17ea-46c2-a25e-86751d5c6bf8.jpeg?im_w=1200',
     'https://rumbonaturaleza.com/wp-content/uploads/2023/08/glamping_megaGuia_furimufilms.jpg',
