@@ -1,7 +1,9 @@
+/* Contenedor general del mapa */
 .mapa-contenedor {
   width: 100%;
   margin: 0 auto;
   margin-bottom: 200px;
+  position: relative;
 }
 
 .mapa-titulo {
@@ -12,19 +14,30 @@
   color: #333;
 }
 
+/* Contenedor del mapa con efecto decorativo */
 .mapa-wrapper {
   width: 100%;
-  height: 350px; /* Máximo de 350px */
+  height: 350px; /* Altura máxima del mapa */
   max-height: 350px;
   position: relative;
   overflow: hidden;
-  border-radius: 15px;
-  border: 1px solid #e0e0e0;
+  background: #f4e8c1; /* Color de fondo estilo pergamino */
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/49/Old_paper_texture.jpg'); /* Fondo estilo pergamino */
+  background-size: cover;
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra */
+  transition: box-shadow 0.3s ease;
 }
 
+/* Efecto interactivo: sombra más fuerte al pasar el mouse */
+.mapa-wrapper:hover {
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Contenedor del mapa interactivo */
 .mapa-interactivo {
   width: 100%;
-  height: 100%; /* Ocupa todo el alto del padre */
+  height: 100%;
   position: absolute;
 }
 
@@ -37,8 +50,8 @@
   height: 40px;
   border-radius: 50%;
   background-color: #000000; /* Fondo del ícono */
-  color: #FFD700;/* Cambia el color del ícono aquí */
-  font-size: 24px; /* Tamaño del ícono */
+  color: #FFD700; /* Color del ícono */
+  font-size: 15px; /* Tamaño del ícono */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -54,6 +67,6 @@
 @media (max-width: 600px) {
   .mapa-contenedor {
     padding: 10px;
-    /* padding-left: 10px; */
   }
+
 }
