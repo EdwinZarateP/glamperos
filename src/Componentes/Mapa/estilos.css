@@ -5,7 +5,7 @@
 }
 
 .mapa-titulo {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: left;
   margin-bottom: 16px;
@@ -36,8 +36,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #f57c00; /* Fondo del ícono */
-  color: white; /* Color del ícono */
+  background-color: #000000; /* Fondo del ícono */
+  color: #FFD700;/* Cambia el color del ícono aquí */
   font-size: 24px; /* Tamaño del ícono */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -48,4 +48,12 @@
   align-items: center;
   width: 100%;
   height: 100%;
+}
+
+/* Ajustes específicos para pantallas pequeñas */
+@media (max-width: 600px) {
+  .mapa-contenedor {
+    padding: 10px;
+    /* padding-left: 10px; */
+  }
 }

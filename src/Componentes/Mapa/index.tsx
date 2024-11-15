@@ -25,12 +25,12 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ glampings }) => {
     L.divIcon({
       html: ReactDOMServer.renderToString(
         <div className="marcador-icono">
-          <GiCampingTent size={24} color="white" />
+          <GiCampingTent size={24} />
         </div>
       ),
       iconSize: [40, 40],
       className: "custom-leaflet-icon",
-    });
+    });  
 
   return (
     <div className="mapa-contenedor">
@@ -38,10 +38,10 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ glampings }) => {
       <div className="mapa-wrapper">
         <MapContainer center={[5.5353, -73.3677]} zoom={7} className="mapa-interactivo">
           <TileLayer
-            url={`https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=${apiKey}`}
+            // url={`https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=${apiKey}`}
             // url={`https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=${apiKey}`}
             // url={`https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${apiKey}`}
-            // url={`https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${apiKey}`}
+            url={`https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${apiKey}`}
 
 
 
