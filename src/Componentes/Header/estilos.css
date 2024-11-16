@@ -127,7 +127,7 @@
 
 .icono-settings {
   font-size: 1.5rem;
-  color: #555; /* Color gris para el ícono */
+  color: #000000; 
 }
 
 .notificacion {
@@ -214,6 +214,11 @@
   .icono-settings-wrapper {
     display: flex; /* Muestra el contenedor circular en pantallas pequeñas */
     margin-right: 5px;
+  }
+
+  .icono-settings {
+    font-size: 2.5rem;
+    color: #000000; 
   }
 
   .opcion-busqueda {

@@ -4,7 +4,7 @@
   justify-content: space-around;
   align-items: center;
   padding: 15px 20px;
-  background: linear-gradient(90deg, #fff, #f8f9fa);
+  background: linear-gradient(45deg, #fff, #f8f9fa);
   border-top: 2px solid #ccc;
   position: fixed;
   bottom: 0;

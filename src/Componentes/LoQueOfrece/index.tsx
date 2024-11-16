@@ -49,7 +49,7 @@ const LoQueOfrece: React.FC<LoQueOfreceProps> = ({ titulo, caracteristicas }) =>
       </div>
       {caracteristicas.length > maxVisible && (
         <button className="loQueOfrece-boton" onClick={abrirAmpliado}>
-          {`Mostrar los ${caracteristicas.length } servicios`}
+          {`Mostrar las ${caracteristicas.length } amenidades`}
         </button>
       )}
       {mostrarAmpliado && (

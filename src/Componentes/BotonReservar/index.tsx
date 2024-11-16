@@ -14,13 +14,16 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
     throw new Error('ReservarBoton debe ser usado dentro de un proveedor de ContextoApp');
   }
 
-  const { fechaInicio, fechaFin, totalDias } = almacenVariables;
+  const { fechaInicio, fechaFin, totalDias, precioPorNoche } = almacenVariables;
 
-  // Redondear el total a pagar
-  const totalRedondeado = Math.round(totalSinImpuestos);
+  // Determinar el precio a mostrar
+  const precioBase = totalDias > 0 ? totalSinImpuestos : precioPorNoche || 0;
+
+  // Redondear el precio
+  const precioRedondeado = Math.round(precioBase);
 
   // Formatear como dinero en COP con separadores de miles
-  const totalFormateado = totalRedondeado.toLocaleString('es-CO', {
+  const precioFormateado = precioRedondeado.toLocaleString('es-CO', {
     style: 'currency',
     currency: 'COP',
     minimumFractionDigits: 0,
@@ -35,31 +38,39 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   };
 
   const manejarReserva = () => {
-    const mensaje = `Estás reservando por ${totalFormateado}.
-      - Noches: ${totalDias > 0 ? totalDias : "Ninguna"} 
-      - Desde: ${formatearFecha(fechaInicio)}
-      - Hasta: ${formatearFecha(fechaFin)}`;
+    const mensaje = totalDias > 0
+      ? `Estás reservando por ${precioFormateado}.
+        - Noches: ${totalDias}
+        - Desde: ${formatearFecha(fechaInicio)}
+        - Hasta: ${formatearFecha(fechaFin)}`
+      : `Estás reservando por ${precioFormateado} por noche.`;
     alert(mensaje);
   };
 
   return (
     <div className="reservar-contenedor">
       <div className="reservar-total">
-        <div className="reservar-precio">{totalFormateado}</div>
-        <div className="reservar-detalles">
-          <span className="reservar-detalles-noche">
-            {totalDias > 0 ? `${totalDias} ${totalDias === 1 ? "noche" : "noches"}` : "Sin noches seleccionadas"}
-          </span>
-          <span className="reservar-fechas">
-            {formatearFecha(fechaInicio)} – {formatearFecha(fechaFin)}
-          </span>
-        </div>
+        <div className="reservar-precio">{precioFormateado}</div>
+        {totalDias > 0 ? (
+          <div className="reservar-detalles">
+            <span className="reservar-detalles-noche">
+              {totalDias} {totalDias === 1 ? "noche" : "noches"}
+            </span>
+            <span className="reservar-fechas">
+              {formatearFecha(fechaInicio)} – {formatearFecha(fechaFin)}
+            </span>
+          </div>
+        ) : (
+          <div className="reservar-detalles">
+            <span className="reservar-fechas">por noche</span>
+          </div>
+        )}
       </div>
       <div className="reservar-boton-contenedor">
-        <button 
+        <button
           className="reservar-boton"
           onClick={manejarReserva}
-          aria-label={`Reservar por ${totalFormateado}`} /* Mejora de accesibilidad */
+          aria-label={`Reservar por ${precioFormateado}`} /* Mejora de accesibilidad */
         >
           <GiCampingTent className="reservar-boton-icono" /> Reservar
         </button>
