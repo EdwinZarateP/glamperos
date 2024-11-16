@@ -37,7 +37,7 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ glamping }) => {
       <div className="mapa-wrapper">
         <MapContainer center={glamping.ubicacion} zoom={13} className="mapa-interactivo">
           <TileLayer
-            url={`https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${apiKey}`}
+            url={`https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=${apiKey}`}
             attribution='Maps &copy; <a href="https://www.thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
           />
           <Marker

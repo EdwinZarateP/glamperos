@@ -63,6 +63,12 @@
   height: 100%;
 }
 
+.leaflet-control-attribution {
+  font-size: 5px; /* Reduce el tamaño */
+  color: #999; /* Cambia el color */
+}
+
+
 /* Ajustes específicos para pantallas pequeñas */
 @media (max-width: 600px) {
   .mapa-contenedor {
@@ -78,6 +84,6 @@
     box-shadow: none;
   }
   .mapa-interactivo {
-    pointer-events: none; /* Desactiva la interacción */
+    pointer-events: none; 
   }
 }
