@@ -55,8 +55,11 @@
 @media (max-width: 600px) {
   .Comentarios-carrusel {
     margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 100px;
   }
   .Comentarios-titulo {
     margin-left: 20px;
+
   }
 }

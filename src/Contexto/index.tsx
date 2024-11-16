@@ -20,6 +20,26 @@ interface ContextProps {
   // Variables de tipo string
   nombre: string;
   setNombre: Dispatch<SetStateAction<string>>;
+
+  // Variables de tipo fecha
+  fechaInicio: Date | null;
+  setFechaInicio: Dispatch<SetStateAction<Date | null>>;
+  fechaFin: Date | null;
+  setFechaFin: Dispatch<SetStateAction<Date | null>>;
+
+  // Variables de tipo número
+  totalDias: number;
+  setTotalDias: Dispatch<SetStateAction<number>>;
+  precioPorNoche?: number; // Precio por noche (opcional)
+  setPrecioPorNoche: Dispatch<SetStateAction<number | undefined>>;
+
+  // Tarifa de servicio (opcional)
+  tarifaServicio?: number;
+  setTarifaServicio: Dispatch<SetStateAction<number | undefined>>;
+
+  // Total sin impuestos
+  totalSinImpuestos?: number;
+  setTotalSinImpuestos: Dispatch<SetStateAction<number | undefined>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -31,7 +51,7 @@ interface ProveedorVariablesProps {
 }
 
 //-------------------------------------------------------------------------------------
-// 2. Proveedor de variables que utiliza el contexto 
+// 2. Proveedor de variables que utiliza el contexto
 //-------------------------------------------------------------------------------------
 
 export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) => {
@@ -43,7 +63,22 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
 
   // Estados para las variables de tipo string
   const [nombre, setNombre] = useState('');
-  
+
+  // Estados para fechas
+  const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
+  const [fechaFin, setFechaFin] = useState<Date | null>(null);
+
+  // Estado para el total de días
+  const [totalDias, setTotalDias] = useState<number>(0);
+
+  // Estado para el precio por noche
+  const [precioPorNoche, setPrecioPorNoche] = useState<number | undefined>(undefined);
+
+  // Estado para la tarifa de servicio
+  const [tarifaServicio, setTarifaServicio] = useState<number | undefined>(undefined);
+
+  // Estado para el total sin impuestos
+  const [totalSinImpuestos, setTotalSinImpuestos] = useState<number | undefined>(undefined);
 
   //-------------------------------------------------------------------------------------
   // 3. Crea el objeto de contexto con los valores y funciones necesarios que quieres proveer
@@ -58,7 +93,26 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     // Variables de tipo string
     nombre,
     setNombre,
-    
+
+    // Variables de tipo fecha
+    fechaInicio,
+    setFechaInicio,
+    fechaFin,
+    setFechaFin,
+
+    // Variables de tipo número
+    totalDias,
+    setTotalDias,
+    precioPorNoche,
+    setPrecioPorNoche,
+
+    // Tarifa de servicio
+    tarifaServicio,
+    setTarifaServicio,
+
+    // Total sin impuestos
+    totalSinImpuestos,
+    setTotalSinImpuestos,
   };
   
   // Renderiza el proveedor de contexto con el valor proporcionado

@@ -1,0 +1,93 @@
+/* Contenedor principal */
+.reservar-contenedor {
+  display: none; /* Oculto por defecto */
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(90deg, #fff, #f8f9fa);
+  border-top: 2px solid #ccc;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+}
+
+/* Mostrar en pantallas pequeñas */
+@media (max-width: 600px) {
+  .reservar-contenedor {
+    display: flex;
+  }
+}
+
+/* Total y detalles de precio */
+.reservar-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.reservar-precio {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+}
+
+.reservar-detalles {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.reservar-detalles-noche {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #333;
+}
+
+.reservar-fechas {
+  display: block;
+  margin-top: 2px;
+}
+
+/* Contenedor del botón */
+.reservar-boton-contenedor {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Botón interactivo */
+.reservar-boton {
+  background: linear-gradient(90deg, #ff416c, #ff4b2b); /* Gradiente atractivo */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reservar-boton:hover {
+  transform: scale(1.05); /* Agrandar ligeramente */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.reservar-boton:active {
+  transform: scale(0.95); /* Reducir al hacer clic */
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+}
+
+/* Ícono dentro del botón */
+.reservar-boton-icono {
+  margin-right: 8px; /* Espaciado entre el ícono y el texto */
+  font-size: 24px; /* Tamaño del ícono */
+  vertical-align: middle;
+  color: #000;
+}
+

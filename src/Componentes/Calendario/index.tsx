@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./estilos.css";
+import { ContextoApp } from "../../Contexto/index";
 
 interface CalendarioProps {
-  nombreGlamping: string; // Propiedad recibida
+  nombreGlamping: string;
 }
 
 const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
+  const almacenVariables = useContext(ContextoApp);
+
+  if (!almacenVariables) {
+    throw new Error("El almacenVariables no está disponible. Asegúrate de envolver el componente en un proveedor de almacenVariables.");
+  }
+
+  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, totalDias, setTotalDias } = almacenVariables;
+
   const [mesActual, setMesActual] = useState<number>(new Date().getMonth());
   const [anioActual, setAnioActual] = useState<number>(new Date().getFullYear());
-  const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
-  const [fechaFin, setFechaFin] = useState<Date | null>(null);
 
   const hoy = new Date();
-  hoy.setHours(0, 0, 0, 0); // Asegurar que la comparación sea solo por fecha
+  hoy.setHours(0, 0, 0, 0);
+
+  useEffect(() => {
+    if (fechaInicio && fechaFin) {
+      const diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
+      const dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+      setTotalDias(dias);
+    } else {
+      setTotalDias(0);
+    }
+  }, [fechaInicio, fechaFin, setTotalDias]);
 
   const formatearFecha = (fecha: Date): string => {
     const opciones: Intl.DateTimeFormatOptions = {
@@ -38,6 +55,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
   const manejarBorrarFechas = () => {
     setFechaInicio(null);
     setFechaFin(null);
+    setTotalDias(0);
   };
 
   const esFechaSeleccionada = (fecha: Date): boolean => {
@@ -51,52 +69,31 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
     return fecha <= hoy;
   };
 
-  const diasEnMes = (anio: number, mes: number) =>
-    new Date(anio, mes + 1, 0).getDate();
-
-  const calcularDiasSeleccionados = (): number => {
-    if (fechaInicio && fechaFin) {
-      const diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
-      return Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24)) + 1; // Incluye ambos días
-    }
-    return 0;
-  };
-
-  const obtenerTitulo = (): string => {
-    if (fechaInicio && fechaFin) {
-      const dias = calcularDiasSeleccionados();
-      return `${nombreGlamping} - ${dias} ${dias === 1 ? "día" : "días"}`;
-    }
-    return "Selecciona las fechas";
-  };
-
-  const obtenerSubtitulo = (): string => {
-    if (!fechaInicio && !fechaFin) {
-      return "Agrega las fechas de viaje";
-    }
-    if (fechaInicio && !fechaFin) {
-      return "Ahora selecciona una fecha de salida";
-    }
-    if (fechaInicio && fechaFin) {
-      return `${formatearFecha(fechaInicio)} - ${formatearFecha(fechaFin)}`;
-    }
-    return "";
-  };
+  const renderizarEncabezadoDias = () => {
+    const diasSemana = ["Do","Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];
+    return (
+      <div className="calendario-dias-semana">
+        {diasSemana.map((dia, index) => (
+          <div key={index} className="calendario-dia-semana">
+            {dia}
+          </div>
+        ))}
+      </div>
+    );
+  };  
 
   const renderizarCalendario = (mes: number, anio: number) => {
     const dias = [];
-    const totalDias = diasEnMes(anio, mes);
+    const totalDiasMes = new Date(anio, mes + 1, 0).getDate();
     const primerDiaDelMes = new Date(anio, mes, 1).getDay();
 
-    // Agregar días vacíos al inicio para alinear
     for (let i = 0; i < primerDiaDelMes; i++) {
       dias.push(
         <div key={`vacio-${i}`} className="calendario-dia calendario-dia-vacio"></div>
       );
     }
 
-    // Agregar días del mes
-    for (let dia = 1; dia <= totalDias; dia++) {
+    for (let dia = 1; dia <= totalDiasMes; dia++) {
       const fecha = new Date(anio, mes, dia);
       const deshabilitada = esFechaDeshabilitada(fecha);
 
@@ -151,13 +148,14 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
       "Diciembre",
     ][mes];
 
-  const mesSiguiente = (mesActual + 1) % 12;
-  const anioMesSiguiente = mesActual === 11 ? anioActual + 1 : anioActual;
-
   return (
     <div className="calendario">
-      <h1>{obtenerTitulo()}</h1>
-      <h2 className="calendario-subtitulo">{obtenerSubtitulo()}</h2>
+      <h1>{nombreGlamping}</h1>
+      <h2 className="calendario-subtitulo">
+        {fechaInicio && fechaFin
+          ? `${formatearFecha(fechaInicio)} - ${formatearFecha(fechaFin)} (${totalDias} noche${totalDias === 1 ? "" : "s"})`
+          : "Selecciona tus fechas"}
+      </h2>
       <div className="calendario-encabezado">
         <button onClick={manejarMesAnterior} className="calendario-navegacion">
           &lt;
@@ -168,19 +166,19 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
       </div>
       <div className="calendario-columnas">
         <div className="calendario-columna">
-          <h2>
-            {obtenerNombreMes(mesActual)} {anioActual}
-          </h2>
+          <h2>{`${obtenerNombreMes(mesActual)} ${anioActual}`}</h2>
+          {renderizarEncabezadoDias()}
           <div className="calendario-grid">
             {renderizarCalendario(mesActual, anioActual)}
           </div>
         </div>
         <div className="calendario-columna">
-          <h2>
-            {obtenerNombreMes(mesSiguiente)} {anioMesSiguiente}
-          </h2>
+          <h2>{`${obtenerNombreMes((mesActual + 1) % 12)} ${
+            mesActual === 11 ? anioActual + 1 : anioActual
+          }`}</h2>
+          {renderizarEncabezadoDias()}
           <div className="calendario-grid">
-            {renderizarCalendario(mesSiguiente, anioMesSiguiente)}
+            {renderizarCalendario((mesActual + 1) % 12, mesActual === 11 ? anioActual + 1 : anioActual)}
           </div>
         </div>
       </div>

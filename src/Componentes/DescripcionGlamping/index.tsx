@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// DescripcionGlamping.tsx
+import React, { useState, useEffect } from 'react';
 import Calificacion from '../Calificacion/index';
 import DetalleAmpliado from '../DetalleAmpliado';
 import './estilos.css';
@@ -20,11 +21,19 @@ const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
 
   const handleMostrarMas = () => {
     setMostrarDetalle(true);
+    document.body.style.overflow = 'hidden'; // Desactiva el scroll del fondo
   };
 
   const handleCerrar = () => {
     setMostrarDetalle(false);
+    document.body.style.overflow = 'auto'; // Reactiva el scroll del fondo
   };
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto'; // Asegura el scroll cuando el componente se desmonta
+    };
+  }, []);
 
   return (
     <div className="descripcion-glamping-contenedor">
@@ -37,7 +46,7 @@ const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
         {descripcion_glamping}
       </p>
       <p className="mostrar-mas-texto" onClick={handleMostrarMas}>
-        Mostrar más ►
+        Mostrar más &gt;
       </p>
       
       {mostrarDetalle && (

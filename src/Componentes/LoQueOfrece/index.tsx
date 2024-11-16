@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+// LoQueOfrece.tsx
+import React, { useState, useEffect } from 'react';
 import './estilos.css';
+import LoqueOfreceAmpliado from '../LoqueOfreceAmpliado/index';
 
 type Caracteristica = {
   icono: string;
@@ -12,13 +14,27 @@ type LoQueOfreceProps = {
 };
 
 const LoQueOfrece: React.FC<LoQueOfreceProps> = ({ titulo, caracteristicas }) => {
-  const [mostrarTodo, setMostrarTodo] = useState(false);
+  const [mostrarAmpliado, setMostrarAmpliado] = useState(false);
+
+  const abrirAmpliado = () => {
+    setMostrarAmpliado(true);
+    document.body.style.overflow = 'hidden'; // Desactiva el scroll del fondo
+  };
+
+  const cerrarAmpliado = () => {
+    setMostrarAmpliado(false);
+    document.body.style.overflow = 'auto'; // Reactiva el scroll del fondo
+  };
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto'; // Asegura el scroll cuando el componente se desmonta
+    };
+  }, []);
 
   // Determina el número máximo de elementos visibles en función del tamaño de pantalla.
   const maxVisible = window.innerWidth < 600 ? 4 : 6; 
-  const caracteristicasVisibles = mostrarTodo ? caracteristicas : caracteristicas.slice(0, maxVisible);
-
-  const toggleMostrarTodo = () => setMostrarTodo(!mostrarTodo);
+  const caracteristicasVisibles = caracteristicas.slice(0, maxVisible);
 
   return (
     <div className="loQueOfrece-contenedor">
@@ -32,9 +48,16 @@ const LoQueOfrece: React.FC<LoQueOfreceProps> = ({ titulo, caracteristicas }) =>
         ))}
       </div>
       {caracteristicas.length > maxVisible && (
-        <button className="loQueOfrece-boton" onClick={toggleMostrarTodo}>
-          {mostrarTodo ? 'Mostrar menos' : `Mostrar los ${caracteristicas.length - maxVisible} servicios`}
+        <button className="loQueOfrece-boton" onClick={abrirAmpliado}>
+          {`Mostrar los ${caracteristicas.length } servicios`}
         </button>
+      )}
+      {mostrarAmpliado && (
+        <LoqueOfreceAmpliado
+          titulo={titulo}
+          caracteristicas={caracteristicas}
+          cerrar={cerrarAmpliado}
+        />
       )}
     </div>
   );
