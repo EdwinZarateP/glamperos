@@ -66,6 +66,8 @@
   .loQueOfrece-contenedor {
     margin-left: 10px;
     margin-right: 10px;
+    border-bottom:none;
+    margin-bottom:0;
   }
 
   .loQueOfrece-lista {

@@ -10,14 +10,13 @@ interface Glamping {
   id: number;
   nombre: string;
   ubicacion: [number, number];
-  puntosTuristicosCercanos: string[];
 }
 
 interface MapaGlampingsProps {
-  glampings: Glamping[];
+  glamping: Glamping; // Ahora recibimos solo un glamping
 }
 
-const MapaGlampings: React.FC<MapaGlampingsProps> = ({ glampings }) => {
+const MapaGlampings: React.FC<MapaGlampingsProps> = ({ glamping }) => {
   const apiKey = "150916424994462a85b859d4177a3cc7"; // Tu API Key de Thunderforest
 
   // Ícono personalizado
@@ -34,25 +33,21 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ glampings }) => {
 
   return (
     <div className="mapa-contenedor">
-      <h2 className="mapa-titulo">Tu aventura en el mapa</h2>
+      <h2 className="mapa-titulo">Ubicación del Glamping</h2>
       <div className="mapa-wrapper">
-        <MapContainer center={[5.5353, -73.3677]} zoom={7} className="mapa-interactivo">
+        <MapContainer center={glamping.ubicacion} zoom={13} className="mapa-interactivo">
           <TileLayer
             url={`https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${apiKey}`}
             attribution='Maps &copy; <a href="https://www.thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
           />
-          {glampings.map((glamping) => (
-            <Marker
-              key={glamping.id}
-              position={glamping.ubicacion}
-              icon={createCustomIcon()}
-            >
-              <Popup>
-                <h3>{glamping.nombre}</h3>
-                <p>Puntos turísticos cercanos: {glamping.puntosTuristicosCercanos.join(", ")}</p>
-              </Popup>
-            </Marker>
-          ))}
+          <Marker
+            position={glamping.ubicacion}
+            icon={createCustomIcon()}
+          >
+            <Popup>
+              <h3>{glamping.nombre}</h3>
+            </Popup>
+          </Marker>
         </MapContainer>
       </div>
     </div>

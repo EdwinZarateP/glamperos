@@ -52,22 +52,22 @@ function ExplorarGlamping() {
   const fechaSalida = "8/11/2024";
   const huespedes = 1;
 
-  const glampingsData = [
-    {
-      id: 1,
-      nombre: 'Casa del Árbol - Utica',
-      region: 'Cundinamarca',
-      ubicacion: [5.1543, -74.5234] as [number, number],
-      puntosTuristicosCercanos: ['Río Magdalena', 'Cascadas de Tobia'],
-    },
-    {
-      id: 3,
-      nombre: 'Bubble Glamping',
-      region: 'Boyacá',
-      ubicacion: [5.5353, -73.3677] as [number, number],
-      puntosTuristicosCercanos: ['Lago de Tota', 'Villa de Leyva'],
-    },
-  ];
+  // const glampingsData = [
+  //   {
+  //     id: 1,
+  //     nombre: 'Casa del Árbol - Utica',
+  //     region: 'Cundinamarca',
+  //     ubicacion: [5.1543, -74.5234] as [number, number],
+  //     puntosTuristicosCercanos: ['Río Magdalena', 'Cascadas de Tobia'],
+  //   },
+  //   {
+  //     id: 3,
+  //     nombre: 'Bubble Glamping',
+  //     region: 'Boyacá',
+  //     ubicacion: [5.5353, -73.3677] as [number, number],
+  //     puntosTuristicosCercanos: ['Lago de Tota', 'Villa de Leyva'],
+  //   },
+  // ];
 
   const datosComentarios = [
     {
@@ -148,7 +148,11 @@ function ExplorarGlamping() {
           </div>
           
         </div>
-        <MapaGlampings glampings={glampingsData} />
+        <MapaGlampings glamping={{
+          id: 1,
+          nombre: 'Casa del Árbol - Utica',
+          ubicacion: [5.1886, -74.48111]
+        }} />
         <Comentarios comentarios={datosComentarios} />
       </main>
     </div>
