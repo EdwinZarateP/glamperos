@@ -1,4 +1,4 @@
-/* FormularioFechas.css */
+/* Contenedor principal */
 .FormularioFechas-contenedor {
   display: flex;
   flex-direction: column;
@@ -12,12 +12,11 @@
   background-color: #fff; /* Fondo blanco */
   position: sticky; /* Permanece en la parte superior del contenedor padre */
   top: 20px; /* Siempre en la parte superior */
-  margin: 0; /* Elimina márgenes adicionales */
-  z-index: 10; 
-  margin-bottom: 30px; /* Elimina márgenes adicionales */
-
+  z-index: 10;
+  margin-bottom: 30px; /* Espaciado inferior */
 }
 
+/* Precio por noche */
 .FormularioFechas-precio {
   font-size: 1.5em;
   font-weight: bold;
@@ -28,6 +27,7 @@
   color: #333;
 }
 
+/* Fechas */
 .FormularioFechas-fechas {
   display: flex;
   justify-content: space-between;
@@ -49,6 +49,7 @@
   color: #555;
 }
 
+/* Huéspedes */
 .FormularioFechas-huespedes {
   display: flex;
   justify-content: space-between;
@@ -59,6 +60,8 @@
   margin-bottom: 15px;
   font-size: 1em;
 }
+
+/* Botón Reserva */
 .FormularioFechas-botonReserva {
   width: 100%;
   padding: 12px;
@@ -75,6 +78,8 @@
   justify-content: center;
   gap: 8px; /* Espacio entre el texto y el ícono */
   transition: transform 0.2s ease, background-color 0.2s ease; /* Transición suave */
+  position: relative;
+  overflow: hidden; /* Oculta el brillo fuera del botón */
 }
 
 .FormularioFechas-botonReserva:hover {
@@ -82,10 +87,41 @@
   transform: scale(1.05); /* Crece ligeramente */
 }
 
-.FormularioFechas-botonReserva-icono {
-  font-size: 1.2em; /* Ajusta el tamaño del ícono */
+/* Efecto de brillo */
+.FormularioFechas-botonReserva::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%; /* Para cubrir todo el botón */
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(10, 253, 26, 0.5), transparent);
+  transform: skewX(-45deg); /* Inclina el brillo */
+  transition: none;
+  animation: brillo-deslizar 5s infinite; /* Repetición infinita */
 }
 
+/* Animación del brillo */
+@keyframes brillo-deslizar {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Ícono dentro del botón de reserva */
+.FormularioFechas-botonReserva-icono {
+  font-size: 1.2em; /* Ajusta el tamaño del ícono */
+  margin-right: 8px; /* Espaciado entre el ícono y el texto */
+  vertical-align: middle;
+}
+
+/* Información adicional */
 .FormularioFechas-info {
   font-size: 0.85em;
   color: #666;
@@ -93,6 +129,7 @@
   margin-bottom: 15px;
 }
 
+/* Detalles del costo */
 .FormularioFechas-detalleCosto {
   border-top: 1px solid #ddd;
   padding-top: 10px;
@@ -106,6 +143,7 @@
   margin-bottom: 8px;
 }
 
+/* Total */
 .FormularioFechas-total {
   display: flex;
   justify-content: space-between;

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
+import { GiCampingTent } from 'react-icons/gi'; // Importa el ícono
 
 interface FormularioFechasProps {
   precioPorNoche: number;
@@ -78,7 +79,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
       </div>
 
       <button className="FormularioFechas-botonReserva">
-        <span className="FormularioFechas-botonReserva-icono">🗓️</span>
+        <GiCampingTent className="FormularioFechas-botonReserva-icono" />
         Reserva
       </button>
       <p className="FormularioFechas-info">No se hará ningún cargo por ahora</p>

@@ -14,10 +14,11 @@
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
 }
 
-/* Mostrar en pantallas pequeñas */
+/* Mostrar y ajustar en pantallas pequeñas */
 @media (max-width: 600px) {
   .reservar-contenedor {
-    display: flex;
+    display: flex; /* Mostrar el contenedor */
+    height: 120px; /* Alto fijo */
   }
 }
 
@@ -57,9 +58,9 @@
   justify-content: flex-end;
 }
 
-/* Botón interactivo */
+/* Botón interactivo con colores verdes */
 .reservar-boton {
-  background: linear-gradient(90deg, #ff416c, #ff4b2b); /* Gradiente atractivo */
+  background-color: #28a745; /* Verde vibrante */
   color: white;
   border: none;
   padding: 12px 24px;
@@ -69,18 +70,42 @@
   border-radius: 8px;
   display: flex;
   align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  position: relative; /* Necesario para el brillo */
+  overflow: hidden; /* Ocultar el brillo fuera del botón */
+  transition: transform 0.3s ease, background-color 0.2s ease; /* Transición suave */
 }
 
+/* Hover e interacción */
 .reservar-boton:hover {
+  background-color: #218838; /* Verde más oscuro */
   transform: scale(1.05); /* Agrandar ligeramente */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-.reservar-boton:active {
-  transform: scale(0.95); /* Reducir al hacer clic */
-  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+/* Efecto de brillo */
+.reservar-boton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%; /* Para cubrir todo el botón */
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent); /* Gradiente ajustado al verde */
+  transform: skewX(-45deg); /* Inclina el brillo */
+  animation: brillo-deslizar 3s infinite; /* Repetición infinita */
+}
+
+/* Animación del brillo */
+@keyframes brillo-deslizar {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Ícono dentro del botón */
@@ -88,6 +113,5 @@
   margin-right: 8px; /* Espaciado entre el ícono y el texto */
   font-size: 24px; /* Tamaño del ícono */
   vertical-align: middle;
-  color: #000;
+  color: white;
 }
-

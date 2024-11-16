@@ -35,7 +35,11 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   };
 
   const manejarReserva = () => {
-    alert(`El total a pagar sin impuestos es: ${totalFormateado}`);
+    const mensaje = `Estás reservando por ${totalFormateado}.
+      - Noches: ${totalDias > 0 ? totalDias : "Ninguna"} 
+      - Desde: ${formatearFecha(fechaInicio)}
+      - Hasta: ${formatearFecha(fechaFin)}`;
+    alert(mensaje);
   };
 
   return (
@@ -44,7 +48,7 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
         <div className="reservar-precio">{totalFormateado}</div>
         <div className="reservar-detalles">
           <span className="reservar-detalles-noche">
-            {totalDias} {totalDias === 1 ? "noche" : "noches"}
+            {totalDias > 0 ? `${totalDias} ${totalDias === 1 ? "noche" : "noches"}` : "Sin noches seleccionadas"}
           </span>
           <span className="reservar-fechas">
             {formatearFecha(fechaInicio)} – {formatearFecha(fechaFin)}
@@ -55,8 +59,9 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
         <button 
           className="reservar-boton"
           onClick={manejarReserva}
+          aria-label={`Reservar por ${totalFormateado}`} /* Mejora de accesibilidad */
         >
-          <GiCampingTent className="reservar-boton-icono" /> Reservar ahora
+          <GiCampingTent className="reservar-boton-icono" /> Reservar
         </button>
       </div>
     </div>

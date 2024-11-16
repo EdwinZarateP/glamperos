@@ -10,7 +10,7 @@ import LoQueOfrece from '../../Componentes/LoQueOfrece';
 import Calendario from '../../Componentes/Calendario/index';
 import MapaGlampings from '../../Componentes/Mapa/index';
 import Comentarios from '../../Componentes/Comentarios/index';
-import ReservarBoton from '../../Componentes/ReservarBoton/index'; // Importa ReservarBoton
+import ReservarBoton from '../../Componentes/BotonReservar/index'; // Importa ReservarBoton
 import { ContextoApp } from '../../Contexto/index'; // Importa el contexto
 import './estilos.css';
 
