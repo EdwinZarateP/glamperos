@@ -16,7 +16,7 @@ interface ComentariosProps {
 const Comentarios: React.FC<ComentariosProps> = ({ comentarios }) => {
   return (
     <div className="Comentarios-contenedor">
-      <h2 className="Comentarios-titulo">Opiniones de nuestros visitantes</h2>
+      <h2 className="Comentarios-titulo">Opiniones</h2>
       <div className="Comentarios-carrusel">
         {comentarios.map((comentario, index) => (
           <Comentario key={index} {...comentario} />

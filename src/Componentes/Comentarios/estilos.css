@@ -54,9 +54,9 @@
 /* Regla para pantallas pequeñas: elimina el borde */
 @media (max-width: 600px) {
   .Comentarios-carrusel {
-    margin-left: 10px;
+    margin-left: 20px;
   }
   .Comentarios-titulo {
-    margin-left: 10px;
+    margin-left: 20px;
   }
 }
