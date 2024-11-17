@@ -8,6 +8,13 @@ import "./estilos.css";
 const Header: React.FC = () => {
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
 
+  // Lista de fechas reservadas
+  const fechasReservadas = [
+    new Date(2024, 10, 20), // 20 de noviembre de 2024
+    new Date(2024, 10, 28), // 28 de noviembre de 2024
+    new Date(2024, 10, 29), // 29 de noviembre de 2024
+  ];
+
   const manejarClickBusqueda = () => {
     setMostrarCalendario(true);
   };
@@ -49,9 +56,12 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Renderiza CalendarioDispositivos si mostrarCalendario es true */}
+      {/* Renderiza el componente CalendarioDispositivos */}
       {mostrarCalendario && (
-        <CalendarioDispositivos cerrarCalendario={cerrarCalendario} />
+        <CalendarioDispositivos
+          cerrarCalendario={cerrarCalendario}
+          FechasReservadas={fechasReservadas}
+        />      
       )}
     </>
   );

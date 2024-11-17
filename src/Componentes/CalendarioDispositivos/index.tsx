@@ -1,20 +1,44 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
 
-const CalendarioDispositivos: React.FC<{ cerrarCalendario: () => void }> = ({ cerrarCalendario }) => {
+interface CalendarioDispositivosProps {
+  cerrarCalendario: () => void;
+  FechasReservadas: Date[];
+}
+
+const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
+  cerrarCalendario,
+  FechasReservadas,
+}) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
-    throw new Error("El almacenVariables no está disponible. Asegúrate de envolver el componente en un proveedor de almacenVariables.");
+    throw new Error(
+      "El almacenVariables no está disponible. Asegúrate de envolver el componente en un proveedor de almacenVariables."
+    );
   }
 
   const { fechaInicio, setFechaInicio, fechaFin, setFechaFin } = almacenVariables;
-  const [mesActual, setMesActual] = useState<number>(new Date().getMonth());
-  const [anioActual, setAnioActual] = useState<number>(new Date().getFullYear());
+
+  const [mesesVisibles, setMesesVisibles] = useState<{ mes: number; anio: number }[]>([]);
 
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const meses = [];
+    for (let i = 0; i < 18; i++) {
+      const nuevoMes = new Date(hoy.getFullYear(), hoy.getMonth() + i, 1);
+      meses.push({ mes: nuevoMes.getMonth(), anio: nuevoMes.getFullYear() });
+    }
+    setMesesVisibles(meses);
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   const manejarClickFecha = (fecha: Date) => {
     if (!fechaInicio || (fechaInicio && fechaFin)) {
@@ -40,7 +64,13 @@ const CalendarioDispositivos: React.FC<{ cerrarCalendario: () => void }> = ({ ce
     return fechaInicio?.toDateString() === fecha.toDateString();
   };
 
-  const esFechaDeshabilitada = (fecha: Date): boolean => fecha <= hoy;
+  const esFechaReservada = (fecha: Date): boolean => {
+    return FechasReservadas.some(
+      (fechaReservada) => fecha.toDateString() === fechaReservada.toDateString()
+    );
+  };
+
+  const esFechaDeshabilitada = (fecha: Date): boolean => fecha < hoy;
 
   const renderizarEncabezadoDias = () => {
     const diasSemana = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];
@@ -67,15 +97,18 @@ const CalendarioDispositivos: React.FC<{ cerrarCalendario: () => void }> = ({ ce
     for (let dia = 1; dia <= totalDiasMes; dia++) {
       const fecha = new Date(anio, mes, dia);
       const deshabilitada = esFechaDeshabilitada(fecha);
+      const reservada = esFechaReservada(fecha);
 
       dias.push(
         <button
           key={dia}
           className={`CalendarioDispositivos-dia ${
             esFechaSeleccionada(fecha) ? "CalendarioDispositivos-dia-seleccionado" : ""
-          } ${deshabilitada ? "CalendarioDispositivos-dia-deshabilitado" : ""}`}
-          onClick={() => !deshabilitada && manejarClickFecha(fecha)}
-          disabled={deshabilitada}
+          } ${reservada ? "CalendarioDispositivos-dia-reservada" : ""} ${
+            deshabilitada ? "CalendarioDispositivos-dia-deshabilitado" : ""
+          }`}
+          onClick={() => !deshabilitada && !reservada && manejarClickFecha(fecha)}
+          disabled={deshabilitada || reservada}
         >
           {dia}
         </button>
@@ -85,61 +118,35 @@ const CalendarioDispositivos: React.FC<{ cerrarCalendario: () => void }> = ({ ce
     return dias;
   };
 
-  const manejarMesAnterior = () => {
-    if (mesActual === 0) {
-      setMesActual(11);
-      setAnioActual((prevAnio) => prevAnio - 1);
-    } else {
-      setMesActual((prevMes) => prevMes - 1);
-    }
-  };
-
-  const manejarMesSiguiente = () => {
-    if (mesActual === 11) {
-      setMesActual(0);
-      setAnioActual((prevAnio) => prevAnio + 1);
-    } else {
-      setMesActual((prevMes) => prevMes + 1);
-    }
-  };
-
-  const manejarSiguiente = () => {
-    // Realiza cualquier lógica necesaria antes de cerrar el calendario
-    cerrarCalendario();
-  };
-
   return (
     <>
       <div className="CalendarioDispositivos-fondo" onClick={cerrarCalendario}></div>
       <div className="CalendarioDispositivos">
-        <div className="CalendarioDispositivos-encabezado">
-          <button onClick={manejarMesAnterior} className="CalendarioDispositivos-navegacion">
-            &lt;
+        <button className="CalendarioDispositivos-cerrar" onClick={cerrarCalendario}>
+          ✖
+        </button>
+        <div className="CalendarioDispositivos-meses">
+          {mesesVisibles.map(({ mes, anio }, index) => (
+            <div key={index} className="CalendarioDispositivos-mes">
+              <h2>
+                {new Date(anio, mes).toLocaleDateString("es-ES", {
+                  month: "long",
+                  year: "numeric",
+                })}
+              </h2>
+              {renderizarEncabezadoDias()}
+              <div className="CalendarioDispositivos-grid">{renderizarCalendario(mes, anio)}</div>
+            </div>
+          ))}
+        </div>
+        <div className="CalendarioDispositivos-botones">
+          <button onClick={manejarBorrarFechas} className="CalendarioDispositivos-boton-borrar">
+            Borrar fechas
           </button>
-          <span className="CalendarioDispositivos-mes">
-            {new Date(anioActual, mesActual).toLocaleDateString("es-ES", {
-              month: "long",
-              year: "numeric",
-            })}
-          </span>
-          <button onClick={manejarMesSiguiente} className="CalendarioDispositivos-navegacion">
-            &gt;
+          <button onClick={cerrarCalendario} className="CalendarioDispositivos-boton-siguiente">
+            Siguiente
           </button>
         </div>
-        <div className="CalendarioDispositivos-cuerpo">
-          {renderizarEncabezadoDias()}
-          <div className="CalendarioDispositivos-grid">{renderizarCalendario(mesActual, anioActual)}</div>
-        </div>
-        {fechaInicio && fechaFin && (
-          <div className="CalendarioDispositivos-botones">
-            <button onClick={manejarBorrarFechas} className="CalendarioDispositivos-boton-borrar">
-              Borrar fechas
-            </button>
-            <button onClick={manejarSiguiente} className="CalendarioDispositivos-boton-siguiente">
-              Siguiente
-            </button>
-          </div>
-        )}
       </div>
     </>
   );

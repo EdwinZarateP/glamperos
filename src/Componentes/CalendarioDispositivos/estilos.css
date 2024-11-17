@@ -1,64 +1,57 @@
-/* Contenedor principal */
-.CalendarioDispositivos {
-  display: none; /* Ocultar por defecto */
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: auto;
-  padding: 16px;
-  background: #f9f9f9;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
 /* Fondo opaco */
 .CalendarioDispositivos-fondo {
-  display: none; /* Ocultar por defecto */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 999; /* Debajo del calendario */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
-@media (max-width: 600px) {
+/* Contenedor principal del calendario */
 .CalendarioDispositivos {
-    display: flex; /* Mostrar solo en pantallas pequeñas */
-}
-}
-
-/* Encabezado */
-.CalendarioDispositivos-encabezado {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 90%;
+  background: white;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+  flex-direction: column;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
-/* Botón de cierre */
+@media (min-width: 960px) {
+  .CalendarioDispositivos {
+    width: 50%;
+  }
+}
+
+/* Botón cerrar */
 .CalendarioDispositivos-cerrar {
   background: none;
   border: none;
   font-size: 1.5rem;
+  color: black;
   cursor: pointer;
-  color: #dc3545; /* Color rojo para resaltar */
+  align-self: flex-end;
+  margin: 16px;
 }
 
-.CalendarioDispositivos-navegacion {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
+/* Meses en lista */
+.CalendarioDispositivos-meses {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
 }
 
-/* Cuerpo del calendario */
-.CalendarioDispositivos-cuerpo {
-  display: flex;
-  flex-direction: column;
+.CalendarioDispositivos-mes {
+  margin-bottom: 32px;
 }
 
 .CalendarioDispositivos-dias-semana {
@@ -98,11 +91,24 @@
   cursor: not-allowed;
 }
 
-/* Botones */
+.CalendarioDispositivos-dia-reservada {
+  background: #fff;
+  color: #bbb;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  border-color: #ccc;
+}
+
+/* Botones inferiores */
 .CalendarioDispositivos-botones {
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+  padding: 16px;
+  background: white;
+  border-top: 1px solid #ddd;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
 }
 
 .CalendarioDispositivos-boton-borrar,
@@ -122,7 +128,7 @@
   background: #dc3545;
 }
 
-.CalendarioDispositivos-boton-siguiente:hover,
-.CalendarioDispositivos-boton-borrar:hover {
+.CalendarioDispositivos-boton-borrar:hover,
+.CalendarioDispositivos-boton-siguiente:hover {
   background: #218838;
 }
