@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { VscSettings } from "react-icons/vsc";
-import CalendarioDispositivos from "../CalendarioGeneral";
 import "./estilos.css";
+import CalendarioGeneral from "../CalendarioGeneral";
 
 const Header: React.FC = () => {
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
@@ -58,7 +58,7 @@ const Header: React.FC = () => {
 
       {/* Renderiza el componente CalendarioDispositivos */}
       {mostrarCalendario && (
-        <CalendarioDispositivos
+        <CalendarioGeneral
           cerrarCalendario={cerrarCalendario}
           FechasReservadas={fechasReservadas}
         />      
