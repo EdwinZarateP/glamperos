@@ -21,9 +21,11 @@
   display: flex;
   flex-direction: column;
   z-index: 1000;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+  font-family: "Poppins", sans-serif;
+  animation: pixelateIn 0.6s ease-out;
 }
 
 @media (min-width: 960px) {
@@ -37,7 +39,7 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: black;
+  color: #555;
   cursor: pointer;
   align-self: flex-end;
   margin: 16px;
@@ -63,7 +65,8 @@
 .CalendarioGeneral-dia-semana {
   text-align: center;
   font-weight: bold;
-  color: #555;
+  color: #2F6B3E;
+  text-transform: uppercase;
 }
 
 .CalendarioGeneral-grid {
@@ -76,13 +79,19 @@
   padding: 8px;
   text-align: center;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.CalendarioGeneral-dia:hover {
+  background: #eafaf2;
 }
 
 .CalendarioGeneral-dia-seleccionado {
-  background:  #2F6B3E;
+  background: #2F6B3E;
   color: white;
+  border: 2px solid #F2A900;
 }
 
 .CalendarioGeneral-dia-deshabilitado {
@@ -92,11 +101,11 @@
 }
 
 .CalendarioGeneral-dia-reservada {
-  background: #fff;
-  color: #bbb;
+  background: #ffe9e9;
+  color: #ff6767;
   text-decoration: line-through;
   cursor: not-allowed;
-  border-color: #ccc;
+  border-color: #ff6767;
 }
 
 /* Botones inferiores */
@@ -116,19 +125,39 @@
   flex: 1;
   margin: 0 8px;
   padding: 12px;
-  background:  #2F6B3E;
+  background: #f2a900;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 24px;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .CalendarioGeneral-boton-borrar {
-  background: #dc3545;
+  background: #ff6767;
 }
 
 .CalendarioGeneral-boton-borrar:hover,
 .CalendarioGeneral-boton-siguiente:hover {
-  background:  #2F6B3E;
+  background: #ff8a8a;
+}
+
+/* Animación pixelada */
+@keyframes pixelateIn {
+  0% {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+  50% {
+    filter: blur(5px);
+    opacity: 0.5;
+    transform: translateX(-50%) scale(1.05);
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
 }
