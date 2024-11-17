@@ -81,7 +81,7 @@
 }
 
 .CalendarioDispositivos-dia-seleccionado {
-  background: #28a745;
+  background:  #2F6B3E;
   color: white;
 }
 
@@ -116,7 +116,7 @@
   flex: 1;
   margin: 0 8px;
   padding: 12px;
-  background: #28a745;
+  background:  #2F6B3E;
   color: white;
   border: none;
   border-radius: 4px;
@@ -130,5 +130,5 @@
 
 .CalendarioDispositivos-boton-borrar:hover,
 .CalendarioDispositivos-boton-siguiente:hover {
-  background: #218838;
+  background:  #2F6B3E;
 }

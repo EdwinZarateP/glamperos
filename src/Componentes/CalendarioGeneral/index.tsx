@@ -2,12 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
 
-interface CalendarioDispositivosProps {
+interface CalendarioGeneralProps {
   cerrarCalendario: () => void;
   FechasReservadas: Date[];
 }
 
-const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
+const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   cerrarCalendario,
   FechasReservadas,
 }) => {
@@ -75,9 +75,9 @@ const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
   const renderizarEncabezadoDias = () => {
     const diasSemana = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];
     return (
-      <div className="CalendarioDispositivos-dias-semana">
+      <div className="CalendarioGeneral-dias-semana">
         {diasSemana.map((dia, index) => (
-          <div key={index} className="CalendarioDispositivos-dia-semana">
+          <div key={index} className="CalendarioGeneral-dia-semana">
             {dia}
           </div>
         ))}
@@ -91,7 +91,7 @@ const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
     const primerDiaDelMes = new Date(anio, mes, 1).getDay();
 
     for (let i = 0; i < primerDiaDelMes; i++) {
-      dias.push(<div key={`vacio-${i}`} className="CalendarioDispositivos-dia-vacio"></div>);
+      dias.push(<div key={`vacio-${i}`} className="CalendarioGeneral-dia-vacio"></div>);
     }
 
     for (let dia = 1; dia <= totalDiasMes; dia++) {
@@ -102,10 +102,10 @@ const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
       dias.push(
         <button
           key={dia}
-          className={`CalendarioDispositivos-dia ${
-            esFechaSeleccionada(fecha) ? "CalendarioDispositivos-dia-seleccionado" : ""
-          } ${reservada ? "CalendarioDispositivos-dia-reservada" : ""} ${
-            deshabilitada ? "CalendarioDispositivos-dia-deshabilitado" : ""
+          className={`CalendarioGeneral-dia ${
+            esFechaSeleccionada(fecha) ? "CalendarioGeneral-dia-seleccionado" : ""
+          } ${reservada ? "CalendarioGeneral-dia-reservada" : ""} ${
+            deshabilitada ? "CalendarioGeneral-dia-deshabilitado" : ""
           }`}
           onClick={() => !deshabilitada && !reservada && manejarClickFecha(fecha)}
           disabled={deshabilitada || reservada}
@@ -120,14 +120,14 @@ const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
 
   return (
     <>
-      <div className="CalendarioDispositivos-fondo" onClick={cerrarCalendario}></div>
-      <div className="CalendarioDispositivos">
-        <button className="CalendarioDispositivos-cerrar" onClick={cerrarCalendario}>
+      <div className="CalendarioGeneral-fondo" onClick={cerrarCalendario}></div>
+      <div className="CalendarioGeneral">
+        <button className="CalendarioGeneral-cerrar" onClick={cerrarCalendario}>
           ✖
         </button>
-        <div className="CalendarioDispositivos-meses">
+        <div className="CalendarioGeneral-meses">
           {mesesVisibles.map(({ mes, anio }, index) => (
-            <div key={index} className="CalendarioDispositivos-mes">
+            <div key={index} className="CalendarioGeneral-mes">
               <h2>
                 {new Date(anio, mes).toLocaleDateString("es-ES", {
                   month: "long",
@@ -135,15 +135,15 @@ const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
                 })}
               </h2>
               {renderizarEncabezadoDias()}
-              <div className="CalendarioDispositivos-grid">{renderizarCalendario(mes, anio)}</div>
+              <div className="CalendarioGeneral-grid">{renderizarCalendario(mes, anio)}</div>
             </div>
           ))}
         </div>
-        <div className="CalendarioDispositivos-botones">
-          <button onClick={manejarBorrarFechas} className="CalendarioDispositivos-boton-borrar">
+        <div className="CalendarioGeneral-botones">
+          <button onClick={manejarBorrarFechas} className="CalendarioGeneral-boton-borrar">
             Borrar fechas
           </button>
-          <button onClick={cerrarCalendario} className="CalendarioDispositivos-boton-siguiente">
+          <button onClick={cerrarCalendario} className="CalendarioGeneral-boton-siguiente">
             Siguiente
           </button>
         </div>
@@ -152,4 +152,4 @@ const CalendarioDispositivos: React.FC<CalendarioDispositivosProps> = ({
   );
 };
 
-export default CalendarioDispositivos;
+export default CalendarioGeneral;

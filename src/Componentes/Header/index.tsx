@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { VscSettings } from "react-icons/vsc";
-import CalendarioDispositivos from "../CalendarioDispositivos";
+import CalendarioDispositivos from "../CalendarioGeneral";
 import "./estilos.css";
 
 const Header: React.FC = () => {
