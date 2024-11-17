@@ -15,7 +15,7 @@
   top: 5%;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width: 95%;
   height: 90%;
   background: white;
   display: flex;
@@ -91,7 +91,7 @@
 .CalendarioGeneral-dia-seleccionado {
   background: #2F6B3E;
   color: white;
-  border: 2px solid #F2A900;
+  border: 2px solid #000000;
 }
 
 .CalendarioGeneral-dia-deshabilitado {
@@ -125,7 +125,7 @@
   flex: 1;
   margin: 0 8px;
   padding: 12px;
-  background: #f2a900;
+  background: #2F6B3E;
   color: white;
   border: none;
   border-radius: 24px;
@@ -138,9 +138,12 @@
   background: #ff6767;
 }
 
-.CalendarioGeneral-boton-borrar:hover,
+.CalendarioGeneral-boton-borrar:hover{
+  background: #ef8989
+}
+
 .CalendarioGeneral-boton-siguiente:hover {
-  background: #ff8a8a;
+  background: #347f47;
 }
 
 /* Animación pixelada */
