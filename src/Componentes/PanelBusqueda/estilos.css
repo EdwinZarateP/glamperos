@@ -108,7 +108,7 @@
 .PanelBusqueda-limpiar {
   background: none;
   border: none;
-  color: #ff385c;
+  color: #218838;
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: none;
@@ -116,11 +116,11 @@
 }
 
 .PanelBusqueda-limpiar:hover {
-  color: #ff6879;
+  color: #2F6B3E;
 }
 
 .PanelBusqueda-buscar {
-  background-color: #ff385c;
+  background-color:#2F6B3E;
   border: none;
   color: white;
   font-size: 1rem;
@@ -134,7 +134,7 @@
 }
 
 .PanelBusqueda-buscar:hover {
-  background-color: #e31e50;
+  background-color:  #218838;
 }
 
 .PanelBusqueda-buscar-icono {
