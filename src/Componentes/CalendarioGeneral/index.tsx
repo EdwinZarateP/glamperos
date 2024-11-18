@@ -125,6 +125,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
         <button className="CalendarioGeneral-cerrar" onClick={cerrarCalendario}>
           ✖
         </button>
+        <h2 className="CalendarioGeneral-titulo">Elige la fecha de tu viaje</h2>
         <div className="CalendarioGeneral-meses">
           {mesesVisibles.map(({ mes, anio }, index) => (
             <div key={index} className="CalendarioGeneral-mes">
