@@ -1,0 +1,151 @@
+/* Fondo opaco para el panel de búsqueda */
+.PanelBusqueda-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Contenedor principal del panel */
+.PanelBusqueda-contenedor {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  width: 35%;
+  height: auto;
+  z-index: 1000;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Título del panel */
+.PanelBusqueda-titulo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Barra de opciones del panel */
+.PanelBusqueda-barra {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+/* Estilo para el campo de destino */
+.PanelBusqueda-destino {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+}
+
+.PanelBusqueda-icono {
+  font-size: 1.5rem;
+  color: #666;
+  margin-right: 12px;
+}
+
+.PanelBusqueda-input {
+  border: none;
+  background: none;
+  font-size: 1rem;
+  flex: 1;
+  outline: none;
+}
+
+/* Opciones de fechas y huéspedes */
+.PanelBusqueda-huespedes,
+.PanelBusqueda-fechas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.PanelBusqueda-huespedes:hover,
+.PanelBusqueda-fechas:hover {
+  background-color: #e8e8e8;
+}
+
+.PanelBusqueda-huespedes-titulo,
+.PanelBusqueda-fechas-titulo {
+  font-size: 1rem;
+  color: #555;
+}
+
+.PanelBusqueda-huespedes-valor,
+.PanelBusqueda-fechas-valor  {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Botones de acción */
+.PanelBusqueda-botones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PanelBusqueda-limpiar {
+  background: none;
+  border: none;
+  color: #ff385c;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.PanelBusqueda-limpiar:hover {
+  color: #ff6879;
+}
+
+.PanelBusqueda-buscar {
+  background-color: #ff385c;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.PanelBusqueda-buscar:hover {
+  background-color: #e31e50;
+}
+
+.PanelBusqueda-buscar-icono {
+  font-size: 1rem;
+}
+
+
+
+@media (max-width: 600px) {
+  .PanelBusqueda-contenedor {
+    width: 95%;
+  }
+}
+

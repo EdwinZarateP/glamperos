@@ -1,5 +1,5 @@
 /* Estilos generales del Header */
-.header {
+.Header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,25 +10,26 @@
 }
 
 /* Logo y nombre de la marca */
-.header-izquierda {
+.Header-izquierda {
   display: flex;
   align-items: center;
   gap: 8px;
+  text-decoration: none;
 }
 
-.logo {
+.Header-logo {
   width: 40px;
   height: auto;
 }
 
-.nombre-marca {
+.Header-nombreMarca {
   font-size: 1.5rem;
   font-weight: bold;
   color: #2F6B3E;
 }
 
 /* Barra de búsqueda */
-.barra-busqueda {
+.Header-barraBusqueda {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,32 +44,32 @@
 }
 
 /* Opciones de búsqueda */
-.opcion-busqueda {
+.Header-opcionBusqueda {
   color: #2F6B3E;
   font-size: 0.8rem;
   white-space: nowrap;
   font-weight: bold;
 }
 
-.opcion-busqueda.opcion-invitados {
+.Header-opcionBusquedaInvitados {
   color: #aca8a2;
   font-weight: normal;
 }
 
 /* Nueva opción para "¿Cuándo?" */
-.opcion-cuando {
+.Header-opcionCuando {
   color: #2F6B3E;
   font-size: 0.8rem;
   white-space: nowrap;
   font-weight: bold;
 }
 
-.divisor {
+.Header-divisor {
   color: #A68A64;
 }
 
 /* Botón de búsqueda */
-.boton-busqueda {
+.Header-botonBusqueda {
   background-color: #F2A900;
   border: none;
   color: #fff;
@@ -82,13 +83,13 @@
 }
 
 /* Header derecho (opciones de usuario) */
-.header-derecha {
+.Header-derecha {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.boton-anfitrion {
+.Header-botonAnfitrion {
   font-size: 0.9rem;
   color: #333;
   background: none;
@@ -97,25 +98,25 @@
   white-space: nowrap;
 }
 
-.icono {
+.Header-icono {
   font-size: 1.2rem;
   color: #555;
 }
 
-.menu-usuario {
+.Header-menuUsuario {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.icono-menu {
+.Header-iconoMenu {
   font-size: 1.5rem;
   color: #555;
   margin-right: 8px;
 }
 
 /* Contenedor circular sin fondo y con borde negro para el ícono de configuración */
-.icono-settings-wrapper {
+.Header-iconoSettingsWrapper {
   display: none; /* Oculta el contenedor en pantallas grandes */
   width: 32px;
   height: 32px;
@@ -125,19 +126,19 @@
   justify-content: center;
 }
 
-.icono-settings {
+.Header-iconoSettings {
   font-size: 1.5rem;
   color: #000000; 
 }
 
-.notificacion {
+.Header-notificacion {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.inicial-usuario {
+.Header-inicialUsuario {
   width: 24px;
   height: 24px;
   background-color: #333;
@@ -150,7 +151,7 @@
   font-weight: bold;
 }
 
-.badge-notificacion {
+.Header-badgeNotificacion {
   position: absolute;
   top: -4px;
   right: -4px;
@@ -166,20 +167,20 @@
 
 /* Pantallas medianas (tabletas) */
 @media (max-width: 1024px) {
-  .header {
+  .Header {
     flex-wrap: wrap;
   }
 
-  .barra-busqueda {
+  .Header-barraBusqueda {
     flex-grow: 1;
     justify-content: space-between;
   }
 
-  .boton-anfitrion {
+  .Header-botonAnfitrion {
     display: none; /* Oculta el botón 'Pon tu espacio' en tabletas */
   }
 
-  .icono-menu {
+  .Header-iconoMenu {
     font-size: 1.8rem;
   }
 }
@@ -187,45 +188,45 @@
 /* Pantallas pequeñas (móviles) */
 @media (max-width: 600px) {
   /* Oculta ciertos elementos y ajusta otros para pantallas pequeñas */
-  .header-izquierda .nombre-marca,
-  .header-izquierda .logo,
-  .boton-anfitrion,
-  .opcion-cuando, /* Oculta la opción "¿Cuándo?" en pantallas pequeñas */
-  .opcion-cuando + .divisor, /* Oculta el divisor siguiente a "¿Cuándo?" */
-  .header-derecha > .icono-globo,
-  .opcion-busqueda:not(:first-child),
-  .divisor:not(:first-child),
-  .notificacion {
+  .Header-izquierda .Header-nombreMarca,
+  .Header-izquierda .Header-logo,
+  .Header-botonAnfitrion,
+  .Header-opcionCuando, /* Oculta la opción "¿Cuándo?" en pantallas pequeñas */
+  .Header-opcionCuando + .Header-divisor, /* Oculta el divisor siguiente a "¿Cuándo?" */
+  .Header-derecha > .Header-iconoGlobo,
+  .Header-opcionBusqueda:not(:first-child),
+  .Header-divisor:not(:first-child),
+  .Header-notificacion {
     display: none;
   }
 
-  .barra-busqueda {
+  .Header-barraBusqueda {
     flex-grow: 1;
     justify-content: space-around;
     max-width: 100%;
     flex-direction: row-reverse;
   }
 
-  .icono-menu {
+  .Header-iconoMenu {
     display: none; /* Oculta FiMenu en pantallas pequeñas */
   }
 
-  /* Muestra el contenedor circular para icono-settings en pantallas pequeñas */
-  .icono-settings-wrapper {
+  /* Muestra el contenedor circular para Header-iconoSettings en pantallas pequeñas */
+  .Header-iconoSettingsWrapper {
     display: flex; /* Muestra el contenedor circular en pantallas pequeñas */
     margin-right: 5px;
   }
 
-  .icono-settings {
+  .Header-iconoSettings {
     font-size: 2.5rem;
     color: #000000; 
   }
 
-  .opcion-busqueda {
+  .Header-opcionBusqueda {
     font-size: 0.9rem;
   }
 
-  .header-derecha {
+  .Header-derecha {
     flex-grow: 1;
     width: 1%;
     justify-content: flex-end;
