@@ -77,9 +77,11 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       setImagenActual((prev) => prev - 1);
     }
   };
+  
+  const precioConTarifa = precio * tarifa;
 
   const handleSetPrecioPorNoche = () => {
-    setPrecioPorNoche(precio);
+    setPrecioPorNoche(precioConTarifa);
   };
 
   const renderPrecio = () => {
@@ -91,7 +93,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         maximumFractionDigits: 0,
       });
 
-    const precioConTarifa = precio * tarifa;
 
     if (totalDias === 0 || totalDias === 1) {
       // Solo muestra el span inferior

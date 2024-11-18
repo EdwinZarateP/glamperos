@@ -1,3 +1,4 @@
+/* Contenedor principal del calendario */
 .calendario {
   max-width: 800px;
   margin: 0 auto;
@@ -28,6 +29,7 @@
   margin-bottom: 1rem;
 }
 
+/* Encabezado de días de la semana */
 .calendario-dias-semana {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -39,14 +41,12 @@
 
 .calendario-dia-semana {
   padding: 5px;
-  font-size: 0.9rem; /* Ajustar el tamaño si es necesario */
+  font-size: 0.9rem;
   text-transform: uppercase;
-}
-
-
-/* Encabezado de días de la semana: mostrar solo las dos primeras iniciales */
-.calendario-dia-semana::after {
-  content: attr(data-dia);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
 }
 
 .calendario-columnas {
@@ -73,24 +73,39 @@
   width: 100%;
 }
 
+/* Botones de los días */
 .calendario-dia {
   background-color: #f0f0f0;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 50%; /* Botones redondos */
+  width: 40px; /* Tamaño uniforme */
+  height: 40px; /* Tamaño uniforme */
+  display: flex;
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  font-size: 0.9rem;
   cursor: pointer;
   text-align: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .calendario-dia:hover {
   background-color: #e0e0e0;
+  transform: scale(1.1); /* Efecto al pasar el mouse */
 }
 
 .calendario-dia-seleccionado {
   background-color: #2F6B3E;
   color: white;
-  border-color: #F2A900;
+  border: 2px solid #F2A900;
+}
+
+.calendario-dia-reservada {
+  background-color: #ffe9e9;
+  color: #ff6767;
+  text-decoration: line-through;
+  border: 1px solid #ff6767;
+  cursor: not-allowed;
 }
 
 .calendario-dia-deshabilitado {

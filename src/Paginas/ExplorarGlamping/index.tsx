@@ -7,7 +7,7 @@ import NombreGlamping from '../../Componentes/NombreGlamping/index';
 import DescripcionGlamping from '../../Componentes/DescripcionGlamping/index';
 import FormularioFechas from '../../Componentes/FormularioFechas/index';
 import LoQueOfrece from '../../Componentes/LoQueOfrece';
-import Calendario from '../../Componentes/Calendario/index';
+import Calendario from '../../Componentes/Calendario/index'; // Asegúrate de importar correctamente
 import MapaGlampings from '../../Componentes/Mapa/index';
 import Comentarios from '../../Componentes/Comentarios/index';
 import ReservarBoton from '../../Componentes/BotonReservar/index'; // Importa ReservarBoton
@@ -50,13 +50,15 @@ function ExplorarGlamping() {
     { icono: 'https://via.placeholder.com/24', descripcion: 'Jabón corporal' },
     { icono: 'https://via.placeholder.com/24', descripcion: 'Agua caliente' },
     { icono: 'https://via.placeholder.com/24', descripcion: 'Gel de ducha' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Champú' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Jabón corporal' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Agua caliente' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Gel de ducha' },
   ];
 
   const huespedes = 1;
+
+  const fechasReservadas = [
+    new Date(2024, 10, 20), // Ejemplo: 20 de noviembre de 2024
+    new Date(2024, 10, 28), // Ejemplo: 28 de noviembre de 2024
+    new Date(2024, 10, 29), // Ejemplo: 29 de noviembre de 2024
+  ];
 
   const datosComentarios = [
     {
@@ -119,7 +121,10 @@ function ExplorarGlamping() {
             </div>
 
             <div className='contenedor-calendario'>
-              <Calendario nombreGlamping="Casa del árbol - Utica" />
+              <Calendario 
+                nombreGlamping="Casa del árbol - Utica" 
+                FechasReservadas={fechasReservadas} // Propiedad de fechas reservadas
+              />
             </div>
           </div>
           <div className='contenedor-descripcion-glamping-der'>

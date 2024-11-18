@@ -25,12 +25,12 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   font-family: "Poppins", sans-serif;
-  animation: pixelateIn 0.3s ease-out;
+  /* animation: pixelateIn 0.3s ease-out; */
 }
 
 @media (min-width: 960px) {
   .CalendarioGeneral {
-    width: 50%;
+    width: 30%;
   }
 }
 
@@ -66,10 +66,12 @@
   margin-bottom: 32px;
 }
 
+/* Encabezados de los días de la semana */
 .CalendarioGeneral-dias-semana {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   margin-bottom: 8px;
+  text-align: center;
 }
 
 .CalendarioGeneral-dia-semana {
@@ -77,45 +79,58 @@
   font-weight: bold;
   color: #2F6B3E;
   text-transform: uppercase;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  height: 40px; /* Tamaño uniforme */
 }
 
+/* Contenedor de los días */
 .CalendarioGeneral-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr); /* Divide las columnas equitativamente */
   gap: 4px;
+  justify-items: center; /* Centra horizontalmente el contenido de cada celda */
+  align-items: center; /* Centra verticalmente el contenido de cada celda */
 }
 
+/* Botones de los días */
 .CalendarioGeneral-dia {
-  padding: 8px;
-  text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  width: 40px; /* Tamaño uniforme */
+  height: 40px; /* Tamaño uniforme */
+  display: flex;
+  align-items: center; /* Centra verticalmente el número */
+  justify-content: center; /* Centra horizontalmente el número */
+  border-radius: 50%; /* Hace los botones redondos */
+  border: 1px solid #ddd; /* Borde del botón */
+  background: #f5f5f5; /* Fondo gris claro */
   cursor: pointer;
+  font-size: 0.9rem; /* Tamaño del texto */
   transition: all 0.3s ease;
 }
 
 .CalendarioGeneral-dia:hover {
-  background: #eafaf2;
+  background: #eafaf2; /* Fondo verde claro al pasar el mouse */
 }
 
 .CalendarioGeneral-dia-seleccionado {
-  background: #2F6B3E;
-  color: white;
-  border: 2px solid #000000;
+  background: #2F6B3E; /* Fondo verde oscuro para el día seleccionado */
+  color: white; /* Texto blanco */
+  border: 2px solid #000000; /* Borde más grueso para destacar */
 }
 
 .CalendarioGeneral-dia-deshabilitado {
-  background: #f5f5f5;
-  color: #bbb;
+  background: #f5f5f5; /* Fondo gris claro */
+  color: #bbb; /* Texto gris */
   cursor: not-allowed;
 }
 
 .CalendarioGeneral-dia-reservada {
-  background: #ffe9e9;
-  color: #ff6767;
+  background: #ffe9e9; /* Fondo rosado */
+  color: #ff6767; /* Texto rojo */
   text-decoration: line-through;
-  cursor: not-allowed;
   border-color: #ff6767;
+  cursor: not-allowed;
 }
 
 /* Botones inferiores */

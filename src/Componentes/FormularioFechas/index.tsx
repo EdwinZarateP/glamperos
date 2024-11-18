@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
-import { GiCampingTent } from 'react-icons/gi'; // Importa el ícono
+import { GiCampingTent } from "react-icons/gi"; // Importa el ícono
+import CalendarioGeneral from "../CalendarioGeneral"; // Importa el componente CalendarioGeneral
 
 interface FormularioFechasProps {
   precioPorNoche: number;
@@ -9,23 +10,40 @@ interface FormularioFechasProps {
   huespedes: number;
 }
 
-const FormularioFechas: React.FC<FormularioFechasProps> = ({ 
-  precioPorNoche, 
-  tarifaServicio, 
-  huespedes 
+const FormularioFechas: React.FC<FormularioFechasProps> = ({
+  precioPorNoche,
+  huespedes,
 }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
-    throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
+    throw new Error(
+      "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
+    );
   }
 
-  const { 
-    fechaInicio, 
-    fechaFin, 
-    totalDias, 
-    setTotalSinImpuestos 
+  const {
+    fechaInicio,
+    fechaFin,
+    totalDias,
+    setTotalSinImpuestos,
   } = almacenVariables;
+
+  const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
+
+  const fechasReservadas = [
+    new Date(2024, 10, 20),
+    new Date(2024, 10, 28),
+    new Date(2024, 10, 29),
+  ]; // Ejemplo de fechas reservadas
+
+  const manejarAbrirCalendario = () => {
+    setMostrarCalendario(true);
+  };
+
+  const cerrarCalendario = () => {
+    setMostrarCalendario(false);
+  };
 
   const formatearFecha = (fecha: Date | null): string => {
     if (!fecha) return "-";
@@ -37,19 +55,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
     return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
   };
 
-  // Calcular tarifa de servicio basada en la tabla
-  const calcularTarifaServicio = (precio: number): number => {
-    if (precioPorNoche > 0 && precio <= 299999) return 1.15;
-    if (precioPorNoche >= 300000 && precio <= 400000) return 1.12;
-    if (precioPorNoche >= 401000 && precio <= 500000) return 1.11;
-    if (precioPorNoche >= 501000 && precio <= 600000) return 1.1;
-    if (precioPorNoche >= 601000 && precio <= 800000) return 1.09;
-    if (precioPorNoche >= 801000 && precio <= 2000000) return 1.08;
-    return 0; // Valor predeterminado si no cae en ningún rango
-  };
-
-  const tarifa = tarifaServicio ?? calcularTarifaServicio(precioPorNoche);
-  const totalSinImpuestos = (precioPorNoche * totalDias) * tarifa;
+  const totalSinImpuestos = precioPorNoche * totalDias;
 
   // Actualiza el valor en el contexto cuando se recalcula
   useEffect(() => {
@@ -59,10 +65,16 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
   return (
     <div className="FormularioFechas-contenedor">
       <div className="FormularioFechas-precio">
-        <span className="FormularioFechas-precioNoche">${precioPorNoche.toLocaleString()} COP</span> <span>/ noche</span>
+        <span className="FormularioFechas-precioNoche">
+          ${precioPorNoche.toLocaleString()} COP
+        </span>{" "}
+        <span>/ noche</span>
       </div>
 
-      <div className="FormularioFechas-fechas">
+      <div
+        className="FormularioFechas-fechas"
+        onClick={manejarAbrirCalendario} // Abre el calendario al hacer clic
+      >
         <div className="FormularioFechas-fecha">
           <span className="FormularioFechas-fechaTitulo">LLEGADA</span>
           <span>{formatearFecha(fechaInicio)}</span>
@@ -75,7 +87,9 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
 
       <div className="FormularioFechas-huespedes">
         <span>Huéspedes</span>
-        <span>{huespedes} huésped{huespedes > 1 ? 'es' : ''}</span>
+        <span>
+          {huespedes} huésped{huespedes > 1 ? "es" : ""}
+        </span>
       </div>
 
       <button className="FormularioFechas-botonReserva">
@@ -86,19 +100,26 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
 
       <div className="FormularioFechas-detalleCosto">
         <div className="FormularioFechas-item">
-          <span>${precioPorNoche.toLocaleString()} COP x {totalDias} noche{totalDias > 1 ? 's' : ''}</span>
+          <span>
+            ${precioPorNoche.toLocaleString()} COP x {totalDias} noche
+            {totalDias > 1 ? "s" : ""}
+          </span>
           <span>${(precioPorNoche * totalDias).toLocaleString()} COP</span>
-        </div>
-        <div className="FormularioFechas-item">
-          <span>Tarifa por servicio</span>
-          <span>${(precioPorNoche * totalDias * (tarifa - 1)).toLocaleString()} COP</span>
         </div>
       </div>
 
       <div className="FormularioFechas-total">
-        <span>Total sin incluir impuestos</span>
+        <span>Total</span>
         <span>${totalSinImpuestos.toLocaleString()} COP</span>
       </div>
+
+      {/* Renderiza el CalendarioGeneral cuando se activa */}
+      {mostrarCalendario && (
+        <CalendarioGeneral
+          cerrarCalendario={cerrarCalendario}
+          FechasReservadas={fechasReservadas}
+        />
+      )}
     </div>
   );
 };

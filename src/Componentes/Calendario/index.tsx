@@ -4,9 +4,10 @@ import { ContextoApp } from "../../Contexto/index";
 
 interface CalendarioProps {
   nombreGlamping: string;
+  FechasReservadas: Date[]; // Nueva propiedad
 }
 
-const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
+const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservadas }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -65,12 +66,16 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
     return fechaInicio?.toDateString() === fecha.toDateString();
   };
 
-  const esFechaDeshabilitada = (fecha: Date): boolean => {
-    return fecha <= hoy;
+  const esFechaReservada = (fecha: Date): boolean => {
+    return FechasReservadas.some(
+      (fechaReservada) => fecha.toDateString() === fechaReservada.toDateString()
+    );
   };
 
+  const esFechaDeshabilitada = (fecha: Date): boolean => fecha <= hoy;
+
   const renderizarEncabezadoDias = () => {
-    const diasSemana = ["Do","Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];
+    const diasSemana = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];
     return (
       <div className="calendario-dias-semana">
         {diasSemana.map((dia, index) => (
@@ -80,7 +85,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
         ))}
       </div>
     );
-  };  
+  };
 
   const renderizarCalendario = (mes: number, anio: number) => {
     const dias = [];
@@ -96,15 +101,18 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
     for (let dia = 1; dia <= totalDiasMes; dia++) {
       const fecha = new Date(anio, mes, dia);
       const deshabilitada = esFechaDeshabilitada(fecha);
+      const reservada = esFechaReservada(fecha);
 
       dias.push(
         <button
           key={dia}
           className={`calendario-dia ${
             esFechaSeleccionada(fecha) ? "calendario-dia-seleccionado" : ""
-          } ${deshabilitada ? "calendario-dia-deshabilitado" : ""}`}
-          onClick={() => !deshabilitada && manejarClickFecha(fecha)}
-          disabled={deshabilitada}
+          } ${reservada ? "calendario-dia-reservada" : ""} ${
+            deshabilitada ? "calendario-dia-deshabilitado" : ""
+          }`}
+          onClick={() => !deshabilitada && !reservada && manejarClickFecha(fecha)}
+          disabled={deshabilitada || reservada}
         >
           {dia}
         </button>
@@ -153,7 +161,9 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
       <h1>{nombreGlamping}</h1>
       <h2 className="calendario-subtitulo">
         {fechaInicio && fechaFin
-          ? `${formatearFecha(fechaInicio)} - ${formatearFecha(fechaFin)} (${totalDias} noche${totalDias === 1 ? "" : "s"})`
+          ? `${formatearFecha(fechaInicio)} - ${formatearFecha(fechaFin)} (${totalDias} noche${
+              totalDias === 1 ? "" : "s"
+            })`
           : "Selecciona tus fechas"}
       </h2>
       <div className="calendario-encabezado">
@@ -178,7 +188,10 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
           }`}</h2>
           {renderizarEncabezadoDias()}
           <div className="calendario-grid">
-            {renderizarCalendario((mesActual + 1) % 12, mesActual === 11 ? anioActual + 1 : anioActual)}
+            {renderizarCalendario(
+              (mesActual + 1) % 12,
+              mesActual === 11 ? anioActual + 1 : anioActual
+            )}
           </div>
         </div>
       </div>
