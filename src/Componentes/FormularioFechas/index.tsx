@@ -39,12 +39,12 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({
 
   // Calcular tarifa de servicio basada en la tabla
   const calcularTarifaServicio = (precio: number): number => {
-    if (precio >= 200000 && precio <= 299999) return 1.15;
-    if (precio >= 300000 && precio <= 400000) return 1.12;
-    if (precio >= 401000 && precio <= 500000) return 1.11;
-    if (precio >= 501000 && precio <= 600000) return 1.1;
-    if (precio >= 601000 && precio <= 800000) return 1.09;
-    if (precio >= 801000 && precio <= 2000000) return 1.08;
+    if (precioPorNoche > 0 && precio <= 299999) return 1.15;
+    if (precioPorNoche >= 300000 && precio <= 400000) return 1.12;
+    if (precioPorNoche >= 401000 && precio <= 500000) return 1.11;
+    if (precioPorNoche >= 501000 && precio <= 600000) return 1.1;
+    if (precioPorNoche >= 601000 && precio <= 800000) return 1.09;
+    if (precioPorNoche >= 801000 && precio <= 2000000) return 1.08;
     return 0; // Valor predeterminado si no cae en ningún rango
   };
 

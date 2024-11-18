@@ -19,7 +19,13 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     );
   }
 
-  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin } = almacenVariables;
+  const {
+    fechaInicio,
+    setFechaInicio,
+    fechaFin,
+    setFechaFin,
+    setTotalDias,
+  } = almacenVariables;
 
   const [mesesVisibles, setMesesVisibles] = useState<{ mes: number; anio: number }[]>([]);
 
@@ -40,6 +46,17 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     };
   }, []);
 
+  // Actualiza totalDias cuando cambian fechaInicio o fechaFin
+  useEffect(() => {
+    if (fechaInicio && fechaFin) {
+      const diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
+      const dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+      setTotalDias(dias);
+    } else {
+      setTotalDias(0);
+    }
+  }, [fechaInicio, fechaFin, setTotalDias]);
+
   const manejarClickFecha = (fecha: Date) => {
     if (!fechaInicio || (fechaInicio && fechaFin)) {
       setFechaInicio(fecha);
@@ -55,6 +72,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   const manejarBorrarFechas = () => {
     setFechaInicio(null);
     setFechaFin(null);
+    setTotalDias(0); // Restablece totalDias a 0
   };
 
   const esFechaSeleccionada = (fecha: Date): boolean => {
@@ -70,7 +88,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     );
   };
 
-  const esFechaDeshabilitada = (fecha: Date): boolean => fecha < hoy;
+  const esFechaDeshabilitada = (fecha: Date): boolean => fecha <= hoy;
 
   const renderizarEncabezadoDias = () => {
     const diasSemana = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];

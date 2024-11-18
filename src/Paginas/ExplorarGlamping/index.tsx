@@ -22,13 +22,12 @@ function ExplorarGlamping() {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { setTarifaServicio, setPrecioPorNoche } = almacenVariables;
+  const { setTarifaServicio, precioPorNoche } = almacenVariables;
 
-  // Establece valores predeterminados
+  // Establece la tarifa de servicio predeterminada
   useEffect(() => {
     setTarifaServicio(1.12); // Tarifa predeterminada
-    setPrecioPorNoche(300000); // Precio por noche predeterminado
-  }, [setTarifaServicio, setPrecioPorNoche]);
+  }, [setTarifaServicio]);
 
   // Scroll hacia la parte superior al cargar el componente
   useEffect(() => {
@@ -125,8 +124,7 @@ function ExplorarGlamping() {
           </div>
           <div className='contenedor-descripcion-glamping-der'>
             <FormularioFechas
-              precioPorNoche={almacenVariables.precioPorNoche || 0} // Usa el valor del contexto
-              // tarifaServicio={1.50}
+              precioPorNoche={precioPorNoche || 0} // Usa el valor del contexto
               huespedes={huespedes}
             />
           </div>

@@ -47,9 +47,3 @@
   }
 }
 
-/* Para pantallas extra grandes */
-@media (min-width: 1440px) {
-  .contenedor-tarjetas {
-    grid-template-columns: repeat(5, 1fr); /* Cinco tarjetas por fila en pantallas extra grandes */
-  }
-}

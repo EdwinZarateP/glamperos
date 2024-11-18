@@ -43,15 +43,16 @@ const ContenedorTarjetas: React.FC = () => {
       <Tarjeta
         imagenesPokemon={imagenesPokemon} 
         ciudad="Medellín"
-        precio={150}
+        precio={100000}
         calificacion={4.5}
         favorito={false}
+        // tarifaServicio={1.12}
         onFavoritoChange={(nuevoEstado) => console.log('Favorito en tarjeta 1:', nuevoEstado)}
       />
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
         ciudad="Bogotá"
-        precio={200}
+        precio={500000}
         calificacion={4.8}
         favorito={false}
         onFavoritoChange={(nuevoEstado) => console.log('Favorito en tarjeta 2:', nuevoEstado)}
@@ -59,7 +60,7 @@ const ContenedorTarjetas: React.FC = () => {
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
         ciudad="Cali"
-        precio={200}
+        precio={350000}
         calificacion={4.8}
         favorito={false}
         onFavoritoChange={(nuevoEstado) => console.log('Favorito en tarjeta 2:', nuevoEstado)}
@@ -68,7 +69,7 @@ const ContenedorTarjetas: React.FC = () => {
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
         ciudad="Armenia"
-        precio={200}
+        precio={150000}
         calificacion={4.8}
         favorito={false}
         onFavoritoChange={(nuevoEstado) => console.log('Favorito en tarjeta 2:', nuevoEstado)}
@@ -76,7 +77,7 @@ const ContenedorTarjetas: React.FC = () => {
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
         ciudad="Armenia"
-        precio={200}
+        precio={120000}
         calificacion={4.8}
         favorito={false}
         onFavoritoChange={(nuevoEstado) => console.log('Favorito en tarjeta 2:', nuevoEstado)}
@@ -84,7 +85,7 @@ const ContenedorTarjetas: React.FC = () => {
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
         ciudad="Armenia"
-        precio={200}
+        precio={200000}
         calificacion={4.8}
         favorito={false}
         onFavoritoChange={(nuevoEstado) => console.log('Favorito en tarjeta 2:', nuevoEstado)}
@@ -92,7 +93,7 @@ const ContenedorTarjetas: React.FC = () => {
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
         ciudad="Armenia"
-        precio={200}
+        precio={200000}
         calificacion={4.8}
         favorito={false}
         onFavoritoChange={(nuevoEstado) => console.log('Favorito en tarjeta 2:', nuevoEstado)}

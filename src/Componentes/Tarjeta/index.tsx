@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AiTwotoneHeart } from 'react-icons/ai';
 import { BsBalloonHeartFill } from 'react-icons/bs';
 import { FaStar } from 'react-icons/fa6';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { ContextoApp } from '../../Contexto/index';
 import './estilos.css';
 
 interface PokemonData {
@@ -18,6 +19,7 @@ interface TarjetaProps {
   calificacion: number;
   favorito: boolean;
   onFavoritoChange: (nuevoEstado: boolean) => void;
+  tarifaServicio?: number; // Propiedad opcional
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
@@ -27,15 +29,36 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   calificacion,
   favorito,
   onFavoritoChange,
+  tarifaServicio,
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [touchEndX, setTouchEndX] = useState(0);
+
+  // Accede a totalDias y setPrecioPorNoche desde el contexto
+  const almacenVariables = useContext(ContextoApp);
+
+  if (!almacenVariables) {
+    throw new Error('El contexto no está disponible. Verifica el proveedor.');
+  }
+
+  const { totalDias, setPrecioPorNoche } = almacenVariables;
 
   if (!imagenesPokemon || imagenesPokemon.length === 0) {
     return <div>No hay imágenes para mostrar.</div>;
   }
+
+  // Calcular tarifa de servicio si no se proporciona
+  const calcularTarifaServicio = (precio: number): number => {
+    if (precio > 0 && precio <= 299999) return 1.15;
+    if (precio >= 300000 && precio <= 400000) return 1.12;
+    if (precio >= 401000 && precio <= 500000) return 1.11;
+    if (precio >= 501000 && precio <= 600000) return 1.1;
+    if (precio >= 601000 && precio <= 800000) return 1.09;
+    if (precio >= 801000 && precio <= 2000000) return 1.08;
+    return 1; // Valor predeterminado si no cae en ningún rango
+  };
+
+  const tarifa = tarifaServicio ?? calcularTarifaServicio(precio);
 
   const handleFavoritoChange = () => {
     const nuevoEstado = !esFavorito;
@@ -55,47 +78,51 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     }
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
+  const handleSetPrecioPorNoche = () => {
+    setPrecioPorNoche(precio);
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    setTouchEndX(e.changedTouches[0].clientX);
-    handleSwipe();
-  };
+  const renderPrecio = () => {
+    const formatoCOP = (valor: number) =>
+      valor.toLocaleString("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
 
-  const handleSwipe = () => {
-    if (touchStartX - touchEndX > 50) {
-      siguienteImagen(); // Deslizar hacia la izquierda
-    } else if (touchEndX - touchStartX > 50) {
-      anteriorImagen(); // Deslizar hacia la derecha
+    const precioConTarifa = precio * tarifa;
+
+    if (totalDias === 0 || totalDias === 1) {
+      // Solo muestra el span inferior
+      return (
+        <span className="tarjeta-precio">
+          {formatoCOP(precioConTarifa * Math.max(totalDias, 1))} por noche
+        </span>
+      );
     }
+
+    // Muestra ambos span si totalDias > 1
+    return (
+      <>
+        <span className="tarjeta-precio-base">
+          {formatoCOP(precioConTarifa)} por noche
+        </span>
+        <span className="tarjeta-precio">
+          {formatoCOP(precioConTarifa * totalDias)} por {totalDias} noches
+        </span>
+      </>
+    );
   };
-
-  const esPantallaPequena = window.innerWidth <= 600;
-
-  // Calcula el rango de puntos visibles alrededor de la imagen actual
-  const maxPuntos = 5;
-  const halfMaxPuntos = Math.floor(maxPuntos / 2);
-  
-  let start = Math.max(0, imagenActual - halfMaxPuntos);
-  let end = start + maxPuntos;
-  
-  if (end > imagenesPokemon.length) {
-    end = imagenesPokemon.length;
-    start = Math.max(0, end - maxPuntos);
-  }
-
-  const puntosVisibles = imagenesPokemon.slice(start, end);
 
   return (
     <div className="tarjeta">
-      <Link to="/TarjetaExclusiva" className="tarjeta-link">
-        <div 
-          className="tarjeta-imagen-container"
-          onTouchStart={esPantallaPequena ? handleTouchStart : undefined}
-          onTouchEnd={esPantallaPequena ? handleTouchEnd : undefined}
-        >
+      <Link
+        to="/TarjetaExclusiva"
+        className="tarjeta-link"
+        onClick={handleSetPrecioPorNoche}
+      >
+        <div className="tarjeta-imagen-container">
           <div
             className="carrusel"
             style={{
@@ -104,13 +131,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           >
             {imagenesPokemon.map((pokemon, index) => (
               <img key={index} src={pokemon.imagen} alt={pokemon.nombre} className="tarjeta-imagen" />
-            ))}
-          </div>
-
-          {/* Puntos de navegación, ahora dentro del contenedor de la imagen */}
-          <div className="puntos">
-            {puntosVisibles.map((_, index) => (
-              <span key={start + index} className={`punto ${start + index === imagenActual ? 'activo' : ''}`} />
             ))}
           </div>
         </div>
@@ -128,24 +148,12 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           <AiTwotoneHeart className="corazon" />
         )}
       </button>
-
-      {!esPantallaPequena && (
-        <>
-          <button className="flecha izquierda" onClick={(e) => {
-            e.stopPropagation();
-            anteriorImagen();
-          }} disabled={imagenActual === 0}>
-            <MdOutlineKeyboardArrowLeft />
-          </button>
-          <button className="flecha derecha" onClick={(e) => {
-            e.stopPropagation();
-            siguienteImagen();
-          }} disabled={imagenActual === imagenesPokemon.length - 1}>
-            <MdOutlineKeyboardArrowRight />
-          </button>
-        </>
-      )}
-
+      <button className="flecha izquierda" onClick={anteriorImagen} disabled={imagenActual === 0}>
+        <MdOutlineKeyboardArrowLeft />
+      </button>
+      <button className="flecha derecha" onClick={siguienteImagen} disabled={imagenActual === imagenesPokemon.length - 1}>
+        <MdOutlineKeyboardArrowRight />
+      </button>
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
           <span className="tarjeta-nombre">{imagenesPokemon[imagenActual]?.nombre}</span>
@@ -155,7 +163,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           </div>
         </div>
         <p className="tarjeta-ciudad">{ciudad}</p>
-        <span className="tarjeta-precio">${precio.toFixed(2)} por noche</span>
+        {renderPrecio()}
       </div>
     </div>
   );
