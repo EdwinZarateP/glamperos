@@ -7,16 +7,16 @@
 
 /* Contenedor principal de la tarjeta */
 .tarjeta {
+  position: relative; /* Define el contenedor relativo para posicionamiento absoluto */
+  overflow: hidden; /* Evita márgenes o desplazamientos inesperados */
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   margin: 8px;
   max-width: 100%;
-  overflow: hidden;
-  font-family: 'Lato', 'Poppins', sans-serif;
   background-color: #fff;
-  position: relative;
   padding: 0;
+  font-family: 'Lato', 'Poppins', sans-serif;
 }
 
 /* Contenedor de la imagen con borde delgado */
@@ -96,7 +96,7 @@
 .punto {
   width: 5px;
   height: 5px;
-   background-color: rgba(57, 56, 56, 0.5);
+  background-color: rgba(57, 56, 56, 0.5);
   border-radius: 50%;
   cursor: pointer;
 }
@@ -157,14 +157,16 @@
 /* Botón de favorito (corazón) */
 .tarjeta-favorito {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 12px; /* Ajusta la distancia desde la parte superior */
+  right: 12px; /* Ajusta la distancia desde el lado derecho */
+  transform: translate(0, 0); /* Asegura que no haya desplazamientos inesperados */
   background: none;
   border: none;
-  font-size: 32px;
+  font-size: 32px; /* Tamaño consistente */
   cursor: pointer;
-  transition: color 0.1s;
   z-index: 2;
+  margin: 0; /* Asegura que no haya márgenes adicionales */
+  padding: 0; /* Asegura que no haya relleno adicional */
 }
 
 .corazon {
