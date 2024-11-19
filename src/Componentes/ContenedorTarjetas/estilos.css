@@ -41,9 +41,18 @@
 }
 
 /* Para pantallas grandes (computadoras de escritorio) */
-@media (min-width: 1024px) {
+@media (min-width: 1366px) {
   .contenedor-tarjetas {
     grid-template-columns: repeat(4, 1fr); /* Cuatro tarjetas por fila en pantallas grandes */
   }
 }
+
+
+/* Para pantallas grandes (computadoras de escritorio) */
+@media (min-width: 1600px) {
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(6, 1fr); /* Cuatro tarjetas por fila en pantallas grandes */
+  }
+}
+
 

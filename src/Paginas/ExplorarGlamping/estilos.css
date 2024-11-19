@@ -1,36 +1,13 @@
 /* Configuración básica del contenedor principal */
 .contenedor-principal-exploracion {
   margin: 0 auto;
+  margin-bottom: 10px;
   padding: 0;
   width: 85%;
   box-sizing: border-box;
-  margin-bottom: 10px;
 }
 
-.contenedor-descripcion-glamping{
-  display: flex;
-  margin-top: 20px;
-  justify-content: space-between;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.contenedor-descripcion-glamping-izq{
-  width: 60%;
-}
-
-.contenedor-descripcion-glamping-der {
-  display: flex;
-  justify-content: flex-start; /* Asegura que los elementos hijos comiencen desde la parte superior */
-  flex-direction: column; /* Alinea los hijos en una columna */
-  width: 35%;
-  position: relative; /* Necesario para que `sticky` funcione en el hijo */
-  height: auto; /* Asegura que el padre ajuste su altura al contenido */
-  padding-top: 0; 
-  align-items:end; 
-}
-
-
-.encabezado-explorado{
+.encabezado-explorado {
   border-bottom: none;
 }
 
@@ -39,8 +16,29 @@
   border-radius: 8px;
 }
 
+.contenedor-descripcion-glamping {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
 
-/* Ajustes específicos para pantallas pequeñas */
+.contenedor-descripcion-glamping-izq {
+  width: 60%;
+}
+
+.contenedor-descripcion-glamping-der {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 35%;
+  position: relative;
+  height: auto;
+  padding-top: 0;
+}
+
+/* Ajustes para pantallas pequeñas (máximo ancho 600px) */
 @media (max-width: 600px) {
   .header-container,
   .imagenes-exploradas-container,
@@ -48,23 +46,21 @@
   .contenedor-descripcion-glamping-der {
     display: none;
   }
-  
+
   .contenedor-principal-exploracion {
     width: 100%;
   }
 
-  .contenedor-descripcion-glamping-izq{
+  .contenedor-descripcion-glamping-izq {
     width: 100%;
   }
 
-
-  /* Muestra NombreGlamping solo en pantallas pequeñas */
   .nombre-glamping-container {
     display: block;
   }
 }
 
-/* Oculta el nombre del glamping en pantallas grandes */
+/* Ajustes para pantallas grandes (mínimo ancho 601px) */
 @media (min-width: 601px) {
   .img-exploradas-individual-container {
     display: none;
@@ -72,5 +68,19 @@
 
   .nombre-glamping-container {
     display: none;
+  }
+}
+
+/* Ajustes para pantallas muy grandes (mínimo ancho 1400px) */
+@media (min-width: 1366px) {
+  .contenedor-principal-exploracion {
+    width: 80%;
+  }
+}
+
+/* Ajustes para pantallas muy grandes (mínimo ancho 1400px) */
+@media (min-width: 1600px) {
+  .contenedor-principal-exploracion {
+    width: 70%;
   }
 }
