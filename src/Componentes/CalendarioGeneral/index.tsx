@@ -45,7 +45,6 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       let diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
       let dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
 
-      // Restar días reservados que están dentro del rango seleccionado
       const diasReservadosEnRango = [];
       for (let i = 0; i < dias; i++) {
         const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
@@ -66,7 +65,6 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   }, [fechaInicio, fechaFin, FechasReservadas, setTotalDias]);
 
   const manejarClickFecha = (fecha: Date) => {
-    // Evita seleccionar días reservados
     if (esFechaReservada(fecha)) return;
 
     if (!fechaInicio || (fechaInicio && fechaFin)) {
@@ -133,8 +131,10 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
         <button
           key={dia}
           className={`CalendarioGeneral-dia ${
-            seleccionado ? "CalendarioGeneral-dia-seleccionado" : ""
+            deshabilitada ? "CalendarioGeneral-dia-deshabilitado" : ""
           } ${reservada ? "CalendarioGeneral-dia-reservada" : ""} ${
+            seleccionado ? "CalendarioGeneral-dia-seleccionado" : ""
+          } ${
             seleccionado && fechaInicio && fechaFin && fecha > fechaInicio && fecha < fechaFin
               ? "CalendarioGeneral-dia-rango"
               : ""

@@ -93,25 +93,25 @@
   align-items: center;
 }
 
-/* Botones de los días */
+/* Botones de los días (por defecto) */
 .CalendarioGeneral-dia {
+  color: black; /* Letra negra predeterminada */
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: transparent;
+  background: transparent; /* Fondo transparente */
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.3s ease;
   border: none; /* Sin borde predeterminado */
-  color: black;
 }
 
 .CalendarioGeneral-dia:hover {
   background: rgba(0, 0, 0, 0.01); /* Fondo ligero al pasar el cursor */
-  color: black;
+  color: black; /* Asegura que el hover mantenga el texto negro */
 }
 
 /* Día seleccionado */
@@ -138,8 +138,8 @@
 
 /* Día deshabilitado */
 .CalendarioGeneral-dia-deshabilitado {
-  background: #f5f5f5;
-  color: #bbb;
+  color: #bbb; /* Letra gris */
+  background: transparent; /* Sin fondo */
   cursor: not-allowed;
 }
 
