@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { FiSearch } from "react-icons/fi";
 import CalendarioGeneral from "../CalendarioGeneral";
+import Visitantes from "../Visitantes"; // Importa el componente Visitantes
 import { ContextoApp } from "../../Contexto/index";
 import "./estilos.css";
 
@@ -11,8 +12,8 @@ interface PanelBusquedaProps {
 
 const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => {
   const [destino, setDestino] = useState('');
-  const [huespedes, setHuespedes] = useState(0);
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
+  const [mostrarVisitantes, setMostrarVisitantes] = useState(false); // Estado para mostrar Visitantes
 
   const almacenVariables = useContext(ContextoApp);
 
@@ -20,18 +21,38 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { fechaInicio, fechaFin, setFechaInicio, setFechaFin } = almacenVariables;
+  const {
+    fechaInicio,
+    fechaFin,
+    setFechaInicio,
+    setFechaFin,
+    Cantidad_Adultos,
+    Cantidad_Niños,
+  } = almacenVariables;
 
   const manejarBuscar = () => {
     const fechas = fechaInicio && fechaFin
-      ? `${fechaInicio.toLocaleDateString()} - ${fechaFin.toLocaleDateString()}`
+      ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}`
       : '';
-    onBuscar(destino, fechas, huespedes);
+    const totalHuespedes = Cantidad_Adultos + Cantidad_Niños;
+    onBuscar(destino, fechas, totalHuespedes);
     onCerrar();
   };
 
   const cerrarCalendario = () => {
     setMostrarCalendario(false);
+  };
+
+  const cerrarVisitantes = () => {
+    setMostrarVisitantes(false);
+  };
+
+  const formatFecha = (fecha: Date): string => {
+    return fecha.toLocaleDateString('es-ES', {
+      day: 'numeric',
+      month: 'short', // Cambiado a "short" para mostrar el nombre del mes abreviado
+      year: 'numeric',
+    });
   };
 
   return (
@@ -49,7 +70,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             <FiSearch className="PanelBusqueda-icono" />
             <input
               type="text"
-              placeholder="Buscar destinos"
+              placeholder="Explora destinos"
               className="PanelBusqueda-input"
               value={destino}
               onChange={(e) => setDestino(e.target.value)}
@@ -64,7 +85,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             <span className="PanelBusqueda-fechas-titulo">Fechas</span>
             <span className="PanelBusqueda-fechas-valor">
               {fechaInicio && fechaFin
-                ? `${fechaInicio.toLocaleDateString()} - ${fechaFin.toLocaleDateString()}`
+                ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}`
                 : "Selecciona fechas"}
             </span>
           </div>
@@ -72,23 +93,30 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
           {/* Campo de huéspedes */}
           <div
             className="PanelBusqueda-huespedes"
-            onClick={() => setHuespedes((prev) => prev + 1)} // Incrementa huéspedes como ejemplo
+            onClick={() => setMostrarVisitantes(true)} // Mostrar Visitantes al hacer clic
           >
             <span className="PanelBusqueda-huespedes-titulo">Huéspedes</span>
             <span className="PanelBusqueda-huespedes-valor">
-              {huespedes > 0 ? `${huespedes} huésped${huespedes > 1 ? 'es' : ''}` : 'Agrega huéspedes'}
+              {Cantidad_Adultos + Cantidad_Niños > 0
+                ? `${Cantidad_Adultos + Cantidad_Niños} huésped${
+                    Cantidad_Adultos + Cantidad_Niños > 1 ? 'es' : ''
+                  }`
+                : 'Agrega huéspedes'}
             </span>
           </div>
         </div>
 
         <div className="PanelBusqueda-botones">
           {/* Botón para limpiar */}
-          <button className="PanelBusqueda-limpiar" onClick={() => {
-            setDestino('');
-            setFechaInicio(null);
-            setFechaFin(null);
-            setHuespedes(0);
-          }}>
+          <button
+            className="PanelBusqueda-limpiar"
+            onClick={() => {
+              setDestino('');
+              setFechaInicio(null);
+              setFechaFin(null);
+              // No es necesario reiniciar Cantidad_Adultos ni Cantidad_Niños aquí porque el componente Visitantes maneja esos valores.
+            }}
+          >
             Limpiar todo
           </button>
 
@@ -109,6 +137,18 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             new Date(2024, 10, 29),
           ]}
         />
+      )}
+
+      {/* Mostrar el componente Visitantes condicionalmente */}
+      {mostrarVisitantes && (
+        <div className="Visitantes-overlay">
+          <div className="Visitantes-modal">
+            <Visitantes />
+            <button className="Visitantes-cerrar" onClick={cerrarVisitantes}>
+              Cerrar
+            </button>
+          </div>
+        </div>
       )}
     </>
   );

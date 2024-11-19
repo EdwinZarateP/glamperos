@@ -83,7 +83,7 @@
 }
 
 /* Media query para pantallas pequeñas */
-@media (max-width: 600px) {
+@media (max-width: 960px) {
   .calificacion-contenedor {
     width: 95%;
     margin: 0 auto;

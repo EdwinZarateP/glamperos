@@ -1,4 +1,6 @@
-/* Fondo opaco para el panel de búsqueda */
+/* ============================
+   Fondo opaco del panel
+============================ */
 .PanelBusqueda-fondo {
   position: fixed;
   top: 0;
@@ -9,7 +11,9 @@
   z-index: 999;
 }
 
-/* Contenedor principal del panel */
+/* ============================
+   Contenedor principal del panel
+============================ */
 .PanelBusqueda-contenedor {
   position: fixed;
   top: 70px;
@@ -25,7 +29,9 @@
   font-family: 'Arial', sans-serif;
 }
 
-/* Título del panel */
+/* ============================
+   Título del panel
+============================ */
 .PanelBusqueda-titulo {
   font-size: 1.8rem;
   font-weight: bold;
@@ -34,7 +40,9 @@
   text-align: center;
 }
 
-/* Barra de opciones del panel */
+/* ============================
+   Barra de opciones del panel
+============================ */
 .PanelBusqueda-barra {
   display: flex;
   flex-direction: column;
@@ -42,7 +50,9 @@
   margin-bottom: 25px;
 }
 
-/* Estilo para el campo de destino */
+/* ============================
+   Campo de destino
+============================ */
 .PanelBusqueda-destino {
   display: flex;
   align-items: center;
@@ -66,7 +76,9 @@
   outline: none;
 }
 
-/* Opciones de fechas y huéspedes */
+/* ============================
+   Opciones de fechas y huéspedes
+============================ */
 .PanelBusqueda-huespedes,
 .PanelBusqueda-fechas {
   display: flex;
@@ -92,19 +104,22 @@
 }
 
 .PanelBusqueda-huespedes-valor,
-.PanelBusqueda-fechas-valor  {
+.PanelBusqueda-fechas-valor {
   font-size: 1rem;
   font-weight: bold;
   color: #333;
 }
 
-/* Botones de acción */
+/* ============================
+   Botones de acción
+============================ */
 .PanelBusqueda-botones {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* Botón para limpiar */
 .PanelBusqueda-limpiar {
   background: none;
   border: none;
@@ -119,8 +134,9 @@
   color: #2F6B3E;
 }
 
+/* Botón para buscar */
 .PanelBusqueda-buscar {
-  background-color:#2F6B3E;
+  background-color: #2F6B3E;
   border: none;
   color: white;
   font-size: 1rem;
@@ -134,18 +150,56 @@
 }
 
 .PanelBusqueda-buscar:hover {
-  background-color:  #218838;
+  background-color: #218838;
 }
 
 .PanelBusqueda-buscar-icono {
   font-size: 1rem;
 }
 
+/* ============================
+   Modal para el componente Visitantes
+============================ */
+.Visitantes-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+.Visitantes-modal {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
+/* Botón de cerrar para el modal */
+.Visitantes-cerrar {
+  margin-top: 12px;
+  background-color: #f2a900;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ============================
+   Responsividad
+============================ */
+
+/* Pantallas pequeñas (máximo ancho: 600px) */
 @media (max-width: 600px) {
   .PanelBusqueda-contenedor {
     width: 95%;
   }
 }
-

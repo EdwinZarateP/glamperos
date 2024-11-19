@@ -5,7 +5,7 @@
   justify-content: space-between;
   border-bottom: 1px solid #e6e3df;
   font-family: inherit;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten si el espacio es limitado */
   height: 70px;
 }
 
@@ -43,7 +43,6 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Opciones de búsqueda */
 .Header-opcionBusqueda {
   color: #2F6B3E;
   font-size: 0.8rem;
@@ -56,7 +55,6 @@
   font-weight: normal;
 }
 
-/* Nueva opción para "¿Cuándo?" */
 .Header-opcionCuando {
   color: #2F6B3E;
   font-size: 0.8rem;
@@ -115,84 +113,44 @@
   margin-right: 8px;
 }
 
-/* Contenedor circular sin fondo y con borde negro para el ícono de configuración */
+/* Contenedor circular para el ícono de configuración */
 .Header-iconoSettingsWrapper {
-  display: none; /* Oculta el contenedor en pantallas grandes */
+  display: none; /* Oculto en pantallas grandes */
   width: 32px;
   height: 32px;
   border: 1px solid #d3d3d3;
-  border-radius: 50%; /* Forma circular */
+  border-radius: 50%; /* Hace el fondo circular */
   align-items: center;
   justify-content: center;
 }
 
 .Header-iconoSettings {
   font-size: 1.5rem;
-  color: #000000; 
-}
-
-.Header-notificacion {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.Header-inicialUsuario {
-  width: 24px;
-  height: 24px;
-  background-color: #333;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-.Header-badgeNotificacion {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background-color: #ff385c;
-  color: #fff;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 0.7rem;
-  font-weight: bold;
+  color: #000000;
 }
 
 /* Responsividad */
 
-/* Pantallas medianas (tabletas) */
-@media (max-width: 1024px) {
-  .Header {
-    flex-wrap: wrap;
+/* Pantallas medianas (entre 480px y 820px) */
+@media (min-width: 540px) and (max-width: 860px) {
+  .Header-izquierda {
+    display: flex; /* Muestra el logo */
   }
 
-  .Header-barraBusqueda {
-    flex-grow: 1;
-    justify-content: space-between;
+  .Header-nombreMarca {
+    display: none; /* Oculta el nombre de la marca */
   }
 
-  .Header-botonAnfitrion {
-    display: none; /* Oculta el botón 'Pon tu espacio' en tabletas */
-  }
-
-  .Header-iconoMenu {
-    font-size: 1.8rem;
+  .Header-barraBusqueda{
+    margin-left: 80px;
   }
 }
 
-/* Pantallas pequeñas (móviles) */
-@media (max-width: 600px) {
-  /* Oculta ciertos elementos y ajusta otros para pantallas pequeñas */
-  .Header-izquierda .Header-nombreMarca,
-  .Header-izquierda .Header-logo,
+/* Pantallas pequeñas (máximo ancho: 820px) */
+@media (max-width: 860px) {
   .Header-botonAnfitrion,
-  .Header-opcionCuando, /* Oculta la opción "¿Cuándo?" en pantallas pequeñas */
-  .Header-opcionCuando + .Header-divisor, /* Oculta el divisor siguiente a "¿Cuándo?" */
+  .Header-opcionCuando,
+  .Header-opcionCuando + .Header-divisor,
   .Header-derecha > .Header-iconoGlobo,
   .Header-opcionBusqueda:not(:first-child),
   .Header-divisor:not(:first-child),
@@ -203,23 +161,23 @@
   .Header-barraBusqueda {
     flex-grow: 1;
     justify-content: space-around;
-    max-width: 100%;
-    flex-direction: row-reverse;
+    max-width: 100%; /* Barra de búsqueda ocupa todo el ancho */
+    flex-direction: row-reverse; /* Invierte la disposición de los elementos */
   }
 
   .Header-iconoMenu {
-    display: none; /* Oculta FiMenu en pantallas pequeñas */
+    display: none; /* Oculta el ícono del menú */
   }
 
-  /* Muestra el contenedor circular para Header-iconoSettings en pantallas pequeñas */
+  /* Muestra el ícono de configuración con estilo circular */
   .Header-iconoSettingsWrapper {
-    display: flex; /* Muestra el contenedor circular en pantallas pequeñas */
+    display: flex;
     margin-right: 5px;
   }
 
   .Header-iconoSettings {
     font-size: 2.5rem;
-    color: #000000; 
+    color: #000000;
   }
 
   .Header-opcionBusqueda {
@@ -230,5 +188,16 @@
     flex-grow: 1;
     width: 1%;
     justify-content: flex-end;
+  }
+}
+
+/* Pantallas muy pequeñas (menores a 480px) */
+@media (max-width: 540px) {
+  .Header-izquierda {
+    display: none; /* Oculta todo el contenedor izquierdo */
+  }
+
+  .Header-barraBusqueda {
+    margin-left: 0; /* Elimina el margen izquierdo */
   }
 }
