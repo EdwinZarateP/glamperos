@@ -9,6 +9,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  position: relative; /* Asegura que los controles puedan posicionarse correctamente */
 }
 
 /* Contenedor del carrusel */
@@ -47,8 +48,12 @@
   display: flex;
   gap: 15px;
   color: white;
+  transform: translate(0, 0); /* Corrige cualquier desplazamiento inesperado */
+  margin: 0; /* Resetea márgenes para asegurar compatibilidad */
+  padding: 0; /* Resetea padding para evitar inconsistencias */
 }
 
+/* Ícono de compartir */
 .imgExp-compartir {
   font-size: 28px;
   color: black;
@@ -60,19 +65,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translate(0, 0); /* Previene problemas de Safari */
 }
 
-
+/* Ícono de corazón */
 .imgExp-corazon {
   font-size: 32px;
-  color: white;
   cursor: pointer;
-  color: red;
-  background: none;
-  border: none;
-  outline: none;
+  color: red; /* Color del corazón */
+  background: none; /* Sin fondo */
+  border: none; /* Sin bordes */
+  outline: none; /* Sin bordes de enfoque */
+  transform: translate(0, 0); /* Previene problemas en Safari */
+  margin: 0; /* Asegura que no haya márgenes predeterminados */
+  padding: 0; /* Asegura que no haya relleno predeterminado */
 }
-
 
 /* Contador en la esquina inferior derecha */
 .imgExp-contador {
