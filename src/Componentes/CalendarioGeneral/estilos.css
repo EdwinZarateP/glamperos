@@ -106,6 +106,7 @@
   font-size: 0.9rem;
   transition: all 0.3s ease;
   border: none; /* Sin borde predeterminado */
+  color: black;
 }
 
 .CalendarioGeneral-dia:hover {
@@ -131,8 +132,8 @@
   background: transparent; /* Sin fondo adicional */
   color: #bbb; /* Color base */
   cursor: not-allowed;
+  text-decoration: line-through; /* Sin línea */
   border: none; /* Sin borde */
-  Text-decoration: line-through;
 }
 
 /* Día deshabilitado */

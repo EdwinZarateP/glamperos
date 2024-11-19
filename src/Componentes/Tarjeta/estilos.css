@@ -11,13 +11,12 @@
   flex-direction: column;
   border-radius: 8px;
   margin: 8px;
-  max-width: 100%; /* Para ocupar todo el espacio disponible en dispositivos pequeños */
+  max-width: 100%;
   overflow: hidden;
   font-family: 'Lato', 'Poppins', sans-serif;
-  box-sizing: border-box;
   background-color: #fff;
   position: relative;
-  padding: 0; 
+  padding: 0;
 }
 
 /* Contenedor de la imagen con borde delgado */
@@ -26,13 +25,12 @@
   width: 100%;
   overflow: hidden;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Borde delgado y uniforme */
-  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .carrusel {
   display: flex;
-  transition: transform 0.5s ease; /* Transición suave */
+  transition: transform 0.5s ease;
 }
 
 .tarjeta-imagen {
@@ -40,26 +38,26 @@
   height: auto;
   object-fit: cover;
   flex-shrink: 0;
-  min-width: 100%; /* Asegura que cada imagen ocupe el ancho completo del contenedor */
+  min-width: 100%;
   border-radius: 8px;
 }
 
 /* Flechas de navegación */
 .flecha {
   position: absolute;
-  top: 30%;
-  font-size: 20px;
+  top: 40%;
+  font-size: 24px;
   color: rgba(0, 0, 0, 0.6);
   background-color: white;
   border: none;
   cursor: pointer;
   padding: 4px;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  opacity: 0; /* Oculta las flechas inicialmente */
-  transition: opacity 0.3s ease;
+  width: 32px;
+  height: 32px;
+  transform: translateY(-50%);
   z-index: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .flecha.izquierda {
@@ -70,37 +68,42 @@
   right: 10px;
 }
 
-/* Muestra las flechas solo cuando el mouse pasa sobre la tarjeta en pantallas grandes */
-.tarjeta:hover .flecha {
-  opacity: 1; /* Muestra las flechas cuando el mouse está sobre la tarjeta */
+/* Mostrar flechas solo en pantallas grandes */
+@media (min-width: 601px) {
+  .flecha {
+    opacity: 0;
+  }
+
+  .tarjeta:hover .flecha {
+    opacity: 1;
+  }
 }
 
 .flecha:hover {
-  transform: scale(1.2); /* Incrementa ligeramente el tamaño */
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* Puntos de navegación */
 .puntos {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .punto {
-  width: 5px; /* Tamaño reducido */
-  height: 5px;
-  background-color: rgba(199, 194, 194, 0.7); /* Fondo oscuro */
-  border: 1px solid gray; /* Borde gris para visibilidad */
+  width: 6px;
+  height: 6px;
+  background-color: rgba(166, 162, 162, 0.3);
   border-radius: 50%;
   transition: background-color 0.3s, transform 0.3s;
 }
 
 .punto.activo {
-  background-color: #d7d2d2; /* Color blanco para el punto activo */
-  transform: scale(1.2); /* Aumenta ligeramente el tamaño del punto activo */
+  background-color: rgba(215, 210, 210, 0.9);
+  transform: scale(1.2);
 }
 
 /* Información de la tarjeta */
@@ -143,18 +146,12 @@
   margin: 4px 0;
 }
 
-/* Precio dinámico */
 .tarjeta-precio {
   font-weight: bold;
   color: #333;
   font-size: 1em;
   display: block;
-  margin-top: 8px; /* Ajuste para espacio superior */
-  margin-bottom: 4px; /* Ajuste para espacio inferior */
-  white-space: nowrap; /* Evita el desbordamiento */
-  overflow: hidden;
-  text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es muy largo */
-  transition: color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+  margin-top: 4px;
 }
 
 /* Botón de favorito (corazón) */
@@ -167,7 +164,12 @@
   font-size: 32px;
   cursor: pointer;
   transition: color 0.1s;
-  z-index: 2; /* Asegura que esté sobre la imagen */
+  z-index: 2;
+}
+
+.corazon {
+  transition: color 0.1s, transform 0.1s;
+  color: gray;
 }
 
 .corazon.activo {
@@ -189,10 +191,6 @@
   /* Muestra los puntos de navegación solo en pantallas pequeñas */
   .puntos {
     display: flex;
-  }
-
-  .tarjeta-precio {
-    font-size: 0.9em; /* Ajusta el tamaño del texto para pantallas pequeñas */
   }
 }
 
