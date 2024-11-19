@@ -75,8 +75,8 @@
 
 /* Botones de los días */
 .calendario-dia {
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
+  background-color: transparent;
+  border: none;
   border-radius: 50%; /* Botones redondos */
   width: 40px; /* Tamaño uniforme */
   height: 40px; /* Tamaño uniforme */
@@ -86,41 +86,50 @@
   font-size: 0.9rem;
   cursor: pointer;
   text-align: center;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease, border 0.3s ease;
 }
 
 .calendario-dia:hover {
-  background-color: #e0e0e0;
-  transform: scale(1.1); /* Efecto al pasar el mouse */
+  background-color: rgba(47, 107, 62, 0.1); /* Fondo verde claro */
+  color: black;
 }
 
+/* Día seleccionado */
 .calendario-dia-seleccionado {
   background-color: #2F6B3E;
   color: white;
-  border: 2px solid #F2A900;
+  border: 2px solid #2F6B3E; /* Borde visible */
 }
 
+/* Rango de fechas seleccionado */
+.calendario-dia-rango {
+  background-color: rgba(47, 107, 62, 0.2); /* Fondo sombreado */
+  border: none; /* Sin borde en los días del rango */
+}
+
+/* Día reservado */
 .calendario-dia-reservada {
-  background-color: #ffe9e9;
-  color: #ff6767;
+  color: #bbb;
   text-decoration: line-through;
-  border: 1px solid #ff6767;
   cursor: not-allowed;
+  background-color: #f5f5f5;
 }
 
+/* Día deshabilitado */
 .calendario-dia-deshabilitado {
-  background-color: #e0e0e0;
-  color: #aaa;
+  background-color: #f5f5f5;
+  color: #bbb;
   cursor: not-allowed;
-  border-color: #ccc;
 }
 
+/* Día vacío */
 .calendario-dia-vacio {
   background-color: transparent;
   border: none;
   cursor: default;
 }
 
+/* Botones de navegación */
 .calendario-navegacion {
   background-color: #2F6B3E;
   color: white;
@@ -129,12 +138,14 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .calendario-navegacion:hover {
-  background-color: #F2A900;
+  background-color: #347f47;
 }
 
+/* Botón de borrar fechas */
 .calendario-boton-borrar {
   text-align: right;
   margin-top: 20px;
@@ -152,8 +163,10 @@
 }
 
 .calendario-borrar:hover {
-  background-color: #b3b6b4;
+  background-color: #aaa;
 }
+
+/* Responsividad */
 
 /* Ocultar el calendario completamente en pantallas menores a 600px */
 @media (max-width: 600px) {
@@ -163,7 +176,7 @@
 }
 
 /* Mostrar solo una columna en pantallas entre 600px y 960px */
-@media (max-width: 960px) and (min-width: 601px) {
+@media (max-width: 1200px) and (min-width: 601px) {
   .calendario-columnas {
     flex-direction: column;
     gap: 0;
@@ -175,7 +188,7 @@
 }
 
 /* Configuración predeterminada: Mostrar dos columnas en pantallas mayores a 960px */
-@media (min-width: 961px) {
+@media (min-width: 1200px) {
   .calendario-columnas {
     flex-direction: row;
   }

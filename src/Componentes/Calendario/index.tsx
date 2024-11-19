@@ -4,7 +4,7 @@ import { ContextoApp } from "../../Contexto/index";
 
 interface CalendarioProps {
   nombreGlamping: string;
-  FechasReservadas: Date[]; // Nueva propiedad
+  FechasReservadas: Date[];
 }
 
 const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservadas }) => {
@@ -24,13 +24,28 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
 
   useEffect(() => {
     if (fechaInicio && fechaFin) {
-      const diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
-      const dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+      let diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
+      let dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+
+      // Restar días reservados que están dentro del rango seleccionado
+      const diasReservadosEnRango = [];
+      for (let i = 0; i < dias; i++) {
+        const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
+        if (
+          FechasReservadas.some(
+            (fechaReservada) => fechaReservada.toDateString() === dia.toDateString()
+          )
+        ) {
+          diasReservadosEnRango.push(dia);
+        }
+      }
+      dias -= diasReservadosEnRango.length;
+
       setTotalDias(dias);
     } else {
       setTotalDias(0);
     }
-  }, [fechaInicio, fechaFin, setTotalDias]);
+  }, [fechaInicio, fechaFin, FechasReservadas, setTotalDias]);
 
   const formatearFecha = (fecha: Date): string => {
     const opciones: Intl.DateTimeFormatOptions = {
@@ -102,14 +117,17 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
       const fecha = new Date(anio, mes, dia);
       const deshabilitada = esFechaDeshabilitada(fecha);
       const reservada = esFechaReservada(fecha);
+      const seleccionado = esFechaSeleccionada(fecha);
 
       dias.push(
         <button
           key={dia}
           className={`calendario-dia ${
-            esFechaSeleccionada(fecha) ? "calendario-dia-seleccionado" : ""
+            seleccionado ? "calendario-dia-seleccionado" : ""
           } ${reservada ? "calendario-dia-reservada" : ""} ${
-            deshabilitada ? "calendario-dia-deshabilitado" : ""
+            seleccionado && fechaInicio && fechaFin && fecha > fechaInicio && fecha < fechaFin
+              ? "calendario-dia-rango"
+              : ""
           }`}
           onClick={() => !deshabilitada && !reservada && manejarClickFecha(fecha)}
           disabled={deshabilitada || reservada}

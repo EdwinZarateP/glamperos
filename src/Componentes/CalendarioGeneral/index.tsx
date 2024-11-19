@@ -19,13 +19,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     );
   }
 
-  const {
-    fechaInicio,
-    setFechaInicio,
-    fechaFin,
-    setFechaFin,
-    setTotalDias,
-  } = almacenVariables;
+  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, setTotalDias } = almacenVariables;
 
   const [mesesVisibles, setMesesVisibles] = useState<{ mes: number; anio: number }[]>([]);
 
@@ -46,18 +40,35 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     };
   }, []);
 
-  // Actualiza totalDias cuando cambian fechaInicio o fechaFin
   useEffect(() => {
     if (fechaInicio && fechaFin) {
-      const diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
-      const dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+      let diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
+      let dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+
+      // Restar días reservados que están dentro del rango seleccionado
+      const diasReservadosEnRango = [];
+      for (let i = 0; i < dias; i++) {
+        const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
+        if (
+          FechasReservadas.some(
+            (fechaReservada) => fechaReservada.toDateString() === dia.toDateString()
+          )
+        ) {
+          diasReservadosEnRango.push(dia);
+        }
+      }
+      dias -= diasReservadosEnRango.length;
+
       setTotalDias(dias);
     } else {
       setTotalDias(0);
     }
-  }, [fechaInicio, fechaFin, setTotalDias]);
+  }, [fechaInicio, fechaFin, FechasReservadas, setTotalDias]);
 
   const manejarClickFecha = (fecha: Date) => {
+    // Evita seleccionar días reservados
+    if (esFechaReservada(fecha)) return;
+
     if (!fechaInicio || (fechaInicio && fechaFin)) {
       setFechaInicio(fecha);
       setFechaFin(null);
@@ -72,7 +83,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   const manejarBorrarFechas = () => {
     setFechaInicio(null);
     setFechaFin(null);
-    setTotalDias(0); // Restablece totalDias a 0
+    setTotalDias(0);
   };
 
   const esFechaSeleccionada = (fecha: Date): boolean => {
@@ -116,14 +127,17 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       const fecha = new Date(anio, mes, dia);
       const deshabilitada = esFechaDeshabilitada(fecha);
       const reservada = esFechaReservada(fecha);
+      const seleccionado = esFechaSeleccionada(fecha);
 
       dias.push(
         <button
           key={dia}
           className={`CalendarioGeneral-dia ${
-            esFechaSeleccionada(fecha) ? "CalendarioGeneral-dia-seleccionado" : ""
+            seleccionado ? "CalendarioGeneral-dia-seleccionado" : ""
           } ${reservada ? "CalendarioGeneral-dia-reservada" : ""} ${
-            deshabilitada ? "CalendarioGeneral-dia-deshabilitado" : ""
+            seleccionado && fechaInicio && fechaFin && fecha > fechaInicio && fecha < fechaFin
+              ? "CalendarioGeneral-dia-rango"
+              : ""
           }`}
           onClick={() => !deshabilitada && !reservada && manejarClickFecha(fecha)}
           disabled={deshabilitada || reservada}
