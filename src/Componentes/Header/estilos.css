@@ -41,8 +41,10 @@
   margin: 8px 0;
   border: 0.5px solid #d3d3d3;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  height: 40px; /* Mantiene la altura constante */
 }
 
+/* Opciones dentro de la barra de búsqueda */
 .Header-opcionBusqueda {
   color: #2F6B3E;
   font-size: 0.8rem;
@@ -131,22 +133,7 @@
 
 /* Responsividad */
 
-/* Pantallas medianas (entre 480px y 820px) */
-@media (min-width: 540px) and (max-width: 860px) {
-  .Header-izquierda {
-    display: flex; /* Muestra el logo */
-  }
-
-  .Header-nombreMarca {
-    display: none; /* Oculta el nombre de la marca */
-  }
-
-  .Header-barraBusqueda{
-    margin-left: 80px;
-  }
-}
-
-/* Pantallas pequeñas (máximo ancho: 820px) */
+/* Pantallas pequeñas (máximo ancho: 860px) */
 @media (max-width: 860px) {
   .Header-botonAnfitrion,
   .Header-opcionCuando,
@@ -163,21 +150,26 @@
     justify-content: space-around;
     max-width: 100%; /* Barra de búsqueda ocupa todo el ancho */
     flex-direction: row-reverse; /* Invierte la disposición de los elementos */
+    height: 40px; /* Mantiene la altura constante */
+    position: relative; /* Asegura que los hijos se posicionen correctamente */
+  }
+
+  .Header-botonBusqueda {
+    position: absolute; /* Fija el botón dentro del contenedor */
+    left: 5px; /* Margen izquierdo */
+    margin-right: 10px;
+    top: 50%; /* Centra verticalmente */
+    transform: translateY(-50%); /* Ajusta el centrado vertical */
+    z-index: 10; /* Asegura que quede encima de otros elementos */
   }
 
   .Header-iconoMenu {
     display: none; /* Oculta el ícono del menú */
   }
 
-  /* Muestra el ícono de configuración con estilo circular */
   .Header-iconoSettingsWrapper {
-    display: flex;
+    display: flex; /* Muestra el ícono de configuración */
     margin-right: 5px;
-  }
-
-  .Header-iconoSettings {
-    font-size: 2.5rem;
-    color: #000000;
   }
 
   .Header-opcionBusqueda {
@@ -191,13 +183,49 @@
   }
 }
 
-/* Pantallas muy pequeñas (menores a 480px) */
+/* Pantallas medianas (entre 540px y 860px) */
+@media (min-width: 540px) and (max-width: 860px) {
+  .Header-izquierda {
+    display: flex; /* Muestra el logo */
+  }
+
+  .Header-nombreMarca {
+    display: none; /* Oculta el nombre de la marca */
+  }
+
+  .Header-barraBusqueda {
+    margin-left: 80px;
+    min-width: 320px;
+    height: 40px; /* Mantiene la altura constante */
+  }
+}
+
+/* Pantallas muy pequeñas (menores a 540px) */
 @media (max-width: 540px) {
   .Header-izquierda {
     display: none; /* Oculta todo el contenedor izquierdo */
   }
 
   .Header-barraBusqueda {
-    margin-left: 0; /* Elimina el margen izquierdo */
+    min-width: 315px;
+    margin-left: 20px;
+    height: 40px; /* Mantiene la altura constante */
+  }
+}
+
+/* Pantallas muy pequeñas (menores a 400px) */
+@media (max-width: 400px) {
+  .Header-izquierda {
+    display: none; /* Oculta todo el contenedor izquierdo */
+  }
+
+  .Header-barraBusqueda {
+    min-width: 235px;
+    margin-left: 5px;
+    height: 40px; /* Mantiene la altura constante */
+  }
+
+  .Header-opcionBusqueda {
+    margin-left: 20px;
   }
 }

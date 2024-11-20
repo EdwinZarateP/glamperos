@@ -53,31 +53,76 @@
   gap: 16px;
   margin-bottom: 25px;
 }
-
 /* ============================
    Campo de destino
 ============================ */
 .PanelBusqueda-destino {
   display: flex;
-  align-items: center;
-  background-color: #f8f8f8;
-  border-radius: 12px;
-  padding: 12px 16px;
-  border: 1px solid #ddd;
-}
-
-.PanelBusqueda-icono {
-  font-size: 1.5rem;
-  color: #666;
-  margin-right: 12px;
+  flex-direction: column;
+  position: relative;
 }
 
 .PanelBusqueda-input {
-  border: none;
-  background: none;
+  border: 1px solid #2F6B3E; /* Asegúrate de que el color del borde sea uniforme */
+  border-radius: 12px;
+  padding: 12px 40px 12px 40px; /* Ajusta el espacio para el ícono */
   font-size: 1rem;
-  flex: 1;
   outline: none;
+  background-color: #fff; /* Fondo blanco para claridad */
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.PanelBusqueda-input:focus {
+  border-color: #2F6B3E;
+  box-shadow: 0 0 5px rgba(47, 107, 62, 0.5); /* Añade un pequeño resplandor */
+}
+
+/* Icono de búsqueda */
+.PanelBusqueda-icono {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 1.2rem; /* Reduce un poco el tamaño del ícono */
+  color: #666;
+  pointer-events: none; /* El ícono no debe interferir con los clics */
+}
+
+
+/* Sugerencias de autocompletado */
+.PanelBusqueda-sugerencias {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.PanelBusqueda-sugerencia {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.PanelBusqueda-sugerencia:hover {
+  background: #e8f5e9;
+  color: #2F6B3E;
+}
+
+/* Añade un resaltado al seleccionar */
+.PanelBusqueda-sugerencia:active {
+  background: #d4e6d5;
 }
 
 /* ============================
@@ -205,28 +250,24 @@
   background: #347f47;
 }
 
-/* Contenedor para versículo e imagen */
+/* Versículo dentro del contenedor Visitantes-modal */
 .Visitantes-versiculo-contenedor {
   display: flex;
   align-items: center;
-  gap: 10px;
   margin-top: 16px;
-  padding-left: 20px;
+  text-align: center;
 }
 
-/* Imagen al lado del versículo */
 .Visitantes-icono-amistad {
-  width: 24px; /* Ajusta el tamaño según necesidad */
+  width: 24px;
   height: 24px;
+  margin-right: 8px;
 }
 
-/* Versículo dentro del contenedor Visitantes-modal */
 .Visitantes-versiculo {
   font-size: 0.8rem;
   color: #555;
-  text-align: left;
   font-style: italic;
-
 }
 
 /* ============================
@@ -245,10 +286,4 @@ body.no-scroll {
     width: 95%;
     min-width: 340px;
   }
-  
-  /* Contenedor para versículo e imagen */
-  .Visitantes-versiculo-contenedor {
-    padding-left: 0;
-  }
-
 }

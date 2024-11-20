@@ -1,9 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { FiSearch } from "react-icons/fi";
 import CalendarioGeneral from "../CalendarioGeneral";
 import Visitantes from "../Visitantes";
 import { ContextoApp } from "../../Contexto/index";
 import parejaIcono from "../../Imagenes/pareja.png";
+import municipios from "../BaseCiudades/municipios.json"; // Importación del archivo JSON
 import "./estilos.css";
 
 interface PanelBusquedaProps {
@@ -12,9 +13,12 @@ interface PanelBusquedaProps {
 }
 
 const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => {
-  const [destino, setDestino] = useState('');
+  const [destino, setDestino] = useState("");
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const [mostrarVisitantes, setMostrarVisitantes] = useState(false);
+  const [sugerencias, setSugerencias] = useState<string[]>([]);
+  const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
+
 
   const almacenVariables = useContext(ContextoApp);
 
@@ -37,9 +41,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
   } = almacenVariables;
 
   const manejarBuscar = () => {
-    const fechas = fechaInicio && fechaFin
-      ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}`
-      : '';
+    const fechas = fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "";
     const totalHuespedes = Cantidad_Adultos + Cantidad_Niños;
     onBuscar(destino, fechas, totalHuespedes);
     onCerrar();
@@ -54,14 +56,45 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
   };
 
   const formatFecha = (fecha: Date): string => {
-    return fecha.toLocaleDateString('es-ES', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
+    return fecha.toLocaleDateString("es-ES", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     });
   };
 
-  // Efecto para deshabilitar el scroll cuando el PanelBusqueda está abierto
+  const buscarSugerenciasDesdeJSON = useCallback(
+    (query: string) => {
+      if (query.length > 2) {
+        const resultados = municipios
+          .filter((municipio: any) =>
+            municipio.CIUDAD_DEPARTAMENTO.toLowerCase().includes(query.toLowerCase())
+          )
+          .map((municipio: any) => municipio.CIUDAD_DEPARTAMENTO)
+          .slice(0, 10); // Limitar a 10 resultados
+        setSugerencias(resultados);
+      } else {
+        setSugerencias([]);
+      }
+    },
+    []
+  );
+
+  const manejarCambioDestino = (query: string) => {
+    setDestino(query);
+    if (timeoutId) clearTimeout(timeoutId);
+
+    const newTimeoutId = setTimeout(() => {
+      buscarSugerenciasDesdeJSON(query);
+    }, 300); // Debounce de 300 ms
+    setTimeoutId(newTimeoutId);
+  };
+
+  const manejarSeleccionSugerencia = (sugerencia: string) => {
+    setDestino(sugerencia);
+    setSugerencias([]); // Ocultar las sugerencias inmediatamente
+  };
+
   useEffect(() => {
     document.body.classList.add("no-scroll");
     return () => {
@@ -84,16 +117,27 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               placeholder="Explora destinos"
               className="PanelBusqueda-input"
               value={destino}
-              onChange={(e) => setDestino(e.target.value)}
+              onChange={(e) => manejarCambioDestino(e.target.value)}
             />
+            {sugerencias.length > 0 && (
+              <div className="PanelBusqueda-sugerencias">
+                {sugerencias.map((sugerencia, index) => (
+                  <div
+                    key={index}
+                    className="PanelBusqueda-sugerencia"
+                    onClick={() => manejarSeleccionSugerencia(sugerencia)}
+                  >
+                    {sugerencia}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="PanelBusqueda-fechas" onClick={() => setMostrarCalendario(true)}>
             <span className="PanelBusqueda-fechas-titulo">Fechas</span>
             <span className="PanelBusqueda-fechas-valor">
-              {fechaInicio && fechaFin
-                ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}`
-                : "Selecciona fechas"}
+              {fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "Selecciona fechas"}
             </span>
           </div>
 
@@ -101,8 +145,8 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             <span className="PanelBusqueda-huespedes-titulo">Huéspedes</span>
             <span className="PanelBusqueda-huespedes-valor">
               {Cantidad_Adultos + Cantidad_Niños > 0
-                ? `${Cantidad_Adultos + Cantidad_Niños} huésped${Cantidad_Adultos + Cantidad_Niños > 1 ? 'es' : ''}`
-                : 'Agrega huéspedes'}
+                ? `${Cantidad_Adultos + Cantidad_Niños} huésped${Cantidad_Adultos + Cantidad_Niños > 1 ? "es" : ""}`
+                : "Agrega huéspedes"}
             </span>
           </div>
         </div>
@@ -111,7 +155,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
           <button
             className="PanelBusqueda-limpiar"
             onClick={() => {
-              setDestino('');
+              setDestino("");
               setFechaInicio(null);
               setFechaFin(null);
               setCantidad_Adultos(0);
@@ -130,9 +174,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
         </div>
       </div>
 
-      {mostrarCalendario && (
-        <CalendarioGeneral cerrarCalendario={cerrarCalendario} FechasReservadas={[]} />
-      )}
+      {mostrarCalendario && <CalendarioGeneral cerrarCalendario={cerrarCalendario} FechasReservadas={[]} />}
 
       {mostrarVisitantes && (
         <>
@@ -143,11 +185,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               Ellos son los elegidos
             </button>
             <div className="Visitantes-versiculo-contenedor">
-              <img
-                src={parejaIcono}
-                alt="Icono de amistad"
-                className="Visitantes-icono-amistad"
-              />
+              <img src={parejaIcono} alt="Icono de amistad" className="Visitantes-icono-amistad" />
               <p className="Visitantes-versiculo">
                 Ámense unos a otros con un afecto genuino y deléitense al honrarse mutuamente. Romanos 12:10
               </p>
