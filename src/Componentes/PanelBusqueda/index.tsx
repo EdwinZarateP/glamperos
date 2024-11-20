@@ -3,6 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import CalendarioGeneral from "../CalendarioGeneral";
 import Visitantes from "../Visitantes";
 import { ContextoApp } from "../../Contexto/index";
+import parejaIcono from "../../Imagenes/pareja.png";
 import "./estilos.css";
 
 interface PanelBusquedaProps {
@@ -141,6 +142,16 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             <button className="Visitantes-cerrar" onClick={cerrarVisitantes}>
               Ellos son los elegidos
             </button>
+            <div className="Visitantes-versiculo-contenedor">
+              <img
+                src={parejaIcono}
+                alt="Icono de amistad"
+                className="Visitantes-icono-amistad"
+              />
+              <p className="Visitantes-versiculo">
+                Ámense unos a otros con un afecto genuino y deléitense al honrarse mutuamente. Romanos 12:10
+              </p>
+            </div>
           </div>
         </>
       )}

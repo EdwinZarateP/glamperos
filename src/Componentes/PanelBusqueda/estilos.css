@@ -15,6 +15,9 @@
    Contenedor principal del panel
 ============================ */
 .PanelBusqueda-contenedor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   position: fixed;
   top: 70px;
   left: 50%;
@@ -26,9 +29,8 @@
   width: 95%;
   max-width: 450px;
   min-width: 340px;
-  height: 370px;
+  height: 410px;
   z-index: 1000;
-
 }
 
 /* ============================
@@ -203,6 +205,30 @@
   background: #347f47;
 }
 
+/* Contenedor para versículo e imagen */
+.Visitantes-versiculo-contenedor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-left: 20px;
+}
+
+/* Imagen al lado del versículo */
+.Visitantes-icono-amistad {
+  width: 24px; /* Ajusta el tamaño según necesidad */
+  height: 24px;
+}
+
+/* Versículo dentro del contenedor Visitantes-modal */
+.Visitantes-versiculo {
+  font-size: 0.8rem;
+  color: #555;
+  text-align: left;
+  font-style: italic;
+
+}
+
 /* ============================
    Deshabilitar scroll en el fondo
 ============================ */
@@ -219,4 +245,10 @@ body.no-scroll {
     width: 95%;
     min-width: 340px;
   }
+  
+  /* Contenedor para versículo e imagen */
+  .Visitantes-versiculo-contenedor {
+    padding-left: 0;
+  }
+
 }
