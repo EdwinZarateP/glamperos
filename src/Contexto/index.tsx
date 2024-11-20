@@ -19,6 +19,8 @@ interface ContextProps {
   // Variables de tipo string
   nombre: string; // Variable para almacenar un nombre
   setNombre: Dispatch<SetStateAction<string>>;
+  ciudad_departamento: string; // Nueva variable para almacenar ciudad_departamento
+  setCiudad_departamento: Dispatch<SetStateAction<string>>; // Setter para ciudad_departamento
 
   // Variables de tipo fecha
   fechaInicio: Date | null; // Fecha de inicio seleccionada
@@ -70,6 +72,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
 
   // Estados para las variables de tipo string
   const [nombre, setNombre] = useState(''); // Almacena un nombre genérico
+  const [ciudad_departamento, setCiudad_departamento] = useState(''); // Estado para ciudad_departamento
 
   // Estados para fechas
   const [fechaInicio, setFechaInicio] = useState<Date | null>(null); // Fecha de inicio seleccionada
@@ -96,7 +99,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   //-------------------------------------------------------------------------------------
   // 3. Crea el objeto de contexto con los valores y funciones necesarios que quieres proveer
   //-------------------------------------------------------------------------------------
-   const contextValue: ContextProps = {
+  const contextValue: ContextProps = {
     // Manejo de apertura y cierre
     estaAbiertoAlgo,
     setEstaAbiertoAlgo,
@@ -106,6 +109,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     // Variables de tipo string
     nombre,
     setNombre,
+    ciudad_departamento,
+    setCiudad_departamento, // Añadir al objeto del contexto
 
     // Variables de tipo fecha
     fechaInicio,
@@ -138,11 +143,6 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setCantidad_Mascotas,
   };
 
-  
   // Renderiza el proveedor de contexto con el valor proporcionado
-  return (
-    <ContextoApp.Provider value={contextValue}>
-      {hijo}
-    </ContextoApp.Provider>
-  );
+  return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;
 };

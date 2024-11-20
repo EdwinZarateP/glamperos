@@ -13,13 +13,6 @@ interface PanelBusquedaProps {
 }
 
 const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => {
-  const [destino, setDestino] = useState("");
-  const [mostrarCalendario, setMostrarCalendario] = useState(false);
-  const [mostrarVisitantes, setMostrarVisitantes] = useState(false);
-  const [sugerencias, setSugerencias] = useState<string[]>([]);
-  const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
-
-
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -38,7 +31,16 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setCantidad_Bebes,
     setCantidad_Mascotas,
     setTotalDias,
+    ciudad_departamento,
+    setCiudad_departamento,
   } = almacenVariables;
+
+  const [destino, setDestino] = useState(ciudad_departamento || "");
+  const [mostrarCalendario, setMostrarCalendario] = useState(false);
+  const [mostrarVisitantes, setMostrarVisitantes] = useState(false);
+  const [sugerencias, setSugerencias] = useState<string[]>([]);
+  const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const [sugerenciaActiva, setSugerenciaActiva] = useState<number>(-1); // Índice de la sugerencia activa
 
   const manejarBuscar = () => {
     const fechas = fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "";
@@ -65,7 +67,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
 
   const buscarSugerenciasDesdeJSON = useCallback(
     (query: string) => {
-      if (query.length > 2) {
+      if (query.length > 1) {
         const resultados = municipios
           .filter((municipio: any) =>
             municipio.CIUDAD_DEPARTAMENTO.toLowerCase().includes(query.toLowerCase())
@@ -82,17 +84,38 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
 
   const manejarCambioDestino = (query: string) => {
     setDestino(query);
+    setSugerenciaActiva(-1); // Reiniciar la sugerencia activa
     if (timeoutId) clearTimeout(timeoutId);
 
     const newTimeoutId = setTimeout(() => {
       buscarSugerenciasDesdeJSON(query);
-    }, 300); // Debounce de 300 ms
+    }, 0); // Debounce de 0 ms
     setTimeoutId(newTimeoutId);
   };
 
   const manejarSeleccionSugerencia = (sugerencia: string) => {
     setDestino(sugerencia);
-    setSugerencias([]); // Ocultar las sugerencias inmediatamente
+    setCiudad_departamento(sugerencia);
+    setSugerencias([]);
+    setSugerenciaActiva(-1); // Reiniciar la sugerencia activa
+  };
+
+  const manejarTecla = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (sugerencias.length === 0) return;
+
+    if (e.key === "ArrowDown") {
+      // Navegar hacia abajo en las sugerencias
+      setSugerenciaActiva((prev) => (prev < sugerencias.length - 1 ? prev + 1 : 0));
+    } else if (e.key === "ArrowUp") {
+      // Navegar hacia arriba en las sugerencias
+      setSugerenciaActiva((prev) => (prev > 0 ? prev - 1 : sugerencias.length - 1));
+    } else if (e.key === "Enter") {
+      // Seleccionar la sugerencia activa
+      if (sugerenciaActiva >= 0 && sugerenciaActiva < sugerencias.length) {
+        manejarSeleccionSugerencia(sugerencias[sugerenciaActiva]);
+        e.preventDefault(); // Evitar comportamiento por defecto (como enviar formularios)
+      }
+    }
   };
 
   useEffect(() => {
@@ -118,13 +141,16 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               className="PanelBusqueda-input"
               value={destino}
               onChange={(e) => manejarCambioDestino(e.target.value)}
+              onKeyDown={manejarTecla} // Manejo de las teclas
             />
             {sugerencias.length > 0 && (
               <div className="PanelBusqueda-sugerencias">
                 {sugerencias.map((sugerencia, index) => (
                   <div
                     key={index}
-                    className="PanelBusqueda-sugerencia"
+                    className={`PanelBusqueda-sugerencia ${
+                      sugerenciaActiva === index ? "activo" : ""
+                    }`} // Agrega una clase "activo" para la sugerencia seleccionada
                     onClick={() => manejarSeleccionSugerencia(sugerencia)}
                   >
                     {sugerencia}
@@ -156,6 +182,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             className="PanelBusqueda-limpiar"
             onClick={() => {
               setDestino("");
+              setCiudad_departamento("");
               setFechaInicio(null);
               setFechaFin(null);
               setCantidad_Adultos(0);
