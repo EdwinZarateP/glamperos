@@ -27,7 +27,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   hoy.setHours(0, 0, 0, 0);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     const meses = [];
     for (let i = 0; i < 18; i++) {
       const nuevoMes = new Date(hoy.getFullYear(), hoy.getMonth() + i, 1);
@@ -36,7 +36,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     setMesesVisibles(meses);
 
     return () => {
-      document.body.style.overflow = "auto";
+      // document.body.style.overflow = "auto";
     };
   }, []);
 
@@ -173,13 +173,18 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
           ))}
         </div>
         <div className="CalendarioGeneral-botones">
-          <button onClick={manejarBorrarFechas} className="CalendarioGeneral-boton-borrar">
-            Borrar fechas
-          </button>
-          <button onClick={cerrarCalendario} className="CalendarioGeneral-boton-siguiente">
-            Siguiente
-          </button>
-        </div>
+        <button onClick={manejarBorrarFechas} className="CalendarioGeneral-boton-borrar">
+          Borrar fechas
+        </button>
+        <button
+          onClick={cerrarCalendario}
+          className="CalendarioGeneral-boton-siguiente"
+          disabled={!fechaFin} // Deshabilitado si no se ha seleccionado una fecha de fin
+          >
+          Quiero estas Fechas
+        </button>
+       </div>
+
       </div>
     </>
   );

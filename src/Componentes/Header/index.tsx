@@ -1,13 +1,14 @@
+// Header.tsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { VscSettings } from "react-icons/vsc";
-import PanelBusqueda from "../PanelBusqueda"; // Importar el nuevo componente
+import PanelBusqueda from "../PanelBusqueda"; // Importar el componente
 import "./estilos.css";
 
 const Header: React.FC = () => {
-  const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false);
+  const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false); // Estado para mostrar el PanelBusqueda
   const [busqueda, setBusqueda] = useState({
     destino: "",
     fechas: "",
@@ -15,16 +16,18 @@ const Header: React.FC = () => {
   });
 
   const manejarClickBusqueda = () => {
-    setMostrarPanelBusqueda(true);
+    setMostrarPanelBusqueda(true); // Mostrar el PanelBusqueda
+    document.body.style.overflow = "hidden"; // Desactiva el scroll del fondo
   };
 
   const cerrarPanelBusqueda = () => {
-    setMostrarPanelBusqueda(false);
+    setMostrarPanelBusqueda(false); // Cerrar el PanelBusqueda
+    document.body.style.overflow = "auto"; // Reactiva el scroll del fondo
   };
 
   const manejarBusqueda = (destino: string, fechas: string, huespedes: number) => {
-    setBusqueda({ destino, fechas, huespedes });
-    setMostrarPanelBusqueda(false);
+    setBusqueda({ destino, fechas, huespedes }); // Actualiza la búsqueda
+    cerrarPanelBusqueda(); // Cierra el PanelBusqueda
   };
 
   return (
@@ -37,7 +40,7 @@ const Header: React.FC = () => {
 
         <div
           className="Header-barraBusqueda"
-          onClick={manejarClickBusqueda} // Muestra el PanelBusqueda
+          onClick={manejarClickBusqueda} // Activa el PanelBusqueda
         >
           <span className="Header-opcionBusqueda">
             {busqueda.destino || "Busca un refugio encantador"}
@@ -66,10 +69,11 @@ const Header: React.FC = () => {
         </div>
       </header>
 
+      {/* Renderiza el PanelBusqueda si mostrarPanelBusqueda es true */}
       {mostrarPanelBusqueda && (
         <PanelBusqueda
-          onBuscar={manejarBusqueda} // Maneja la búsqueda
-          onCerrar={cerrarPanelBusqueda} // Cierra el panel
+          onBuscar={manejarBusqueda} // Callback para manejar la búsqueda
+          onCerrar={cerrarPanelBusqueda} // Callback para cerrar el panel
         />
       )}
     </>

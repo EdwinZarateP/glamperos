@@ -16,6 +16,8 @@
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
+  max-width: 450px;
+  min-width: 340px;
   height: 90%;
   background: white;
   display: flex;
@@ -24,12 +26,11 @@
   border-radius: 12px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  font-family: "Poppins", sans-serif;
 }
 
 @media (min-width: 600px) {
   .CalendarioGeneral {
-    width: 35%;
+    min-width: 340px; /* Cambiado a 450px */
   }
 }
 
@@ -95,55 +96,55 @@
 
 /* Botones de los días (por defecto) */
 .CalendarioGeneral-dia {
-  color: black; /* Letra negra predeterminada */
+  color: black;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: transparent; /* Fondo transparente */
+  background: transparent;
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  border: none; /* Sin borde predeterminado */
+  border: none;
 }
 
 .CalendarioGeneral-dia:hover {
-  background: rgba(0, 0, 0, 0.01); /* Fondo ligero al pasar el cursor */
-  color: black; /* Asegura que el hover mantenga el texto negro */
+  background: rgba(0, 0, 0, 0.01);
+  color: black;
 }
 
 /* Día seleccionado */
 .CalendarioGeneral-dia-seleccionado {
   background: #2F6B3E;
   color: white;
-  border: 2px solid #2F6B3E; /* Borde visible al seleccionar */
+  border: 2px solid #2F6B3E;
 }
 
 /* Rango de fechas seleccionado */
 .CalendarioGeneral-dia-rango {
-  background: rgba(47, 107, 62, 0.2); /* Fondo sombreado */
-  border: none; /* Sin borde en los días del rango */
+  background: rgba(47, 107, 62, 0.2);
+  border: none;
 }
 
 /* Día reservado */
 .CalendarioGeneral-dia-reservada {
-  background: transparent; /* Sin fondo adicional */
-  color: #bbb; /* Color base */
+  background: transparent;
+  color: #bbb;
   cursor: not-allowed;
-  text-decoration: line-through; /* Sin línea */
-  border: none; /* Sin borde */
+  text-decoration: line-through;
+  border: none;
 }
 
 /* Día deshabilitado */
 .CalendarioGeneral-dia-deshabilitado {
-  color: #bbb; /* Letra gris */
-  background: transparent; /* Sin fondo */
+  color: #bbb;
+  background: transparent;
   cursor: not-allowed;
 }
 
-/* Días vacíos (espacios iniciales en el calendario) */
+/* Días vacíos */
 .CalendarioGeneral-dia-vacio {
   visibility: hidden;
 }
@@ -184,4 +185,11 @@
 
 .CalendarioGeneral-boton-siguiente:hover {
   background: #347f47;
+}
+
+/* Botón deshabilitado */
+.CalendarioGeneral-boton-siguiente:disabled {
+  background: #bbb;
+  color: #fff;
+  cursor: not-allowed;
 }
