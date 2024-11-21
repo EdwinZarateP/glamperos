@@ -134,8 +134,8 @@
 
 /* Responsividad */
 
-/* Pantallas pequeñas (máximo ancho: 860px) */
-@media (max-width: 860px) {
+/* Pantallas pequeñas (máximo ancho: 900px) */
+@media (max-width: 900px) {
   .Header-botonAnfitrion,
   .Header-opcionCuando,
   .Header-opcionCuando + .Header-divisor,
@@ -153,6 +153,7 @@
     flex-direction: row-reverse; /* Invierte la disposición de los elementos */
     height: 40px; /* Mantiene la altura constante */
     position: relative; /* Asegura que los hijos se posicionen correctamente */
+    margin-left: 80px;
   }
 
   .Header-botonBusqueda {
@@ -189,14 +190,14 @@
   .Header-izquierda {
     display: flex; /* Muestra el logo */
   }
-
+/* 
   .Header-nombreMarca {
-    display: none; /* Oculta el nombre de la marca */
-  }
+    display: none; 
+  } */
 
   .Header-barraBusqueda {
-    margin-left: 80px;
-    min-width: 68%;
+    margin-left: 20px;
+    min-width: 55%;
     height: 40px; /* Mantiene la altura constante */
   }
 }

@@ -52,7 +52,9 @@ const Header: React.FC = () => {
           onClick={manejarClickBusqueda} // Activa el PanelBusqueda
         >
           <span className="Header-opcionBusqueda">
-            {busqueda.destino || "Busca un refugio encantador"}
+            {busqueda.destino
+              ? busqueda.destino.substring(0,20) + (busqueda.destino.length > 30 ? "..." : "")
+              : "Busca un refugio encantador"}
           </span>
           <span className="Header-divisor">|</span>
           <span className="Header-opcionCuando">{busqueda.fechas || "¿Cuándo?"}</span>
