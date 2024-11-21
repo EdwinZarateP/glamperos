@@ -63,7 +63,15 @@
   position: relative;
 }
 
+.PanelBusqueda-inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
 .PanelBusqueda-input {
+  flex-grow: 1;
   border: 1px solid #2F6B3E;
   border-radius: 12px;
   padding: 12px 40px 12px 40px;
@@ -71,14 +79,27 @@
   outline: none;
   background-color: #fff;
   color: #333;
-  width: 100%;
-  box-sizing: border-box;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .PanelBusqueda-input:focus {
   border-color: #2F6B3E;
   box-shadow: 0 0 5px rgba(47, 107, 62, 0.5);
+}
+
+/* Botón para borrar el contenido del input */
+.PanelBusqueda-botonBorrar {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.PanelBusqueda-botonBorrar:hover {
+  color: #000;
 }
 
 /* Icono de búsqueda */

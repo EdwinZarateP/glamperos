@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import { FiSearch } from "react-icons/fi";
+import { MdClose } from "react-icons/md"; // Icono de "X" para borrar
 import CalendarioGeneral from "../CalendarioGeneral";
 import Visitantes from "../Visitantes";
 import { ContextoApp } from "../../Contexto/index";
@@ -56,6 +57,13 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       year: "numeric",
     });
   };
+
+  // Fechas reservadas (puedes modificar este array según tus necesidades)
+  const FechasReservadas: Date[] = [
+    new Date(2024, 11, 24),
+    new Date(2024, 11, 25),
+    new Date(2024, 11, 31),
+  ];
 
   const buscarSugerenciasDesdeJSON = useCallback(
     (query: string) => {
@@ -118,13 +126,6 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     };
   }, []);
 
-  // Fechas reservadas (puedes modificar este array según tus necesidades)
-  const FechasReservadas: Date[] = [
-    new Date(2024, 11, 24),
-    new Date(2024, 11, 25),
-    new Date(2024, 11, 31),
-  ];
-
   return (
     <>
       <div className="PanelBusqueda-fondo" onClick={onCerrar}></div>
@@ -135,14 +136,24 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
         <div className="PanelBusqueda-barra">
           <div className="PanelBusqueda-destino">
             <FiSearch className="PanelBusqueda-icono" />
-            <input
-              type="text"
-              placeholder="Explora destinos"
-              className="PanelBusqueda-input"
-              value={destino}
-              onChange={(e) => manejarCambioDestino(e.target.value)}
-              onKeyDown={manejarTecla}
-            />
+            <div className="PanelBusqueda-inputWrapper">
+              <input
+                type="text"
+                placeholder="Explora destinos"
+                className="PanelBusqueda-input"
+                value={destino}
+                onChange={(e) => manejarCambioDestino(e.target.value)}
+                onKeyDown={manejarTecla}
+              />
+              {destino && (
+                <button
+                  className="PanelBusqueda-botonBorrar"
+                  onClick={() => setDestino("")}
+                >
+                  <MdClose />
+                </button>
+              )}
+            </div>
             {sugerencias.length > 0 && (
               <div className="PanelBusqueda-sugerencias">
                 {sugerencias.map((sugerencia, index) => (
@@ -207,7 +218,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       )}
 
       {mostrarVisitantes && (
-        <div >
+        <div>
           <Visitantes onCerrar={() => setMostrarVisitantes(false)} />
         </div>
       )}

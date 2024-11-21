@@ -53,6 +53,8 @@
   font-weight: bold;
 }
 
+
+
 .Header-opcionBusquedaInvitados {
   color: #aca8a2;
   font-weight: normal;
@@ -190,10 +192,7 @@
   .Header-izquierda {
     display: flex; /* Muestra el logo */
   }
-/* 
-  .Header-nombreMarca {
-    display: none; 
-  } */
+
 
   .Header-barraBusqueda {
     margin-left: 20px;
