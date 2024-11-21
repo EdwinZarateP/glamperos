@@ -3,8 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import CalendarioGeneral from "../CalendarioGeneral";
 import Visitantes from "../Visitantes";
 import { ContextoApp } from "../../Contexto/index";
-import parejaIcono from "../../Imagenes/pareja.png";
-import municipios from "../BaseCiudades/municipios.json"; // Importación del archivo JSON
+import municipios from "../BaseCiudades/municipios.json";
 import "./estilos.css";
 
 interface PanelBusquedaProps {
@@ -24,37 +23,30 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     fechaFin,
     setFechaInicio,
     setFechaFin,
-    Cantidad_Adultos,
-    Cantidad_Niños,
+    setTotalDias,
+    ciudad_departamento,
+    setCiudad_departamento,
+    totalHuespedes,
+    setTotalHuespedes,
     setCantidad_Adultos,
     setCantidad_Niños,
     setCantidad_Bebes,
     setCantidad_Mascotas,
-    setTotalDias,
-    ciudad_departamento,
-    setCiudad_departamento,
+    mostrarCalendario,
+    setMostrarCalendario,
+    mostrarVisitantes,
+    setMostrarVisitantes,
   } = almacenVariables;
 
   const [destino, setDestino] = useState(ciudad_departamento || "");
-  const [mostrarCalendario, setMostrarCalendario] = useState(false);
-  const [mostrarVisitantes, setMostrarVisitantes] = useState(false);
   const [sugerencias, setSugerencias] = useState<string[]>([]);
   const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
-  const [sugerenciaActiva, setSugerenciaActiva] = useState<number>(-1); // Índice de la sugerencia activa
+  const [sugerenciaActiva, setSugerenciaActiva] = useState<number>(-1);
 
   const manejarBuscar = () => {
     const fechas = fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "";
-    const totalHuespedes = Cantidad_Adultos + Cantidad_Niños;
     onBuscar(destino, fechas, totalHuespedes);
     onCerrar();
-  };
-
-  const cerrarCalendario = () => {
-    setMostrarCalendario(false);
-  };
-
-  const cerrarVisitantes = () => {
-    setMostrarVisitantes(false);
   };
 
   const formatFecha = (fecha: Date): string => {
@@ -73,7 +65,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             municipio.CIUDAD_DEPARTAMENTO.toLowerCase().includes(query.toLowerCase())
           )
           .map((municipio: any) => municipio.CIUDAD_DEPARTAMENTO)
-          .slice(0, 10); // Limitar a 10 resultados
+          .slice(0, 10);
         setSugerencias(resultados);
       } else {
         setSugerencias([]);
@@ -84,12 +76,12 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
 
   const manejarCambioDestino = (query: string) => {
     setDestino(query);
-    setSugerenciaActiva(-1); // Reiniciar la sugerencia activa
+    setSugerenciaActiva(-1);
     if (timeoutId) clearTimeout(timeoutId);
 
     const newTimeoutId = setTimeout(() => {
       buscarSugerenciasDesdeJSON(query);
-    }, 0); // Debounce de 0 ms
+    }, 0);
     setTimeoutId(newTimeoutId);
   };
 
@@ -97,23 +89,24 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setDestino(sugerencia);
     setCiudad_departamento(sugerencia);
     setSugerencias([]);
-    setSugerenciaActiva(-1); // Reiniciar la sugerencia activa
+    setSugerenciaActiva(-1);
+
+    if (!fechaFin) {
+      setMostrarCalendario(true);
+    }
   };
 
   const manejarTecla = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (sugerencias.length === 0) return;
 
     if (e.key === "ArrowDown") {
-      // Navegar hacia abajo en las sugerencias
       setSugerenciaActiva((prev) => (prev < sugerencias.length - 1 ? prev + 1 : 0));
     } else if (e.key === "ArrowUp") {
-      // Navegar hacia arriba en las sugerencias
       setSugerenciaActiva((prev) => (prev > 0 ? prev - 1 : sugerencias.length - 1));
     } else if (e.key === "Enter") {
-      // Seleccionar la sugerencia activa
       if (sugerenciaActiva >= 0 && sugerenciaActiva < sugerencias.length) {
         manejarSeleccionSugerencia(sugerencias[sugerenciaActiva]);
-        e.preventDefault(); // Evitar comportamiento por defecto (como enviar formularios)
+        e.preventDefault();
       }
     }
   };
@@ -124,6 +117,13 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       document.body.classList.remove("no-scroll");
     };
   }, []);
+
+  // Fechas reservadas (puedes modificar este array según tus necesidades)
+  const FechasReservadas: Date[] = [
+    new Date(2024, 11, 24),
+    new Date(2024, 11, 25),
+    new Date(2024, 11, 31),
+  ];
 
   return (
     <>
@@ -141,16 +141,14 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               className="PanelBusqueda-input"
               value={destino}
               onChange={(e) => manejarCambioDestino(e.target.value)}
-              onKeyDown={manejarTecla} // Manejo de las teclas
+              onKeyDown={manejarTecla}
             />
             {sugerencias.length > 0 && (
               <div className="PanelBusqueda-sugerencias">
                 {sugerencias.map((sugerencia, index) => (
                   <div
                     key={index}
-                    className={`PanelBusqueda-sugerencia ${
-                      sugerenciaActiva === index ? "activo" : ""
-                    }`} // Agrega una clase "activo" para la sugerencia seleccionada
+                    className={`PanelBusqueda-sugerencia ${sugerenciaActiva === index ? "activo" : ""}`}
                     onClick={() => manejarSeleccionSugerencia(sugerencia)}
                   >
                     {sugerencia}
@@ -163,15 +161,17 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
           <div className="PanelBusqueda-fechas" onClick={() => setMostrarCalendario(true)}>
             <span className="PanelBusqueda-fechas-titulo">Fechas</span>
             <span className="PanelBusqueda-fechas-valor">
-              {fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "Selecciona fechas"}
+              {fechaInicio && fechaFin
+                ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}`
+                : "Selecciona fechas"}
             </span>
           </div>
 
           <div className="PanelBusqueda-huespedes" onClick={() => setMostrarVisitantes(true)}>
             <span className="PanelBusqueda-huespedes-titulo">Huéspedes</span>
             <span className="PanelBusqueda-huespedes-valor">
-              {Cantidad_Adultos + Cantidad_Niños > 0
-                ? `${Cantidad_Adultos + Cantidad_Niños} huésped${Cantidad_Adultos + Cantidad_Niños > 1 ? "es" : ""}`
+              {totalHuespedes > 0
+                ? `${totalHuespedes} huésped${totalHuespedes > 1 ? "es" : ""}`
                 : "Agrega huéspedes"}
             </span>
           </div>
@@ -185,11 +185,12 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               setCiudad_departamento("");
               setFechaInicio(null);
               setFechaFin(null);
-              setCantidad_Adultos(0);
+              setTotalDias(0);
+              setTotalHuespedes(1);
+              setCantidad_Adultos(1);
               setCantidad_Niños(0);
               setCantidad_Bebes(0);
               setCantidad_Mascotas(0);
-              setTotalDias(0);
             }}
           >
             Limpiar todo
@@ -201,24 +202,14 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
         </div>
       </div>
 
-      {mostrarCalendario && <CalendarioGeneral cerrarCalendario={cerrarCalendario} FechasReservadas={[]} />}
+      {mostrarCalendario && (
+        <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} FechasReservadas={FechasReservadas} />
+      )}
 
       {mostrarVisitantes && (
-        <>
-          <div className="Visitantes-fondo" onClick={cerrarVisitantes}></div>
-          <div className="Visitantes-modal">
-            <Visitantes />
-            <button className="Visitantes-cerrar" onClick={cerrarVisitantes}>
-              Ellos son los elegidos
-            </button>
-            <div className="Visitantes-versiculo-contenedor">
-              <img src={parejaIcono} alt="Icono de amistad" className="Visitantes-icono-amistad" />
-              <p className="Visitantes-versiculo">
-                Ámense unos a otros con un afecto genuino y deléitense al honrarse mutuamente. Romanos 12:10
-              </p>
-            </div>
-          </div>
-        </>
+        <div className="Visitantes-overlay">
+          <Visitantes onCerrar={() => setMostrarVisitantes(false)} />
+        </div>
       )}
     </>
   );

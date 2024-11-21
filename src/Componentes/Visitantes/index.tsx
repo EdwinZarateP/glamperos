@@ -1,8 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ContextoApp } from "../../Contexto/index";
+import parejaIcono from "../../Imagenes/pareja.png";
 import "./estilos.css";
 
-const Visitantes: React.FC = () => {
+interface VisitantesProps {
+  onCerrar: () => void;
+}
+
+const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -20,54 +25,50 @@ const Visitantes: React.FC = () => {
     setCantidad_Bebes,
     Cantidad_Mascotas,
     setCantidad_Mascotas,
+    setTotalHuespedes,
   } = almacenVariables;
 
-  // Límite individual y combinado
   const limites = {
     adultos: 15,
     niños: 15,
     bebes: 5,
     mascotas: 5,
-    totalPersonas: 10, // Límite combinado de adultos y niños
   };
 
-  // Incrementar con límite, asegurando que haya al menos 1 adulto
+  // Calcula y actualiza el total de huéspedes
+  useEffect(() => {
+    const nuevoTotal = Cantidad_Adultos + Cantidad_Niños;
+    setTotalHuespedes(nuevoTotal);
+  }, [
+    Cantidad_Adultos,
+    Cantidad_Niños,
+    Cantidad_Bebes,
+    Cantidad_Mascotas,
+    setTotalHuespedes,
+  ]);
+
   const incrementar = (
     setter: React.Dispatch<React.SetStateAction<number>>,
     valor: number,
-    limite: number,
-    tipo?: "niños" | "bebes" | "mascotas",
-    totalActualPersonas?: number
+    limite: number
   ) => {
-    if (valor < limite && (!totalActualPersonas || totalActualPersonas < limites.totalPersonas)) {
-      // Si se agrega un niño, bebé o mascota y no hay adultos, se aumenta a 1 adulto automáticamente
-      if (tipo && Cantidad_Adultos === 0) {
-        setCantidad_Adultos(1);
-      }
-      setter((prev) => prev + 1);
-    }
+    if (valor < limite) setter(valor + 1);
   };
 
-  // Decrementar (sin valores negativos)
   const decrementar = (
     setter: React.Dispatch<React.SetStateAction<number>>,
-    valor: number
+    valor: number,
+    esAdulto: boolean = false
   ) => {
-    if (valor > 0) {
-      setter((prev) => prev - 1);
+    if (esAdulto) {
+      if (valor > 1) setter(valor - 1); // Los adultos no pueden bajar a 0
+    } else {
+      if (valor > 0) setter(valor - 1);
     }
   };
-
-  // Condición para deshabilitar el botón de restar adultos
-  const deshabilitarBotonRestarAdultos =
-    Cantidad_Adultos === 1 && (Cantidad_Niños > 0 || Cantidad_Bebes > 0 || Cantidad_Mascotas > 0);
-
-  // Total combinado de adultos y niños
-  const totalPersonas = Cantidad_Adultos + Cantidad_Niños;
 
   return (
     <div className="Visitantes-contenedor">
-      {/* Sección Adultos */}
       <div className="Visitantes-seccion">
         <div className="Visitantes-titulo">
           <span>Adultos</span>
@@ -76,8 +77,8 @@ const Visitantes: React.FC = () => {
         <div className="Visitantes-controles">
           <button
             className="Visitantes-boton"
-            onClick={() => decrementar(setCantidad_Adultos, Cantidad_Adultos)}
-            disabled={deshabilitarBotonRestarAdultos} // Deshabilita el botón si aplica la condición
+            onClick={() => decrementar(setCantidad_Adultos, Cantidad_Adultos, true)}
+            disabled={Cantidad_Adultos <= 1} // Deshabilitar si hay 1 adulto
           >
             −
           </button>
@@ -85,7 +86,7 @@ const Visitantes: React.FC = () => {
           <button
             className="Visitantes-boton"
             onClick={() =>
-              incrementar(setCantidad_Adultos, Cantidad_Adultos, limites.adultos, undefined, totalPersonas)
+              incrementar(setCantidad_Adultos, Cantidad_Adultos, limites.adultos)
             }
           >
             +
@@ -93,7 +94,6 @@ const Visitantes: React.FC = () => {
         </div>
       </div>
 
-      {/* Sección Niños */}
       <div className="Visitantes-seccion">
         <div className="Visitantes-titulo">
           <span>Niños</span>
@@ -110,7 +110,7 @@ const Visitantes: React.FC = () => {
           <button
             className="Visitantes-boton"
             onClick={() =>
-              incrementar(setCantidad_Niños, Cantidad_Niños, limites.niños, "niños", totalPersonas)
+              incrementar(setCantidad_Niños, Cantidad_Niños, limites.niños)
             }
           >
             +
@@ -118,7 +118,6 @@ const Visitantes: React.FC = () => {
         </div>
       </div>
 
-      {/* Sección Bebés */}
       <div className="Visitantes-seccion">
         <div className="Visitantes-titulo">
           <span>Bebés</span>
@@ -135,7 +134,7 @@ const Visitantes: React.FC = () => {
           <button
             className="Visitantes-boton"
             onClick={() =>
-              incrementar(setCantidad_Bebes, Cantidad_Bebes, limites.bebes, "bebes")
+              incrementar(setCantidad_Bebes, Cantidad_Bebes, limites.bebes)
             }
           >
             +
@@ -143,7 +142,6 @@ const Visitantes: React.FC = () => {
         </div>
       </div>
 
-      {/* Sección Mascotas */}
       <div className="Visitantes-seccion">
         <div className="Visitantes-titulo">
           <span>Mascotas</span>
@@ -160,12 +158,28 @@ const Visitantes: React.FC = () => {
           <button
             className="Visitantes-boton"
             onClick={() =>
-              incrementar(setCantidad_Mascotas, Cantidad_Mascotas, limites.mascotas, "mascotas")
+              incrementar(setCantidad_Mascotas, Cantidad_Mascotas, limites.mascotas)
             }
           >
             +
           </button>
         </div>
+      </div>
+
+      <button className="Visitantes-cerrar" onClick={onCerrar}>
+        Ellos son los elegidos
+      </button>
+
+      <div className="Visitantes-versiculo-contenedor">
+        <img
+          src={parejaIcono}
+          alt="Icono de amistad"
+          className="Visitantes-icono-amistad"
+        />
+        <p className="Visitantes-versiculo">
+          Ámense unos a otros con un afecto genuino y deléitense al honrarse
+          mutuamente. Romanos 12:10
+        </p>
       </div>
     </div>
   );

@@ -11,128 +11,107 @@ import { createContext, useState, ReactNode, Dispatch, SetStateAction } from 're
 //-------------------------------------------------------------------------------------
 interface ContextProps {
   // Abrir o cerrar cosas
-  estaAbiertoAlgo: boolean; // Variable booleana para manejar estados de apertura/cierre
+  estaAbiertoAlgo: boolean;
   setEstaAbiertoAlgo: Dispatch<SetStateAction<boolean>>;
-  abrirAlgo: () => void; // Función para abrir algo
-  cerrarAlgo: () => void; // Función para cerrar algo
+  abrirAlgo: () => void;
+  cerrarAlgo: () => void;
 
   // Variables de tipo string
-  nombre: string; // Variable para almacenar un nombre
+  nombre: string;
   setNombre: Dispatch<SetStateAction<string>>;
-  ciudad_departamento: string; // Nueva variable para almacenar ciudad_departamento
-  setCiudad_departamento: Dispatch<SetStateAction<string>>; // Setter para ciudad_departamento
+  ciudad_departamento: string;
+  setCiudad_departamento: Dispatch<SetStateAction<string>>;
 
   // Variables de tipo fecha
-  fechaInicio: Date | null; // Fecha de inicio seleccionada
+  fechaInicio: Date | null;
   setFechaInicio: Dispatch<SetStateAction<Date | null>>;
-  fechaFin: Date | null; // Fecha de fin seleccionada
+  fechaFin: Date | null;
   setFechaFin: Dispatch<SetStateAction<Date | null>>;
 
   // Variables de tipo número
-  totalDias: number; // Total de días seleccionados
+  totalDias: number;
   setTotalDias: Dispatch<SetStateAction<number>>;
-  precioPorNoche?: number; // Precio por noche (opcional)
+  precioPorNoche?: number;
   setPrecioPorNoche: Dispatch<SetStateAction<number | undefined>>;
 
-  // Tarifa de servicio (opcional)
-  tarifaServicio?: number; // Tarifa adicional al precio por noche
+  tarifaServicio?: number;
   setTarifaServicio: Dispatch<SetStateAction<number | undefined>>;
-
-  // Total sin impuestos
-  totalSinImpuestos?: number; // Total antes de aplicar impuestos
+  totalSinImpuestos?: number;
   setTotalSinImpuestos: Dispatch<SetStateAction<number | undefined>>;
 
   // Variables de visitantes
-  Cantidad_Adultos: number; // Cantidad de adultos seleccionados
+  Cantidad_Adultos: number;
   setCantidad_Adultos: Dispatch<SetStateAction<number>>;
-  Cantidad_Niños: number; // Cantidad de niños seleccionados
+  Cantidad_Niños: number;
   setCantidad_Niños: Dispatch<SetStateAction<number>>;
-  Cantidad_Bebes: number; // Cantidad de bebés seleccionados
+  Cantidad_Bebes: number;
   setCantidad_Bebes: Dispatch<SetStateAction<number>>;
-  Cantidad_Mascotas: number; // Cantidad de mascotas seleccionadas
+  Cantidad_Mascotas: number;
   setCantidad_Mascotas: Dispatch<SetStateAction<number>>;
+  totalHuespedes: number;
+  setTotalHuespedes: Dispatch<SetStateAction<number>>;
+
+  // Estados para modales
+  mostrarVisitantes: boolean;
+  setMostrarVisitantes: Dispatch<SetStateAction<boolean>>;
+  mostrarCalendario: boolean;
+  setMostrarCalendario: Dispatch<SetStateAction<boolean>>;
 }
 
 // Crea el contexto con un valor inicial undefined
 export const ContextoApp = createContext<ContextProps | undefined>(undefined);
 
-// Props para el proveedor de variables
 interface ProveedorVariablesProps {
-  hijo: ReactNode; // Nodo hijo que será envuelto por el proveedor
+  hijo: ReactNode;
 }
 
 //-------------------------------------------------------------------------------------
 // 2. Proveedor de variables que utiliza el contexto
 //-------------------------------------------------------------------------------------
 export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) => {
-  // Estado para abrir y cerrar el "Algo"
   const [estaAbiertoAlgo, setEstaAbiertoAlgo] = useState(false);
-  const abrirAlgo = () => setEstaAbiertoAlgo(true); // Abre el estado
-  const cerrarAlgo = () => setEstaAbiertoAlgo(false); // Cierra el estado
+  const abrirAlgo = () => setEstaAbiertoAlgo(true);
+  const cerrarAlgo = () => setEstaAbiertoAlgo(false);
 
-  // Estados para las variables de tipo string
-  const [nombre, setNombre] = useState(''); // Almacena un nombre genérico
-  const [ciudad_departamento, setCiudad_departamento] = useState(''); // Estado para ciudad_departamento
-
-  // Estados para fechas
-  const [fechaInicio, setFechaInicio] = useState<Date | null>(null); // Fecha de inicio seleccionada
-  const [fechaFin, setFechaFin] = useState<Date | null>(null); // Fecha de fin seleccionada
-
-  // Estado para el total de días seleccionados
+  const [nombre, setNombre] = useState('');
+  const [ciudad_departamento, setCiudad_departamento] = useState('');
+  const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
+  const [fechaFin, setFechaFin] = useState<Date | null>(null);
   const [totalDias, setTotalDias] = useState<number>(0);
-
-  // Estado para el precio por noche
   const [precioPorNoche, setPrecioPorNoche] = useState<number | undefined>(undefined);
-
-  // Estado para la tarifa de servicio (opcional)
   const [tarifaServicio, setTarifaServicio] = useState<number | undefined>(undefined);
-
-  // Estado para el total sin impuestos
   const [totalSinImpuestos, setTotalSinImpuestos] = useState<number | undefined>(undefined);
+  const [Cantidad_Adultos, setCantidad_Adultos] = useState<number>(1);
+  const [Cantidad_Niños, setCantidad_Niños] = useState<number>(0);
+  const [Cantidad_Bebes, setCantidad_Bebes] = useState<number>(0);
+  const [Cantidad_Mascotas, setCantidad_Mascotas] = useState<number>(0);
+  const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
 
-  // Estados para las cantidades de visitantes
-  const [Cantidad_Adultos, setCantidad_Adultos] = useState<number>(0); // Adultos
-  const [Cantidad_Niños, setCantidad_Niños] = useState<number>(0); // Niños
-  const [Cantidad_Bebes, setCantidad_Bebes] = useState<number>(0); // Bebés
-  const [Cantidad_Mascotas, setCantidad_Mascotas] = useState<number>(0); // Mascotas
+  // Estados para modales
+  const [mostrarVisitantes, setMostrarVisitantes] = useState<boolean>(false);
+  const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
 
-  //-------------------------------------------------------------------------------------
-  // 3. Crea el objeto de contexto con los valores y funciones necesarios que quieres proveer
-  //-------------------------------------------------------------------------------------
   const contextValue: ContextProps = {
-    // Manejo de apertura y cierre
     estaAbiertoAlgo,
     setEstaAbiertoAlgo,
     abrirAlgo,
     cerrarAlgo,
-
-    // Variables de tipo string
     nombre,
     setNombre,
     ciudad_departamento,
-    setCiudad_departamento, // Añadir al objeto del contexto
-
-    // Variables de tipo fecha
+    setCiudad_departamento,
     fechaInicio,
     setFechaInicio,
     fechaFin,
     setFechaFin,
-
-    // Variables de tipo número
     totalDias,
     setTotalDias,
     precioPorNoche,
     setPrecioPorNoche,
-
-    // Tarifa de servicio
     tarifaServicio,
     setTarifaServicio,
-
-    // Total sin impuestos
     totalSinImpuestos,
     setTotalSinImpuestos,
-
-    // Cantidades de visitantes
     Cantidad_Adultos,
     setCantidad_Adultos,
     Cantidad_Niños,
@@ -141,8 +120,13 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setCantidad_Bebes,
     Cantidad_Mascotas,
     setCantidad_Mascotas,
+    totalHuespedes,
+    setTotalHuespedes,
+    mostrarVisitantes,
+    setMostrarVisitantes,
+    mostrarCalendario,
+    setMostrarCalendario,
   };
 
-  // Renderiza el proveedor de contexto con el valor proporcionado
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;
 };

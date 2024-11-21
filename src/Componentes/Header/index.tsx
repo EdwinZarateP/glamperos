@@ -1,18 +1,27 @@
-// Header.tsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { VscSettings } from "react-icons/vsc";
-import PanelBusqueda from "../PanelBusqueda"; // Importar el componente
+import PanelBusqueda from "../PanelBusqueda";
+import { ContextoApp } from "../../Contexto/index"; // Importar el contexto
 import "./estilos.css";
 
 const Header: React.FC = () => {
+  const almacenVariables = useContext(ContextoApp);
+
+  if (!almacenVariables) {
+    throw new Error(
+      "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
+    );
+  }
+
+  const { totalHuespedes } = almacenVariables; // Extraer totalHuespedes del contexto
+
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false); // Estado para mostrar el PanelBusqueda
   const [busqueda, setBusqueda] = useState({
     destino: "",
     fechas: "",
-    huespedes: 0,
   });
 
   const manejarClickBusqueda = () => {
@@ -25,8 +34,8 @@ const Header: React.FC = () => {
     document.body.style.overflow = "auto"; // Reactiva el scroll del fondo
   };
 
-  const manejarBusqueda = (destino: string, fechas: string, huespedes: number) => {
-    setBusqueda({ destino, fechas, huespedes }); // Actualiza la búsqueda
+  const manejarBusqueda = (destino: string, fechas: string) => {
+    setBusqueda({ destino, fechas }); // Actualiza la búsqueda
     cerrarPanelBusqueda(); // Cierra el PanelBusqueda
   };
 
@@ -49,8 +58,8 @@ const Header: React.FC = () => {
           <span className="Header-opcionCuando">{busqueda.fechas || "¿Cuándo?"}</span>
           <span className="Header-divisor">|</span>
           <span className="Header-opcionBusqueda Header-opcionBusquedaInvitados">
-            {busqueda.huespedes > 0
-              ? `${busqueda.huespedes} huésped${busqueda.huespedes > 1 ? "es" : ""}`
+            {totalHuespedes > 0
+              ? `${totalHuespedes} huésped${totalHuespedes > 1 ? "es" : ""}`
               : "¿Cuántos?"}
           </span>
           <button className="Header-botonBusqueda">
@@ -72,7 +81,7 @@ const Header: React.FC = () => {
       {/* Renderiza el PanelBusqueda si mostrarPanelBusqueda es true */}
       {mostrarPanelBusqueda && (
         <PanelBusqueda
-          onBuscar={manejarBusqueda} // Callback para manejar la búsqueda
+          onBuscar={(destino, fechas) => manejarBusqueda(destino, fechas)} // Callback para manejar la búsqueda
           onCerrar={cerrarPanelBusqueda} // Callback para cerrar el panel
         />
       )}
