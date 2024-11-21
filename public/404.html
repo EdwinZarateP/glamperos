@@ -16,7 +16,12 @@
     <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Redirige al index.html para que React maneje la navegación
+      window.location.replace("/");
+    </script>
+    <noscript>
+      Tu navegador no soporta JavaScript. Por favor habilítalo para usar esta aplicación.
+    </noscript>
   </body>
 </html>
