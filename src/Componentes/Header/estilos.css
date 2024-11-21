@@ -196,7 +196,7 @@
 
   .Header-barraBusqueda {
     margin-left: 80px;
-    min-width: 340px;
+    min-width: 68%;
     height: 40px; /* Mantiene la altura constante */
   }
 }
@@ -209,7 +209,7 @@
 
   .Header-barraBusqueda {
     /* width: 350px; */
-    min-width: 340px;
+    min-width: 85%;
     margin-left: 20px;
     height: 40px; /* Mantiene la altura constante */
   }
@@ -222,8 +222,9 @@
   }
 
   .Header-barraBusqueda {
-    min-width: 290px;
-    margin-left: 5px;
+    min-width: 85%;
+    /* min-width: 320px; */
+    margin-left: 10px;
     height: 40px; /* Mantiene la altura constante */
   }
 
