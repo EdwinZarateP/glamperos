@@ -52,7 +52,6 @@ function ExplorarGlamping() {
     { icono: 'https://via.placeholder.com/24', descripcion: 'Gel de ducha' },
   ];
 
-  const huespedes = 1;
 
   const fechasReservadas = [
     new Date(2024, 10, 20), // Ejemplo: 20 de noviembre de 2024
@@ -130,7 +129,6 @@ function ExplorarGlamping() {
           <div className='contenedor-descripcion-glamping-der'>
             <FormularioFechas
               precioPorNoche={precioPorNoche || 0} // Usa el valor del contexto
-              huespedes={huespedes}
             />
           </div>
         </div>
