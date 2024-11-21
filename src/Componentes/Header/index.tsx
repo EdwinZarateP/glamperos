@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
@@ -23,6 +23,15 @@ const Header: React.FC = () => {
     destino: "",
     fechas: "",
   });
+  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth); // Tamaño de la pantalla
+
+  // Actualizar el tamaño de la pantalla al redimensionar
+  useEffect(() => {
+    const actualizarTamañoPantalla = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", actualizarTamañoPantalla);
+
+    return () => window.removeEventListener("resize", actualizarTamañoPantalla);
+  }, []);
 
   const manejarClickBusqueda = () => {
     setMostrarPanelBusqueda(true); // Mostrar el PanelBusqueda
@@ -52,7 +61,7 @@ const Header: React.FC = () => {
           onClick={manejarClickBusqueda} // Activa el PanelBusqueda
         >
           <span className="Header-opcionBusqueda">
-            {busqueda.destino || "Busca un refugio encantador"}
+            {screenWidth}px {/* Mostrar el tamaño de la pantalla */}
           </span>
           <span className="Header-divisor">|</span>
           <span className="Header-opcionCuando">{busqueda.fechas || "¿Cuándo?"}</span>

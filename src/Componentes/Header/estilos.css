@@ -196,7 +196,7 @@
 
   .Header-barraBusqueda {
     margin-left: 80px;
-    min-width: 320px;
+    min-width: 340px;
     height: 40px; /* Mantiene la altura constante */
   }
 }
