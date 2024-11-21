@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Inicio from '../Inicio/index';
-import ContenedorImagenesExploradas from '../ExplorarGlamping/index';
-import MapaAmpliado from '../ExplorarGlamping/index';
+import CreacionGlamping from '../CreacionGlamping/index';
+import ExplorarGlamping from '../ExplorarGlamping/index';
 import NoEncontrado from '../NoEncontrado/index';
 import { ProveedorVariables } from '../../Contexto/index';
 import './estilos.css';
@@ -14,8 +14,8 @@ const App: React.FC = () => {
     <Router basename="/glamperos">
       <Routes>
         <Route path="/" element={<Inicio />} />
-        <Route path="/TarjetaExclusiva" element={<ContenedorImagenesExploradas />} />
-        <Route path="/mapa-ampliado" element={<MapaAmpliado />} />
+        <Route path="/TarjetaExclusiva" element={<ExplorarGlamping />} />  
+        <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
         <Route path="*" element={<NoEncontrado />} />
       </Routes>
     </Router>

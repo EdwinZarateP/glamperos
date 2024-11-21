@@ -53,7 +53,8 @@ const Header: React.FC = () => {
         >
           <span className="Header-opcionBusqueda">
             {busqueda.destino
-              ? busqueda.destino.substring(0,20) + (busqueda.destino.length > 30 ? "..." : "")
+              ? busqueda.destino.substring(0, 20) +
+                (busqueda.destino.length > 30 ? "..." : "")
               : "Busca un refugio encantador"}
           </span>
           <span className="Header-divisor">|</span>
@@ -70,7 +71,11 @@ const Header: React.FC = () => {
         </div>
 
         <div className="Header-derecha">
-          <button className="Header-botonAnfitrion">Publica tu Glamping</button>
+          {/* Link para redirigir a /CrearGlamping */}
+          <Link to="/CrearGlamping" className="Header-botonAnfitrion">
+            Publica tu Glamping
+          </Link>
+
           <div className="Header-menuUsuario">
             <FiMenu className="Header-iconoMenu" />
             <div className="Header-iconoSettingsWrapper">
