@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ContextoApp } from '../../Contexto/index';
-import { GiCampingTent } from 'react-icons/gi'; // Importa el ícono
+import { GiCampingTent } from 'react-icons/gi';
+import CalendarioGeneral from "../CalendarioGeneral";
 import './estilos.css';
 
 interface ReservarBotonProps {
@@ -14,7 +15,20 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
     throw new Error('ReservarBoton debe ser usado dentro de un proveedor de ContextoApp');
   }
 
-  const { fechaInicio, fechaFin, totalDias, precioPorNoche } = almacenVariables;
+  const {
+    fechaInicio,
+    fechaFin,
+    totalDias,
+    precioPorNoche,
+    setMostrarCalendario,
+    mostrarCalendario,
+  } = almacenVariables;
+
+  const FechasReservadas = [
+    new Date(2024, 10, 20),
+    new Date(2024, 10, 28),
+    new Date(2024, 10, 29),
+  ];
 
   // Determinar el precio a mostrar
   const precioBase = totalDias > 0 ? totalSinImpuestos : precioPorNoche || 0;
@@ -48,34 +62,46 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   };
 
   return (
-    <div className="reservar-contenedor">
-      <div className="reservar-total">
-        <div className="reservar-precio">{precioFormateado}</div>
-        {totalDias > 0 ? (
-          <div className="reservar-detalles">
-            <span className="reservar-detalles-noche">
-              {totalDias} {totalDias === 1 ? "noche" : "noches"}
-            </span>
-            <span className="reservar-fechas">
-              {formatearFecha(fechaInicio)} – {formatearFecha(fechaFin)}
-            </span>
-          </div>
-        ) : (
-          <div className="reservar-detalles">
-            <span className="reservar-fechas">por noche</span>
-          </div>
-        )}
-      </div>
-      <div className="reservar-boton-contenedor">
-        <button
-          className="reservar-boton"
-          onClick={manejarReserva}
-          aria-label={`Reservar por ${precioFormateado}`} /* Mejora de accesibilidad */
+    <>
+      <div className="reservar-contenedor">
+        <div
+          className="reservar-total"
+          onClick={() => setMostrarCalendario(true)} // Abre el calendario
         >
-          <GiCampingTent className="reservar-boton-icono" /> Reservar
-        </button>
+          <div className="reservar-precio">{precioFormateado}</div>
+          {totalDias > 0 ? (
+            <div className="reservar-detalles">
+              <span className="reservar-detalles-noche">
+                {totalDias} {totalDias === 1 ? "noche" : "noches"}
+              </span>
+              <span className="reservar-fechas">
+                {formatearFecha(fechaInicio)} – {formatearFecha(fechaFin)}
+              </span>
+            </div>
+          ) : (
+            <div className="reservar-detalles">
+              <span className="reservar-fechas">por noche</span>
+            </div>
+          )}
+        </div>
+        <div className="reservar-boton-contenedor">
+          <button
+            className="reservar-boton"
+            onClick={manejarReserva}
+            aria-label={`Reservar por ${precioFormateado}`} /* Mejora de accesibilidad */
+          >
+            <GiCampingTent className="reservar-boton-icono" /> Reservar
+          </button>
+        </div>
       </div>
-    </div>
+
+      {mostrarCalendario && (
+        <CalendarioGeneral
+          cerrarCalendario={() => setMostrarCalendario(false)}
+          FechasReservadas={FechasReservadas}
+        />
+      )}
+    </>
   );
 };
 

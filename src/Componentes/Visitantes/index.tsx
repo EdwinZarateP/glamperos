@@ -29,11 +29,13 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
   } = almacenVariables;
 
   const limites = {
-    adultos: 15,
-    niños: 15,
+    adultos: 10,
+    niños: 10,
     bebes: 5,
     mascotas: 5,
   };
+
+  const MAX_HUESPEDES = 10;
 
   // Calcula y actualiza el total de huéspedes
   useEffect(() => {
@@ -47,12 +49,23 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
     setTotalHuespedes,
   ]);
 
+  // Deshabilitar scroll del fondo al abrir el modal
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
+
   const incrementar = (
     setter: React.Dispatch<React.SetStateAction<number>>,
     valor: number,
-    limite: number
+    limite: number,
+    totalActual: number
   ) => {
-    if (valor < limite) setter(valor + 1);
+    if (valor < limite && totalActual < MAX_HUESPEDES) {
+      setter(valor + 1);
+    }
   };
 
   const decrementar = (
@@ -67,119 +80,139 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
     }
   };
 
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLElement).classList.contains("Visitantes-overlay")) {
+      onCerrar();
+    }
+  };
+
   return (
-    <div className="Visitantes-contenedor">
-      <div className="Visitantes-seccion">
-        <div className="Visitantes-titulo">
-          <span>Adultos</span>
-          <small>Edad: 13 años o más</small>
+    <div className="Visitantes-overlay" onClick={handleOverlayClick}>
+      <div className="Visitantes-contenedor">
+        <div className="Visitantes-seccion">
+          <div className="Visitantes-titulo">
+            <span>Adultos</span>
+            <small>Edad: 13 años o más</small>
+          </div>
+          <div className="Visitantes-controles">
+            <button
+              className="Visitantes-boton"
+              onClick={() =>
+                decrementar(setCantidad_Adultos, Cantidad_Adultos, true)
+              }
+              disabled={Cantidad_Adultos <= 1}
+            >
+              −
+            </button>
+            <span>{Cantidad_Adultos}</span>
+            <button
+              className="Visitantes-boton"
+              onClick={() =>
+                incrementar(
+                  setCantidad_Adultos,
+                  Cantidad_Adultos,
+                  limites.adultos,
+                  Cantidad_Adultos + Cantidad_Niños
+                )
+              }
+            >
+              +
+            </button>
+          </div>
         </div>
-        <div className="Visitantes-controles">
-          <button
-            className="Visitantes-boton"
-            onClick={() => decrementar(setCantidad_Adultos, Cantidad_Adultos, true)}
-            disabled={Cantidad_Adultos <= 1} // Deshabilitar si hay 1 adulto
-          >
-            −
-          </button>
-          <span>{Cantidad_Adultos}</span>
-          <button
-            className="Visitantes-boton"
-            onClick={() =>
-              incrementar(setCantidad_Adultos, Cantidad_Adultos, limites.adultos)
-            }
-          >
-            +
-          </button>
-        </div>
-      </div>
 
-      <div className="Visitantes-seccion">
-        <div className="Visitantes-titulo">
-          <span>Niños</span>
-          <small>Edades 2 – 12</small>
+        <div className="Visitantes-seccion">
+          <div className="Visitantes-titulo">
+            <span>Niños</span>
+            <small>Edades 2 – 12</small>
+          </div>
+          <div className="Visitantes-controles">
+            <button
+              className="Visitantes-boton"
+              onClick={() => decrementar(setCantidad_Niños, Cantidad_Niños)}
+            >
+              −
+            </button>
+            <span>{Cantidad_Niños}</span>
+            <button
+              className="Visitantes-boton"
+              onClick={() =>
+                incrementar(
+                  setCantidad_Niños,
+                  Cantidad_Niños,
+                  limites.niños,
+                  Cantidad_Adultos + Cantidad_Niños
+                )
+              }
+            >
+              +
+            </button>
+          </div>
         </div>
-        <div className="Visitantes-controles">
-          <button
-            className="Visitantes-boton"
-            onClick={() => decrementar(setCantidad_Niños, Cantidad_Niños)}
-          >
-            −
-          </button>
-          <span>{Cantidad_Niños}</span>
-          <button
-            className="Visitantes-boton"
-            onClick={() =>
-              incrementar(setCantidad_Niños, Cantidad_Niños, limites.niños)
-            }
-          >
-            +
-          </button>
-        </div>
-      </div>
 
-      <div className="Visitantes-seccion">
-        <div className="Visitantes-titulo">
-          <span>Bebés</span>
-          <small>Menos de 2 años</small>
+        <div className="Visitantes-seccion">
+          <div className="Visitantes-titulo">
+            <span>Bebés</span>
+            <small>Menos de 2 años</small>
+          </div>
+          <div className="Visitantes-controles">
+            <button
+              className="Visitantes-boton"
+              onClick={() => decrementar(setCantidad_Bebes, Cantidad_Bebes)}
+            >
+              −
+            </button>
+            <span>{Cantidad_Bebes}</span>
+            <button
+              className="Visitantes-boton"
+              onClick={() =>
+                incrementar(setCantidad_Bebes, Cantidad_Bebes, limites.bebes, 0)
+              }
+            >
+              +
+            </button>
+          </div>
         </div>
-        <div className="Visitantes-controles">
-          <button
-            className="Visitantes-boton"
-            onClick={() => decrementar(setCantidad_Bebes, Cantidad_Bebes)}
-          >
-            −
-          </button>
-          <span>{Cantidad_Bebes}</span>
-          <button
-            className="Visitantes-boton"
-            onClick={() =>
-              incrementar(setCantidad_Bebes, Cantidad_Bebes, limites.bebes)
-            }
-          >
-            +
-          </button>
-        </div>
-      </div>
 
-      <div className="Visitantes-seccion">
-        <div className="Visitantes-titulo">
-          <span>Mascotas</span>
-          <small>¿Traes a un animal de servicio?</small>
+        <div className="Visitantes-seccion">
+          <div className="Visitantes-titulo">
+            <span>Mascotas</span>
+            <small>¿Traes a un animal de servicio?</small>
+          </div>
+          <div className="Visitantes-controles">
+            <button
+              className="Visitantes-boton"
+              onClick={() => decrementar(setCantidad_Mascotas, Cantidad_Mascotas)}
+            >
+              −
+            </button>
+            <span>{Cantidad_Mascotas}</span>
+            <button
+              className="Visitantes-boton"
+              onClick={() =>
+                incrementar(setCantidad_Mascotas, Cantidad_Mascotas, limites.mascotas, 0)
+              }
+            >
+              +
+            </button>
+          </div>
         </div>
-        <div className="Visitantes-controles">
-          <button
-            className="Visitantes-boton"
-            onClick={() => decrementar(setCantidad_Mascotas, Cantidad_Mascotas)}
-          >
-            −
-          </button>
-          <span>{Cantidad_Mascotas}</span>
-          <button
-            className="Visitantes-boton"
-            onClick={() =>
-              incrementar(setCantidad_Mascotas, Cantidad_Mascotas, limites.mascotas)
-            }
-          >
-            +
-          </button>
+
+        <button className="Visitantes-cerrar" onClick={onCerrar}>
+          Ellos son los elegidos
+        </button>
+
+        <div className="Visitantes-versiculo-contenedor">
+          <img
+            src={parejaIcono}
+            alt="Icono de amistad"
+            className="Visitantes-icono-amistad"
+          />
+          <p className="Visitantes-versiculo">
+            Ámense unos a otros con un afecto genuino y deléitense al honrarse
+            mutuamente. Romanos 12:10
+          </p>
         </div>
-      </div>
-
-      <button className="Visitantes-cerrar" onClick={onCerrar}>
-        Ellos son los elegidos
-      </button>
-
-      <div className="Visitantes-versiculo-contenedor">
-        <img
-          src={parejaIcono}
-          alt="Icono de amistad"
-          className="Visitantes-icono-amistad"
-        />
-        <p className="Visitantes-versiculo">
-          Ámense unos a otros con un afecto genuino y deléitense al honrarse
-          mutuamente. Romanos 12:10
-        </p>
       </div>
     </div>
   );

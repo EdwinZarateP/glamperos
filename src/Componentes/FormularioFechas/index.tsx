@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
-import { GiCampingTent } from "react-icons/gi"; // Importa el ícono
-import CalendarioGeneral from "../CalendarioGeneral"; // Importa el componente CalendarioGeneral
+import { GiCampingTent } from "react-icons/gi";
+import CalendarioGeneral from "../CalendarioGeneral";
 import Visitantes from "../Visitantes";
 
 interface FormularioFechasProps {
   precioPorNoche: number;
-  tarifaServicio?: number; // Hacer que la propiedad sea opcional
 }
 
 const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) => {
@@ -35,7 +34,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
     new Date(2024, 10, 20),
     new Date(2024, 10, 28),
     new Date(2024, 10, 29),
-  ]; // Ejemplo de fechas reservadas
+  ];
 
   const formatearFecha = (fecha: Date | null): string => {
     if (!fecha) return "-";
@@ -53,19 +52,28 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
     setTotalSinImpuestos(totalSinImpuestos);
   }, [totalSinImpuestos, setTotalSinImpuestos]);
 
+  // Manejo de la clase no-scroll para desactivar el scroll
+  useEffect(() => {
+    if (mostrarVisitantes) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [mostrarVisitantes]);
+
   return (
     <>
       <div className="FormularioFechas-contenedor">
         <div className="FormularioFechas-precio">
           <span className="FormularioFechas-precioNoche">
             ${precioPorNoche.toLocaleString()} COP
-          </span>{" "}
+          </span>
           <span>/ noche</span>
         </div>
 
         <div
           className="FormularioFechas-fechas"
-          onClick={() => setMostrarCalendario(true)} // Abre el calendario
+          onClick={() => setMostrarCalendario(true)}
         >
           <div className="FormularioFechas-fecha">
             <span className="FormularioFechas-fechaTitulo">LLEGADA</span>
@@ -79,7 +87,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
 
         <div
           className="FormularioFechas-huespedes"
-          onClick={() => setMostrarVisitantes(true)} // Abre el modal de visitantes
+          onClick={() => setMostrarVisitantes(true)}
         >
           <span>Huéspedes</span>
           <span>
@@ -117,9 +125,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
       )}
 
       {mostrarVisitantes && (
-        <div className="Visitantes-overlay">
-          <Visitantes onCerrar={() => setMostrarVisitantes(false)} />
-        </div>
+        <Visitantes onCerrar={() => setMostrarVisitantes(false)} />
       )}
     </>
   );

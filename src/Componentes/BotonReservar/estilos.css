@@ -1,4 +1,4 @@
-/* Contenedor principal */
+/* Contenedor principal: Oculto por defecto */
 .reservar-contenedor {
   display: none; /* Oculto por defecto */
   justify-content: space-around;
@@ -11,14 +11,15 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Mostrar y ajustar en pantallas pequeñas */
+/* Mostrar en pantallas pequeñas */
 @media (max-width: 600px) {
   .reservar-contenedor {
     display: flex; /* Mostrar el contenedor */
     height: 120px; /* Alto fijo */
+    padding: 10px 15px; /* Reducir el padding para pantallas más pequeñas */
   }
 }
 

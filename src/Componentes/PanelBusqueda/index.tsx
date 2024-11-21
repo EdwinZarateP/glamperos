@@ -207,7 +207,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       )}
 
       {mostrarVisitantes && (
-        <div className="Visitantes-overlay">
+        <div >
           <Visitantes onCerrar={() => setMostrarVisitantes(false)} />
         </div>
       )}

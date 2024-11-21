@@ -8,12 +8,12 @@
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ajuste sutil de sombra */
-  background-color: #fff; /* Fondo blanco */
-  position: sticky; /* Permanece en la parte superior del contenedor padre */
-  top: 20px; /* Siempre en la parte superior */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  position: sticky;
+  top: 20px;
   z-index: 10;
-  margin-bottom: 30px; /* Espaciado inferior */
+  margin-bottom: 30px;
 }
 
 /* Precio por noche */
@@ -35,12 +35,12 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .FormularioFechas-fecha {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
 .FormularioFechas-fechaTitulo {
@@ -59,6 +59,7 @@
   border-radius: 8px;
   margin-bottom: 15px;
   font-size: 1em;
+  cursor: pointer;
 }
 
 /* Botón Reserva */
@@ -68,7 +69,7 @@
   font-size: 1em;
   font-weight: bold;
   color: #fff;
-  background-color: #28a745; /* Verde más vibrante */
+  background-color: #28a745;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -76,49 +77,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Espacio entre el texto y el ícono */
-  transition: transform 0.2s ease, background-color 0.2s ease; /* Transición suave */
-  position: relative;
-  overflow: hidden; /* Oculta el brillo fuera del botón */
+  gap: 8px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .FormularioFechas-botonReserva:hover {
-  background-color: #218838; /* Verde más oscuro */
-  transform: scale(1.05); /* Crece ligeramente */
+  background-color: #218838;
+  transform: scale(1.05);
 }
 
-/* Efecto de brillo */
-.FormularioFechas-botonReserva::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%; /* Para cubrir todo el botón */
-  height: 100%;
-  background: linear-gradient(45deg, transparent, rgba(10, 253, 26, 0.5), transparent);
-  transform: skewX(-45deg); /* Inclina el brillo */
-  transition: none;
-  animation: brillo-deslizar 5s infinite; /* Repetición infinita */
-}
-
-/* Animación del brillo */
-@keyframes brillo-deslizar {
-  0% {
-    left: -100%;
-  }
-  50% {
-    left: 0%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-/* Ícono dentro del botón de reserva */
 .FormularioFechas-botonReserva-icono {
-  font-size: 1.2em; /* Ajusta el tamaño del ícono */
-  margin-right: 8px; /* Espaciado entre el ícono y el texto */
-  vertical-align: middle;
+  font-size: 1.2em;
 }
 
 /* Información adicional */
@@ -151,4 +120,9 @@
   font-weight: bold;
   padding-top: 10px;
   border-top: 1px solid #ddd;
+}
+
+/* Clase para desactivar el scroll del cuerpo */
+.no-scroll {
+  overflow: hidden;
 }
