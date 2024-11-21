@@ -21,6 +21,8 @@ interface ContextProps {
   setNombre: Dispatch<SetStateAction<string>>;
   ciudad_departamento: string;
   setCiudad_departamento: Dispatch<SetStateAction<string>>;
+  ciudad_Elegida: string;
+  setCiudad_Elegida: Dispatch<SetStateAction<string>>;
 
   // Variables de tipo fecha
   fechaInicio: Date | null;
@@ -75,6 +77,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
 
   const [nombre, setNombre] = useState('');
   const [ciudad_departamento, setCiudad_departamento] = useState('');
+  const [ciudad_Elegida, setCiudad_Elegida] = useState('');
   const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
   const [fechaFin, setFechaFin] = useState<Date | null>(null);
   const [totalDias, setTotalDias] = useState<number>(0);
@@ -100,6 +103,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setNombre,
     ciudad_departamento,
     setCiudad_departamento,
+    ciudad_Elegida,
+    setCiudad_Elegida,
     fechaInicio,
     setFechaInicio,
     fechaFin,

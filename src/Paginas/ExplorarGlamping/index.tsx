@@ -22,7 +22,7 @@ function ExplorarGlamping() {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { setTarifaServicio, precioPorNoche } = almacenVariables;
+  const { setTarifaServicio, precioPorNoche, ciudad_Elegida } = almacenVariables;
 
   // Establece la tarifa de servicio predeterminada
   useEffect(() => {
@@ -91,7 +91,8 @@ function ExplorarGlamping() {
       </div>
       <main>
         <div className="encabezado-explorado-container">
-          <EncabezadoExplorado nombreGlamping="Casa del árbol - Utica" />
+          <EncabezadoExplorado 
+            nombreGlamping={`Casa del árbol - ${ciudad_Elegida.split(" - ")[0]}`} />
         </div>
         <div className="imagenes-exploradas-container">
           <ImagenesExploradas imagenes={imagenes} />
@@ -100,7 +101,7 @@ function ExplorarGlamping() {
           <ImgExploradasIndividual imagenes={imagenes} />
         </div>
         <div className="nombre-glamping-container">
-          <NombreGlamping nombreGlamping="Casa del árbol - Utica" />
+          <NombreGlamping nombreGlamping={`Casa del árbol - ${ciudad_Elegida.split(" - ")[0]}`}/>
         </div>
         <div className='contenedor-descripcion-glamping'>
           <div className='contenedor-descripcion-glamping-izq'>
@@ -121,7 +122,7 @@ function ExplorarGlamping() {
 
             <div className='contenedor-calendario'>
               <Calendario 
-                nombreGlamping="Casa del árbol - Utica" 
+                nombreGlamping={`Casa del árbol - ${ciudad_Elegida.split(" - ")[0]}`}
                 FechasReservadas={fechasReservadas} // Propiedad de fechas reservadas
               />
             </div>

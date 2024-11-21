@@ -42,7 +42,7 @@ const ContenedorTarjetas: React.FC = () => {
     <div className="contenedor-tarjetas">
       <Tarjeta
         imagenesPokemon={imagenesPokemon} 
-        ciudad="Medellín"
+        ciudad="Sasaima - Cundinamarca"
         precio={100000}
         calificacion={4.5}
         favorito={false}
@@ -51,7 +51,7 @@ const ContenedorTarjetas: React.FC = () => {
       />
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
-        ciudad="Bogotá"
+        ciudad="San Bernardo - Cundinamarca"
         precio={500000}
         calificacion={4.8}
         favorito={false}
@@ -59,7 +59,7 @@ const ContenedorTarjetas: React.FC = () => {
       />
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
-        ciudad="Cali"
+        ciudad="Sasaima - Cundinamarca"
         precio={350000}
         calificacion={4.8}
         favorito={false}
@@ -68,7 +68,7 @@ const ContenedorTarjetas: React.FC = () => {
 
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
-        ciudad="Armenia"
+        ciudad="San Francisco - Antioquia"
         precio={150000}
         calificacion={4.8}
         favorito={false}
@@ -76,7 +76,7 @@ const ContenedorTarjetas: React.FC = () => {
       />
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
-        ciudad="Armenia"
+        ciudad="Medellin - Antioquia"
         precio={120000}
         calificacion={4.8}
         favorito={false}
@@ -84,7 +84,7 @@ const ContenedorTarjetas: React.FC = () => {
       />
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
-        ciudad="Armenia"
+        ciudad="Guatape - Antioquia"
         precio={200000}
         calificacion={4.8}
         favorito={false}
@@ -92,7 +92,7 @@ const ContenedorTarjetas: React.FC = () => {
       />
       <Tarjeta
         imagenesPokemon={imagenesPokemon}
-        ciudad="Armenia"
+        ciudad="Hispania - Antioquia"
         precio={200000}
         calificacion={4.8}
         favorito={false}
