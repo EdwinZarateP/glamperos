@@ -17,8 +17,8 @@ interface ContextProps {
   cerrarAlgo: () => void;
 
   // Variables de tipo string
-  nombre: string;
-  setNombre: Dispatch<SetStateAction<string>>;
+  nombreGlamping: string;
+  setNombreGlamping: Dispatch<SetStateAction<string>>;
   ciudad_departamento: string;
   setCiudad_departamento: Dispatch<SetStateAction<string>>;
   ciudad_Elegida: string;
@@ -75,7 +75,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const abrirAlgo = () => setEstaAbiertoAlgo(true);
   const cerrarAlgo = () => setEstaAbiertoAlgo(false);
 
-  const [nombre, setNombre] = useState('');
+  const [nombreGlamping, setNombreGlamping] = useState('');
   const [ciudad_departamento, setCiudad_departamento] = useState('');
   const [ciudad_Elegida, setCiudad_Elegida] = useState('');
   const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
@@ -99,8 +99,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setEstaAbiertoAlgo,
     abrirAlgo,
     cerrarAlgo,
-    nombre,
-    setNombre,
+    nombreGlamping,
+    setNombreGlamping,
     ciudad_departamento,
     setCiudad_departamento,
     ciudad_Elegida,

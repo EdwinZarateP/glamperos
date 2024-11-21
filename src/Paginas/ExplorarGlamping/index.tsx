@@ -22,7 +22,7 @@ function ExplorarGlamping() {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { setTarifaServicio, precioPorNoche, ciudad_Elegida } = almacenVariables;
+  const { setTarifaServicio, precioPorNoche, ciudad_Elegida, nombreGlamping } = almacenVariables;
 
   // Establece la tarifa de servicio predeterminada
   useEffect(() => {
@@ -92,7 +92,7 @@ function ExplorarGlamping() {
       <main>
         <div className="encabezado-explorado-container">
           <EncabezadoExplorado 
-            nombreGlamping={`Casa del árbol - ${ciudad_Elegida.split(" - ")[0]}`} />
+            nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`} />
         </div>
         <div className="imagenes-exploradas-container">
           <ImagenesExploradas imagenes={imagenes} />
@@ -101,7 +101,7 @@ function ExplorarGlamping() {
           <ImgExploradasIndividual imagenes={imagenes} />
         </div>
         <div className="nombre-glamping-container">
-          <NombreGlamping nombreGlamping={`Casa del árbol - ${ciudad_Elegida.split(" - ")[0]}`}/>
+          <NombreGlamping nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`}/>
         </div>
         <div className='contenedor-descripcion-glamping'>
           <div className='contenedor-descripcion-glamping-izq'>
@@ -122,7 +122,7 @@ function ExplorarGlamping() {
 
             <div className='contenedor-calendario'>
               <Calendario 
-                nombreGlamping={`Casa del árbol - ${ciudad_Elegida.split(" - ")[0]}`}
+                nombreGlamping={`${nombreGlamping}  - ${ciudad_Elegida.split(" - ")[0]}`}
                 FechasReservadas={fechasReservadas} // Propiedad de fechas reservadas
               />
             </div>
@@ -135,7 +135,7 @@ function ExplorarGlamping() {
         </div>
         <MapaGlampings glamping={{
           id: 1,
-          nombre: 'Casa del Árbol - Utica',
+          nombre: `${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`,
           ubicacion: [5.1886, -74.48111],
         }} />
         <Comentarios comentarios={datosComentarios} />

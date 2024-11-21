@@ -45,7 +45,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     throw new Error("El contexto no está disponible. Verifica el proveedor.");
   }
 
-  const { totalDias, setPrecioPorNoche, setCiudad_Elegida } = almacenVariables;
+  const { totalDias, setPrecioPorNoche, setCiudad_Elegida, setNombreGlamping } = almacenVariables;
 
   if (!imagenesPokemon || imagenesPokemon.length === 0) {
     return <div>No hay imágenes para mostrar.</div>;
@@ -114,9 +114,13 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
   const precioConTarifa = precio * tarifa;
 
-  const handleSetPrecioPorNoche = () => {
-    setPrecioPorNoche(precioConTarifa);
-    setCiudad_Elegida(ciudad);
+  const handleClicTarjeta = () => {
+    const pokemonSeleccionado = imagenesPokemon[imagenActual];
+    if (pokemonSeleccionado) {
+      setPrecioPorNoche(precioConTarifa);
+      setCiudad_Elegida(ciudad);
+      setNombreGlamping(pokemonSeleccionado.nombre); // Guarda el nombre del Pokémon actual
+    }
   };
 
   const renderPrecio = () => {
@@ -153,7 +157,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       <Link
         to="/TarjetaExclusiva"
         className="tarjeta-link"
-        onClick={handleSetPrecioPorNoche}
+        onClick={handleClicTarjeta}
       >
         <div
           className="tarjeta-imagen-container"
