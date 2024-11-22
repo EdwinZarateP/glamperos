@@ -91,6 +91,7 @@
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
+  visibility: visible; /* Siempre visibles */
 }
 
 .punto {
@@ -104,6 +105,13 @@
 .punto.activo {
   background-color: rgba(226, 219, 219, 0.9);
   transform: scale(1.2);
+}
+
+/* Ocultar puntos en pantallas grandes */
+@media (min-width: 601px) {
+  .puntos {
+    visibility: hidden;
+  }
 }
 
 /* Información de la tarjeta */
@@ -154,6 +162,13 @@
   margin-top: 4px;
 }
 
+.tarjeta-precio-base {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 0.9em;
+  margin-right: 8px;
+}
+
 /* Botón de favorito (corazón) */
 .tarjeta-favorito {
   position: absolute;
@@ -189,21 +204,11 @@
   .flecha {
     display: none;
   }
-
-  /* Muestra los puntos de navegación solo en pantallas pequeñas */
-  .puntos {
-    display: flex;
-  }
 }
 
 @media (min-width: 601px) {
   /* Muestra las flechas en pantallas grandes */
   .flecha {
     display: inline-flex;
-  }
-
-  /* Oculta los puntos en pantallas grandes */
-  .puntos {
-    display: none;
   }
 }

@@ -98,6 +98,18 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
   const esPantallaPequena = window.innerWidth <= 600;
 
+  const maxPuntos = 5;
+  const halfMaxPuntos = Math.floor(maxPuntos / 2);
+  let start = Math.max(0, imagenActual - halfMaxPuntos);
+  let end = start + maxPuntos;
+
+  if (end > imagenes.length) {
+    end = imagenes.length;
+    start = Math.max(0, end - maxPuntos);
+  }
+
+  const puntosVisibles = imagenes.slice(start, end);
+
   const precioConTarifa = precio * tarifa;
 
   const precioConFormato = (valor: number) =>
@@ -162,6 +174,16 @@ const Tarjeta: React.FC<TarjetaProps> = ({
               />
             ))}
           </div>
+
+          {/* Puntos de navegación */}
+          <div className="puntos">
+            {puntosVisibles.map((_, index) => (
+              <span
+                key={start + index}
+                className={`punto ${start + index === imagenActual ? "activo" : ""}`}
+              />
+            ))}
+          </div>
         </div>
       </Link>
       <button
@@ -177,6 +199,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           <AiTwotoneHeart className="corazon" />
         )}
       </button>
+
       {!esPantallaPequena && (
         <>
           <button
@@ -195,6 +218,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           </button>
         </>
       )}
+
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
           <span className="tarjeta-nombre">{nombreGlamping}</span>
