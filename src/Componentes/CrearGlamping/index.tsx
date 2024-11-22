@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./estilos.css";
+import "./estilos.css"; // Cambia el nombre del archivo si necesitas
 
 const CrearGlamping: React.FC = () => {
   const [nombre, setNombre] = useState("");
@@ -9,6 +9,7 @@ const CrearGlamping: React.FC = () => {
   const [descripcion, setDescripcion] = useState("");
   const [caracteristicas, setCaracteristicas] = useState("");
   const [imagenes, setImagenes] = useState<FileList | null>(null);
+  const [videoYoutube, setVideoYoutube] = useState("");
 
   const handleImagenesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImagenes(event.target.files);
@@ -17,6 +18,12 @@ const CrearGlamping: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    // Validación para asegurar que el precio no sea 0
+    if (precioNoche <= 0) {
+      alert("El precio por noche debe ser mayor que 0.");
+      return;
+    }
+
     const formData = new FormData();
     if (imagenes) {
       Array.from(imagenes).forEach((imagen) => {
@@ -24,18 +31,26 @@ const CrearGlamping: React.FC = () => {
       });
     }
 
+    // Formatear la ubicación como cadena JSON
+    const ubicacionJSON = {
+      lat: parseFloat(ubicacion.lat),
+      lng: parseFloat(ubicacion.lng),
+    };
+
     formData.append("nombre", nombre);
-    formData.append("ubicacion", JSON.stringify(ubicacion));
+    formData.append("ubicacion", JSON.stringify(ubicacionJSON)); // Enviar como JSON string
     formData.append("precio_noche", precioNoche.toString());
     formData.append("descripcion", descripcion);
-    formData.append(
-      "caracteristicas",
-      JSON.stringify(caracteristicas.split(","))
-    );
+    formData.append("caracteristicas", caracteristicas); // Enviar como lista separada por comas
+    if (videoYoutube) {
+      formData.append("video_youtube", videoYoutube);
+    }
+
+    console.log("Datos enviados:", Object.fromEntries(formData.entries()));
 
     try {
       const response = await axios.post(
-        "https://glamperosapi.onrender.com/glampings",
+        "https://glamperosapi.onrender.com/glampings/",
         formData,
         {
           headers: {
@@ -44,9 +59,14 @@ const CrearGlamping: React.FC = () => {
         }
       );
       alert("Glamping creado con éxito: " + JSON.stringify(response.data));
-    } catch (error) {
-      console.error(error);
-      alert("Error al crear el glamping");
+    } catch (error: any) {
+      console.error("Error al crear el glamping:", error);
+      if (error.response) {
+        console.error("Respuesta del servidor:", error.response.data);
+        alert("Error del servidor: " + error.response.data.detail);
+      } else {
+        alert("Error de red. Verifica tu conexión o revisa los logs.");
+      }
     }
   };
 
@@ -73,7 +93,7 @@ const CrearGlamping: React.FC = () => {
             Latitud:
           </label>
           <input
-            type="text"
+            type="number"
             id="latitud"
             className="crearGlamping-input"
             value={ubicacion.lat}
@@ -86,7 +106,7 @@ const CrearGlamping: React.FC = () => {
             Longitud:
           </label>
           <input
-            type="text"
+            type="number"
             id="longitud"
             className="crearGlamping-input"
             value={ubicacion.lng}
@@ -149,6 +169,20 @@ const CrearGlamping: React.FC = () => {
             multiple
             accept="image/*"
             onChange={handleImagenesChange}
+            required
+          />
+        </div>
+
+        <div className="crearGlamping-campo">
+          <label htmlFor="videoYoutube" className="crearGlamping-label">
+            Video de YouTube (opcional):
+          </label>
+          <input
+            type="url"
+            id="videoYoutube"
+            className="crearGlamping-input"
+            value={videoYoutube}
+            onChange={(e) => setVideoYoutube(e.target.value)}
           />
         </div>
 

@@ -1,48 +1,75 @@
 .crearGlamping-contenedor {
-    padding: 20px;
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .crearGlamping-titulo {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .crearGlamping-formulario {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .crearGlamping-campo {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .crearGlamping-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .crearGlamping-input,
-  .crearGlamping-textarea {
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  .crearGlamping-boton {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .crearGlamping-boton:hover {
-    background-color: #218838;
-  }
-  
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.crearGlamping-titulo {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #343a40;
+}
+
+.crearGlamping-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.crearGlamping-campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.crearGlamping-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #495057;
+}
+
+.crearGlamping-input,
+.crearGlamping-textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #495057;
+}
+
+.crearGlamping-input:focus,
+.crearGlamping-textarea:focus {
+  border-color: #80bdff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.crearGlamping-boton {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.crearGlamping-boton:hover {
+  background-color: #0056b3;
+}
+
+.crearGlamping-boton:active {
+  background-color: #004085;
+}
+
+.crearGlamping-boton:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.65;
+}

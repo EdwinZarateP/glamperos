@@ -10,29 +10,26 @@ import {
 import { ContextoApp } from "../../Contexto/index";
 import "./estilos.css";
 
-interface PokemonData {
-  nombre: string;
-  imagen: string;
-}
-
 interface TarjetaProps {
-  imagenesPokemon: PokemonData[];
+  imagenes: string[];
   ciudad: string;
   precio: number;
   calificacion: number;
   favorito: boolean;
   onFavoritoChange: (nuevoEstado: boolean) => void;
   tarifaServicio?: number;
+  nombreGlamping: string;
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
-  imagenesPokemon,
+  imagenes,
   ciudad,
   precio,
   calificacion,
   favorito,
   onFavoritoChange,
   tarifaServicio,
+  nombreGlamping,
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
@@ -45,9 +42,10 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     throw new Error("El contexto no está disponible. Verifica el proveedor.");
   }
 
-  const { totalDias, setPrecioPorNoche, setCiudad_Elegida, setNombreGlamping } = almacenVariables;
+  const { totalDias, setPrecioPorNoche, setCiudad_Elegida, setNombreGlamping } =
+    almacenVariables;
 
-  if (!imagenesPokemon || imagenesPokemon.length === 0) {
+  if (!imagenes || imagenes.length === 0) {
     return <div>No hay imágenes para mostrar.</div>;
   }
 
@@ -70,7 +68,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   };
 
   const siguienteImagen = () => {
-    if (imagenActual < imagenesPokemon.length - 1) {
+    if (imagenActual < imagenes.length - 1) {
       setImagenActual((prev) => prev + 1);
     }
   };
@@ -100,42 +98,27 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
   const esPantallaPequena = window.innerWidth <= 600;
 
-  const maxPuntos = 5;
-  const halfMaxPuntos = Math.floor(maxPuntos / 2);
-  let start = Math.max(0, imagenActual - halfMaxPuntos);
-  let end = start + maxPuntos;
-
-  if (end > imagenesPokemon.length) {
-    end = imagenesPokemon.length;
-    start = Math.max(0, end - maxPuntos);
-  }
-
-  const puntosVisibles = imagenesPokemon.slice(start, end);
-
   const precioConTarifa = precio * tarifa;
 
+  const precioConFormato = (valor: number) =>
+    valor.toLocaleString("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+
   const handleClicTarjeta = () => {
-    const pokemonSeleccionado = imagenesPokemon[imagenActual];
-    if (pokemonSeleccionado) {
-      setPrecioPorNoche(precioConTarifa);
-      setCiudad_Elegida(ciudad);
-      setNombreGlamping(pokemonSeleccionado.nombre); // Guarda el nombre del Pokémon actual
-    }
+    setPrecioPorNoche(precioConTarifa);
+    setCiudad_Elegida(ciudad);
+    setNombreGlamping(nombreGlamping);
   };
 
   const renderPrecio = () => {
-    const formatoCOP = (valor: number) =>
-      valor.toLocaleString("es-CO", {
-        style: "currency",
-        currency: "COP",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      });
-
     if (totalDias === 0 || totalDias === 1) {
       return (
         <span className="tarjeta-precio">
-          {formatoCOP(precioConTarifa * Math.max(totalDias, 1))} por noche
+          {precioConFormato(precioConTarifa * Math.max(totalDias, 1))} por noche
         </span>
       );
     }
@@ -143,10 +126,10 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     return (
       <>
         <span className="tarjeta-precio-base">
-          {formatoCOP(precioConTarifa)} por noche
+          {precioConFormato(precioConTarifa)} por noche
         </span>
         <span className="tarjeta-precio">
-          {formatoCOP(precioConTarifa * totalDias)} por {totalDias} noches
+          {precioConFormato(precioConTarifa * totalDias)} por {totalDias} noches
         </span>
       </>
     );
@@ -170,22 +153,12 @@ const Tarjeta: React.FC<TarjetaProps> = ({
               transform: `translateX(-${imagenActual * 100}%)`,
             }}
           >
-            {imagenesPokemon.map((pokemon, index) => (
+            {imagenes.map((url, index) => (
               <img
                 key={index}
-                src={pokemon.imagen}
-                alt={pokemon.nombre}
+                src={url}
+                alt={`Glamping ${nombreGlamping}`}
                 className="tarjeta-imagen"
-              />
-            ))}
-          </div>
-
-          {/* Puntos de navegación */}
-          <div className="puntos">
-            {puntosVisibles.map((_, index) => (
-              <span
-                key={start + index}
-                className={`punto ${start + index === imagenActual ? "activo" : ""}`}
               />
             ))}
           </div>
@@ -204,7 +177,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           <AiTwotoneHeart className="corazon" />
         )}
       </button>
-
       {!esPantallaPequena && (
         <>
           <button
@@ -217,18 +189,15 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           <button
             className="flecha derecha"
             onClick={siguienteImagen}
-            disabled={imagenActual === imagenesPokemon.length - 1}
+            disabled={imagenActual === imagenes.length - 1}
           >
             <MdOutlineKeyboardArrowRight />
           </button>
         </>
       )}
-
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">
-            {imagenesPokemon[imagenActual]?.nombre}
-          </span>
+          <span className="tarjeta-nombre">{nombreGlamping}</span>
           <div className="tarjeta-calificacion">
             <FaStar className="estrella" />
             <span>{calificacion}</span>

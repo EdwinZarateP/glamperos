@@ -46,13 +46,12 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
     return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
   };
 
-  const totalSinImpuestos = precioPorNoche * totalDias;
+  const totalSinImpuestos = precioPorNoche * (totalDias === 0 ? 1 : totalDias);
 
   useEffect(() => {
     setTotalSinImpuestos(totalSinImpuestos);
   }, [totalSinImpuestos, setTotalSinImpuestos]);
 
-  // Manejo de la clase no-scroll para desactivar el scroll
   useEffect(() => {
     if (mostrarVisitantes) {
       document.body.classList.add("no-scroll");
@@ -104,10 +103,13 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
         <div className="FormularioFechas-detalleCosto">
           <div className="FormularioFechas-item">
             <span>
-              ${precioPorNoche.toLocaleString()} COP x {totalDias} noche
+              ${precioPorNoche.toLocaleString()} COP x{" "}
+              {totalDias === 0 ? 1 : totalDias} noche
               {totalDias > 1 ? "s" : ""}
             </span>
-            <span>${(precioPorNoche * totalDias).toLocaleString()} COP</span>
+            <span>
+              ${(precioPorNoche * (totalDias === 0 ? 1 : totalDias)).toLocaleString()} COP
+            </span>
           </div>
         </div>
 
