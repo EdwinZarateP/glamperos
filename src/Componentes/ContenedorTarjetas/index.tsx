@@ -4,7 +4,7 @@ import "./estilos.css";
 
 interface GlampingData {
   nombre: string;
-  ubicacion: { lat: number; lng: number }; // Modifica para reflejar la estructura real.
+  ciudad_departamento: string; // Cambiado para reflejar el campo correcto.
   precio_noche: number;
   calificacion: number | null;
   imagenes: string[];
@@ -21,10 +21,13 @@ const ContenedorTarjetas: React.FC = () => {
         if (!response.ok) throw new Error("Error al obtener los datos de la API");
         const data = await response.json();
 
-        // Mapear los datos para transformar `ubicacion` de string a objeto
+        // Mapear los datos para asegurar la estructura
         const parsedData = data.map((glamping: any) => ({
-          ...glamping,
-          ubicacion: JSON.parse(glamping.ubicacion), // Decodificar el string JSON
+          nombre: glamping.nombre,
+          ciudad_departamento: glamping.ciudad_departamento, // Usar el campo correcto
+          precio_noche: glamping.precio_noche,
+          calificacion: glamping.calificacion,
+          imagenes: glamping.imagenes,
         }));
 
         setGlampings(parsedData);
@@ -52,7 +55,7 @@ const ContenedorTarjetas: React.FC = () => {
         <Tarjeta
           key={index}
           imagenes={glamping.imagenes}
-          ciudad={`Lat: ${glamping.ubicacion.lat}, Lng: ${glamping.ubicacion.lng}`}
+          ciudad={glamping.ciudad_departamento} // Mostrar ciudad y departamento
           precio={glamping.precio_noche}
           calificacion={glamping.calificacion || 0} // Si `calificacion` es null, usar 0
           favorito={false}
