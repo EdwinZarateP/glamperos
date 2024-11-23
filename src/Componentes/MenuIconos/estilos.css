@@ -1,13 +1,29 @@
+.MenuIconos-contenedor {
+  position: fixed; 
+  top: 70px; 
+  left: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  height: 70px;
+  width: 100%;
+  padding: 10px 0;
+  z-index: 1000; 
+}
+
+
 /* Contenedor principal del menú */
-.contenedor-menu {
+.MenuIconos-contenedor-menu {
   display: flex;
   align-items: center;
   position: relative;
-  font-family: inherit; /* Usa la fuente predeterminada de la página */
+  font-family: inherit; 
+  width: 85%;
 }
 
 /* Contenedor de iconos con desplazamiento horizontal */
-.lista-iconos {
+.MenuIconos-lista-iconos {
   display: flex;
   align-items: center;
   overflow-x: auto;
@@ -17,17 +33,17 @@
   flex: 1;
 }
 
-.lista-iconos::-webkit-scrollbar {
+.MenuIconos-lista-iconos::-webkit-scrollbar {
   display: none;
 }
 
-.lista-iconos {
+.MenuIconos-lista-iconos {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 /* Estilo para cada ítem de icono */
-.icono-item {
+.MenuIconos-icono-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,23 +57,23 @@
   font-family: inherit; /* Usa la fuente predeterminada de la página */
 }
 
-.icono-item .icono {
+.MenuIconos-icono-item .MenuIconos-icono {
   font-size: 24px;
   margin-bottom: 5px;
 }
 
-.icono-item:hover {
+.MenuIconos-icono-item:hover {
   transform: scale(1.1);
 }
 
 /* Estilo para el icono seleccionado */
-.icono-seleccionado {
+.MenuIconos-icono-seleccionado {
   color: #000;
   font-weight: bold;
 }
 
 /* Estilo para las flechas de navegación */
-.flecha-izquierda, .flecha-derecha {
+.MenuIconos-flecha-izquierda, .MenuIconos-flecha-derecha {
   position: absolute;
   font-size: 20px;
   color: rgba(0, 0, 0, 0.6);
@@ -72,21 +88,24 @@
   z-index: 1;
 }
 
-.flecha-izquierda {
+.MenuIconos-flecha-izquierda {
   left: 10px;
 }
 
-.flecha-derecha {
+.MenuIconos-flecha-derecha {
   right: 10px;
 }
 
-.flecha-izquierda:hover, .flecha-derecha:hover {
+.MenuIconos-flecha-izquierda:hover, .MenuIconos-flecha-derecha:hover {
   transform: scale(1.2); /* Incrementa ligeramente el tamaño */
 }
 
 /* Responsividad: Oculta las flechas en pantallas pequeñas */
-@media (max-width: 767px) {
-  .flecha-izquierda, .flecha-derecha {
+@media (max-width: 540px) {
+  .MenuIconos-flecha-izquierda, .MenuIconos-flecha-derecha {
     display: none;
   }
+  .MenuIconos-contenedor-menu {
+    width: 100%;
+  } 
 }

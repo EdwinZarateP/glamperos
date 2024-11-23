@@ -22,6 +22,9 @@ const MenuIconos: React.FC = () => {
         { titulo: "Casa del árbol", icono: <GiTreehouse /> },
         { titulo: "Caminata", icono: <GiHiking /> },
         { titulo: "Remolques", icono: <FaCaravan /> },
+        { titulo: "Desierto", icono: <GiDesert /> },
+        { titulo: "Pet Friendly", icono: <MdOutlinePets /> },
+        { titulo: "Flotantes", icono: <FaHouseFloodWater /> },
         { titulo: "Cabañas", icono: <MdCabin /> },
         { titulo: "Casa del árbol", icono: <GiTreehouse /> },
         { titulo: "Caminata", icono: <GiHiking /> },
@@ -47,26 +50,28 @@ const MenuIconos: React.FC = () => {
     };
 
     return (
-        <div className="contenedor-menu">
-            <div className="flecha-izquierda" onClick={desplazarIzquierda}>
-                <MdOutlineKeyboardArrowLeft />
-            </div>
+        <div className="MenuIconos-contenedor">
+            <div className="MenuIconos-contenedor-menu">
+                <div className="MenuIconos-flecha-izquierda" onClick={desplazarIzquierda}>
+                    <MdOutlineKeyboardArrowLeft />
+                </div>
 
-            <div ref={contenedorListaRef} className="lista-iconos">
-                {iconos.map((elemento, indice) => (
-                    <div
-                        key={indice}
-                        className={`icono-item ${iconoSeleccionado === indice ? 'icono-seleccionado' : ''}`}
-                        onClick={() => seleccionarIcono(indice)}
-                    >
-                        <div className="icono">{elemento.icono}</div>
-                        <span>{elemento.titulo}</span>
-                    </div>
-                ))}
-            </div>
+                <div ref={contenedorListaRef} className="MenuIconos-lista-iconos">
+                    {iconos.map((elemento, indice) => (
+                        <div
+                            key={indice}
+                            className={`MenuIconos-icono-item ${iconoSeleccionado === indice ? 'MenuIconos-icono-seleccionado' : ''}`}
+                            onClick={() => seleccionarIcono(indice)}
+                        >
+                            <div className="MenuIconos-icono">{elemento.icono}</div>
+                            <span>{elemento.titulo}</span>
+                        </div>
+                    ))}
+                </div>
 
-            <div className="flecha-derecha" onClick={desplazarDerecha}>
-                <MdOutlineKeyboardArrowRight />
+                <div className="MenuIconos-flecha-derecha" onClick={desplazarDerecha}>
+                    <MdOutlineKeyboardArrowRight />
+                </div>
             </div>
         </div>
     );
