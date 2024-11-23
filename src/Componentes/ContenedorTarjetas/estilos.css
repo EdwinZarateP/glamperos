@@ -6,7 +6,6 @@
   gap: 6px;
   padding: 0 4px; 
   box-sizing: border-box;
-
 }
 
 /* Estilo básico para cada tarjeta */
@@ -15,7 +14,6 @@
   border-radius: 8px;
   width: 100%;
   max-width: 100%; /* Permite que cada tarjeta ocupe el ancho completo */
-
 }
 
 /* Para pantallas pequeñas (móviles) */
