@@ -3,18 +3,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Define el tamaño mínimo de cada tarjeta */
   justify-items: center;
-  gap: 6px;
+  gap: 20px;
   padding: 0 4px; 
   box-sizing: border-box;
 }
 
-/* Estilo básico para cada tarjeta */
-.contenedor-tarjetas .tarjeta {
-  background-color: #fff;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 100%; /* Permite que cada tarjeta ocupe el ancho completo */
-}
 
 /* Para pantallas pequeñas (móviles) */
 @media (max-width: 480px) {
@@ -24,9 +17,6 @@
     gap: 4px; /* Reduce el espacio entre tarjetas */
   }
 
-  .contenedor-tarjetas .tarjeta {
-    max-width: 100%; /* Ocupa el ancho completo del contenedor */
-  }
 }
 
 /* Para pantallas medianas (tabletas) */
@@ -35,9 +25,6 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ajuste automático en tabletas */
   }
 
-  .contenedor-tarjetas .tarjeta {
-    max-width: 100%;
-  }
 }
 
 /* Para pantallas grandes (computadoras de escritorio) */
