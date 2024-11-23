@@ -16,21 +16,20 @@ const ContenedorTarjetas: React.FC = () => {
 
   useEffect(() => {
     const fetchGlampings = async () => {
-      // Verificar si los datos ya están almacenados en sessionStorage
       const storedData = sessionStorage.getItem("glampingsData");
 
       if (storedData) {
-        // Si existen datos almacenados, úsalos directamente
         setGlampings(JSON.parse(storedData));
         setLoading(false);
       } else {
-        // Si no, realiza la solicitud a la API
         try {
-          const response = await fetch("https://glamperosapi.onrender.com/glampings/");
-          if (!response.ok) throw new Error("Error al obtener los datos de la API");
+          const response = await fetch(
+            "https://glamperosapi.onrender.com/glampings/"
+          );
+          if (!response.ok)
+            throw new Error("Error al obtener los datos de la API");
           const data = await response.json();
 
-          // Mapear los datos para asegurar la estructura
           const parsedData = data.map((glamping: any) => ({
             nombre: glamping.nombre,
             ciudad_departamento: glamping.ciudad_departamento,
@@ -39,8 +38,10 @@ const ContenedorTarjetas: React.FC = () => {
             imagenes: glamping.imagenes,
           }));
 
-          // Guardar los datos en sessionStorage
-          sessionStorage.setItem("glampingsData", JSON.stringify(parsedData));
+          sessionStorage.setItem(
+            "glampingsData",
+            JSON.stringify(parsedData)
+          );
 
           setGlampings(parsedData);
         } catch (error) {
@@ -55,7 +56,19 @@ const ContenedorTarjetas: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Cargando glampings...</div>;
+    return (
+      <div className="contenedor-tarjetas">
+        {[...Array(6)].map((_, index) => (
+          <div key={index} className="tarjeta-skeleton">
+            <div className="tarjeta-skeleton-imagen" />
+            <div className="tarjeta-skeleton-info">
+              <div className="tarjeta-skeleton-linea" />
+              <div className="tarjeta-skeleton-linea corta" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   }
 
   if (glampings.length === 0) {

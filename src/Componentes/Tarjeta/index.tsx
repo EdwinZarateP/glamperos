@@ -35,6 +35,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const [imagenActual, setImagenActual] = useState(0);
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
+  const [bloqueoNavegacion, setBloqueoNavegacion] = useState(false);
+  const [imagenCargada, setImagenCargada] = useState(false);
 
   const almacenVariables = useContext(ContextoApp);
 
@@ -68,14 +70,18 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   };
 
   const siguienteImagen = () => {
-    if (imagenActual < imagenes.length - 1) {
+    if (imagenActual < imagenes.length - 1 && !bloqueoNavegacion) {
+      setBloqueoNavegacion(true);
       setImagenActual((prev) => prev + 1);
+      setTimeout(() => setBloqueoNavegacion(false), 500);
     }
   };
 
   const anteriorImagen = () => {
-    if (imagenActual > 0) {
+    if (imagenActual > 0 && !bloqueoNavegacion) {
+      setBloqueoNavegacion(true);
       setImagenActual((prev) => prev - 1);
+      setTimeout(() => setBloqueoNavegacion(false), 500);
     }
   };
 
@@ -159,6 +165,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           onTouchStart={esPantallaPequena ? handleTouchStart : undefined}
           onTouchEnd={esPantallaPequena ? handleTouchEnd : undefined}
         >
+          {!imagenCargada && <div className="tarjeta-skeleton" />}
           <div
             className="carrusel"
             style={{
@@ -170,7 +177,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
                 key={index}
                 src={url}
                 alt={`Glamping ${nombreGlamping}`}
-                className="tarjeta-imagen"
+                className={`tarjeta-imagen ${imagenCargada ? "visible" : "oculta"}`}
+                onLoad={() => setImagenCargada(true)}
               />
             ))}
           </div>
