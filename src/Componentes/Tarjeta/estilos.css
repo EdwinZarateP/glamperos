@@ -92,7 +92,7 @@
 /* Puntos de navegación */
 .puntos {
   position: absolute;
-  bottom: 5px;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -101,15 +101,15 @@
 }
 
 .punto {
-  width: 5px;
-  height: 5px;
-  background-color: rgba(57, 56, 56, 0.5);
+  width: 6px;
+  height: 6px;
+  background-color: rgba(35, 34, 34, 0.7);
   border-radius: 50%;
   cursor: pointer;
 }
 
 .punto.activo {
-  background-color: rgba(226, 219, 219, 0.9);
+  background-color: rgba(240, 233, 233, 0.9);
   transform: scale(1.2);
 }
 
@@ -141,7 +141,7 @@
 .tarjeta-calificacion {
   display: flex;
   align-items: center;
-  font-size: 1em;
+  font-size: 0.9em;
   margin-left: 8px;
   transition: transform 0.3s ease;
 }
@@ -151,7 +151,7 @@
 }
 
 .estrella {
-  color: gold;
+  color: black;
   margin-right: 4px;
 }
 

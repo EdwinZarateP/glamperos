@@ -40,7 +40,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="contenedor-Header">
       <header className="Header">
         <Link to="/" className="Header-izquierda">
           <img src={logo} alt="Glamperos logo" className="Header-logo" />
@@ -92,7 +92,7 @@ const Header: React.FC = () => {
           onCerrar={cerrarPanelBusqueda} // Callback para cerrar el panel
         />
       )}
-    </>
+    </div>
   );
 };
 

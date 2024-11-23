@@ -1,13 +1,28 @@
+.contenedor-Header{
+  position: fixed; /* Fija el Header en la parte superior */
+  top: 0; /* Asegura que esté al borde superior */
+  left: 0; /* Asegura que esté alineado a la izquierda */
+  width: 100%; /* Ocupa todo el ancho de la pantalla */
+  z-index: 1000; /* Coloca el Header encima de otros elementos */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e6e3df;
+  font-family: inherit;
+  height: 70px;
+  background-color: #ffffff; /* Fondo blanco para cubrir elementos detrás */
+}
+
 /* Estilos generales del Header */
 .Header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #e6e3df;
   font-family: inherit;
   flex-wrap: wrap; /* Permite que los elementos se ajusten si el espacio es limitado */
-  height: 70px;
+  width: 85%;
 }
+
 
 /* Logo y nombre de la marca */
 .Header-izquierda {
@@ -136,8 +151,8 @@
 
 /* Responsividad */
 
-/* Pantallas pequeñas (máximo ancho: 900px) */
-@media (max-width: 900px) {
+/* Pantallas pequeñas (máximo ancho: 860px) */
+@media (max-width: 860px) {
   .Header-botonAnfitrion,
   .Header-opcionCuando,
   .Header-opcionCuando + .Header-divisor,
@@ -147,7 +162,7 @@
   .Header-notificacion {
     display: none;
   }
-
+  
   .Header-barraBusqueda {
     flex-grow: 1;
     justify-content: space-around;
@@ -189,10 +204,10 @@
 
 /* Pantallas medianas (entre 540px y 860px) */
 @media (min-width: 540px) and (max-width: 860px) {
+  
   .Header-izquierda {
     display: flex; /* Muestra el logo */
   }
-
 
   .Header-barraBusqueda {
     margin-left: 20px;
@@ -203,6 +218,10 @@
 
 /* Pantallas muy pequeñas (menores a 540px) */
 @media (max-width: 540px) {
+  .Header{
+    width: 100%;
+  }
+
   .Header-izquierda {
     display: none; /* Oculta todo el contenedor izquierdo */
   }
@@ -210,13 +229,18 @@
   .Header-barraBusqueda {
     /* width: 350px; */
     min-width: 85%;
-    margin-left: 20px;
+    margin-left: 10px;
     height: 40px; /* Mantiene la altura constante */
   }
 }
 
 /* Pantallas muy pequeñas (menores a 400px) */
 @media (max-width: 400px) {
+
+  .Header{
+    width: 100%;
+  }
+
   .Header-izquierda {
     display: none; /* Oculta todo el contenedor izquierdo */
   }
@@ -229,6 +253,6 @@
   }
 
   .Header-opcionBusqueda {
-    margin-left: 20px;
+    margin-left: 10px;
   }
 }
