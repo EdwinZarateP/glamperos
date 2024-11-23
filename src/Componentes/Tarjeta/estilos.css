@@ -24,20 +24,23 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  aspect-ratio: 1 / 0.9; /* Mantiene el formato cuadrado */
+  aspect-ratio: 1 / 0.9;
   overflow: hidden;
   border-radius: 8px;
-  
 }
 
 /* Skeleton loader */
 .tarjeta-skeleton {
   width: 100%;
-  height: 200px; /* Ajusta la altura de acuerdo al diseño */
+  height: 200px;
   background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
   background-size: 200% 100%;
   animation: skeleton-animation 1.5s infinite;
   border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 /* Animación del skeleton */
@@ -60,7 +63,7 @@
 .tarjeta-imagen {
   width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: cover; /* Escala la imagen y recorta los bordes si es necesario */
+  object-fit: cover;
   flex-shrink: 0;
   min-width: 100%;
   border-radius: 8px;
@@ -125,7 +128,7 @@
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  visibility: visible; /* Siempre visibles */
+  visibility: visible;
 }
 
 .punto {
@@ -187,11 +190,11 @@
 .tarjeta-ciudad {
   color: #555;
   margin: 4px 0;
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-  overflow: hidden; /* Oculta cualquier contenido que se desborde */
-  text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el texto es demasiado largo */
-  display: block; /* Asegura que se comporte como un bloque completo */
-  max-width: 100%; /* Limita el ancho máximo al contenedor padre */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
 }
 
 .tarjeta-precio {

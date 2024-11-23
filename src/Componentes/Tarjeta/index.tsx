@@ -19,6 +19,7 @@ interface TarjetaProps {
   onFavoritoChange: (nuevoEstado: boolean) => void;
   tarifaServicio?: number;
   nombreGlamping: string;
+  onImagenCargada?: () => void;
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
@@ -30,6 +31,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   tarifaServicio,
   nombreGlamping,
+  onImagenCargada,
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
@@ -44,8 +46,13 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     throw new Error("El contexto no está disponible. Verifica el proveedor.");
   }
 
-  const { totalDias, setPrecioPorNoche, setCiudad_Elegida, setNombreGlamping, setImagenesSeleccionadas } =
-    almacenVariables;
+  const {
+    totalDias,
+    setPrecioPorNoche,
+    setCiudad_Elegida,
+    setNombreGlamping,
+    setImagenesSeleccionadas,
+  } = almacenVariables;
 
   if (!imagenes || imagenes.length === 0) {
     return <div>No hay imágenes para mostrar.</div>;
@@ -133,6 +140,11 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setImagenesSeleccionadas(imagenes);
   };
 
+  const handleImagenCargada = () => {
+    setImagenCargada(true);
+    if (onImagenCargada) onImagenCargada();
+  };
+
   const renderPrecio = () => {
     if (totalDias === 0 || totalDias === 1) {
       return (
@@ -179,12 +191,11 @@ const Tarjeta: React.FC<TarjetaProps> = ({
                 src={url}
                 alt={`Glamping ${nombreGlamping}`}
                 className={`tarjeta-imagen ${imagenCargada ? "visible" : "oculta"}`}
-                onLoad={() => setImagenCargada(true)}
+                onLoad={handleImagenCargada}
               />
             ))}
           </div>
 
-          {/* Puntos de navegación */}
           <div className="puntos">
             {puntosVisibles.map((_, index) => (
               <span
