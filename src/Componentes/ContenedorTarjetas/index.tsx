@@ -4,7 +4,7 @@ import "./estilos.css";
 
 interface GlampingData {
   nombre: string;
-  ciudad_departamento: string; // Cambiado para reflejar el campo correcto.
+  ciudad_departamento: string;
   precio_noche: number;
   calificacion: number | null;
   imagenes: string[];
@@ -16,25 +16,38 @@ const ContenedorTarjetas: React.FC = () => {
 
   useEffect(() => {
     const fetchGlampings = async () => {
-      try {
-        const response = await fetch("https://glamperosapi.onrender.com/glampings/");
-        if (!response.ok) throw new Error("Error al obtener los datos de la API");
-        const data = await response.json();
+      // Verificar si los datos ya están almacenados en sessionStorage
+      const storedData = sessionStorage.getItem("glampingsData");
 
-        // Mapear los datos para asegurar la estructura
-        const parsedData = data.map((glamping: any) => ({
-          nombre: glamping.nombre,
-          ciudad_departamento: glamping.ciudad_departamento, // Usar el campo correcto
-          precio_noche: glamping.precio_noche,
-          calificacion: glamping.calificacion,
-          imagenes: glamping.imagenes,
-        }));
-
-        setGlampings(parsedData);
-      } catch (error) {
-        console.error("Error al obtener glampings:", error);
-      } finally {
+      if (storedData) {
+        // Si existen datos almacenados, úsalos directamente
+        setGlampings(JSON.parse(storedData));
         setLoading(false);
+      } else {
+        // Si no, realiza la solicitud a la API
+        try {
+          const response = await fetch("https://glamperosapi.onrender.com/glampings/");
+          if (!response.ok) throw new Error("Error al obtener los datos de la API");
+          const data = await response.json();
+
+          // Mapear los datos para asegurar la estructura
+          const parsedData = data.map((glamping: any) => ({
+            nombre: glamping.nombre,
+            ciudad_departamento: glamping.ciudad_departamento,
+            precio_noche: glamping.precio_noche,
+            calificacion: glamping.calificacion,
+            imagenes: glamping.imagenes,
+          }));
+
+          // Guardar los datos en sessionStorage
+          sessionStorage.setItem("glampingsData", JSON.stringify(parsedData));
+
+          setGlampings(parsedData);
+        } catch (error) {
+          console.error("Error al obtener glampings:", error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
@@ -55,9 +68,9 @@ const ContenedorTarjetas: React.FC = () => {
         <Tarjeta
           key={index}
           imagenes={glamping.imagenes}
-          ciudad={glamping.ciudad_departamento} // Mostrar ciudad y departamento
+          ciudad={glamping.ciudad_departamento}
           precio={glamping.precio_noche}
-          calificacion={glamping.calificacion || 0} // Si `calificacion` es null, usar 0
+          calificacion={glamping.calificacion || 0}
           favorito={false}
           nombreGlamping={glamping.nombre}
           onFavoritoChange={(nuevoEstado) =>
