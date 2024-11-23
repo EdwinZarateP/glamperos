@@ -23,6 +23,7 @@ interface ContextProps {
   setCiudad_departamento: Dispatch<SetStateAction<string>>;
   ciudad_Elegida: string;
   setCiudad_Elegida: Dispatch<SetStateAction<string>>;
+  
 
   // Variables de tipo fecha
   fechaInicio: Date | null;
@@ -58,6 +59,10 @@ interface ContextProps {
   setMostrarVisitantes: Dispatch<SetStateAction<boolean>>;
   mostrarCalendario: boolean;
   setMostrarCalendario: Dispatch<SetStateAction<boolean>>;
+
+    // Imagenes puntuales del glamping
+    imagenesSeleccionadas: string[];
+    setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -89,6 +94,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Cantidad_Bebes, setCantidad_Bebes] = useState<number>(0);
   const [Cantidad_Mascotas, setCantidad_Mascotas] = useState<number>(0);
   const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
+  const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
 
   // Estados para modales
   const [mostrarVisitantes, setMostrarVisitantes] = useState<boolean>(false);
@@ -131,6 +137,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setMostrarVisitantes,
     mostrarCalendario,
     setMostrarCalendario,
+    imagenesSeleccionadas,
+    setImagenesSeleccionadas,
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;

@@ -43,6 +43,12 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
     setEsFavorito(!esFavorito); // Alterna el estado de favorito
   };
 
+  // Lógica para limitar el número de puntos visibles a 5
+  const maxPuntos = 5; // Número máximo de puntos visibles
+  const start = Math.max(0, indiceActual - Math.floor(maxPuntos / 2));
+  const end = Math.min(imagenes.length, start + maxPuntos);
+  const puntosVisibles = imagenes.slice(start, end);
+
   return (
     <div
       className="imgExp-carrusel"
@@ -70,11 +76,11 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
       </div>
 
       <div className="imgExp-puntos">
-        {imagenes.map((_, index) => (
+        {puntosVisibles.map((_, index) => (
           <span
-            key={index}
-            className={`imgExp-punto ${index === indiceActual ? 'imgExp-activo' : ''}`}
-            onClick={() => setIndiceActual(index)}
+            key={start + index}
+            className={`imgExp-punto ${start + index === indiceActual ? 'imgExp-activo' : ''}`}
+            onClick={() => setIndiceActual(start + index)}
           />
         ))}
       </div>

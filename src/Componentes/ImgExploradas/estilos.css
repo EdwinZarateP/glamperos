@@ -45,6 +45,7 @@
 .imagenes-secundarias img {
   width: 100%;
   height: 100%;
+  aspect-ratio: 1 / 0.5; /* Mantiene el formato cuadrado */
   object-fit: cover;
   transition: filter 0.3s ease; /* Transición suave para el efecto de oscurecimiento */
 }
@@ -72,3 +73,4 @@
 .icono {
   font-size: 18px;
 }
+

@@ -44,7 +44,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     throw new Error("El contexto no está disponible. Verifica el proveedor.");
   }
 
-  const { totalDias, setPrecioPorNoche, setCiudad_Elegida, setNombreGlamping } =
+  const { totalDias, setPrecioPorNoche, setCiudad_Elegida, setNombreGlamping, setImagenesSeleccionadas } =
     almacenVariables;
 
   if (!imagenes || imagenes.length === 0) {
@@ -130,6 +130,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setPrecioPorNoche(precioConTarifa);
     setCiudad_Elegida(ciudad);
     setNombreGlamping(nombreGlamping);
+    setImagenesSeleccionadas(imagenes);
   };
 
   const renderPrecio = () => {

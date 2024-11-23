@@ -24,10 +24,10 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  aspect-ratio: 1 / 1; /* Mantiene el formato cuadrado */
+  aspect-ratio: 1 / 0.9; /* Mantiene el formato cuadrado */
   overflow: hidden;
   border-radius: 8px;
-  height: 95%;
+  
 }
 
 /* Skeleton loader */
@@ -152,6 +152,7 @@
 .tarjeta-info {
   padding-top: 0;
   background-color: #ffffff;
+  margin-top: 10px;
 }
 
 .tarjeta-contenido {

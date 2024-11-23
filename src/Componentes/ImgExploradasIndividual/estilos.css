@@ -9,7 +9,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  position: relative; /* Asegura que los controles puedan posicionarse correctamente */
+  position: relative;
 }
 
 /* Contenedor del carrusel */
@@ -104,13 +104,15 @@
 }
 
 .imgExp-punto {
-  width: 5px;
-  height: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
+  width: 6px;
+  height: 6px;
+  background-color: rgba(35, 34, 34, 0.7);
   border-radius: 50%;
   cursor: pointer;
 }
 
 .imgExp-punto.imgExp-activo {
-  background-color: white; /* Cambia el color del punto activo */
+  background-color: rgba(240, 233, 233, 0.9);
+  transform: scale(1.2);
+  
 }

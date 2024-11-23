@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'; // Importa useContext
+import { useEffect, useContext } from 'react';
 import Header from '../../Componentes/Header';
 import ImagenesExploradas from '../../Componentes/ImgExploradas/index';
 import EncabezadoExplorado from '../../Componentes/EncabezadoExplorado/index';
@@ -7,22 +7,21 @@ import NombreGlamping from '../../Componentes/NombreGlamping/index';
 import DescripcionGlamping from '../../Componentes/DescripcionGlamping/index';
 import FormularioFechas from '../../Componentes/FormularioFechas/index';
 import LoQueOfrece from '../../Componentes/LoQueOfrece';
-import Calendario from '../../Componentes/Calendario/index'; // Asegúrate de importar correctamente
+import Calendario from '../../Componentes/Calendario/index';
 import MapaGlampings from '../../Componentes/Mapa/index';
 import Comentarios from '../../Componentes/Comentarios/index';
-import ReservarBoton from '../../Componentes/BotonReservar/index'; // Importa ReservarBoton
-import { ContextoApp } from '../../Contexto/index'; // Importa el contexto
+import ReservarBoton from '../../Componentes/BotonReservar/index';
+import { ContextoApp } from '../../Contexto/index';
 import './estilos.css';
 
 function ExplorarGlamping() {
-  // Accede al contexto
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { setTarifaServicio, precioPorNoche, ciudad_Elegida, nombreGlamping } = almacenVariables;
+  const { setTarifaServicio, precioPorNoche, ciudad_Elegida, nombreGlamping, imagenesSeleccionadas } = almacenVariables;
 
   // Establece la tarifa de servicio predeterminada
   useEffect(() => {
@@ -36,13 +35,10 @@ function ExplorarGlamping() {
     });
   }, []);
 
-  const imagenes = [
-    'https://a0.muscache.com/im/pictures/miso/Hosting-33556265/original/934a550a-17ea-46c2-a25e-86751d5c6bf8.jpeg?im_w=1200',
-    'https://www.dosisverde.com/cmsd/wp-content/uploads/2022/05/casa_en_el_arbol_utica_n_0.jpeg',
-    'https://media.admagazine.com/photos/666a5173a0a09ff28cdff9e6/16:9/w_2560%2Cc_limit/GettyImages-1740469306.jpg',
-    'https://cf.bstatic.com/xdata/images/hotel/max1024x768/529183840.jpg?k=fe86b8b2731b17900d37b685f368a06cabcf8d7aa823c823b2e50df1f912d81a&o=&hp=1',
-    'https://entrepinosglamping.com/wp-content/uploads/2022/11/22-tipi-sin-jacuzzi-glamping-1.jpeg',
-  ];
+  // Validación para evitar errores si no hay imágenes seleccionadas
+  if (!imagenesSeleccionadas || imagenesSeleccionadas.length === 0) {
+    return <div>No hay imágenes disponibles para mostrar.</div>;
+  }
 
   const caracteristicas = [
     { icono: 'https://via.placeholder.com/24', descripcion: 'Secadora de pelo' },
@@ -52,11 +48,10 @@ function ExplorarGlamping() {
     { icono: 'https://via.placeholder.com/24', descripcion: 'Gel de ducha' },
   ];
 
-
   const fechasReservadas = [
-    new Date(2024, 10, 20), // Ejemplo: 20 de noviembre de 2024
-    new Date(2024, 10, 28), // Ejemplo: 28 de noviembre de 2024
-    new Date(2024, 10, 29), // Ejemplo: 29 de noviembre de 2024
+    new Date(2024, 10, 20),
+    new Date(2024, 10, 28),
+    new Date(2024, 10, 29),
   ];
 
   const datosComentarios = [
@@ -95,13 +90,13 @@ function ExplorarGlamping() {
             nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`} />
         </div>
         <div className="imagenes-exploradas-container">
-          <ImagenesExploradas imagenes={imagenes} />
+          <ImagenesExploradas imagenes={imagenesSeleccionadas} />
         </div>
         <div className="img-exploradas-individual-container">
-          <ImgExploradasIndividual imagenes={imagenes} />
+          <ImgExploradasIndividual imagenes={imagenesSeleccionadas} />
         </div>
         <div className="nombre-glamping-container">
-          <NombreGlamping nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`}/>
+          <NombreGlamping nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`} />
         </div>
         <div className='contenedor-descripcion-glamping'>
           <div className='contenedor-descripcion-glamping-izq'>
@@ -123,13 +118,13 @@ function ExplorarGlamping() {
             <div className='contenedor-calendario'>
               <Calendario 
                 nombreGlamping={`${nombreGlamping}  - ${ciudad_Elegida.split(" - ")[0]}`}
-                FechasReservadas={fechasReservadas} // Propiedad de fechas reservadas
+                FechasReservadas={fechasReservadas} 
               />
             </div>
           </div>
           <div className='contenedor-descripcion-glamping-der'>
             <FormularioFechas
-              precioPorNoche={precioPorNoche || 0} // Usa el valor del contexto
+              precioPorNoche={precioPorNoche || 0}
             />
           </div>
         </div>
