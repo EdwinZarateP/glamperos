@@ -191,20 +191,20 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         )}
       </div>
 
-      <button
+      <div
         className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}
         onClick={anteriorImagen}
       >
         <MdOutlineKeyboardArrowLeft />
-      </button>
-      <button
+      </div>
+      <div
         className={`flecha derecha ${
           imagenActual === imagenes.length - 1 ? "oculta" : ""
         }`}
         onClick={siguienteImagen}
       >
         <MdOutlineKeyboardArrowRight />
-      </button>
+      </div>
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
