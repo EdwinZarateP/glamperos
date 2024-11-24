@@ -13,9 +13,17 @@ const CrearGlamping: React.FC = () => {
   const [caracteristicas, setCaracteristicas] = useState("");
 
   const [mensaje, setMensaje] = useState<string | null>(null);
+  const [subiendo, setSubiendo] = useState(false);
 
+  // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validar que las imágenes no estén vacías
+    if (imagenes.length === 0) {
+      setMensaje("Por favor, selecciona al menos una imagen.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("nombre", nombre);
@@ -23,25 +31,42 @@ const CrearGlamping: React.FC = () => {
     formData.append("precio_noche", precioNoche);
     formData.append("descripcion", descripcion);
     formData.append("ciudad_departamento", ciudadDepartamento);
-    imagenes.forEach((imagen) => formData.append("imagenes", imagen));
+    imagenes.forEach((imagen) => formData.append("imagenes", imagen)); // Adjunta las imágenes
     formData.append("video_youtube", videoYoutube);
     formData.append("caracteristicas", caracteristicas);
 
     try {
+      setSubiendo(true); // Indicar que el proceso está en curso
       const response = await axios.post("https://glamperosapi.onrender.com/glampings/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMensaje("¡Glamping creado exitosamente!");
       console.log(response.data);
     } catch (error) {
-      setMensaje("Hubo un error al crear el glamping.");
+      setMensaje("Hubo un error al crear el glamping. Intenta nuevamente.");
       console.error(error);
+    } finally {
+      setSubiendo(false); // Indicar que el proceso terminó
     }
   };
 
+  // Manejar selección de imágenes
   const handleImagenesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImagenes(Array.from(e.target.files));
+      const archivosSeleccionados = Array.from(e.target.files);
+
+      // Validar tipo de archivo
+      const formatosValidos = ["image/jpeg", "image/png", "image/webp"];
+      const archivosValidos = archivosSeleccionados.filter((archivo) =>
+        formatosValidos.includes(archivo.type)
+      );
+
+      if (archivosValidos.length !== archivosSeleccionados.length) {
+        setMensaje("Algunas imágenes tienen formatos no válidos. Solo se permiten JPEG, PNG y WebP.");
+        return;
+      }
+
+      setImagenes(archivosValidos);
     }
   };
 
@@ -114,6 +139,7 @@ const CrearGlamping: React.FC = () => {
           <input
             type="file"
             id="imagenes"
+            accept="image/*" // Solo permite imágenes
             multiple
             onChange={handleImagenesChange}
             required
@@ -138,7 +164,9 @@ const CrearGlamping: React.FC = () => {
             required
           />
         </div>
-        <button type="submit" className="CrearGlamping-boton">Guardar Glamping</button>
+        <button type="submit" className="CrearGlamping-boton" disabled={subiendo}>
+          {subiendo ? "Subiendo..." : "Guardar Glamping"}
+        </button>
       </form>
     </div>
   );
