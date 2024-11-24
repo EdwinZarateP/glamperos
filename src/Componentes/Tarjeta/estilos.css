@@ -76,51 +76,52 @@
 }
 
 .tarjeta-imagen.oculta {
-  display: none; /* Oculta completamente la imagen */
+  display: none;
 }
 
 /* Flechas de navegación */
 .flecha {
   position: absolute;
   top: 40%;
-  font-size: 24px;
+  font-size: 20px;
   color: rgba(0, 0, 0, 0.6);
   background-color: white;
   border: none;
   cursor: pointer;
-  padding: 2px;
+  padding: 4px;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   transform: translateY(-50%);
-  z-index: 1;
+  z-index: 2;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0; /* Ocultas por defecto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Mostrar flechas solo cuando se hace hover sobre la tarjeta */
+.tarjeta:hover .flecha {
+  opacity: 1;
+}
+
+/* Oculta las flechas en la primera o última imagen */
 .flecha.oculta {
   display: none;
 }
 
-
+/* Flecha izquierda */
 .flecha.izquierda {
-  left: 10px;
+  left: 12px;
 }
 
+/* Flecha derecha */
 .flecha.derecha {
-  right: 10px;
+  right: 12px;
 }
 
-/* Mostrar flechas solo en pantallas grandes */
-@media (min-width: 601px) {
-  .flecha {
-    opacity: 0;
-  }
-
-  .tarjeta:hover .flecha {
-    opacity: 1;
-  }
-}
-
+/* Hover para flechas */
 .flecha:hover {
   transform: translateY(-50%) scale(1.1);
 }
@@ -133,7 +134,6 @@
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  visibility: visible;
 }
 
 .punto {
@@ -144,12 +144,25 @@
   cursor: pointer;
 }
 
-.punto.activo {
+.punto:hover {
   background-color: rgba(240, 233, 233, 0.9);
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
-/* Ocultar puntos en pantallas grandes */
+/* Responsividad */
+
+/* Pantallas pequeñas: oculta flechas y muestra puntos */
+@media (max-width: 600px) {
+  .flecha {
+    display: none;
+  }
+
+  .puntos {
+    visibility: visible;
+  }
+}
+
+/* Pantallas grandes: muestra flechas y oculta puntos */
 @media (min-width: 601px) {
   .puntos {
     visibility: hidden;
@@ -239,23 +252,11 @@
   color: red;
 }
 
-/* Responsividad */
+/* Ajustes para pantallas pequeñas */
 @media (max-width: 600px) {
   .tarjeta {
     margin: 8px;
     width: 95%;
     margin-bottom: 25px;
-  }
-
-  /* Oculta las flechas en pantallas pequeñas */
-  .flecha {
-    display: none;
-  }
-}
-
-@media (min-width: 601px) {
-  /* Muestra las flechas en pantallas grandes */
-  .flecha {
-    display: inline-flex;
   }
 }

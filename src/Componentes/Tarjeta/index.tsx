@@ -37,7 +37,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const [imagenActual, setImagenActual] = useState(0);
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
-  const [bloqueoNavegacion, setBloqueoNavegacion] = useState(false);
   const [imagenCargada, setImagenCargada] = useState(false);
 
   const almacenVariables = useContext(ContextoApp);
@@ -77,18 +76,14 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   };
 
   const siguienteImagen = () => {
-    if (imagenActual < imagenes.length - 1 && !bloqueoNavegacion) {
-      setBloqueoNavegacion(true);
+    if (imagenActual < imagenes.length - 1) {
       setImagenActual((prev) => prev + 1);
-      setTimeout(() => setBloqueoNavegacion(false), 500);
     }
   };
 
   const anteriorImagen = () => {
-    if (imagenActual > 0 && !bloqueoNavegacion) {
-      setBloqueoNavegacion(true);
+    if (imagenActual > 0) {
       setImagenActual((prev) => prev - 1);
-      setTimeout(() => setBloqueoNavegacion(false), 500);
     }
   };
 
@@ -108,20 +103,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       anteriorImagen();
     }
   };
-
-  const esPantallaPequena = window.innerWidth <= 600;
-
-  const maxPuntos = 5;
-  const halfMaxPuntos = Math.floor(maxPuntos / 2);
-  let start = Math.max(0, imagenActual - halfMaxPuntos);
-  let end = start + maxPuntos;
-
-  if (end > imagenes.length) {
-    end = imagenes.length;
-    start = Math.max(0, end - maxPuntos);
-  }
-
-  const puntosVisibles = imagenes.slice(start, end);
 
   const precioConTarifa = precio * tarifa;
 
@@ -175,8 +156,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       >
         <div
           className="tarjeta-imagen-container"
-          onTouchStart={esPantallaPequena ? handleTouchStart : undefined}
-          onTouchEnd={esPantallaPequena ? handleTouchEnd : undefined}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           {!imagenCargada && <div className="tarjeta-skeleton" />}
           <div
@@ -197,11 +178,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           </div>
 
           <div className="puntos">
-            {puntosVisibles.map((_, index) => (
-              <span
-                key={start + index}
-                className={`punto ${start + index === imagenActual ? "activo" : ""}`}
-              />
+            {imagenes.map((_, index) => (
+              <span key={index} className="punto" />
             ))}
           </div>
         </div>
@@ -220,24 +198,20 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         )}
       </button>
 
-      {!esPantallaPequena && (
-        <>
-          <button
-            className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}
-            onClick={anteriorImagen}
-          >
-            <MdOutlineKeyboardArrowLeft />
-          </button>
-          <button
-            className={`flecha derecha ${
-              imagenActual === imagenes.length - 1 ? "oculta" : ""
-            }`}
-            onClick={siguienteImagen}
-          >
-            <MdOutlineKeyboardArrowRight />
-          </button>
-        </>
-      )}
+      <button
+        className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}
+        onClick={anteriorImagen}
+      >
+        <MdOutlineKeyboardArrowLeft />
+      </button>
+      <button
+        className={`flecha derecha ${
+          imagenActual === imagenes.length - 1 ? "oculta" : ""
+        }`}
+        onClick={siguienteImagen}
+      >
+        <MdOutlineKeyboardArrowRight />
+      </button>
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
