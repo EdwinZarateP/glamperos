@@ -89,16 +89,15 @@
 /* Botón de búsqueda */
 .Header-botonBusqueda {
   background-color: #F2A900;
-  border: none;
-  color: #fff;
   border-radius: 50%;
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  box-sizing: border-box;
 }
+
 
 /* Header derecho (opciones de usuario) */
 .Header-derecha {

@@ -65,9 +65,9 @@ const Header: React.FC = () => {
               ? `${totalHuespedes} huésped${totalHuespedes > 1 ? "es" : ""}`
               : "¿Cuántos?"}
           </span>
-          <button className="Header-botonBusqueda">
+          <div className="Header-botonBusqueda">
             <FiSearch className="Header-icono" />
-          </button>
+          </div>
         </div>
 
         <div className="Header-derecha">
