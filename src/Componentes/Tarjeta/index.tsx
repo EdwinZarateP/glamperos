@@ -28,7 +28,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   tarifaServicio,
   nombreGlamping,
-  onImagenCargada,
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
