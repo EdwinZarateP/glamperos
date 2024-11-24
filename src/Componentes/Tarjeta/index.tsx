@@ -223,16 +223,16 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       {!esPantallaPequena && (
         <>
           <button
-            className="flecha izquierda"
+            className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}
             onClick={anteriorImagen}
-            disabled={imagenActual === 0}
           >
             <MdOutlineKeyboardArrowLeft />
           </button>
           <button
-            className="flecha derecha"
+            className={`flecha derecha ${
+              imagenActual === imagenes.length - 1 ? "oculta" : ""
+            }`}
             onClick={siguienteImagen}
-            disabled={imagenActual === imagenes.length - 1}
           >
             <MdOutlineKeyboardArrowRight />
           </button>
