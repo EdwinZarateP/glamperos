@@ -61,9 +61,7 @@ const ContenedorTarjetas: React.FC = () => {
         {[...Array(6)].map((_, index) => (
           <div key={index} className="tarjeta-skeleton">
             <div className="tarjeta-skeleton-imagen" />
-            <div className="tarjeta-skeleton-info">
-              <div className="tarjeta-skeleton-linea" />
-              <div className="tarjeta-skeleton-linea corta" />
+            <div className="tarjeta-skeleton-info">          
             </div>
           </div>
         ))}
