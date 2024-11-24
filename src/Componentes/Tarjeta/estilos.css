@@ -82,7 +82,7 @@
 /* Flechas de navegación */
 .flecha {
   position: absolute;
-  top: 40%;
+  top: 50%; /* Centra verticalmente la flecha */
   font-size: 20px;
   color: rgba(0, 0, 0, 0.6);
   background-color: white;
@@ -142,11 +142,17 @@
   background-color: rgba(35, 34, 34, 0.7);
   border-radius: 50%;
   cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.punto.activo {
+  background-color: rgba(240, 233, 233, 0.9);
+  transform: scale(1.2); /* Resalta el punto activo */
 }
 
 .punto:hover {
   background-color: rgba(240, 233, 233, 0.9);
-  transform: scale(1.1);
+  transform: scale(1.2); /* Similar al punto activo */
 }
 
 /* Responsividad */

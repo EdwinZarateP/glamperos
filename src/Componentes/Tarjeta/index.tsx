@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import { AiTwotoneHeart } from "react-icons/ai";
 import { BsBalloonHeartFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
-import {
-  MdOutlineKeyboardArrowLeft,
-  MdOutlineKeyboardArrowRight,
-} from "react-icons/md";
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ContextoApp } from "../../Contexto/index";
 import "./estilos.css";
 
@@ -35,9 +32,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [touchEndX, setTouchEndX] = useState(0);
-  const [imagenCargada, setImagenCargada] = useState(false);
+  let touchStartX = 0;
+  let touchEndX = 0;
 
   const almacenVariables = useContext(ContextoApp);
 
@@ -76,23 +72,19 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   };
 
   const siguienteImagen = () => {
-    if (imagenActual < imagenes.length - 1) {
-      setImagenActual((prev) => prev + 1);
-    }
+    setImagenActual((prev) => (prev < imagenes.length - 1 ? prev + 1 : prev));
   };
 
   const anteriorImagen = () => {
-    if (imagenActual > 0) {
-      setImagenActual((prev) => prev - 1);
-    }
+    setImagenActual((prev) => (prev > 0 ? prev - 1 : prev));
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
+    touchStartX = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    setTouchEndX(e.changedTouches[0].clientX);
+    touchEndX = e.changedTouches[0].clientX;
     handleSwipe();
   };
 
@@ -103,6 +95,12 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       anteriorImagen();
     }
   };
+
+  // Lógica para limitar los puntos visibles a 5
+  const maxPuntos = 5;
+  const start = Math.max(0, imagenActual - Math.floor(maxPuntos / 2));
+  const end = Math.min(imagenes.length, start + maxPuntos);
+  const puntosVisibles = imagenes.slice(start, end);
 
   const precioConTarifa = precio * tarifa;
 
@@ -119,11 +117,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setCiudad_Elegida(ciudad);
     setNombreGlamping(nombreGlamping);
     setImagenesSeleccionadas(imagenes);
-  };
-
-  const handleImagenCargada = () => {
-    setImagenCargada(true);
-    if (onImagenCargada) onImagenCargada();
   };
 
   const renderPrecio = () => {
@@ -159,7 +152,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {!imagenCargada && <div className="tarjeta-skeleton" />}
           <div
             className="carrusel"
             style={{
@@ -171,15 +163,17 @@ const Tarjeta: React.FC<TarjetaProps> = ({
                 key={index}
                 src={url}
                 alt={`Glamping ${nombreGlamping}`}
-                className={`tarjeta-imagen ${imagenCargada ? "visible" : "oculta"}`}
-                onLoad={handleImagenCargada}
+                className="tarjeta-imagen visible"
               />
             ))}
           </div>
-
           <div className="puntos">
-            {imagenes.map((_, index) => (
-              <span key={index} className="punto" />
+            {puntosVisibles.map((_, index) => (
+              <span
+                key={start + index}
+                className={`punto ${start + index === imagenActual ? "activo" : ""}`}
+                onClick={() => setImagenActual(start + index)}
+              />
             ))}
           </div>
         </div>
