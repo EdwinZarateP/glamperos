@@ -82,7 +82,7 @@
 /* Flechas de navegación */
 .flecha {
   position: absolute;
-  top: 50%; /* Centra verticalmente la flecha */
+  top: 40%; /* Centra verticalmente la flecha */
   font-size: 20px;
   color: rgba(0, 0, 0, 0.6);
   background-color: white;
