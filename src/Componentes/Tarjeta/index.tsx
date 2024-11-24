@@ -177,7 +177,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
           </div>
         </div>
       </Link>
-      <button
+      <div
         className="tarjeta-favorito"
         onClick={(e) => {
           e.stopPropagation();
@@ -189,7 +189,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         ) : (
           <AiTwotoneHeart className="corazon" />
         )}
-      </button>
+      </div>
 
       <button
         className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}

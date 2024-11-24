@@ -65,9 +65,9 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
       </div>
 
       <div className="imgExp-controles">
-        <button onClick={toggleFavorito} className="imgExp-corazon">
+        <div onClick={toggleFavorito} className="imgExp-corazon">
           {esFavorito ? <BsBalloonHeartFill /> : <AiTwotoneHeart />}
-        </button>
+        </div>
         <IoShareSocialSharp className="imgExp-compartir" />
       </div>
 
