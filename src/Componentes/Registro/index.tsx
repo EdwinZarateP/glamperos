@@ -27,7 +27,7 @@ const Registro: React.FC = () => {
     try {
       setCargando(true);
       const response = await axios.post(
-        "https://glamperosapi.onrender.com/usuarios", // URL de tu API
+        "https://glamperosapi.onrender.com/usuarios",
         datosUsuario
       );
 
@@ -37,16 +37,7 @@ const Registro: React.FC = () => {
       console.error("Error en el registro:", error);
 
       if (error.response?.data?.detail) {
-        if (typeof error.response.data.detail === "string") {
-          setMensaje(error.response.data.detail);
-        } else if (typeof error.response.data.detail === "object") {
-          const detalles = Object.values(error.response.data.detail)
-            .map((msg: any) => msg?.msg || msg)
-            .join(", ");
-          setMensaje(detalles);
-        } else {
-          setMensaje("Hubo un error inesperado. Intenta nuevamente.");
-        }
+        setMensaje(error.response.data.detail); // Mostrar mensaje de error específico
       } else {
         setMensaje("Hubo un error al registrar. Intenta nuevamente.");
       }
@@ -77,7 +68,12 @@ const Registro: React.FC = () => {
           })
           .catch((error) => {
             console.error("Error en el registro con Google:", error);
-            setMensaje("Hubo un error al registrar con Google. Intenta nuevamente.");
+
+            if (error.response?.data?.detail) {
+              setMensaje(error.response.data.detail); // Mostrar mensaje de error específico
+            } else {
+              setMensaje("Hubo un error al registrar con Google. Intenta nuevamente.");
+            }
           });
       } catch (error) {
         console.error("Error al decodificar el token de Google:", error);
@@ -157,10 +153,7 @@ const Registro: React.FC = () => {
         </button>
       </form>
       <div className="Registro-google">
-        <GoogleLogin
-          onSuccess={handleGoogleSuccess}
-          onError={handleGoogleError}
-        />
+        <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
       </div>
     </div>
   );
