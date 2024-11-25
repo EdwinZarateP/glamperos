@@ -13,6 +13,8 @@ const Registro: React.FC = () => {
   const [mostrandoClave, setMostrandoClave] = useState(false);
   const [cargando, setCargando] = useState(false);
 
+  const API_URL = "https://glamperosapi.onrender.com/usuarios";
+
   // Manejar registro manual
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,68 +28,59 @@ const Registro: React.FC = () => {
 
     try {
       setCargando(true);
-      const response = await axios.post(
-        "https://glamperosapi.onrender.com/usuarios",
-        datosUsuario
-      );
-
+      const response = await axios.post(API_URL, datosUsuario);
       setMensaje("¡Registro exitoso!"); // Mensaje de éxito
       console.log("Usuario registrado:", response.data);
     } catch (error: any) {
-      console.error("Error en el registro:", error);
-
-      if (error.response?.data?.detail) {
-        setMensaje(error.response.data.detail); // Mostrar mensaje de error específico
-      } else {
-        setMensaje("Hubo un error al registrar. Intenta nuevamente.");
-      }
+      manejarError(error);
     } finally {
       setCargando(false);
     }
   };
 
   // Manejar inicio de sesión con Google
-  const handleGoogleSuccess = (credentialResponse: CredentialResponse | undefined) => {
-    if (credentialResponse?.credential) {
-      try {
-        const decoded: any = jwtDecode(credentialResponse.credential);
-        const nombreUsuario: string = decoded.name;
-        const emailUsuario: string = decoded.email;
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse | undefined) => {
+    if (!credentialResponse?.credential) {
+      setMensaje("No se recibió el credencial de Google.");
+      return;
+    }
 
-        // Enviar el usuario decodificado a la API para registrarlo
-        axios
-          .post("https://glamperosapi.onrender.com/usuarios", {
-            nombre: nombreUsuario,
-            email: emailUsuario,
-            telefono: "", // No se obtiene de Google, puedes dejarlo vacío
-            clave: "autenticacionGoogle", // Generar una clave ficticia para usuarios de Google
-          })
-          .then((response) => {
-            setMensaje("¡Registro exitoso con Google!");
-            console.log("Usuario registrado con Google:", response.data);
-          })
-          .catch((error) => {
-            console.error("Error en el registro con Google:", error);
+    try {
+      const decoded: any = jwtDecode(credentialResponse.credential);
+      const nombreUsuario = decoded.name;
+      const emailUsuario = decoded.email;
 
-            if (error.response?.data?.detail) {
-              setMensaje(error.response.data.detail); // Mostrar mensaje de error específico
-            } else {
-              setMensaje("Hubo un error al registrar con Google. Intenta nuevamente.");
-            }
-          });
-      } catch (error) {
-        console.error("Error al decodificar el token de Google:", error);
-        setMensaje("Hubo un error inesperado al procesar tu cuenta de Google.");
-      }
-    } else {
-      console.log("No se recibió el credencial de Google.");
-      setMensaje("No se pudo iniciar sesión con Google.");
+      // Intentar registrar o verificar usuario en la API
+      const response = await axios.post(API_URL, {
+        nombre: nombreUsuario,
+        email: emailUsuario,
+        telefono: "",
+        clave: "autenticacionGoogle", // Generar clave ficticia
+      });
+
+      setMensaje("¡Registro exitoso con Google!");
+      console.log("Usuario registrado con Google:", response.data);
+    } catch (error: any) {
+      manejarError(error);
     }
   };
 
   const handleGoogleError = () => {
-    console.log("Login con Google falló.");
     setMensaje("Hubo un error al iniciar sesión con Google. Intenta nuevamente.");
+  };
+
+  // Función para manejar errores
+  const manejarError = (error: any) => {
+    console.error("Error:", error);
+    if (error.response?.data?.detail) {
+      setMensaje(
+        typeof error.response.data.detail === "string"
+          ? error.response.data.detail
+          : "Ocurrió un error inesperado."
+      );
+    } else {
+      setMensaje("Hubo un error al registrar. Intenta nuevamente.");
+    }
   };
 
   return (
