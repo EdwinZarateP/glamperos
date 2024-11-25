@@ -56,33 +56,30 @@
 
 /* Contenedor de la clave */
 .Registro-clave-contenedor {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
 }
 
 .Registro-clave-contenedor input {
-  flex: 1;
+  width: 100%;
+  padding-right: 40px; /* Espacio para el ícono */
 }
 
-.Registro-mostrar-clave {
-  background: none;
-  border: none;
-  font-size: 18px;
+.Registro-icono-clave {
+  position: absolute;
+  right: 10px;
   cursor: pointer;
-  color: #2F6B3E; /* Verde */
-  transition: color 0.3s ease;
-}
-
-.Registro-mostrar-clave:hover {
-  color: #0056b3; /* Azul claro */
+  font-size: 1.2rem;
+  color: #555;
 }
 
 /* Botón principal */
 .Registro-boton {
   width: 100%;
   padding: 12px;
-  background-color: #F2A900; /* Amarillo corporativo */
+  background-color: #2F6B3E; /* Amarillo corporativo */
   color: #fff;
   font-size: 16px;
   border: none;
@@ -93,7 +90,7 @@
 }
 
 .Registro-boton:hover {
-  background-color: #d58d00; /* Amarillo oscuro */
+  background-color: #3f8f53; 
   transform: translateY(-2px);
 }
 
@@ -104,27 +101,12 @@
 
 /* Botón de Google */
 .Registro-google {
+  display: flex;
   margin-top: 20px;
+  justify-content: center;
   text-align: center;
 }
 
-.Registro-google-boton {
-  padding: 12px 20px;
-  background-color: #4285f4; /* Azul de Google */
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: bold;
-  display: inline-block;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.Registro-google-boton:hover {
-  background-color: #357ae8; /* Azul más oscuro */
-  transform: translateY(-2px);
-}
 
 /* Responsividad */
 @media (max-width: 768px) {

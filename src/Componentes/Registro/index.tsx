@@ -29,7 +29,7 @@ const Registro: React.FC = () => {
     try {
       setCargando(true);
       const response = await axios.post(API_URL, datosUsuario);
-      setMensaje("¡Registro exitoso!"); // Mensaje de éxito
+      setMensaje("¡Registro exitoso!"); 
       console.log("Usuario registrado:", response.data);
     } catch (error: any) {
       manejarError(error);
@@ -41,7 +41,7 @@ const Registro: React.FC = () => {
   // Manejar inicio de sesión con Google
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse | undefined) => {
     if (!credentialResponse?.credential) {
-      setMensaje("No se recibió el credencial de Google.");
+      setMensaje("No se recibió el credencial de Google");
       return;
     }
 
@@ -132,13 +132,12 @@ const Registro: React.FC = () => {
               onChange={(e) => setClave(e.target.value)}
               required
             />
-            <button
-              type="button"
-              className="Registro-mostrar-clave"
+            <span
+              className="Registro-icono-clave"
               onClick={() => setMostrandoClave(!mostrandoClave)}
             >
               {mostrandoClave ? "🙈" : "👁️"}
-            </button>
+            </span>
           </div>
         </div>
         <button type="submit" className="Registro-boton" disabled={cargando}>
@@ -146,7 +145,11 @@ const Registro: React.FC = () => {
         </button>
       </form>
       <div className="Registro-google">
-        <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={handleGoogleError}
+          
+        />
       </div>
     </div>
   );
