@@ -18,7 +18,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Configuración adicional */
+    "typeRoots": ["node_modules/@types"], // Para reconocer los tipos globales
+    "types": ["node"] // Incluye tipos específicos para Node.js
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts"],
+  "exclude": ["node_modules", "dist"] // Excluye carpetas no necesarias
 }

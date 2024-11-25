@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 import "./estilos.css";
 
 const Registro: React.FC = () => {
@@ -11,6 +13,7 @@ const Registro: React.FC = () => {
   const [mostrandoClave, setMostrandoClave] = useState(false);
   const [cargando, setCargando] = useState(false);
 
+  // Manejar registro manual
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -33,15 +36,13 @@ const Registro: React.FC = () => {
     } catch (error: any) {
       console.error("Error en el registro:", error);
 
-      // Validar si el mensaje de error es un objeto y manejarlo correctamente
       if (error.response?.data?.detail) {
         if (typeof error.response.data.detail === "string") {
-          setMensaje(error.response.data.detail); // Si es un string, lo mostramos directamente
+          setMensaje(error.response.data.detail);
         } else if (typeof error.response.data.detail === "object") {
-          // Si es un objeto, lo convertimos a una cadena legible
           const detalles = Object.values(error.response.data.detail)
-            .map((msg: any) => msg?.msg || msg) // Tomar los mensajes específicos
-            .join(", "); // Concatenarlos
+            .map((msg: any) => msg?.msg || msg)
+            .join(", ");
           setMensaje(detalles);
         } else {
           setMensaje("Hubo un error inesperado. Intenta nuevamente.");
@@ -54,9 +55,43 @@ const Registro: React.FC = () => {
     }
   };
 
-  const handleGoogleAuth = () => {
-    // Redirigir al endpoint de autenticación con Google de tu API
-    window.location.href = "https://glamperosapi.onrender.com/auth/google";
+  // Manejar inicio de sesión con Google
+  const handleGoogleSuccess = (credentialResponse: CredentialResponse | undefined) => {
+    if (credentialResponse?.credential) {
+      try {
+        const decoded: any = jwtDecode(credentialResponse.credential);
+        const nombreUsuario: string = decoded.name;
+        const emailUsuario: string = decoded.email;
+
+        // Enviar el usuario decodificado a la API para registrarlo
+        axios
+          .post("https://glamperosapi.onrender.com/usuarios", {
+            nombre: nombreUsuario,
+            email: emailUsuario,
+            telefono: "", // No se obtiene de Google, puedes dejarlo vacío
+            clave: "autenticacionGoogle", // Generar una clave ficticia para usuarios de Google
+          })
+          .then((response) => {
+            setMensaje("¡Registro exitoso con Google!");
+            console.log("Usuario registrado con Google:", response.data);
+          })
+          .catch((error) => {
+            console.error("Error en el registro con Google:", error);
+            setMensaje("Hubo un error al registrar con Google. Intenta nuevamente.");
+          });
+      } catch (error) {
+        console.error("Error al decodificar el token de Google:", error);
+        setMensaje("Hubo un error inesperado al procesar tu cuenta de Google.");
+      }
+    } else {
+      console.log("No se recibió el credencial de Google.");
+      setMensaje("No se pudo iniciar sesión con Google.");
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.log("Login con Google falló.");
+    setMensaje("Hubo un error al iniciar sesión con Google. Intenta nuevamente.");
   };
 
   return (
@@ -122,9 +157,10 @@ const Registro: React.FC = () => {
         </button>
       </form>
       <div className="Registro-google">
-        <button className="Registro-google-boton" onClick={handleGoogleAuth}>
-          Registrarse con Google
-        </button>
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={handleGoogleError}
+        />
       </div>
     </div>
   );

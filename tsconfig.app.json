@@ -1,30 +1,34 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2020",
+    "target": "ES2020", // Compila el código para ES2020
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"], // Usa librerías compatibles con DOM y ES2020
+    "module": "ESNext", // Usa ESNext para módulos
+    "skipLibCheck": true, // Omite la comprobación de tipos en librerías externas
 
     /* Bundler mode */
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node", // Asegura compatibilidad con módulos tipo Node
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
-    "moduleDetection": "force",
+    "moduleDetection": "force", // Obliga a detectar módulos explícitamente
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx", // Configuración específica para React
 
     /* Linting */
-    "strict": true,
+    "strict": true, // Activa comprobaciones estrictas
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    /* Configuración adicional para Leaflet */
-    "typeRoots": ["node_modules/@types"], // Asegúrate de que reconozca los tipos instalados
-    "types": ["leaflet"]                  // Agrega Leaflet explícitamente
+    /* Configuración adicional */
+    "typeRoots": ["node_modules/@types"], // Incluye definiciones de tipos globales
+    "types": ["leaflet", "node", "react"], // Especifica tipos necesarios para el proyecto
+    "resolveJsonModule": true, // Habilita la importación de JSON
+    "esModuleInterop": true, // Habilita interoperabilidad con ES Modules
+    "allowSyntheticDefaultImports": true // Permite importar módulos con exportaciones por defecto
   },
-  "include": ["src"]
+  "include": ["src"], // Incluye archivos del directorio src
+  "exclude": ["node_modules", "dist"] // Excluye directorios innecesarios
 }
