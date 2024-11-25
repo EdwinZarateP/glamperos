@@ -11,6 +11,7 @@ const CrearGlamping: React.FC = () => {
   const [imagenes, setImagenes] = useState<File[]>([]);
   const [videoYoutube, setVideoYoutube] = useState("");
   const [caracteristicas, setCaracteristicas] = useState("");
+  const [propietarioId, setPropietarioId] = useState(""); // Nuevo campo para propietario_id
 
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [subiendo, setSubiendo] = useState(false);
@@ -25,15 +26,25 @@ const CrearGlamping: React.FC = () => {
       return;
     }
 
+    // Validar que propietario_id no esté vacío
+    if (!propietarioId) {
+      setMensaje("Por favor, proporciona un ID de propietario.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("nombre", nombre);
-    formData.append("ubicacion", JSON.stringify({ lat: parseFloat(ubicacion.lat), lng: parseFloat(ubicacion.lng) }));
+    formData.append(
+      "ubicacion",
+      JSON.stringify({ lat: parseFloat(ubicacion.lat), lng: parseFloat(ubicacion.lng) })
+    );
     formData.append("precio_noche", precioNoche);
     formData.append("descripcion", descripcion);
     formData.append("ciudad_departamento", ciudadDepartamento);
     imagenes.forEach((imagen) => formData.append("imagenes", imagen)); // Adjunta las imágenes
     formData.append("video_youtube", videoYoutube);
     formData.append("caracteristicas", caracteristicas);
+    formData.append("propietario_id", propietarioId); // Agrega el ID del propietario
 
     try {
       setSubiendo(true); // Indicar que el proceso está en curso
@@ -161,6 +172,16 @@ const CrearGlamping: React.FC = () => {
             id="caracteristicas"
             value={caracteristicas}
             onChange={(e) => setCaracteristicas(e.target.value)}
+            required
+          />
+        </div>
+        <div className="CrearGlamping-campo">
+          <label htmlFor="propietarioId">ID del Propietario:</label>
+          <input
+            type="text"
+            id="propietarioId"
+            value={propietarioId}
+            onChange={(e) => setPropietarioId(e.target.value)}
             required
           />
         </div>

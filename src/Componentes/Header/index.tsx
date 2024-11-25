@@ -76,12 +76,13 @@ const Header: React.FC = () => {
             Publica tu Glamping
           </Link>
 
-          <div className="Header-menuUsuario">
+          {/* Link para redirigir a /Registrarse */}
+          <Link to="/Registrarse" className="Header-menuUsuario">
             <FiMenu className="Header-iconoMenu" />
             <div className="Header-iconoSettingsWrapper">
               <VscSettings className="Header-iconoSettings" />
             </div>
-          </div>
+          </Link>
         </div>
       </header>
 

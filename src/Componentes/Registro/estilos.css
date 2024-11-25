@@ -1,0 +1,102 @@
+/* Contenedor principal */
+.Registro-contenedor {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título */
+  .Registro-titulo {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Mensaje */
+  .Registro-mensaje {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  /* Campos del formulario */
+  .Registro-campo {
+    margin-bottom: 15px;
+  }
+  
+  .Registro-campo label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .Registro-campo input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Contenedor de la clave */
+  .Registro-clave-contenedor {
+    display: flex;
+    align-items: center;
+  }
+  
+  .Registro-clave-contenedor input {
+    flex: 1;
+  }
+  
+  .Registro-mostrar-clave {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  
+  /* Botón principal */
+  .Registro-boton {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .Registro-boton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Botón de Google */
+  .Registro-google {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .Registro-google-boton {
+    padding: 10px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .Registro-google-boton:hover {
+    background-color: #357ae8;
+  }
+  

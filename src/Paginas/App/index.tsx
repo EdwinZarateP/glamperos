@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Inicio from '../Inicio/index';
+import Registrarse from '../Registrarse/index';
 import CreacionGlamping from '../CreacionGlamping/index';
 import ExplorarGlamping from '../ExplorarGlamping/index';
 import NoEncontrado from '../NoEncontrado/index';
@@ -14,6 +15,7 @@ const App: React.FC = () => {
     <Router basename="/glamperos">
       <Routes>
         <Route path="/" element={<Inicio />} />
+        <Route path="/Registrarse" element={<Registrarse />} />  
         <Route path="/TarjetaExclusiva" element={<ExplorarGlamping />} />  
         <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
         <Route path="*" element={<NoEncontrado />} />
