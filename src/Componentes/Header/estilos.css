@@ -150,8 +150,8 @@
 
 /* Responsividad */
 
-/* Pantallas pequeñas (máximo ancho: 860px) */
-@media (max-width: 860px) {
+/* Pantallas pequeñas (máximo ancho: 900px) */
+@media (max-width: 900px) {
   .Header-botonAnfitrion,
   .Header-opcionCuando,
   .Header-opcionCuando + .Header-divisor,
@@ -201,8 +201,8 @@
   }
 }
 
-/* Pantallas medianas (entre 540px y 860px) */
-@media (min-width: 540px) and (max-width: 860px) {
+/* Pantallas medianas (entre 540px y 900px) */
+@media (min-width: 540px) and (max-width: 900px) {
   
   .Header-izquierda {
     display: flex; /* Muestra el logo */
