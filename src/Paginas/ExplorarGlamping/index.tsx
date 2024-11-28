@@ -128,11 +128,11 @@ function ExplorarGlamping() {
             />
           </div>
         </div>
-        <MapaGlampings glamping={{
-          id: 1,
-          nombre: `${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`,
-          ubicacion: [5.1886, -74.48111],
-        }} />
+        <MapaGlampings 
+          lat={5.1865} 
+          lng={-74.48111} 
+          nombre={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`}
+        />
         <Comentarios comentarios={datosComentarios} />
         <ReservarBoton totalSinImpuestos={almacenVariables.totalSinImpuestos || 0} />
       </main>

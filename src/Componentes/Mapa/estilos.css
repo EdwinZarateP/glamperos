@@ -1,4 +1,3 @@
-/* Contenedor general del mapa */
 .mapa-contenedor {
   width: 100%;
   margin: 0 auto;
@@ -17,73 +16,29 @@
   color: #333;
 }
 
-/* Contenedor del mapa con efecto decorativo */
 .mapa-wrapper {
   width: 100%;
-  min-height: 400px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px; /* Bordes redondeados */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra */
+  height: 400px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease;
 }
 
-/* Efecto interactivo: sombra más fuerte al pasar el mouse */
 .mapa-wrapper:hover {
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Contenedor del mapa interactivo */
-.mapa-interactivo {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  
-}
-
-/* Ícono personalizado en el marcador */
-.custom-leaflet-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #000000; /* Fondo del ícono */
-  color: #FFD700; /* Color del ícono */
-  font-size: 15px; /* Tamaño del ícono */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.marcador-icono {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.leaflet-control-attribution {
-  font-size: 5px; /* Reduce el tamaño */
-  color: #999; /* Cambia el color */
-}
-
-
-/* Ajustes específicos para pantallas pequeñas */
+/* Ajustes para pantallas pequeñas */
 @media (max-width: 600px) {
   .mapa-contenedor {
     padding: 20px;
     margin: 0;
-
   }
   .mapa-wrapper {
-    min-height: 250px;
+    height: 250px;
     box-shadow: none;
   }
   .mapa-wrapper:hover {
     box-shadow: none;
-  }
-  .mapa-interactivo {
-    pointer-events: none; 
   }
 }
