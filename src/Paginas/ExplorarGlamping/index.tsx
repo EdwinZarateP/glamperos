@@ -12,6 +12,7 @@ import MapaGlampings from '../../Componentes/Mapa/index';
 import Comentarios from '../../Componentes/Comentarios/index';
 import ReservarBoton from '../../Componentes/BotonReservar/index';
 import { ContextoApp } from '../../Contexto/index';
+import ManejoErrores from '../../Funciones/ManejoErrores';
 import './estilos.css';
 
 function ExplorarGlamping() {
@@ -128,11 +129,13 @@ function ExplorarGlamping() {
             />
           </div>
         </div>
-        <MapaGlampings 
-          lat={5.1865} 
-          lng={-74.48111} 
-          nombre={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`}
-        />
+        <ManejoErrores>
+          <MapaGlampings 
+            lat={5.1865} 
+            lng={-74.48111} 
+            nombre={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`}
+          />
+        </ManejoErrores>
         <Comentarios comentarios={datosComentarios} />
         <ReservarBoton totalSinImpuestos={almacenVariables.totalSinImpuestos || 0} />
       </main>

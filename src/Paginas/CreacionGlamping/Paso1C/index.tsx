@@ -1,19 +1,34 @@
-import React, { useState } from "react";
-import { GoogleMap, Marker } from "@react-google-maps/api";
+import React, { useContext, useState } from "react";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+import { ContextoApp } from "../../../Contexto/index";
 import "./estilos.css";
 
 const Paso1C: React.FC = () => {
+  const contexto = useContext(ContextoApp);
+
+  if (!contexto) {
+    throw new Error(
+      "ContextoApp no está disponible. Asegúrate de envolver el componente en el ProveedorVariables."
+    );
+  }
+
+  const { libraries } = contexto;
+
   const [posicion, setPosicion] = useState<{ lat: number; lng: number }>({
     lat: 4.570868, // Coordenadas iniciales (Colombia)
     lng: -74.297333,
   });
 
   const mapContainerStyle = { width: "100%", height: "400px" };
-  const center = posicion;
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY!,
+    libraries: libraries as any, // Confirma que incluye "places"
+  });
 
   const {
     ready,
@@ -23,7 +38,7 @@ const Paso1C: React.FC = () => {
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
-      componentRestrictions: { country: "co" }, // Restringe las búsquedas a Colombia
+      componentRestrictions: { country: "co" },
     },
     debounce: 300,
   });
@@ -45,18 +60,15 @@ const Paso1C: React.FC = () => {
     setValue(e.target.value, true);
   };
 
-  const handleDragEnd = (e: google.maps.MapMouseEvent) => {
-    if (e.latLng) {
-      setPosicion({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-    }
-  };
+  if (!isLoaded || !ready) {
+    return <div>Cargando mapa...</div>;
+  }
 
   return (
     <div className="Paso1C-contenedor">
       <h1 className="Paso1C-titulo">¿Dónde se encuentra tu espacio?</h1>
       <p className="Paso1C-descripcion">
-        Solo compartiremos tu dirección con los huéspedes que hayan hecho una
-        reservación.
+        Solo compartiremos tu dirección con los huéspedes que hayan hecho una reservación.
       </p>
 
       {/* Campo de búsqueda con autocompletado */}
@@ -86,9 +98,14 @@ const Paso1C: React.FC = () => {
 
       {/* Mapa */}
       <div className="Paso1C-mapa">
-        <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={16}>
-          <Marker position={posicion} draggable={true} onDragEnd={handleDragEnd} />
-        </GoogleMap>
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          center={posicion}
+          zoom={16}
+          options={{
+            disableDefaultUI: true,
+          }}
+        />
       </div>
     </div>
   );

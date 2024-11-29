@@ -1,10 +1,15 @@
 import { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
 
+// Define libraries como una constante global
+const libraries: Libraries = ["places"];
+
 // Si quiere usar una variable de aquí en alguna parte de la App, siga estos pasos:
 // 1. En el componente elegido, import { useContext } from 'react';
 // 2. En el componente elegido, traiga el proveedor así: import { ContextoApp } from '../../Contexto/index'
 // 3. Antes del return del componente, cree lo siguiente: const almacenVariables = useContext(ContextoApp)
 // 4. Use la variable que desee del ProveedorVariables, por ejemplo: almacenVariables.esFavorito
+
+type Libraries = string[];
 
 //-------------------------------------------------------------------------------------
 // 1. Define la interfaz para el contexto
@@ -23,7 +28,6 @@ interface ContextProps {
   setCiudad_departamento: Dispatch<SetStateAction<string>>;
   ciudad_Elegida: string;
   setCiudad_Elegida: Dispatch<SetStateAction<string>>;
-  
 
   // Variables de tipo fecha
   fechaInicio: Date | null;
@@ -60,9 +64,12 @@ interface ContextProps {
   mostrarCalendario: boolean;
   setMostrarCalendario: Dispatch<SetStateAction<boolean>>;
 
-    // Imagenes puntuales del glamping
-    imagenesSeleccionadas: string[];
-    setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
+  // Imagenes puntuales del glamping
+  imagenesSeleccionadas: string[];
+  setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
+
+  // Mapas
+  libraries: Libraries;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -139,6 +146,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setMostrarCalendario,
     imagenesSeleccionadas,
     setImagenesSeleccionadas,
+    libraries,
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;

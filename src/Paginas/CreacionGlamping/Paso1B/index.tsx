@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GiCampingTent, GiHabitatDome, GiTreehouse, GiHut } from 'react-icons/gi';
-import { FaTrailer } from "react-icons/fa6";
 import { MdOutlineCabin } from "react-icons/md";
+import { FaCaravan } from "react-icons/fa";
 import './estilos.css';
 
 const Paso1B: React.FC = () => {
@@ -11,7 +11,7 @@ const Paso1B: React.FC = () => {
     { id: 'Tienda', label: 'Tienda', icono: <GiCampingTent /> }, // Usamos el ícono importado
     { id: 'Domo', label: 'Domo', icono: <GiHabitatDome /> }, // Usamos el ícono importado
     { id: 'Casa_arbol', label: 'Casa del árbol', icono: <GiTreehouse /> },
-    { id: 'Remolque', label: 'Remolque', icono: <FaTrailer /> },
+    { id: 'Remolque', label: 'Remolque', icono: <FaCaravan /> },
     { id: 'Cabana', label: 'Cabaña', icono: <MdOutlineCabin /> },
     { id: 'Choza', label: 'Choza', icono: <GiHut /> }
 

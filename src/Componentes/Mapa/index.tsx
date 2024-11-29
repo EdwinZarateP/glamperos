@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { GoogleMap } from "@react-google-maps/api";
-import { GiCampingTent } from "react-icons/gi"; // Ícono
+import React, { useContext, useEffect, useRef } from "react";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GiCampingTent } from "react-icons/gi";
 import ReactDOMServer from "react-dom/server";
+import { ContextoApp } from "../../Contexto";
 import "./estilos.css";
 
 interface MapaGlampingsProps {
@@ -11,8 +12,17 @@ interface MapaGlampingsProps {
 }
 
 const MapaGlampings: React.FC<MapaGlampingsProps> = ({ lat, lng, nombre }) => {
+  const contexto = useContext(ContextoApp);
+
+  if (!contexto) {
+    throw new Error(
+      "ContextoApp no está disponible. Asegúrate de envolver el componente en el ProveedorVariables."
+    );
+  }
+
+  const { libraries } = contexto;
+
   const mapRef = useRef<google.maps.Map | null>(null);
-  const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(null);
 
   const mapContainerStyle = {
     width: "100%",
@@ -38,20 +48,32 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ lat, lng, nombre }) => {
     </div>
   );
 
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY!,
+    libraries: libraries as any, // Usa "as any" para evitar el error de tipo.
+  });
+
   useEffect(() => {
-    if (mapRef.current && !markerRef.current) {
-      // Crea un AdvancedMarkerElement
-      const marker = new google.maps.marker.AdvancedMarkerElement({
+    if (isLoaded && mapRef.current) {
+      new google.maps.Marker({
         position: { lat, lng },
         map: mapRef.current,
-        content: new DOMParser().parseFromString(campingTentIcon, "text/html").body
-          .firstChild as HTMLElement, // Convierte el SVG a un elemento HTML
+        icon: {
+          url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(campingTentIcon),
+          scaledSize: new window.google.maps.Size(40, 40),
+        },
         title: nombre,
       });
-
-      markerRef.current = marker;
     }
-  }, [lat, lng, nombre, campingTentIcon]);
+  }, [isLoaded, lat, lng, nombre, campingTentIcon]);
+
+  if (loadError) {
+    return <div>Error al cargar el mapa.</div>;
+  }
+
+  if (!isLoaded) {
+    return <div>Cargando mapa...</div>;
+  }
 
   return (
     <div className="mapa-contenedor">
@@ -61,11 +83,15 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ lat, lng, nombre }) => {
         center={{ lat, lng }}
         zoom={12}
         onLoad={(map) => {
-          mapRef.current = map; // Asigna la referencia del mapa
-        }} // Ahora no retorna ningún valor explícito
+          mapRef.current = map;
+        }}
+        options={{
+          disableDefaultUI: true,
+        }}
       />
     </div>
   );
 };
 
 export default MapaGlampings;
+
