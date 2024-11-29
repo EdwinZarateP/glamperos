@@ -1,6 +1,6 @@
 import React from 'react';
 import './estilos.css';
-import videoPaso1A from '../../../../public/Videos/Paso1AVideo.mp4';
+import videoPaso1A from '../../../Videos/Paso1AVideo.mp4';
 
 const Paso1A: React.FC = () => {
   return (
