@@ -4,12 +4,12 @@ import { ContextoApp } from "../../Contexto/index";
 
 interface CalendarioGeneralProps {
   cerrarCalendario: () => void;
-  FechasReservadas: Date[];
+  FechasReservadas?: Date[]; // Ahora es opcional
 }
 
 const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   cerrarCalendario,
-  FechasReservadas,
+  FechasReservadas = [], // Valor por defecto: array vacío
 }) => {
   const almacenVariables = useContext(ContextoApp);
 
@@ -27,17 +27,12 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   hoy.setHours(0, 0, 0, 0);
 
   useEffect(() => {
-    // document.body.style.overflow = "hidden";
     const meses = [];
     for (let i = 0; i < 18; i++) {
       const nuevoMes = new Date(hoy.getFullYear(), hoy.getMonth() + i, 1);
       meses.push({ mes: nuevoMes.getMonth(), anio: nuevoMes.getFullYear() });
     }
     setMesesVisibles(meses);
-
-    return () => {
-      // document.body.style.overflow = "auto";
-    };
   }, []);
 
   useEffect(() => {
@@ -45,18 +40,20 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       let diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
       let dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
 
-      const diasReservadosEnRango = [];
-      for (let i = 0; i < dias; i++) {
-        const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
-        if (
-          FechasReservadas.some(
-            (fechaReservada) => fechaReservada.toDateString() === dia.toDateString()
-          )
-        ) {
-          diasReservadosEnRango.push(dia);
+      if (FechasReservadas.length > 0) {
+        const diasReservadosEnRango = [];
+        for (let i = 0; i < dias; i++) {
+          const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
+          if (
+            FechasReservadas.some(
+              (fechaReservada) => fechaReservada.toDateString() === dia.toDateString()
+            )
+          ) {
+            diasReservadosEnRango.push(dia);
+          }
         }
+        dias -= diasReservadosEnRango.length;
       }
-      dias -= diasReservadosEnRango.length;
 
       setTotalDias(dias);
     } else {
@@ -92,9 +89,11 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   };
 
   const esFechaReservada = (fecha: Date): boolean => {
-    return FechasReservadas.some(
-      (fechaReservada) => fecha.toDateString() === fechaReservada.toDateString()
-    );
+    return FechasReservadas.length > 0
+      ? FechasReservadas.some(
+          (fechaReservada) => fecha.toDateString() === fechaReservada.toDateString()
+        )
+      : false;
   };
 
   const esFechaDeshabilitada = (fecha: Date): boolean => fecha <= hoy;
@@ -173,18 +172,17 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
           ))}
         </div>
         <div className="CalendarioGeneral-botones">
-        <button onClick={manejarBorrarFechas} className="CalendarioGeneral-boton-borrar">
-          Borrar fechas
-        </button>
-        <button
-          onClick={cerrarCalendario}
-          className="CalendarioGeneral-boton-siguiente"
-          disabled={!fechaFin} // Deshabilitado si no se ha seleccionado una fecha de fin
+          <button onClick={manejarBorrarFechas} className="CalendarioGeneral-boton-borrar">
+            Borrar fechas
+          </button>
+          <button
+            onClick={cerrarCalendario}
+            className="CalendarioGeneral-boton-siguiente"
+            disabled={!fechaFin} // Deshabilitado si no se ha seleccionado una fecha de fin
           >
-          Quiero estas Fechas
-        </button>
-       </div>
-
+            Quiero estas Fechas
+          </button>
+        </div>
       </div>
     </>
   );

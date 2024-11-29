@@ -58,13 +58,6 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     });
   };
 
-  // Fechas reservadas (puedes modificar este array según tus necesidades)
-  const FechasReservadas: Date[] = [
-    new Date(2024, 11, 24),
-    new Date(2024, 11, 25),
-    new Date(2024, 11, 31),
-  ];
-
   const buscarSugerenciasDesdeJSON = useCallback(
     (query: string) => {
       if (query.length > 1) {
@@ -214,7 +207,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       </div>
 
       {mostrarCalendario && (
-        <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} FechasReservadas={FechasReservadas} />
+        <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} />
       )}
 
       {mostrarVisitantes && (
