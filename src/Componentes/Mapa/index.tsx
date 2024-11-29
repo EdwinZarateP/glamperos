@@ -1,19 +1,18 @@
-import React from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { GiCampingTent } from "react-icons/gi"; // Importamos el ícono
-import ReactDOMServer from "react-dom/server"; // Para convertir JSX a SVG renderizable por Google Maps
+import React, { useEffect, useRef } from "react";
+import { GoogleMap } from "@react-google-maps/api";
+import { GiCampingTent } from "react-icons/gi"; // Ícono
+import ReactDOMServer from "react-dom/server";
 import "./estilos.css";
 
 interface MapaGlampingsProps {
-  lat: number; // Latitud de la ubicación
-  lng: number; // Longitud de la ubicación
-  nombre: string; // Nombre del glamping
+  lat: number;
+  lng: number;
+  nombre: string;
 }
 
 const MapaGlampings: React.FC<MapaGlampingsProps> = ({ lat, lng, nombre }) => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY!, // Usar tu clave API desde variables de entorno
-  });
+  const mapRef = useRef<google.maps.Map | null>(null);
+  const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(null);
 
   const mapContainerStyle = {
     width: "100%",
@@ -22,7 +21,6 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ lat, lng, nombre }) => {
     boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
   };
 
-  // Convertimos el ícono GiCampingTent a un SVG renderizable
   const campingTentIcon = ReactDOMServer.renderToString(
     <div
       style={{
@@ -32,15 +30,28 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ lat, lng, nombre }) => {
         width: "40px",
         height: "40px",
         borderRadius: "50%",
-        backgroundColor: "black", // Fondo negro
-        color: "gold", // Color dorado para el ícono
+        backgroundColor: "black",
+        color: "gold",
       }}
     >
       <GiCampingTent size={24} />
     </div>
   );
 
-  if (!isLoaded) return <div>Cargando mapa...</div>;
+  useEffect(() => {
+    if (mapRef.current && !markerRef.current) {
+      // Crea un AdvancedMarkerElement
+      const marker = new google.maps.marker.AdvancedMarkerElement({
+        position: { lat, lng },
+        map: mapRef.current,
+        content: new DOMParser().parseFromString(campingTentIcon, "text/html").body
+          .firstChild as HTMLElement, // Convierte el SVG a un elemento HTML
+        title: nombre,
+      });
+
+      markerRef.current = marker;
+    }
+  }, [lat, lng, nombre, campingTentIcon]);
 
   return (
     <div className="mapa-contenedor">
@@ -49,16 +60,10 @@ const MapaGlampings: React.FC<MapaGlampingsProps> = ({ lat, lng, nombre }) => {
         mapContainerStyle={mapContainerStyle}
         center={{ lat, lng }}
         zoom={12}
-      >
-        <Marker
-          position={{ lat, lng }}
-          title={nombre}
-          icon={{
-            url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(campingTentIcon),
-            scaledSize: new window.google.maps.Size(40, 40), // Tamaño del ícono
-          }}
-        />
-      </GoogleMap>
+        onLoad={(map) => {
+          mapRef.current = map; // Asigna la referencia del mapa
+        }} // Ahora no retorna ningún valor explícito
+      />
     </div>
   );
 };
