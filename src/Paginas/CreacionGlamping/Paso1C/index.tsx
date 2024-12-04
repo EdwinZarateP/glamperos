@@ -101,10 +101,13 @@ const Paso1C: React.FC = () => {
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={posicion}
-          zoom={16}
+          zoom={14}
           options={{
-            disableDefaultUI: true,
+            disableDefaultUI: false,
+            mapTypeControl: false,
+            streetViewControl: false,            
           }}
+          
         />
       </div>
     </div>

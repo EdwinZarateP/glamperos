@@ -6,53 +6,45 @@
   gap: 20px;
   padding: 0 4px;
   box-sizing: border-box;
+  position: relative; /* Necesario para la animación global */
+  overflow: hidden;
 }
 
 /* Skeleton Loader */
 .tarjeta-skeleton {
-  width: 80%; /* Ocupa el 85% del ancho de la pantalla */
-  height: 80%; /* Ocupa el 85% del alto de la pantalla */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  height: 280px;
   background: #f4f4f4;
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  overflow: hidden; /* Ocultar animación fuera del borde */
+}
 
-  /* Centrar absolutamente */
+/* Animación avanzada del skeleton */
+.tarjeta-skeleton::after {
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-sizing: border-box; /* Asegura que padding y bordes no alteren el tamaño total */
+  top: 0;
+  left: -150%; /* Comienza fuera de vista */
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: skeleton-wave 2s infinite;
+  transform: skewX(-20deg); /* Inclina las líneas para un efecto dinámico */
 }
 
-
-.tarjeta-skeleton-imagen {
-  width: 80%;
-  height: 80%;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-  background-size: 80% 80%;
-  animation: skeleton-animation 1.5s infinite;
-  border-radius: 8px;
- 
-}
-
-.tarjeta-skeleton-info {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-
-/* Animación del skeleton */
-@keyframes skeleton-animation {
+/* Keyframes para la animación */
+@keyframes skeleton-wave {
   0% {
-    background-position: 200% 0;
+    left: -150%;
   }
   100% {
-    background-position: -200% 0;
+    left: 150%;
   }
 }
 
