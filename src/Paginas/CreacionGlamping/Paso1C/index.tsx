@@ -103,7 +103,7 @@ const Paso1C: React.FC = () => {
         <div className="Paso1C-input-contenedor">
           <input
             type="text"
-            placeholder="Escribe una dirección"
+            placeholder="Escribe una dirección, un municipio o una ciudad"
             value={value}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
@@ -139,7 +139,7 @@ const Paso1C: React.FC = () => {
           mapboxAccessToken="pk.eyJ1IjoiZWR3aW56YXIiLCJhIjoiY200OXd3ZnF4MDFoaDJxcHpwd2lzdGM0ZSJ9.c4C1qbzuCJqKjQ01Jn-2nA"
           {...viewState}
           style={{ width: "100%", height: "100%", borderRadius: "20px" }}  
-          mapStyle="mapbox://styles/mapbox/streets-v11"
+          mapStyle="mapbox://styles/mapbox/light-v10"
           onMove={(evt) => setViewState(evt.viewState)}
         >
           <NavigationControl position="top-right" />

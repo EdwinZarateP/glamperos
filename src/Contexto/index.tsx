@@ -57,6 +57,10 @@ interface ContextProps {
   setCantidad_Mascotas: Dispatch<SetStateAction<number>>;
   totalHuespedes: number;
   setTotalHuespedes: Dispatch<SetStateAction<number>>;
+  Cantidad_Huespedes: number;
+  setCantidad_Huespedes: Dispatch<SetStateAction<number>>;
+  Acepta_Mascotas: boolean;
+  setAcepta_Mascotas: Dispatch<SetStateAction<boolean>>;
 
   // Estados para modales
   mostrarVisitantes: boolean;
@@ -101,6 +105,9 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Cantidad_Bebes, setCantidad_Bebes] = useState<number>(0);
   const [Cantidad_Mascotas, setCantidad_Mascotas] = useState<number>(0);
   const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
+  const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);  // Nueva variable para cantidad de huéspedes
+  const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
+  
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
 
   // Estados para modales
@@ -140,6 +147,10 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setCantidad_Mascotas,
     totalHuespedes,
     setTotalHuespedes,
+    Cantidad_Huespedes,
+    setCantidad_Huespedes,
+    Acepta_Mascotas,
+    setAcepta_Mascotas,
     mostrarVisitantes,
     setMostrarVisitantes,
     mostrarCalendario,
