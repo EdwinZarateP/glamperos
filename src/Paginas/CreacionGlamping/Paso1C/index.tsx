@@ -1,33 +1,24 @@
-import React, { useContext, useState } from "react";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import { ContextoApp } from "../../../Contexto/index";
+import React, { useState } from "react";
+import Map, { Marker, NavigationControl, GeolocateControl } from "react-map-gl";
+import { GiCampingTent } from "react-icons/gi"; // Importar el ícono
+import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import "mapbox-gl/dist/mapbox-gl.css";
 import "./estilos.css";
 
+interface Coordenadas {
+  lat: number;
+  lng: number;
+}
+
 const Paso1C: React.FC = () => {
-  const contexto = useContext(ContextoApp);
-
-  if (!contexto) {
-    throw new Error(
-      "ContextoApp no está disponible. Asegúrate de envolver el componente en el ProveedorVariables."
-    );
-  }
-
-  const { libraries } = contexto;
-
-  const [posicion, setPosicion] = useState<{ lat: number; lng: number }>({
-    lat: 4.570868, // Coordenadas iniciales (Colombia)
-    lng: -74.297333,
+  const [coordenadas, setCoordenadas] = useState<Coordenadas>({
+    lat: 4.711, // Coordenada inicial (Colombia)
+    lng: -74.072,
   });
-
-  const mapContainerStyle = { width: "100%", height: "400px" };
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY!,
-    libraries: libraries as any, // Confirma que incluye "places"
+  const [viewState, setViewState] = useState({
+    latitude: 4.711,
+    longitude: -74.072,
+    zoom: 14,
   });
 
   const {
@@ -38,19 +29,28 @@ const Paso1C: React.FC = () => {
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
-      componentRestrictions: { country: "co" },
+      componentRestrictions: { country: "co" }, // Limitar a Colombia
     },
     debounce: 300,
   });
 
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
   const handleSelect = async (address: string) => {
     setValue(address, false);
     clearSuggestions();
+    setSelectedIndex(null);
 
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
-      setPosicion({ lat, lng });
+      setCoordenadas({ lat, lng });
+      setViewState((prev) => ({
+        ...prev,
+        latitude: lat,
+        longitude: lng,
+        zoom: 14,
+      }));
     } catch (error) {
       console.error("Error al obtener coordenadas:", error);
     }
@@ -58,35 +58,73 @@ const Paso1C: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value, true);
+    setSelectedIndex(null);  // Resetear índice seleccionado al escribir
   };
 
-  if (!isLoaded || !ready) {
-    return <div>Cargando mapa...</div>;
-  }
+  const clearInput = () => {
+    setValue("");
+    clearSuggestions();
+  };
+
+  const handleMarkerDragEnd = (event: any) => {
+    const { lngLat } = event;
+    setCoordenadas({
+      lat: lngLat.lat,
+      lng: lngLat.lng,
+    });
+    setViewState((prev) => ({
+      ...prev,
+      latitude: lngLat.lat,
+      longitude: lngLat.lng,
+    }));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (status === "OK" && data.length > 0) {
+      if (e.key === "ArrowDown") {
+        setSelectedIndex((prevIndex) =>
+          prevIndex === null || prevIndex === data.length - 1 ? 0 : prevIndex + 1
+        );
+      } else if (e.key === "ArrowUp") {
+        setSelectedIndex((prevIndex) =>
+          prevIndex === null || prevIndex === 0 ? data.length - 1 : prevIndex - 1
+        );
+      } else if (e.key === "Enter" && selectedIndex !== null) {
+        handleSelect(data[selectedIndex].description);
+      }
+    }
+  };
 
   return (
     <div className="Paso1C-contenedor">
-      <h1 className="Paso1C-titulo">¿Dónde se encuentra tu espacio?</h1>
-      <p className="Paso1C-descripcion">
-        Solo compartiremos tu dirección con los huéspedes que hayan hecho una reservación.
-      </p>
+      <h1 className="Paso1C-titulo">¿Dónde se encuentra tu Glamping?</h1>
 
-      {/* Campo de búsqueda con autocompletado */}
-      <div className="Paso1C-buscador">
-        <input
-          type="text"
-          placeholder="Ingresa tu dirección"
-          className="Paso1C-input"
-          value={value}
-          onChange={handleInputChange}
-          disabled={!ready}
-        />
+      <div className="Paso1C-busqueda">
+        <div className="Paso1C-input-contenedor">
+          <input
+            type="text"
+            placeholder="Escribe una dirección"
+            value={value}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            className="Paso1C-input"
+            disabled={!ready}
+          />
+          {value && (
+            <button className="Paso1C-clear" onClick={clearInput}>
+              x
+            </button>
+          )}
+        </div>
+
         {status === "OK" && (
           <ul className="Paso1C-sugerencias">
-            {data.map(({ place_id, description }) => (
+            {data.map(({ place_id, description }, index) => (
               <li
                 key={place_id}
-                className="Paso1C-sugerencia"
+                className={`Paso1C-sugerencia ${
+                  index === selectedIndex ? "seleccionado" : ""
+                }`}
                 onClick={() => handleSelect(description)}
               >
                 {description}
@@ -96,19 +134,33 @@ const Paso1C: React.FC = () => {
         )}
       </div>
 
-      {/* Mapa */}
-      <div className="Paso1C-mapa">
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={posicion}
-          zoom={14}
-          options={{
-            disableDefaultUI: false,
-            mapTypeControl: false,
-            streetViewControl: false,            
-          }}
-          
-        />
+      <div className="Paso1C-mapa-contenedor">
+        <Map
+          mapboxAccessToken="pk.eyJ1IjoiZWR3aW56YXIiLCJhIjoiY200OXd3ZnF4MDFoaDJxcHpwd2lzdGM0ZSJ9.c4C1qbzuCJqKjQ01Jn-2nA"
+          {...viewState}
+          style={{ width: "100%", height: "100%", borderRadius: "20px" }}  
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+          onMove={(evt) => setViewState(evt.viewState)}
+        >
+          <NavigationControl position="top-right" />
+          <GeolocateControl position="top-left" />
+
+          <Marker
+            latitude={coordenadas.lat}
+            longitude={coordenadas.lng}
+            draggable
+            onDragEnd={handleMarkerDragEnd}
+          >
+            <div className="Paso1C-marcador">
+              <GiCampingTent size={35} color="black" /> {/* Usar el ícono de tienda */}
+            </div>
+          </Marker>
+        </Map>
+      </div>
+
+      <div className="Paso1C-coordenadas">
+        <p>Latitud: {coordenadas.lat.toFixed(6)}</p>
+        <p>Longitud: {coordenadas.lng.toFixed(6)}</p>
       </div>
     </div>
   );

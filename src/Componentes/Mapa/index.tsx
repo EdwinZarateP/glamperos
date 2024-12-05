@@ -1,7 +1,7 @@
 import React from "react";
 import Map, { Marker, NavigationControl } from "react-map-gl";  // Importar el control de navegación
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { GiCampingTent } from "react-icons/gi";  // Importar el ícono
+import { GiCampingTent } from "react-icons/gi";  
 import "./estilos.css";
 
 // Definimos las propiedades que el componente va a recibir
