@@ -74,6 +74,10 @@ interface ContextProps {
 
   // Mapas
   libraries: Libraries;
+
+  //amenidades elegidas por el dueño
+  seleccionadosGlobal: string[];
+  setSeleccionadosGlobal: Dispatch<SetStateAction<string[]>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -113,6 +117,9 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   // Estados para modales
   const [mostrarVisitantes, setMostrarVisitantes] = useState<boolean>(false);
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
+
+  //amenidades elegidas por el dueño
+  const [seleccionadosGlobal, setSeleccionadosGlobal] = useState<string[]>([]);
 
   const contextValue: ContextProps = {
     estaAbiertoAlgo,
@@ -158,6 +165,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     imagenesSeleccionadas,
     setImagenesSeleccionadas,
     libraries,
+    seleccionadosGlobal,
+    setSeleccionadosGlobal
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;

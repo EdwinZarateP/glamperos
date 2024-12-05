@@ -4,6 +4,7 @@ import Paso1B from "./Paso1B/index";
 import Paso1C from "./Paso1C/index";
 import Paso1D from "./Paso1D/index";
 import Paso2A from "./Paso2A/index";
+import Paso2B from "./Paso2B/index";
 import "./estilos.css";
 
 const CreacionGlamping: React.FC = () => {
@@ -16,6 +17,7 @@ const CreacionGlamping: React.FC = () => {
     <Paso1C key="Paso1C" />,
     <Paso1D key="Paso1D" />,
     <Paso2A key="Paso2A" />,
+    <Paso2B key="Paso2B" />,
     // Agrega más pasos aquí si es necesario
   ];
 
