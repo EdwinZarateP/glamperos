@@ -3,11 +3,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 90%;
   height: 100%;
-  -webkit-tap-highlight-color: transparent;
-
-  
+  -webkit-tap-highlight-color: transparent;  
 }
 
 .Paso2C-titulo {
@@ -25,15 +24,16 @@
   display: flex;
   gap: 15px;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  margin-bottom: 30px;
+
 }
 
 /* Lado izquierdo: Sección de fotos */
 .Paso2C-fotos {
   width: 50%;
-  height: 100%;
+  margin: 0 auto;
+
 }
 
 .Paso2C-subtitulo-fotos {
@@ -103,6 +103,8 @@
   box-sizing: border-box;
   margin-top: 10px;
   position: relative;
+  border-radius: 15px;
+  border: 1px dashed #d7d7d7;
 }
 
 .Paso2C-derecha-destino {
@@ -112,6 +114,13 @@
   border-radius: 15px 0 0 15px;  /* Bordes redondeados solo a la izquierda */
   cursor: pointer;
   position: relative; /* Para que el botón se posicione correctamente sobre la imagen */
+}
+
+.Paso2C-derecha-destino p{
+  font-size: 1.1em;
+  margin-top: 20px;
+  margin-left: 20px;
+  color: gray;
 }
 
 .Paso2C-boton-eliminar {
@@ -138,6 +147,14 @@
   box-sizing: border-box;
   border-radius: 0 15px 15px 0;  /* Bordes redondeados solo a la derecha */
   cursor: pointer;
+  border-left: 1px dashed #d7d7d7;
+}
+
+.Paso2C-derecha-imagenes p{
+  font-size: 1.1em;
+  margin-top: 20px;
+  margin-left: 20px;
+  color: gray;
 }
 
 .Paso2C-imagen-wrapper {
@@ -148,6 +165,7 @@
   overflow: hidden;
   object-fit: cover;
   transition: filter 0.3s ease; 
+  
 }
 
 .Paso2C-imagen-preview {
@@ -156,7 +174,4 @@
   object-fit: cover;
 }
 
-/* Estilo para cuando la imagen está siendo arrastrada */
-.dragging {
-  opacity: 0.5;
-}
+

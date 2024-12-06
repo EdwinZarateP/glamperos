@@ -1,0 +1,57 @@
+/* Contenedor principal */
+.Paso2D-contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Título principal */
+  .Paso2D-titulo {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  /* Texto de instrucciones */
+  .Paso2D-instrucciones {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 20px;
+    max-width: 600px;
+  }
+  
+  /* Input para pegar el enlace */
+  .Paso2D-input-contenedor {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+  
+  .Paso2D-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Contenedor de video */
+  .Paso2D-video-contenedor {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .Paso2D-video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+  }
+  

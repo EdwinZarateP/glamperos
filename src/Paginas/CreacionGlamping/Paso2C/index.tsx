@@ -32,18 +32,24 @@ const Paso2C: React.FC = () => {
     }
 
     if (imagenesArray.length + imagenesSeleccionadas.length > 15) {
-      // Usar SweetAlert2 para mostrar el mensaje de error
       Swal.fire({
         icon: "error",
         title: "¡Error!",
         text: "Solo puedes subir un máximo de 15 fotos.",
         confirmButtonText: "Aceptar",
       });
+    } else if (imagenesArray.length + imagenesSeleccionadas.length < 5) {
+      Swal.fire({
+        icon: "warning",
+        title: "¡Atención!",
+        text: "Debes subir al menos 5 fotos.",
+        confirmButtonText: "Aceptar",
+      });
     } else {
       setImagenesSeleccionadas((prevState) => [...prevState, ...imagenesArray]);
       setImagenesValidas(imagenesArray);
       setImagenesInvalidas(imagenesInvalidaArray);
-    }
+    }    
   };
 
   const eliminarImagen = (index: number) => {
@@ -52,7 +58,9 @@ const Paso2C: React.FC = () => {
 
   const iniciarArrastre = (imagen: string, index: number) => {
     setDraggingImage(imagen);
-    setDraggedIndex(index); // Guardar el índice de la imagen que se está arrastrando
+    // setDraggedIndex(index); // Guardar el índice de la imagen que se está arrastrando
+    setDraggedIndex(4);
+    console.log(index)
   };
 
   const soltarImagen = (index: number) => {
@@ -60,7 +68,7 @@ const Paso2C: React.FC = () => {
     if (imagenesPrincipales.length >= 5) {
       Swal.fire({
         icon: "info",
-        title: "Todo melo, pero..",
+        title: "Todo melo, pero...",
         text: "Ya escogiste 5 imágenes. Si quieres reemplazar alguna, elimina una primero.",
         confirmButtonText: "Aceptar",
       });
@@ -110,7 +118,7 @@ const Paso2C: React.FC = () => {
       <div className="Paso2C-contenedor-principal">
         {/* Lado izquierdo */}
         <div className="Paso2C-fotos">
-          <h2 className="Paso2C-subtitulo-fotos">Sube tus fotos</h2>
+          <h2 className="Paso2C-subtitulo-fotos">Sube tus fotos (min 5 / máx 15)</h2>
           <input
             type="file"
             multiple
@@ -183,10 +191,13 @@ const Paso2C: React.FC = () => {
                 </button>
               </>
             ) : (
-              <p>Arrastra una imagen aquí para ser la principal</p>
+              <p>1. Arrastra aquí tu imagen principal</p>
             )}
           </div>
           <div className="Paso2C-derecha-imagenes">
+            {imagenesPrincipales.length <= 1 && (
+              <p className="Paso2C-mensaje">2. Arrastra aquí 4 imágenes</p>
+            )}
             {imagenesPrincipales.slice(1, 5).map((imagen, index) => (
               <div
                 key={index}
