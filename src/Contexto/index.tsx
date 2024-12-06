@@ -78,6 +78,13 @@ interface ContextProps {
   //amenidades elegidas por el dueño
   seleccionadosGlobal: string[];
   setSeleccionadosGlobal: Dispatch<SetStateAction<string[]>>;
+
+  //Carga de fotos y video
+  videoSeleccionado: string | null; // Para almacenar el video seleccionado
+  setVideoSeleccionado: Dispatch<SetStateAction<string | null>>; // Para actualizar el video
+  fotosSeleccionadas: string[]; // Array de URLs o rutas de fotos seleccionadas
+  setFotosSeleccionadas: Dispatch<SetStateAction<string[]>>; // Para actualizar las fotos
+
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -120,6 +127,10 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
 
   //amenidades elegidas por el dueño
   const [seleccionadosGlobal, setSeleccionadosGlobal] = useState<string[]>([]);
+
+    // Estado para el video y fotos
+    const [videoSeleccionado, setVideoSeleccionado] = useState<string | null>(null);
+    const [fotosSeleccionadas, setFotosSeleccionadas] = useState<string[]>([]);
 
   const contextValue: ContextProps = {
     estaAbiertoAlgo,
@@ -166,7 +177,11 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setImagenesSeleccionadas,
     libraries,
     seleccionadosGlobal,
-    setSeleccionadosGlobal
+    setSeleccionadosGlobal,
+    videoSeleccionado,
+    setVideoSeleccionado,
+    fotosSeleccionadas,
+    setFotosSeleccionadas
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;

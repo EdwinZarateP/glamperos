@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { GiWashingMachine, GiFireplace, GiSmokeBomb } from 'react-icons/gi';
+import { GiWashingMachine, GiFireplace, GiSmokeBomb, GiThermometerHot  } from 'react-icons/gi';
 import { IoWifi } from "react-icons/io5";
 import { TbDeviceTv } from "react-icons/tb";
 import { FaRegSnowflake, FaLaptopHouse, FaShower } from "react-icons/fa";
 import { AiTwotoneCar } from "react-icons/ai";
-import { MdOutdoorGrill, MdPool, MdOutlineBathtub } from "react-icons/md";
+import { MdOutdoorGrill, MdPool, MdOutlineBathtub  } from "react-icons/md";
 import { IoIosBonfire } from "react-icons/io";
-import { FaFireExtinguisher, FaKitMedical, FaKitchenSet} from "react-icons/fa6";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHotTub } from '@fortawesome/free-solid-svg-icons';
+import { FaFireExtinguisher, FaKitMedical, FaKitchenSet, FaHotTubPerson } from "react-icons/fa6";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faHotTub } from '@fortawesome/free-solid-svg-icons';
 import { ContextoApp } from '../../../Contexto/index'; 
 import './estilos.css';
 
@@ -18,7 +18,7 @@ const Paso2B: React.FC = () => {
 
   const opciones = [
     { id: 'Wifi', label: 'Wifi', icono: <IoWifi /> },
-    { id: 'Jacuzzi', label: 'Jacuzzi', icono: <FontAwesomeIcon icon={faHotTub} /> },
+    { id: 'Jacuzzi', label: 'Jacuzzi', icono: <FaHotTubPerson /> },
     { id: 'Tv', label: 'Tv', icono: <TbDeviceTv /> },
     { id: 'Cocina', label: 'Cocina', icono: <FaKitchenSet /> },
     { id: 'Lavadora', label: 'Lavadora', icono: <GiWashingMachine /> },
@@ -34,6 +34,7 @@ const Paso2B: React.FC = () => {
     { id: 'Botiquin', label: 'Botiquin', icono: <FaKitMedical /> },
     { id: 'Piscina', label: 'Piscina', icono: <MdPool /> },
     { id: 'Tina', label: 'Tina', icono: <MdOutlineBathtub /> },
+    { id: 'Calefaccion', label: 'Calefacción', icono: <GiThermometerHot /> },
 
   ];
 
