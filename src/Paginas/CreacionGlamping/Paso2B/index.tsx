@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GiWashingMachine, GiFireplace, GiSmokeBomb, GiThermometerHot  } from 'react-icons/gi';
 import { IoWifi } from "react-icons/io5";
 import { TbDeviceTv } from "react-icons/tb";
@@ -7,14 +7,12 @@ import { AiTwotoneCar } from "react-icons/ai";
 import { MdOutdoorGrill, MdPool, MdOutlineBathtub  } from "react-icons/md";
 import { IoIosBonfire } from "react-icons/io";
 import { FaFireExtinguisher, FaKitMedical, FaKitchenSet, FaHotTubPerson } from "react-icons/fa6";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faHotTub } from '@fortawesome/free-solid-svg-icons';
 import { ContextoApp } from '../../../Contexto/index'; 
 import './estilos.css';
 
 const Paso2B: React.FC = () => {
-  const [seleccionados, setSeleccionados] = useState<string[]>([]);  // Estado para almacenar múltiples seleccionados
-  const { setSeleccionadosGlobal } = useContext(ContextoApp)!;  // Acceder a la función de contexto
+  const [seleccionados, setSeleccionados] = useState<string[]>([]);  
+  const { seleccionadosGlobal, setSeleccionadosGlobal } = useContext(ContextoApp)!;
 
   const opciones = [
     { id: 'Wifi', label: 'Wifi', icono: <IoWifi /> },
@@ -35,23 +33,27 @@ const Paso2B: React.FC = () => {
     { id: 'Piscina', label: 'Piscina', icono: <MdPool /> },
     { id: 'Tina', label: 'Tina', icono: <MdOutlineBathtub /> },
     { id: 'Calefaccion', label: 'Calefacción', icono: <GiThermometerHot /> },
-
   ];
 
   const manejarSeleccion = (id: string) => {
     setSeleccionados(prev => {
       if (prev.includes(id)) {
-        return prev.filter(item => item !== id);  // Si ya está seleccionado, lo deselecciona
+        return prev.filter(item => item !== id);
       } else {
-        return [...prev, id];  // Si no está seleccionado, lo añade
+        return [...prev, id];
       }
     });
   };
 
   // Actualizar el contexto global
-  React.useEffect(() => {
+  useEffect(() => {
     setSeleccionadosGlobal(seleccionados);
   }, [seleccionados, setSeleccionadosGlobal]);
+
+  // Configurar los elementos seleccionados solo al montar el componente por primera vez
+  useEffect(() => {
+    setSeleccionados(seleccionadosGlobal || []);
+  }, []); // La dependencia vacía evita bucles
 
   return (
     <div className="Paso2B-contenedor">
@@ -61,7 +63,7 @@ const Paso2B: React.FC = () => {
           <div
             key={opcion.id}
             className={`Paso2B-opcion ${seleccionados.includes(opcion.id) ? 'Paso2B-seleccionado' : ''}`}
-            onClick={() => manejarSeleccion(opcion.id)}  // Llama a la función de manejo de selección
+            onClick={() => manejarSeleccion(opcion.id)}
           >
             <span className="Paso2B-icono">{opcion.icono}</span>
             <span className="Paso2B-label">{opcion.label}</span>

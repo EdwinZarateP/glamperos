@@ -1,0 +1,44 @@
+import React, { useContext, useState } from 'react';
+import './estilos.css';
+import { ContextoApp } from '../../../Contexto/index';
+
+const Paso2E: React.FC = () => {
+  const { setNombreGlamping } = useContext(ContextoApp)!;
+
+  // Local state para el campo de texto, con validación
+  const [inputNombre, setInputNombre] = useState('');
+
+  const manejarCambio = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valor = e.target.value.slice(0, 40); // Limitar a 40 caracteres
+    setInputNombre(valor);
+    setNombreGlamping(valor);
+  };
+
+  return (
+    <div className="Paso2E-contenedor">
+      <div className="Paso2E-contenido">
+        <div className="Paso2E-texto">
+          <h1 className="Paso2E-titulo-principal">Dinos el alias de tu glamping</h1>
+          <p className="Paso2E-descripcion">
+            Los nombres cortos funcionan mejor, por ejemplo "El refugio", "El nido de la montaña", etc.
+          </p>
+        </div>
+        <div className="Paso2E-input-contenedor">
+          <input
+            type="text"
+            className="Paso2E-input"
+            placeholder="Escribe el nombre de tu glamping"
+            value={inputNombre}
+            onChange={manejarCambio}
+          />
+          {/* Mostrar la cantidad de caracteres ingresados */}
+          <p className="Paso2E-caracteres">
+            {inputNombre.length}/40
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Paso2E;

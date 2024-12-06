@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Map, { Marker, NavigationControl, GeolocateControl } from "react-map-gl";
 import { GiCampingTent } from "react-icons/gi"; // Importar el ícono
+import { ContextoApp } from "../../../Contexto";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./estilos.css";
@@ -11,14 +12,17 @@ interface Coordenadas {
 }
 
 const Paso1C: React.FC = () => {
+  const { latitud, setLatitud, longitud, setLongitud } = useContext(ContextoApp)!; // Extraer las funciones del contexto
+
   const [coordenadas, setCoordenadas] = useState<Coordenadas>({
-    lat: 4.711, // Coordenada inicial (Colombia)
-    lng: -74.072,
+    lat: latitud,
+    lng: longitud,
   });
+
   const [viewState, setViewState] = useState({
-    latitude: 4.711,
-    longitude: -74.072,
-    zoom: 14,
+    latitude: latitud,
+    longitude: longitud,
+    zoom: 10,
   });
 
   const {
@@ -44,6 +48,7 @@ const Paso1C: React.FC = () => {
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
+      
       setCoordenadas({ lat, lng });
       setViewState((prev) => ({
         ...prev,
@@ -51,6 +56,10 @@ const Paso1C: React.FC = () => {
         longitude: lng,
         zoom: 14,
       }));
+
+      // Guardar las coordenadas en el contexto global
+      setLatitud(lat);
+      setLongitud(lng);
     } catch (error) {
       console.error("Error al obtener coordenadas:", error);
     }
@@ -58,7 +67,7 @@ const Paso1C: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value, true);
-    setSelectedIndex(null);  // Resetear índice seleccionado al escribir
+    setSelectedIndex(null); // Resetear índice seleccionado al escribir
   };
 
   const clearInput = () => {
@@ -68,6 +77,7 @@ const Paso1C: React.FC = () => {
 
   const handleMarkerDragEnd = (event: any) => {
     const { lngLat } = event;
+
     setCoordenadas({
       lat: lngLat.lat,
       lng: lngLat.lng,
@@ -77,6 +87,10 @@ const Paso1C: React.FC = () => {
       latitude: lngLat.lat,
       longitude: lngLat.lng,
     }));
+
+    // Guardar las coordenadas en el contexto global
+    setLatitud(lngLat.lat);
+    setLongitud(lngLat.lng);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -122,9 +136,7 @@ const Paso1C: React.FC = () => {
             {data.map(({ place_id, description }, index) => (
               <li
                 key={place_id}
-                className={`Paso1C-sugerencia ${
-                  index === selectedIndex ? "seleccionado" : ""
-                }`}
+                className={`Paso1C-sugerencia ${index === selectedIndex ? "seleccionado" : ""}`}
                 onClick={() => handleSelect(description)}
               >
                 {description}
@@ -152,7 +164,7 @@ const Paso1C: React.FC = () => {
             onDragEnd={handleMarkerDragEnd}
           >
             <div className="Paso1C-marcador">
-              <GiCampingTent size={35} color="black" /> {/* Usar el ícono de tienda */}
+              <GiCampingTent size={35} color="black" />
             </div>
           </Marker>
         </Map>

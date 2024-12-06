@@ -26,7 +26,7 @@ const Paso1D: React.FC = () => {
       <div className="paso1d-seccion">
         <div className="paso1d-titulo">
           <h2>Huéspedes</h2>
-          <p>¿Cuántos huéspedes puedes alojar?</p>
+          <p>¿Cuántos huéspedes máximo puedes alojar?</p>
         </div>
         <div className="paso1d-controles">
           <button

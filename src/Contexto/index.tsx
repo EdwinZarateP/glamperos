@@ -24,6 +24,8 @@ interface ContextProps {
   // Variables de tipo string
   nombreGlamping: string;
   setNombreGlamping: Dispatch<SetStateAction<string>>;
+  descripcionGlamping: string;
+  setDescripcionGlamping: Dispatch<SetStateAction<string>>;
   ciudad_departamento: string;
   setCiudad_departamento: Dispatch<SetStateAction<string>>;
   ciudad_Elegida: string;
@@ -57,6 +59,8 @@ interface ContextProps {
   setCantidad_Mascotas: Dispatch<SetStateAction<number>>;
   totalHuespedes: number;
   setTotalHuespedes: Dispatch<SetStateAction<number>>;
+  
+  //Paso 3 
   Cantidad_Huespedes: number;
   setCantidad_Huespedes: Dispatch<SetStateAction<number>>;
   Acepta_Mascotas: boolean;
@@ -67,6 +71,16 @@ interface ContextProps {
   setMostrarVisitantes: Dispatch<SetStateAction<boolean>>;
   mostrarCalendario: boolean;
   setMostrarCalendario: Dispatch<SetStateAction<boolean>>;
+
+  //Tipo de glamping
+  tipoGlamping: string;
+  setTipoGlamping: Dispatch<SetStateAction<string>>;
+
+  //latitud y longitud
+  latitud: number;
+  setLatitud: Dispatch<SetStateAction<number>>;
+  longitud: number;
+  setLongitud: Dispatch<SetStateAction<number>>;
 
   // Imagenes puntuales del glamping
   imagenesSeleccionadas: string[];
@@ -85,6 +99,11 @@ interface ContextProps {
   fotosSeleccionadas: string[]; // Array de URLs o rutas de fotos seleccionadas
   setFotosSeleccionadas: Dispatch<SetStateAction<string[]>>; // Para actualizar las fotos
 
+  //Precios
+  precioEstandar: string;
+  setPrecioEstandar: React.Dispatch<React.SetStateAction<string>>;
+  descuento: string;
+  setDescuento: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -103,6 +122,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const cerrarAlgo = () => setEstaAbiertoAlgo(false);
 
   const [nombreGlamping, setNombreGlamping] = useState('');
+  const [descripcionGlamping, setDescripcionGlamping] = useState('');
   const [ciudad_departamento, setCiudad_departamento] = useState('');
   const [ciudad_Elegida, setCiudad_Elegida] = useState('');
   const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
@@ -125,12 +145,25 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [mostrarVisitantes, setMostrarVisitantes] = useState<boolean>(false);
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
 
+  //Tipo de glamping
+  const [tipoGlamping, setTipoGlamping] = useState<string>('');
+
+  //latitud y longitud
+  const [latitud, setLatitud] = useState<number>(4.123456); // Estado predeterminado de latitud
+  const [longitud, setLongitud] = useState<number>(-74.123456); // Estado predeterminado de longitud
+
+
   //amenidades elegidas por el dueño
   const [seleccionadosGlobal, setSeleccionadosGlobal] = useState<string[]>([]);
 
-    // Estado para el video y fotos
-    const [videoSeleccionado, setVideoSeleccionado] = useState<string | null>(null);
-    const [fotosSeleccionadas, setFotosSeleccionadas] = useState<string[]>([]);
+  // Estado para el video y fotos
+  const [videoSeleccionado, setVideoSeleccionado] = useState<string | null>(null);
+  const [fotosSeleccionadas, setFotosSeleccionadas] = useState<string[]>([]);
+
+  //precios
+  const [precioEstandar, setPrecioEstandar] = useState('');
+  const [descuento, setDescuento] = useState('');
+  
 
   const contextValue: ContextProps = {
     estaAbiertoAlgo,
@@ -139,6 +172,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     cerrarAlgo,
     nombreGlamping,
     setNombreGlamping,
+    descripcionGlamping,
+    setDescripcionGlamping,
     ciudad_departamento,
     setCiudad_departamento,
     ciudad_Elegida,
@@ -173,6 +208,12 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setMostrarVisitantes,
     mostrarCalendario,
     setMostrarCalendario,
+    tipoGlamping,
+    setTipoGlamping,
+    latitud,
+    setLatitud,
+    longitud,
+    setLongitud,
     imagenesSeleccionadas,
     setImagenesSeleccionadas,
     libraries,
@@ -181,7 +222,11 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     videoSeleccionado,
     setVideoSeleccionado,
     fotosSeleccionadas,
-    setFotosSeleccionadas
+    setFotosSeleccionadas,
+    precioEstandar,
+    setPrecioEstandar,
+    descuento,
+    setDescuento
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;
