@@ -1,6 +1,6 @@
 .MapaGlampings-contenedor {
   width: 100%;
-  height: 100%; /* El contenedor toma el 100% de la altura disponible */
+  height: 100%; 
   max-width: 100%;
   margin: 0 auto;
   margin-top: 20px;
@@ -45,5 +45,10 @@
   .MapaGlampings-contenedor {
     width: 95%; 
   }
+
+  .MapaGlampings-mapa-container {
+    height: 250px; /* Altura fija para el mapa */
+    pointer-events: none;
+    }
 
 }

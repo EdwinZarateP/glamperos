@@ -109,7 +109,7 @@ const CreacionGlamping: React.FC = () => {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
-      console.log(nombreGlamping);
+      console.log(imagenesCargadas);
     }
   };
 
