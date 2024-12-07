@@ -14,14 +14,13 @@ import Paso3A from "./Paso3A/index";
 import Paso3B from "./Paso3B/index";
 import Swal from "sweetalert2";
 import "./estilos.css";
+import DescripcionGlamping from '../../Componentes/DescripcionGlamping';
 
 const CreacionGlamping: React.FC = () => {
-  const [pasoActual, setPasoActual] = useState<number>(0); // Estado para controlar el paso actual
+  const [pasoActual, setPasoActual] = useState<number>(0);
 
-  // Acceder al contexto
-  const { latitud, tipoGlamping, seleccionadosGlobal } = useContext(ContextoApp)!;
+  const { latitud, tipoGlamping, imagenesSeleccionadas, nombreGlamping, descripcionGlamping } = useContext(ContextoApp)!;
 
-  // Lista de componentes (puedes agregar más pasos aquí)
   const pasos = [
     <Paso1A key="Paso1A" />,
     <Paso1B key="Paso1B" />,
@@ -37,25 +36,58 @@ const CreacionGlamping: React.FC = () => {
     <Paso3B key="Paso3B" />
   ];
 
-  // Función para manejar el avance entre pasos
   const avanzarPaso = () => {
-    // Validación: Si estamos intentando avanzar de paso 2 a paso 3, verificar el contexto
+    // Validar pasoActual === 6 y si no se seleccionaron imágenes
+    if (pasoActual === 6 && (!imagenesSeleccionadas || imagenesSeleccionadas.length === 0)) {
+      Swal.fire({
+        icon: "warning",
+        title: "¡Todo entra por los ojos! 🫣",
+        text: "No puedes avanzar sin seleccionar imágenes.",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
+
+    // Validación para el paso 1 y verificar si eligio tipo glamping
     if (pasoActual === 1 && !tipoGlamping) {
       Swal.fire({
         icon: "warning",
-        title: "Tomala suave",
+        title: "Tomala suave 🛖",
         text: "Escoge un tipo de glamping antes de continuar.",
         confirmButtonText: "Aceptar",
       });
       return;
     }
 
-    // Lógica personalizada: Verificar en el paso 2 si las coordenadas están vacías
+    // Validación para el paso 2 y verificar si las coordenadas están vacías
     if (pasoActual === 2 && (!latitud || latitud === 4.123456)) {
       Swal.fire({
         icon: "warning",
-        title: "Ubicación requerida",
+        title: "¡No quieres huéspedes perdidos! 😵‍💫",
         text: "Por favor selecciona una ubicación para continuar.",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
+
+    // Validación para el paso 8 y verificar si puso nombre
+    if (pasoActual === 8 && !nombreGlamping) {
+      Swal.fire({
+        icon: "warning",
+        title: "Sin nombre ¿Quién eres en la vida?",
+        text: "Escribe el nombre de tu glamping antes de continuar.",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
+
+    
+    // Validación para el paso 9 y verificar si puso descripcion
+    if (pasoActual === 9 && !descripcionGlamping) {
+      Swal.fire({
+        icon: "warning",
+        title: "Todos tenemos cualidades",
+        text: "Escribe uan descripción de tu glamping antes de continuar.",
         confirmButtonText: "Aceptar",
       });
       return;
@@ -63,46 +95,38 @@ const CreacionGlamping: React.FC = () => {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
-      console.log(seleccionadosGlobal)
+      console.log(nombreGlamping);
     }
   };
 
-  // Función para manejar el retroceso entre pasos
   const retrocederPaso = () => {
     if (pasoActual > 0) {
       setPasoActual(pasoActual - 1);
     }
   };
 
-  // Calcular porcentaje de progreso
   const progreso = ((pasoActual + 1) / pasos.length) * 100;
 
   return (
     <div className="creacionGlamping-contenedor">
-      {/* Renderizar el componente del paso actual */}
       <div className="creacionGlamping-paso">{pasos[pasoActual]}</div>
 
-      {/* Barra de progreso */}
       <div className="creacionGlamping-progreso">
-        <div
-          className="creacionGlamping-progreso-barra"
-          style={{ width: `${progreso}%` }}
-        ></div>
+        <div className="creacionGlamping-progreso-barra" style={{ width: `${progreso}%` }}></div>
       </div>
 
-      {/* Controles de navegación */}
       <div className="creacionGlamping-controles">
         <button
           className="creacionGlamping-boton-atras"
           onClick={retrocederPaso}
-          disabled={pasoActual === 0} // Desactivar botón si está en el primer paso
+          disabled={pasoActual === 0}
         >
           Atrás
         </button>
         <button
           className="creacionGlamping-boton-siguiente"
           onClick={avanzarPaso}
-          disabled={pasoActual === pasos.length - 1} // Desactivar botón si está en el último paso
+          disabled={pasoActual === pasos.length - 1}
         >
           Siguiente
         </button>

@@ -94,11 +94,11 @@ interface ContextProps {
   setSeleccionadosGlobal: Dispatch<SetStateAction<string[]>>;
 
   //Carga de fotos y video
-  videoSeleccionado: string | null; // Para almacenar el video seleccionado
-  setVideoSeleccionado: Dispatch<SetStateAction<string | null>>; // Para actualizar el video
+  videoSeleccionado: string;
+  setVideoSeleccionado: Dispatch<SetStateAction<string>>;
   fotosSeleccionadas: string[]; // Array de URLs o rutas de fotos seleccionadas
   setFotosSeleccionadas: Dispatch<SetStateAction<string[]>>; // Para actualizar las fotos
-
+  
   //Precios
   precioEstandar: string;
   setPrecioEstandar: React.Dispatch<React.SetStateAction<string>>;
@@ -140,6 +140,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
   
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
+  const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
 
   // Estados para modales
   const [mostrarVisitantes, setMostrarVisitantes] = useState<boolean>(false);
@@ -157,7 +158,6 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [seleccionadosGlobal, setSeleccionadosGlobal] = useState<string[]>([]);
 
   // Estado para el video y fotos
-  const [videoSeleccionado, setVideoSeleccionado] = useState<string | null>(null);
   const [fotosSeleccionadas, setFotosSeleccionadas] = useState<string[]>([]);
 
   //precios

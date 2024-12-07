@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect, useContext} from "react";
+import { ContextoApp } from '../../../Contexto/index';
 import "./estilos.css";
 
 const Paso2D: React.FC = () => {
+
   const [linkVideo, setLinkVideo] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [videoBlocked, setVideoBlocked] = useState<boolean>(false);
   const [videoId, setVideoId] = useState<string | null>(null);
   const [isValidVideo, setIsValidVideo] = useState<boolean>(false);
 
+  const { videoSeleccionado, setVideoSeleccionado } = useContext(ContextoApp)!;
   // Capturar el enlace
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLinkVideo(e.target.value);
@@ -29,11 +32,11 @@ const Paso2D: React.FC = () => {
       setIsValidVideo(false);
       return;
     }
-
+  
     const validarVideo = (url: string) => {
       const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
       const match = url.match(regex);
-
+  
       if (match) {
         const idVideo = match[1];
         if (url.includes("redesociales") || url.includes("marca")) {
@@ -45,6 +48,9 @@ const Paso2D: React.FC = () => {
           setVideoBlocked(false);
           setVideoId(idVideo);
           setIsValidVideo(true);
+          
+          // Solo almacenar si el video es válido
+          setVideoSeleccionado(url);
         }
       } else {
         setVideoBlocked(true);
@@ -52,9 +58,10 @@ const Paso2D: React.FC = () => {
         setIsValidVideo(false);
       }
     };
-
+  
     validarVideo(linkVideo);
-  }, [linkVideo]);
+  }, [linkVideo, setVideoSeleccionado]);
+  
 
   return (
     <div className="Paso2D-contenedor">
@@ -86,6 +93,7 @@ const Paso2D: React.FC = () => {
       {/* Mostrar el video solo si no está bloqueado */}
       {!videoBlocked && videoId && (
         <div className="Paso2D-video-container">
+
           <iframe
             src={`https://www.youtube.com/embed/${videoId}?controls=0&disablekb=1&rel=0&modestbranding=1&showinfo=0`}
             className="Paso2D-video"
