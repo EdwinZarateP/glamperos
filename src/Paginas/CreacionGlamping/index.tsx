@@ -19,7 +19,7 @@ import "./estilos.css";
 const CreacionGlamping: React.FC = () => {
   const [pasoActual, setPasoActual] = useState<number>(0);
 
-  const { latitud, tipoGlamping, imagenesSeleccionadas, nombreGlamping, descripcionGlamping } = useContext(ContextoApp)!;
+  const { latitud, tipoGlamping, imagenesCargadas, nombreGlamping, descripcionGlamping } = useContext(ContextoApp)!;
 
   const pasos = [
     <Paso1A key="Paso1A" />,
@@ -38,7 +38,9 @@ const CreacionGlamping: React.FC = () => {
 
   const avanzarPaso = () => {
     // Validar pasoActual === 6 y si no se seleccionaron imágenes
-    if (pasoActual === 6 && (!imagenesSeleccionadas || imagenesSeleccionadas.length === 0)) {
+    // Validar pasoActual === 6 y si no se seleccionaron imágenes
+  if (pasoActual === 6) {
+    if (!imagenesCargadas || imagenesCargadas.length === 0) {
       Swal.fire({
         icon: "warning",
         title: "¡Todo entra por los ojos! 🫣",
@@ -47,6 +49,18 @@ const CreacionGlamping: React.FC = () => {
       });
       return;
     }
+
+    if (imagenesCargadas.length < 5) {
+      Swal.fire({
+        icon: "warning",
+        title: "¡Faltan imágenes! 🫣",
+        text: "Debes seleccionar al menos 5 imágenes para continuar.",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
+  }
+
 
     // Validación para el paso 1 y verificar si eligio tipo glamping
     if (pasoActual === 1 && !tipoGlamping) {
@@ -74,7 +88,7 @@ const CreacionGlamping: React.FC = () => {
     if (pasoActual === 8 && !nombreGlamping) {
       Swal.fire({
         icon: "warning",
-        title: "Sin nombre ¿Quién eres en la vida?",
+        title: "¿Quién va sin nombre por la vida?",
         text: "Escribe el nombre de tu glamping antes de continuar.",
         confirmButtonText: "Aceptar",
       });

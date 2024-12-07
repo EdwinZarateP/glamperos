@@ -19,6 +19,7 @@ const Paso2C: React.FC = () => {
   const { imagenesCargadas, setImagenesCargadas } = contexto;
 
   /** Funcionalidad para subir imágenes */
+  /** Funcionalidad para subir imágenes */
   const manejarSubida = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const archivos = event.target.files;
     if (!archivos) return;
@@ -26,10 +27,18 @@ const Paso2C: React.FC = () => {
     const imagenesArray: Imagen[] = [];
     for (let i = 0; i < archivos.length; i++) {
       const archivo = archivos[i];
+
+      // Validación para asegurarse de que sea un tipo de imagen válido
+      if (!archivo.type.startsWith("image/")) {
+        Swal.fire("Error", "Solo se permiten imágenes (JPEG, PNG, GIF)", "error");
+        continue;
+      }
+
       if (archivo.size > 10 * 1024 * 1024) {
         Swal.fire("Error", "Una o más imágenes superan el tamaño máximo de 10MB", "error");
         continue;
       }
+
       imagenesArray.push({
         id: Date.now() + Math.random(),
         ruta: URL.createObjectURL(archivo),
@@ -39,10 +48,11 @@ const Paso2C: React.FC = () => {
     if (imagenesCargadas.length + imagenesArray.length > 10) {
       Swal.fire("Error", `Tienes cupo para 10 imágenes en total.`, "error");
       return;
-    }    
+    }
 
     setImagenesCargadas((prev) => [...prev, ...imagenesArray]);
   };
+
 
   /** Funcionalidad para eliminar una imagen */
   const eliminarImagen = (id: number) => {

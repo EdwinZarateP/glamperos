@@ -25,7 +25,7 @@
     width: 80%;
     height: 100%; /* Asegura que ocupe la altura disponible */
     max-height: 60%; /* Limita la altura para que no se desborde */
-    grid-template-columns: repeat(4, 1fr); /* Máximo 3 columnas */
+    grid-template-columns: repeat(5, 1fr); /* Máximo 3 columnas */
     gap: 20px;
     overflow-y: auto; /* Habilita el scroll vertical */
     padding: 10px;
