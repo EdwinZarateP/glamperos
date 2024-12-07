@@ -22,7 +22,6 @@ const CreacionGlamping: React.FC = () => {
   const { latitud, tipoGlamping, imagenesSeleccionadas, nombreGlamping, descripcionGlamping } = useContext(ContextoApp)!;
 
   const pasos = [
-    <Paso2C key="Paso2C" />,
     <Paso1A key="Paso1A" />,
     <Paso1B key="Paso1B" />,
     <Paso1C key="Paso1C" />,
