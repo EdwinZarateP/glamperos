@@ -16,7 +16,7 @@ const Paso2C: React.FC = () => {
 
   if (!contexto) return null;
 
-  const { imagenesSeleccionadas, setImagenesSeleccionadas } = contexto;
+  const { imagenesCargadas, setImagenesCargadas } = contexto;
 
   /** Funcionalidad para subir imágenes */
   const manejarSubida = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,34 +36,34 @@ const Paso2C: React.FC = () => {
       });
     }
 
-    if (imagenesSeleccionadas.length + imagenesArray.length > 10) {
+    if (imagenesCargadas.length + imagenesArray.length > 10) {
       Swal.fire("Error", `Tienes cupo para 10 imágenes en total.`, "error");
       return;
     }    
 
-    setImagenesSeleccionadas((prev) => [...prev, ...imagenesArray]);
+    setImagenesCargadas((prev) => [...prev, ...imagenesArray]);
   };
 
   /** Funcionalidad para eliminar una imagen */
   const eliminarImagen = (id: number) => {
-    setImagenesSeleccionadas((prev) => prev.filter((img) => img.id !== id));
+    setImagenesCargadas((prev) => prev.filter((img) => img.id !== id));
   };
 
   /** Manejo de arrastrar imágenes */
   const manejarArrastrar = (resultado: React.DragEvent<HTMLDivElement>, index: number) => {
     const targetIndex = parseInt(resultado.dataTransfer.getData("index"), 10);
-    const copy = [...imagenesSeleccionadas];
+    const copy = [...imagenesCargadas];
     const temp = copy[index];
     copy[index] = copy[targetIndex];
     copy[targetIndex] = temp;
-    setImagenesSeleccionadas(copy);
+    setImagenesCargadas(copy);
   };
 
   /** Actualizar las imágenes de la derecha con las primeras 5 imágenes seleccionadas */
-  const primerasCincoImagenes = imagenesSeleccionadas.slice(0, 5);
+  const primerasCincoImagenes = imagenesCargadas.slice(0, 5);
 
   /** Lógica para calcular cuántas imágenes restantes se pueden subir */
-  const calcularCupoRestante = () => 10 - imagenesSeleccionadas.length;
+  const calcularCupoRestante = () => 10 - imagenesCargadas.length;
 
   /** Funcionalidad para mostrar el botón de "Subir Imágenes" solo si queda espacio */
   const mostrarBotonSubir = calcularCupoRestante() > 0;
@@ -81,7 +81,7 @@ const Paso2C: React.FC = () => {
           style={{ display: "none" }}
         />
 
-        {imagenesSeleccionadas.map((imagen, index) => (
+        {imagenesCargadas.map((imagen, index) => (
           <div
             key={imagen.id}
             className="Paso2C-imagenContenedor"

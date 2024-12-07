@@ -88,11 +88,11 @@ interface ContextProps {
   setLongitud: Dispatch<SetStateAction<number>>;
 
   // Imagenes puntuales del glamping
-  // imagenesSeleccionadas: string[];
-  // setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
+  imagenesSeleccionadas: string[];
+  setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
 
-  imagenesSeleccionadas: Imagen[];
-  setImagenesSeleccionadas: Dispatch<SetStateAction<Imagen[]>>;
+  imagenesCargadas: Imagen[];
+  setImagenesCargadas: Dispatch<SetStateAction<Imagen[]>>;
 
   // Mapas
   libraries: Libraries;
@@ -147,8 +147,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);  // Nueva variable para cantidad de huéspedes
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
   
-  // const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
-  const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<Imagen[]>([]);
+  const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
+  const [imagenesCargadas, setImagenesCargadas] = useState<Imagen[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
 
   // Estados para modales
@@ -225,6 +225,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setLongitud,
     imagenesSeleccionadas,
     setImagenesSeleccionadas,
+    imagenesCargadas, 
+    setImagenesCargadas,
     libraries,
     seleccionadosGlobal,
     setSeleccionadosGlobal,

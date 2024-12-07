@@ -10,7 +10,7 @@ const Paso2D: React.FC = () => {
   const [videoId, setVideoId] = useState<string | null>(null);
   const [isValidVideo, setIsValidVideo] = useState<boolean>(false);
 
-  const { videoSeleccionado, setVideoSeleccionado } = useContext(ContextoApp)!;
+  const { setVideoSeleccionado } = useContext(ContextoApp)!;
   // Capturar el enlace
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLinkVideo(e.target.value);
