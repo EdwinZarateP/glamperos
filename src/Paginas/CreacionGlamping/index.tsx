@@ -14,7 +14,7 @@ import Paso3A from "./Paso3A/index";
 import Paso3B from "./Paso3B/index";
 import Swal from "sweetalert2";
 import "./estilos.css";
-import DescripcionGlamping from '../../Componentes/DescripcionGlamping';
+
 
 const CreacionGlamping: React.FC = () => {
   const [pasoActual, setPasoActual] = useState<number>(0);
@@ -22,6 +22,7 @@ const CreacionGlamping: React.FC = () => {
   const { latitud, tipoGlamping, imagenesSeleccionadas, nombreGlamping, descripcionGlamping } = useContext(ContextoApp)!;
 
   const pasos = [
+    <Paso2C key="Paso2C" />,
     <Paso1A key="Paso1A" />,
     <Paso1B key="Paso1B" />,
     <Paso1C key="Paso1C" />,

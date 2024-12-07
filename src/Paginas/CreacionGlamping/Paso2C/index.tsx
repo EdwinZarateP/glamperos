@@ -1,234 +1,145 @@
-import React, { useState, useContext } from "react";
-import { ContextoApp } from "../../../Contexto/index";
-import { FaRegTrashAlt } from "react-icons/fa";
+import React, { useContext } from "react";
 import Swal from "sweetalert2";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { ContextoApp } from "../../../Contexto/index";
 import "./estilos.css";
 
+// Interfaz para la tipificación de imágenes
+interface Imagen {
+  id: number;
+  ruta: string;
+}
+
+// Componente Principal
 const Paso2C: React.FC = () => {
-  const { imagenesSeleccionadas, setImagenesSeleccionadas } = useContext(ContextoApp)!;
+  const contexto = useContext(ContextoApp);
 
-  const [imagenesValidas, setImagenesValidas] = useState<string[]>([]);
-  const [imagenesInvalidas, setImagenesInvalidas] = useState<string[]>([]);
-  const [imagenesPrincipales, setImagenesPrincipales] = useState<string[]>([]);
+  if (!contexto) return null;
 
-  const [draggingImage, setDraggingImage] = useState<string | null>(null); // Imagen que se está arrastrando
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null); // Índice de la imagen que se está arrastrando
-  const [overDest, setOverDest] = useState<boolean>(false); // Si la imagen está sobre el área de destino
+  const { imagenesSeleccionadas, setImagenesSeleccionadas } = contexto;
 
-  const manejarImagenes = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+  /** Funcionalidad para subir imágenes */
+  const manejarSubida = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const archivos = event.target.files;
+    if (!archivos) return;
 
-    const imagenesArray: string[] = [];
-    const imagenesInvalidaArray: string[] = [];
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.size <= 10485760) {
-        imagenesArray.push(URL.createObjectURL(file));
-      } else {
-        imagenesInvalidaArray.push(file.name);
+    const imagenesArray: Imagen[] = [];
+    for (let i = 0; i < archivos.length; i++) {
+      const archivo = archivos[i];
+      if (archivo.size > 10 * 1024 * 1024) {
+        Swal.fire("Error", "Una o más imágenes superan el tamaño máximo de 10MB", "error");
+        continue;
       }
+      imagenesArray.push({
+        id: Date.now() + Math.random(),
+        ruta: URL.createObjectURL(archivo),
+      });
     }
 
-    if (imagenesArray.length + imagenesSeleccionadas.length > 15) {
-      Swal.fire({
-        icon: "error",
-        title: "¡Error!",
-        text: "Solo puedes subir un máximo de 15 fotos.",
-        confirmButtonText: "Aceptar",
-      });
-    } else if (imagenesArray.length + imagenesSeleccionadas.length < 5) {
-      Swal.fire({
-        icon: "warning",
-        title: "¡Atención!",
-        text: "Debes subir al menos 5 fotos.",
-        confirmButtonText: "Aceptar",
-      });
-    } else {
-      setImagenesSeleccionadas((prevState) => [...prevState, ...imagenesArray]);
-      setImagenesValidas(imagenesArray);
-      setImagenesInvalidas(imagenesInvalidaArray);
+    if (imagenesSeleccionadas.length + imagenesArray.length > 10) {
+      Swal.fire("Error", `Tienes cupo para 10 imágenes en total.`, "error");
+      return;
     }    
+
+    setImagenesSeleccionadas((prev) => [...prev, ...imagenesArray]);
   };
 
-  const eliminarImagen = (index: number) => {
-    setImagenesSeleccionadas((prevState) => prevState.filter((_, i) => i !== index));
+  /** Funcionalidad para eliminar una imagen */
+  const eliminarImagen = (id: number) => {
+    setImagenesSeleccionadas((prev) => prev.filter((img) => img.id !== id));
   };
 
-  const iniciarArrastre = (imagen: string, index: number) => {
-    setDraggingImage(imagen);
-    // setDraggedIndex(index); // Guardar el índice de la imagen que se está arrastrando
-    setDraggedIndex(4);
-    console.log(index)
+  /** Manejo de arrastrar imágenes */
+  const manejarArrastrar = (resultado: React.DragEvent<HTMLDivElement>, index: number) => {
+    const targetIndex = parseInt(resultado.dataTransfer.getData("index"), 10);
+    const copy = [...imagenesSeleccionadas];
+    const temp = copy[index];
+    copy[index] = copy[targetIndex];
+    copy[targetIndex] = temp;
+    setImagenesSeleccionadas(copy);
   };
 
-  const soltarImagen = (index: number) => {
-    
-    if (imagenesPrincipales.length >= 5) {
-      Swal.fire({
-        icon: "info",
-        title: "Todo melo, pero...",
-        text: "Ya escogiste 5 imágenes. Si quieres reemplazar alguna, elimina una primero.",
-        confirmButtonText: "Aceptar",
-      });
-      return; // No permite agregar más imágenes si ya hay 5
-    }
+  /** Actualizar las imágenes de la derecha con las primeras 5 imágenes seleccionadas */
+  const primerasCincoImagenes = imagenesSeleccionadas.slice(0, 5);
 
-    if (draggingImage && !imagenesPrincipales.includes(draggingImage)) {
-      // Si ya hay 5 imágenes, reemplazar la imagen
-      const updatedImages = [...imagenesPrincipales];
-      updatedImages.splice(index, 0, draggingImage); // Colocar la imagen en el índice correcto
-      setImagenesPrincipales(updatedImages);
-      setImagenesSeleccionadas((prevState) => prevState.filter((imagen) => imagen !== draggingImage));
-    }
-  };
+  /** Lógica para calcular cuántas imágenes restantes se pueden subir */
+  const calcularCupoRestante = () => 10 - imagenesSeleccionadas.length;
 
-  const devolverImagen = (imagen: string) => {
-    setImagenesPrincipales((prevState) => prevState.filter((img) => img !== imagen));
-    setImagenesSeleccionadas((prevState) => [...prevState, imagen]);
-  };
-
-  const eliminarImagenDeDest = () => {
-    if (imagenesPrincipales.length > 0) {
-      const imagenEliminada = imagenesPrincipales[0];
-      setImagenesPrincipales(imagenesPrincipales.slice(1)); // Eliminar la primera imagen (la principal)
-      setImagenesSeleccionadas((prevState) => [imagenEliminada, ...prevState]); // Volver a agregarla a la izquierda
-    }
-  };
-
-  const manejarOverDest = (over: boolean) => {
-    setOverDest(over);
-  };
-
-  const moverImagen = (fromIndex: number, toIndex: number) => {
-    const updatedImages = [...imagenesPrincipales];
-    const [movedImage] = updatedImages.splice(fromIndex, 1); // Eliminar imagen desde el índice de origen
-    updatedImages.splice(toIndex, 0, movedImage); // Insertar imagen en el índice de destino
-    setImagenesPrincipales(updatedImages);
-  };
+  /** Funcionalidad para mostrar el botón de "Subir Imágenes" solo si queda espacio */
+  const mostrarBotonSubir = calcularCupoRestante() > 0;
 
   return (
     <div className="Paso2C-contenedor">
-      <h1 className="Paso2C-titulo">Agrega algunas fotos de tu glamping</h1>
-      <p className="Paso2C-subtitulo">
-        Para empezar necesitas al menos 5 fotos, pero luego podrás modificarlas en el futuro.
-      </p>
+      {/* Sección de imágenes a la izquierda */}
+      <div className="Paso2C-seccionPrincipal">
+        <input
+          type="file"
+          multiple
+          onChange={manejarSubida}
+          className="input-imagenes"
+          id="inputImagenes"
+          style={{ display: "none" }}
+        />
 
-      <div className="Paso2C-contenedor-principal">
-        {/* Lado izquierdo */}
-        <div className="Paso2C-fotos">
-          <h2 className="Paso2C-subtitulo-fotos">Sube tus fotos (min 5 / máx 15)</h2>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={manejarImagenes}
-            className="Paso2C-input-imagen"
-          />
-          {imagenesValidas.length > 0 && (
-            <div className="Paso2C-imagenes">
-              {imagenesSeleccionadas.map((imagen, index) => (
-                <div
-                  key={index}
-                  className={`Paso2C-imagen ${draggingImage === imagen ? "dragging" : ""}`}
-                  draggable
-                  onDragStart={() => iniciarArrastre(imagen, index)}
-                >
-                  <img src={imagen} alt={`Imagen ${index}`} className="Paso2C-imagen-preview" />
-                  <button
-                    onClick={() => eliminarImagen(index)}
-                    className="Paso2C-boton-eliminar"
-                  >
-                    <FaRegTrashAlt />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-          {imagenesInvalidas.length > 0 && (
-            <div className="Paso2C-error-imagen">
-              <p>Las siguientes imágenes no se subieron porque exceden el tamaño de 10 MB:</p>
-              <ul>
-                {imagenesInvalidas.map((imagen, index) => (
-                  <li key={index}>{imagen}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Lado derecho (destino del arrastre) */}
-        <div
-          className="Paso2C-derecha"
-          onDragOver={(e) => {
-            e.preventDefault();
-            manejarOverDest(true);
-          }}
-          onDragLeave={() => manejarOverDest(false)}
-          onDrop={(e) => {
-            e.preventDefault();
-            if (draggedIndex !== null) {
-              soltarImagen(draggedIndex); // Cambiar por el manejo correcto de imágenes
-            }
-          }}
-        >
+        {imagenesSeleccionadas.map((imagen, index) => (
           <div
-            className={`Paso2C-derecha-destino ${overDest ? "over" : ""}`}
+            key={imagen.id}
+            className="Paso2C-imagenContenedor"
+            draggable
+            onDragStart={(e) => e.dataTransfer.setData("index", index.toString())}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => manejarArrastrar(e, index)}
           >
-            {imagenesPrincipales.length > 0 ? (
-              <>
-                <img
-                  src={imagenesPrincipales[0]}
-                  alt="Imagen Principal"
-                  className="Paso2C-imagen-preview"
-                />
-                <button
-                  onClick={eliminarImagenDeDest}
-                  className="Paso2C-boton-eliminar"
-                >
-                  <FaRegTrashAlt />
-                </button>
-              </>
-            ) : (
-              <p>1. Arrastra aquí tu imagen principal</p>
-            )}
+            <img src={imagen.ruta} alt={`Imagen ${imagen.id}`} className="Paso2C-imagen" />
+            <button
+              className="Paso2C-boton-eliminar"
+              onClick={() => eliminarImagen(imagen.id)}
+            >
+              <FaRegTrashAlt />
+            </button>
           </div>
-          <div className="Paso2C-derecha-imagenes">
-            {imagenesPrincipales.length <= 1 && (
-              <p className="Paso2C-mensaje">2. Arrastra aquí 4 imágenes</p>
-            )}
-            {imagenesPrincipales.slice(1, 5).map((imagen, index) => (
-              <div
-                key={index}
-                className="Paso2C-imagen-wrapper"
-                draggable
-                onDragStart={() => iniciarArrastre(imagen, index + 1)}
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  const targetIndex = index + 1;
-                  if (draggedIndex !== null && draggedIndex !== targetIndex) {
-                    moverImagen(draggedIndex, targetIndex);
-                  }
-                }}
-              >
+        ))}
+
+        {/* Mensaje con el botón dinámico */}
+        {mostrarBotonSubir && (
+          <label className="Paso2C-botonAgregar" htmlFor="inputImagenes">
+            Subir Imágenes (Tienes espacio para {calcularCupoRestante()} imágenes)
+          </label>
+        )}
+      </div>
+
+      {/* Sección derecha con las primeras 5 imágenes */}
+      <div className="Paso2C-seccionDerecha-contenedor">
+        <h4>Así se verán en tu portada</h4>
+        <div className="Paso2C-seccionDerecha">
+
+          {/* Contenedor para la imagen principal */}
+          <div className="Paso2C-principal">
+            {primerasCincoImagenes.slice(0, 1).map((imagen) => (
+              <div key={imagen.id} className="Paso2C-seccionDerecha principal">
                 <img
-                  src={imagen}
-                  alt={`Imagen Principal ${index + 1}`}
-                  className="Paso2C-imagen-preview"
+                  src={imagen.ruta}
+                  alt={`Imagen ${imagen.id}`}
                 />
-                <button
-                  onClick={() => devolverImagen(imagen)}
-                  className="Paso2C-boton-eliminar"
-                >
-                  <FaRegTrashAlt />
-                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Contenedor para las imágenes secundarias */}
+          <div className="Paso2C-secundaria">
+            {primerasCincoImagenes.slice(1).map((imagen) => (
+              <div key={imagen.id} className="Paso2C-seccionDerecha secundaria">
+                <img
+                  src={imagen.ruta}
+                />
               </div>
             ))}
           </div>
         </div>
       </div>
+
+
+
     </div>
   );
 };

@@ -10,10 +10,15 @@ const libraries: Libraries = ["places"];
 // 4. Use la variable que desee del ProveedorVariables, por ejemplo: almacenVariables.esFavorito
 
 type Libraries = string[];
-
+interface Imagen {
+  id: number;
+  ruta: string;
+}
 //-------------------------------------------------------------------------------------
 // 1. Define la interfaz para el contexto
 //-------------------------------------------------------------------------------------
+
+
 interface ContextProps {
   // Abrir o cerrar cosas
   estaAbiertoAlgo: boolean;
@@ -83,8 +88,11 @@ interface ContextProps {
   setLongitud: Dispatch<SetStateAction<number>>;
 
   // Imagenes puntuales del glamping
-  imagenesSeleccionadas: string[];
-  setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
+  // imagenesSeleccionadas: string[];
+  // setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
+
+  imagenesSeleccionadas: Imagen[];
+  setImagenesSeleccionadas: Dispatch<SetStateAction<Imagen[]>>;
 
   // Mapas
   libraries: Libraries;
@@ -139,7 +147,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);  // Nueva variable para cantidad de huéspedes
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
   
-  const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
+  // const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
+  const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<Imagen[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
 
   // Estados para modales
