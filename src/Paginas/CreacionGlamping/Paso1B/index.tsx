@@ -15,7 +15,7 @@ const Paso1B: React.FC = () => {
     { id: 'Domo', label: 'Domo', icono: <GiHabitatDome /> },
     { id: 'Casa_arbol', label: 'Casa del árbol', icono: <GiTreehouse /> },
     { id: 'Remolque', label: 'Remolque', icono: <FaCaravan /> },
-    { id: 'Cabana', label: 'Cabaña', icono: <MdOutlineCabin /> },
+    { id: 'Cabaña', label: 'Cabaña', icono: <MdOutlineCabin /> },
     { id: 'Choza', label: 'Choza', icono: <GiHut /> },
   ];
 
