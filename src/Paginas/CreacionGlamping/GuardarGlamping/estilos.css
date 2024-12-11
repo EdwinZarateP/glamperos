@@ -1,5 +1,9 @@
 /* Contenedor principal */
 .guardarGlampingP-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100vh;
   margin: 2rem auto;
@@ -7,8 +11,8 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #5c9ded;
   z-index: 500000000;
+  background-color: #ccc;
 }
 
 /* Título principal */
@@ -22,8 +26,9 @@
 /* Formulario principal */
 .guardarGlampingP-formulario {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1.5rem;
   padding: 1rem;
 }
@@ -67,7 +72,6 @@
 .guardarGlampingP-boton {
   background-color: #5c9ded;
   color: white;
-  border: none;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
