@@ -3,9 +3,9 @@ import Tarjeta from "../../Componentes/Tarjeta/index";
 import "./estilos.css";
 
 interface GlampingData {
-  nombre: string;
+  nombreGlamping: string;
   ciudad_departamento: string;
-  precio_noche: number;
+  precioEstandar: number;
   calificacion: number | null;
   imagenes: string[];
 }
@@ -31,12 +31,12 @@ const ContenedorTarjetas: React.FC = () => {
           const data = await response.json();
 
           const parsedData = data.map((glamping: any) => ({
-            nombre: glamping.nombre,
-            ciudad_departamento: glamping.ciudad_departamento,
-            precio_noche: glamping.precio_noche,
+            nombreGlamping: glamping.nombreGlamping || "Nombre no disponible",
+            ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
+            precioEstandar: glamping.precioEstandar || 0,
             calificacion: glamping.calificacion,
-            imagenes: glamping.imagenes,
-          }));
+            imagenes: glamping.imagenes || [],
+          }));          
 
           sessionStorage.setItem(
             "glampingsData",
@@ -80,10 +80,10 @@ const ContenedorTarjetas: React.FC = () => {
           key={index}
           imagenes={glamping.imagenes}
           ciudad={glamping.ciudad_departamento}
-          precio={glamping.precio_noche}
+          precio={glamping.precioEstandar}
           calificacion={glamping.calificacion || 0}
           favorito={false}
-          nombreGlamping={glamping.nombre}
+          nombreGlamping={glamping.nombreGlamping}
           onFavoritoChange={(nuevoEstado) =>
             console.log(`Favorito en tarjeta ${index + 1}:`, nuevoEstado)
           }

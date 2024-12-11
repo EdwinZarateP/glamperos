@@ -12,7 +12,7 @@ interface Coordenadas {
 }
 
 const Paso1C: React.FC = () => {
-  const { latitud, setLatitud, longitud, setLongitud } = useContext(ContextoApp)!; // Extraer las funciones del contexto
+  const { latitud, setLatitud, longitud, setLongitud, setUbicacion} = useContext(ContextoApp)!; // Extraer las funciones del contexto
 
   const [coordenadas, setCoordenadas] = useState<Coordenadas>({
     lat: latitud,
@@ -60,6 +60,9 @@ const Paso1C: React.FC = () => {
       // Guardar las coordenadas en el contexto global
       setLatitud(lat);
       setLongitud(lng);
+      const nuevaUbicacion = JSON.stringify({ lat: lat, lng: lng });
+      setUbicacion(nuevaUbicacion);
+
     } catch (error) {
       console.error("Error al obtener coordenadas:", error);
     }
@@ -91,6 +94,8 @@ const Paso1C: React.FC = () => {
     // Guardar las coordenadas en el contexto global
     setLatitud(lngLat.lat);
     setLongitud(lngLat.lng);
+    const nuevaUbicacion = JSON.stringify({ lat: lngLat.lat, lng: lngLat.lng });
+    setUbicacion(nuevaUbicacion);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

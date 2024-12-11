@@ -1,0 +1,111 @@
+/* Contenedor principal */
+.guardarGlampingP-contenedor {
+  width: 100%;
+  height: 100vh;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #5c9ded;
+  z-index: 500000000;
+}
+
+/* Título principal */
+.guardarGlampingP-titulo {
+  text-align: center;
+  color: #555;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Formulario principal */
+.guardarGlampingP-formulario {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+/* Estilo general para las etiquetas y campos de entrada */
+.guardarGlampingP-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: #555;
+  width: 48%;
+  gap: 0.5rem;
+}
+
+/* Campos de texto, select y textarea */
+.guardarGlampingP-input,
+.guardarGlampingP-select,
+.guardarGlampingP-textarea {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Estilizar los campos activos */
+.guardarGlampingP-input:focus,
+.guardarGlampingP-select:focus,
+.guardarGlampingP-textarea:focus {
+  border-color: #5c9ded;
+  outline: none;
+  box-shadow: 0 0 5px rgba(92, 157, 237, 0.3);
+}
+
+/* Checkbox */
+.guardarGlampingP-checkbox {
+  width: 20px;
+}
+
+/* Botón */
+.guardarGlampingP-boton {
+  background-color: #5c9ded;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+  align-self: center;
+}
+
+.guardarGlampingP-boton:hover:not([disabled]) {
+  background-color: #3a7bd5;
+}
+
+.guardarGlampingP-boton:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
+}
+
+/* Mensaje */
+.guardarGlampingP-mensaje {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: green;
+  font-size: 1rem;
+}
+
+/* Estilización para archivos cargados */
+.guardarGlampingP-file {
+  padding: 5px 0;
+  font-size: 0.9rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .guardarGlampingP-label {
+    width: 100%;
+  }
+  
+  .guardarGlampingP-formulario {
+    justify-content: center;
+  }
+}

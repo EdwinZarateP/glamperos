@@ -88,7 +88,7 @@ function ExplorarGlamping() {
       <main>
         <div className="encabezado-explorado-container">
           <EncabezadoExplorado 
-            nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`} />
+            nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`} />            
         </div>
         <div className="imagenes-exploradas-container">
           <ImagenesExploradas imagenes={imagenesSeleccionadas} />
@@ -97,7 +97,8 @@ function ExplorarGlamping() {
           <ImgExploradasIndividual imagenes={imagenesSeleccionadas} />
         </div>
         <div className="nombre-glamping-container">
-          <NombreGlamping nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`} />
+          <NombreGlamping nombreGlamping={`${nombreGlamping}  - ${ciudad_Elegida.split(" - ")[0]}`} />
+          
         </div>
         <div className='contenedor-descripcion-glamping'>
           <div className='contenedor-descripcion-glamping-izq'>

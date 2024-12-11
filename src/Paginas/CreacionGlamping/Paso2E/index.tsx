@@ -1,12 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './estilos.css';
 import { ContextoApp } from '../../../Contexto/index';
 
 const Paso2E: React.FC = () => {
   const { nombreGlamping, setNombreGlamping } = useContext(ContextoApp)!;
 
-  // Local state para el campo de texto, con validación
+  // Local state para el campo de texto
   const [inputNombre, setInputNombre] = useState('');
+
+  // Sincronizar el estado local con el valor guardado en el contexto al cargar el componente
+  useEffect(() => {
+    setInputNombre(nombreGlamping);
+  }, [nombreGlamping]);
 
   const manejarCambio = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valor = e.target.value.slice(0, 40); // Limitar a 40 caracteres
@@ -21,7 +26,7 @@ const Paso2E: React.FC = () => {
           <h1 className="Paso2E-titulo-principal">Dinos el alias de tu glamping</h1>
           <p className="Paso2E-descripcion">
             Los nombres cortos funcionan mejor, por ejemplo "El refugio",
-             "El nido de la montaña", etc.
+            "El nido de la montaña", etc.
           </p>
         </div>
         <div className="Paso2E-input-contenedor">

@@ -4,12 +4,6 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { ContextoApp } from "../../../Contexto/index";
 import "./estilos.css";
 
-// Interfaz para la tipificación de imágenes
-interface Imagen {
-  id: number;
-  ruta: string;
-}
-
 // Componente Principal
 const Paso2C: React.FC = () => {
   const contexto = useContext(ContextoApp);
@@ -19,12 +13,11 @@ const Paso2C: React.FC = () => {
   const { imagenesCargadas, setImagenesCargadas } = contexto;
 
   /** Funcionalidad para subir imágenes */
-  /** Funcionalidad para subir imágenes */
   const manejarSubida = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const archivos = event.target.files;
     if (!archivos) return;
 
-    const imagenesArray: Imagen[] = [];
+    const imagenesArray: File[] = [];
     for (let i = 0; i < archivos.length; i++) {
       const archivo = archivos[i];
 
@@ -39,10 +32,7 @@ const Paso2C: React.FC = () => {
         continue;
       }
 
-      imagenesArray.push({
-        id: Date.now() + Math.random(),
-        ruta: URL.createObjectURL(archivo),
-      });
+      imagenesArray.push(archivo);
     }
 
     if (imagenesCargadas.length + imagenesArray.length > 10) {
@@ -53,29 +43,30 @@ const Paso2C: React.FC = () => {
     setImagenesCargadas((prev) => [...prev, ...imagenesArray]);
   };
 
-
   /** Funcionalidad para eliminar una imagen */
-  const eliminarImagen = (id: number) => {
-    setImagenesCargadas((prev) => prev.filter((img) => img.id !== id));
+  const eliminarImagen = (index: number) => {
+    setImagenesCargadas((prev) => prev.filter((_, i) => i !== index));
   };
 
-  /** Manejo de arrastrar imágenes */
-  const manejarArrastrar = (resultado: React.DragEvent<HTMLDivElement>, index: number) => {
-    const targetIndex = parseInt(resultado.dataTransfer.getData("index"), 10);
-    const copy = [...imagenesCargadas];
-    const temp = copy[index];
-    copy[index] = copy[targetIndex];
-    copy[targetIndex] = temp;
-    setImagenesCargadas(copy);
+  /** Manejo de arrastrar imágenes con optimización */
+  const manejarArrastrar = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+    e.preventDefault(); // Necesario para permitir el evento drop
+    const targetIndex = parseInt(e.dataTransfer.getData("index"), 10);
+
+    // Validación para evitar operaciones inválidas
+    if (isNaN(targetIndex) || targetIndex === index || targetIndex >= imagenesCargadas.length) return;
+
+    // Realizar intercambio de posiciones
+    const updatedImages = [...imagenesCargadas];
+    [updatedImages[index], updatedImages[targetIndex]] = [updatedImages[targetIndex], updatedImages[index]];
+
+    setImagenesCargadas(updatedImages);
   };
 
-  /** Actualizar las imágenes de la derecha con las primeras 5 imágenes seleccionadas */
   const primerasCincoImagenes = imagenesCargadas.slice(0, 5);
 
-  /** Lógica para calcular cuántas imágenes restantes se pueden subir */
   const calcularCupoRestante = () => 10 - imagenesCargadas.length;
 
-  /** Funcionalidad para mostrar el botón de "Subir Imágenes" solo si queda espacio */
   const mostrarBotonSubir = calcularCupoRestante() > 0;
 
   return (
@@ -93,24 +84,23 @@ const Paso2C: React.FC = () => {
 
         {imagenesCargadas.map((imagen, index) => (
           <div
-            key={imagen.id}
+            key={index}
             className="Paso2C-imagenContenedor"
             draggable
             onDragStart={(e) => e.dataTransfer.setData("index", index.toString())}
-            onDragOver={(e) => e.preventDefault()}
+            onDragOver={(e) => e.preventDefault()} // Necesario para permitir el drop
             onDrop={(e) => manejarArrastrar(e, index)}
           >
-            <img src={imagen.ruta} alt={`Imagen ${imagen.id}`} className="Paso2C-imagen" />
+            <img src={URL.createObjectURL(imagen)} alt={`Imagen ${index}`} className="Paso2C-imagen" />
             <button
               className="Paso2C-boton-eliminar"
-              onClick={() => eliminarImagen(imagen.id)}
+              onClick={() => eliminarImagen(index)}
             >
               <FaRegTrashAlt />
             </button>
           </div>
         ))}
 
-        {/* Mensaje con el botón dinámico */}
         {mostrarBotonSubir && (
           <label className="Paso2C-botonAgregar" htmlFor="inputImagenes">
             Subir Imágenes (Tienes espacio para {calcularCupoRestante()} imágenes)
@@ -122,14 +112,13 @@ const Paso2C: React.FC = () => {
       <div className="Paso2C-seccionDerecha-contenedor">
         <h4>Así se verán en tu portada</h4>
         <div className="Paso2C-seccionDerecha">
-
           {/* Contenedor para la imagen principal */}
           <div className="Paso2C-principal">
-            {primerasCincoImagenes.slice(0, 1).map((imagen) => (
-              <div key={imagen.id} className="Paso2C-seccionDerecha principal">
+            {primerasCincoImagenes.slice(0, 1).map((imagen, index) => (
+              <div key={index} className="Paso2C-seccionDerecha principal">
                 <img
-                  src={imagen.ruta}
-                  alt={`Imagen ${imagen.id}`}
+                  src={URL.createObjectURL(imagen)}
+                  alt={`Imagen ${index}`}
                 />
               </div>
             ))}
@@ -137,19 +126,17 @@ const Paso2C: React.FC = () => {
 
           {/* Contenedor para las imágenes secundarias */}
           <div className="Paso2C-secundaria">
-            {primerasCincoImagenes.slice(1).map((imagen) => (
-              <div key={imagen.id} className="Paso2C-seccionDerecha secundaria">
+            {primerasCincoImagenes.slice(1).map((imagen, index) => (
+              <div key={index} className="Paso2C-seccionDerecha secundaria">
                 <img
-                  src={imagen.ruta}
+                  src={URL.createObjectURL(imagen)}
+                  alt={`Imagen ${index}`}
                 />
               </div>
             ))}
           </div>
         </div>
       </div>
-
-
-
     </div>
   );
 };

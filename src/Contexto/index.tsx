@@ -10,10 +10,7 @@ const libraries: Libraries = ["places"];
 // 4. Use la variable que desee del ProveedorVariables, por ejemplo: almacenVariables.esFavorito
 
 type Libraries = string[];
-interface Imagen {
-  id: number;
-  ruta: string;
-}
+
 //-------------------------------------------------------------------------------------
 // 1. Define la interfaz para el contexto
 //-------------------------------------------------------------------------------------
@@ -86,20 +83,22 @@ interface ContextProps {
   setLatitud: Dispatch<SetStateAction<number>>;
   longitud: number;
   setLongitud: Dispatch<SetStateAction<number>>;
+  ubicacion: string;
+  setUbicacion: Dispatch<SetStateAction<string>>;
 
   // Imagenes puntuales del glamping
   imagenesSeleccionadas: string[];
   setImagenesSeleccionadas: Dispatch<SetStateAction<string[]>>;
 
-  imagenesCargadas: Imagen[];
-  setImagenesCargadas: Dispatch<SetStateAction<Imagen[]>>;
+  imagenesCargadas: File[];
+  setImagenesCargadas: Dispatch<SetStateAction<File[]>>;
 
   // Mapas
   libraries: Libraries;
 
   //amenidades elegidas por el dueño
-  seleccionadosGlobal: string[];
-  setSeleccionadosGlobal: Dispatch<SetStateAction<string[]>>;
+  amenidadesGlobal: string[];
+  setAmenidadesGlobal: Dispatch<SetStateAction<string[]>>;
 
   //Carga de fotos y video
   videoSeleccionado: string;
@@ -108,10 +107,10 @@ interface ContextProps {
   setFotosSeleccionadas: Dispatch<SetStateAction<string[]>>; // Para actualizar las fotos
   
   //Precios
-  precioEstandar: string;
-  setPrecioEstandar: React.Dispatch<React.SetStateAction<string>>;
-  descuento: string;
-  setDescuento: React.Dispatch<React.SetStateAction<string>>;
+  precioEstandar: number;
+  setPrecioEstandar: React.Dispatch<React.SetStateAction<number>>;
+  descuento: number;
+  setDescuento: React.Dispatch<React.SetStateAction<number>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -148,7 +147,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
   
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
-  const [imagenesCargadas, setImagenesCargadas] = useState<Imagen[]>([]);
+  const [imagenesCargadas, setImagenesCargadas] = useState<File[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
 
   // Estados para modales
@@ -161,17 +160,17 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   //latitud y longitud
   const [latitud, setLatitud] = useState<number>(4.123456); // Estado predeterminado de latitud
   const [longitud, setLongitud] = useState<number>(-74.123456); // Estado predeterminado de longitud
-
+  const [ubicacion, setUbicacion] = useState<string>('');
 
   //amenidades elegidas por el dueño
-  const [seleccionadosGlobal, setSeleccionadosGlobal] = useState<string[]>([]);
+  const [amenidadesGlobal, setAmenidadesGlobal] = useState<string[]>([]);
 
-  // Estado para el video y fotos
+  // Estado para el fotos
   const [fotosSeleccionadas, setFotosSeleccionadas] = useState<string[]>([]);
 
   //precios
-  const [precioEstandar, setPrecioEstandar] = useState('');
-  const [descuento, setDescuento] = useState('');
+  const [precioEstandar, setPrecioEstandar] = useState<number>(0);
+  const [descuento, setDescuento] = useState<number>(0);
   
 
   const contextValue: ContextProps = {
@@ -223,13 +222,15 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setLatitud,
     longitud,
     setLongitud,
+    ubicacion,
+    setUbicacion,
     imagenesSeleccionadas,
     setImagenesSeleccionadas,
     imagenesCargadas, 
     setImagenesCargadas,
     libraries,
-    seleccionadosGlobal,
-    setSeleccionadosGlobal,
+    amenidadesGlobal,
+    setAmenidadesGlobal,
     videoSeleccionado,
     setVideoSeleccionado,
     fotosSeleccionadas,

@@ -12,7 +12,7 @@ import './estilos.css';
 
 const Paso2B: React.FC = () => {
   const [seleccionados, setSeleccionados] = useState<string[]>([]);  
-  const { seleccionadosGlobal, setSeleccionadosGlobal } = useContext(ContextoApp)!;
+  const { amenidadesGlobal, setAmenidadesGlobal } = useContext(ContextoApp)!;
 
   const opciones = [
     { id: 'Wifi', label: 'Wifi', icono: <IoWifi /> },
@@ -47,12 +47,12 @@ const Paso2B: React.FC = () => {
 
   // Actualizar el contexto global
   useEffect(() => {
-    setSeleccionadosGlobal(seleccionados);
-  }, [seleccionados, setSeleccionadosGlobal]);
+    setAmenidadesGlobal(seleccionados);
+  }, [seleccionados, setAmenidadesGlobal]);
 
   // Configurar los elementos seleccionados solo al montar el componente por primera vez
   useEffect(() => {
-    setSeleccionados(seleccionadosGlobal || []);
+    setSeleccionados(amenidadesGlobal || []);
   }, []); // La dependencia vacía evita bucles
 
   return (

@@ -5,33 +5,39 @@ import { ContextoApp } from '../../../Contexto/index';
 const Paso3B: React.FC = () => {
   const { precioEstandar, setPrecioEstandar, descuento, setDescuento } = useContext(ContextoApp)!;
 
+  // Función para manejar la entrada de precios estándar
   const manejarPreciosEstandar = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const valor = e.target.value.replace(/\D/g, ''); // Remover caracteres no numéricos
+    const valor = e.target.value.replace(/\D/g, ''); // Eliminar no numéricos
     const valorNumerico = Number(valor);
     if (valorNumerico <= 5000000) {
-      setPrecioEstandar(valor); 
+      setPrecioEstandar(valorNumerico); // Almacenar siempre como número
     }
   };
 
+  // Función para manejar el blur de precios estándar
   const manejarBlurPrecio = () => {
     setPrecioEstandar((prev) => {
-      if (!prev) return '';
-      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(
-        Number(prev)
-      );
+      if (prev === undefined || prev === null) return 0; 
+      return Number(prev); 
     });
   };
 
+  // Función para manejar la entrada de descuento
   const manejarDescuento = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const valor = e.target.value.replace(/\D/g, ''); // Permitir solo números
+    const valor = e.target.value.replace(/\D/g, ''); // Eliminar no numéricos
     const valorNumerico = Number(valor);
     if (valorNumerico <= 100) {
-      setDescuento(valor); 
+      setDescuento(valorNumerico); // Siempre como número
     }
   };
 
+  // Función para manejar el blur de descuentos
   const manejarBlurDescuento = () => {
-    setDescuento((prev) => `${prev.replace(/\D/g, '')}%`); // Agregar "%" al perder el foco
+    setDescuento((prev) => {
+      if (!prev) return 0; 
+      const valorNumerico = Number(prev);
+      return valorNumerico; 
+    });
   };
 
   return (

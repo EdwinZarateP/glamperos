@@ -22,6 +22,7 @@ const Paso2D: React.FC = () => {
     setVideoId(null);
     setVideoBlocked(false);
     setIsValidVideo(false);
+    setVideoSeleccionado(""); // Asegurar que no quede un video seleccionado
   };
 
   // Validación del enlace para evitar bucles
@@ -44,11 +45,11 @@ const Paso2D: React.FC = () => {
           setShowModal(true);
           setVideoId(null);
           setIsValidVideo(false);
+          setVideoSeleccionado(""); // No selecciona video bloqueado
         } else {
           setVideoBlocked(false);
           setVideoId(idVideo);
           setIsValidVideo(true);
-          
           // Solo almacenar si el video es válido
           setVideoSeleccionado(url);
         }
@@ -56,6 +57,7 @@ const Paso2D: React.FC = () => {
         setVideoBlocked(true);
         setVideoId(null);
         setIsValidVideo(false);
+        setVideoSeleccionado(""); // No selecciona video bloqueado
       }
     };
   

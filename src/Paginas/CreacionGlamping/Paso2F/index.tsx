@@ -1,15 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './estilos.css';
 import { ContextoApp } from '../../../Contexto/index';
 
 const Paso2F: React.FC = () => {
-  const { setDescripcionGlamping } = useContext(ContextoApp)!;
+  const { descripcionGlamping, setDescripcionGlamping } = useContext(ContextoApp)!;
 
-  // Local state para el campo de texto, con validación
+  // Local state para el campo de texto
   const [inputDescripcion, setInputDescripcion] = useState('');
 
+  // Sincronizar el estado local con el valor guardado en el contexto al cargar el componente
+  useEffect(() => {
+    setInputDescripcion(descripcionGlamping);
+  }, [descripcionGlamping]);
+
   const manejarCambio = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const valor = e.target.value.slice(0, 500); // Limitar a 500 caracteres
+    const valor = e.target.value.slice(0, 1000); // Limitar a 1000 caracteres
     setInputDescripcion(valor);
     setDescripcionGlamping(valor);
   };
@@ -28,13 +33,13 @@ const Paso2F: React.FC = () => {
         <div className="Paso2F-input-contenedor">
           <textarea
             className="Paso2F-input"
-            placeholder="Escribe la descripción de tu glamping"
+            placeholder={"Escribe la descripción de tu glamping"}
             value={inputDescripcion}
             onChange={manejarCambio}
           />
           {/* Mostrar la cantidad de caracteres ingresados */}
           <p className="Paso2F-caracteres">
-            {inputDescripcion.length}/500
+            {inputDescripcion.length}/1000
           </p>
         </div>
       </div>

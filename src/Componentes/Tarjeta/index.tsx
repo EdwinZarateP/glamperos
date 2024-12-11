@@ -208,7 +208,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">{nombreGlamping}</span>
+          <span className="tarjeta-nombre">{nombreGlamping   }</span>
           <div className="tarjeta-calificacion">
             <FaStar className="estrella" />
             <span>{calificacion}</span>
