@@ -117,15 +117,19 @@ const CreacionGlamping: React.FC = () => {
       return;
     }
     // Validación para el paso 9 y verificar si puso nombre
-    if (pasoActual === 9 && (!nombreGlamping || nombreGlamping.trim() === "")) {
+    if (
+      pasoActual === 9 &&
+      (!nombreGlamping || nombreGlamping.trim() === "" || !/^[a-zA-Z0-9 ]+$/.test(nombreGlamping.trim()))
+    ) {
       Swal.fire({
         icon: "warning",
         title: "¿Quién va sin nombre por la vida? 🪪",
-        text: "Escribe el nombre de tu glamping antes de continuar.",
+        text: "Escribe un nombre válido para tu glamping que contenga solo letras o números.",
         confirmButtonText: "Aceptar",
       });
       return;
     }
+
 
     // Validación para el paso 10 si la descripción está vacía
     if (pasoActual === 10 && (!descripcionGlamping || descripcionGlamping.trim() === "")) {
