@@ -22,7 +22,7 @@ function ExplorarGlamping() {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { setTarifaServicio, precioPorNoche, ciudad_Elegida, nombreGlamping, imagenesSeleccionadas } = almacenVariables;
+  const { setTarifaServicio, precioPorNoche, ciudad_Elegida, nombreGlamping, imagenesSeleccionadas, latitud, longitud } = almacenVariables;
 
   // Establece la tarifa de servicio predeterminada
   useEffect(() => {
@@ -131,7 +131,7 @@ function ExplorarGlamping() {
           </div>
         </div>
         <ManejoErrores>
-        <MapaGlampings lat={5.1865} lng={-74.48111} />
+        <MapaGlampings lat={latitud} lng={longitud} />
         </ManejoErrores>
         <Comentarios comentarios={datosComentarios} />
         <ReservarBoton totalSinImpuestos={almacenVariables.totalSinImpuestos || 0} />

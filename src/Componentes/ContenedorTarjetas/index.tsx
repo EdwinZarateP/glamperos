@@ -8,6 +8,10 @@ interface GlampingData {
   precioEstandar: number;
   calificacion: number | null;
   imagenes: string[];
+  ubicacion: {
+    lat: number;
+    lng: number;
+  };
 }
 
 const ContenedorTarjetas: React.FC = () => {
@@ -36,6 +40,10 @@ const ContenedorTarjetas: React.FC = () => {
             precioEstandar: glamping.precioEstandar || 0,
             calificacion: glamping.calificacion,
             imagenes: glamping.imagenes || [],
+            ubicacion: {
+              lat: glamping.ubicacion.lat,
+              lng: glamping.ubicacion.lng,
+            },
           }));          
 
           sessionStorage.setItem(
@@ -84,6 +92,7 @@ const ContenedorTarjetas: React.FC = () => {
           calificacion={glamping.calificacion || 0}
           favorito={false}
           nombreGlamping={glamping.nombreGlamping}
+          ubicacion={glamping.ubicacion}
           onFavoritoChange={(nuevoEstado) =>
             console.log(`Favorito en tarjeta ${index + 1}:`, nuevoEstado)
           }

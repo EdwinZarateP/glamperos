@@ -16,6 +16,10 @@ interface TarjetaProps {
   onFavoritoChange: (nuevoEstado: boolean) => void;
   tarifaServicio?: number;
   nombreGlamping: string;
+  ubicacion: {
+    lat: number;
+    lng: number;
+  };
   onImagenCargada?: () => void;
 }
 
@@ -28,6 +32,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   tarifaServicio,
   nombreGlamping,
+  ubicacion,
+  
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
   const [imagenActual, setImagenActual] = useState(0);
@@ -46,6 +52,9 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setCiudad_Elegida,
     setNombreGlamping,
     setImagenesSeleccionadas,
+    setLatitud,
+    setLongitud,
+    latitud,
   } = almacenVariables;
 
   if (!imagenes || imagenes.length === 0) {
@@ -116,6 +125,9 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setCiudad_Elegida(ciudad);
     setNombreGlamping(nombreGlamping);
     setImagenesSeleccionadas(imagenes);
+    setLatitud(ubicacion.lat);
+    setLongitud(ubicacion.lng);
+    console.log(latitud)
   };
 
   const renderPrecio = () => {

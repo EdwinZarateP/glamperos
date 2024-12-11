@@ -12,6 +12,7 @@
   border-radius: 8px;
   display: flex;
   gap: 20px;
+
 }
 
 /* Contenedor principal de imágenes */
@@ -119,8 +120,6 @@
   width: 150px;
   height: 140px;
   position: relative;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
 }
 
 .Paso2C-imagenContenedor:hover {
@@ -133,6 +132,7 @@
   object-fit: cover;
   border-radius: 15px;
   cursor: grab;
+
 }
 
 /* Botones con estilos amigables */

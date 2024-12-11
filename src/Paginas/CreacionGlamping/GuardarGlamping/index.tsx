@@ -21,7 +21,7 @@ const guardarGlampingP: React.FC = () => {
     propietario_id: "",
   });
 
-  const { ubicacion, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento} = useContext(ContextoApp)!; // Obtenemos la ubicación y las imágenes desde el contexto
+  const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento} = useContext(ContextoApp)!; // Obtenemos la ubicación y las imágenes desde el contexto
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
 
@@ -34,6 +34,16 @@ const guardarGlampingP: React.FC = () => {
       }));
     }
   }, [ubicacion]);
+
+   // Sincroniza la ciudad_departamento automáticamente al formulario cuando la variable global cambia
+   useEffect(() => {
+    if (ciudad_departamento) {
+      setFormulario((prev) => ({
+        ...prev,
+        ciudad_departamento, // Actualizamos la ciudad_departamento directamente
+      }));
+    }
+  }, [ciudad_departamento]);
 
     // Sincroniza la tipoGlamping automáticamente al formulario cuando la variable global cambia
     useEffect(() => {
@@ -184,30 +194,7 @@ const guardarGlampingP: React.FC = () => {
       <h1 className="guardarGlampingP-titulo">Crear Nuevo Glamping</h1>
       <form className="guardarGlampingP-formulario" onSubmit={manejarEnvio}>
 
-       
-        <label className="guardarGlampingP-label">
-          Ciudad y Departamento:
-          <input
-            type="text"
-            name="ciudad_departamento"
-            value={formulario.ciudad_departamento}
-            onChange={manejarCambio}
-            className="guardarGlampingP-input"
-            required
-          />
-        </label>
-{/* 
-        <label className="guardarGlampingP-label">
-          Video de YouTube:
-          <input
-            type="url"
-            name="video_youtube"
-            value={formulario.video_youtube}
-            onChange={manejarCambio}
-            className="guardarGlampingP-input"
-          />
-        </label> */}
-
+             
         <label className="guardarGlampingP-label">
           ID del Propietario:
           <input
