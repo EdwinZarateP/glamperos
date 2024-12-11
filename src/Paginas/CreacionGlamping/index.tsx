@@ -110,7 +110,7 @@ const CreacionGlamping: React.FC = () => {
     if (pasoActual === 6 && amenidadesGlobal.length === 0) {
       Swal.fire({
         icon: "warning",
-        title: "Todos tenemos detallitos",
+        title: "Todos tenemos detallitos 🎸🎹🎺",
         text: "Dinos al menos una amenidad que dispongas",
         confirmButtonText: "Aceptar",
       });
@@ -120,7 +120,7 @@ const CreacionGlamping: React.FC = () => {
     if (pasoActual === 9 && (!nombreGlamping || nombreGlamping.trim() === "")) {
       Swal.fire({
         icon: "warning",
-        title: "¿Quién va sin nombre por la vida?",
+        title: "¿Quién va sin nombre por la vida? 🪪",
         text: "Escribe el nombre de tu glamping antes de continuar.",
         confirmButtonText: "Aceptar",
       });
@@ -131,7 +131,7 @@ const CreacionGlamping: React.FC = () => {
     if (pasoActual === 10 && (!descripcionGlamping || descripcionGlamping.trim() === "")) {
       Swal.fire({
         icon: "warning",
-        title: "Todos tenemos cualidades",
+        title: "Todos tenemos cualidades 😉",
         text: "Escribe una descripción de tu glamping antes de continuar.",
         confirmButtonText: "Aceptar",
       });
@@ -144,7 +144,7 @@ const CreacionGlamping: React.FC = () => {
       if (cantidadPalabras < 50) {
         Swal.fire({
           icon: "warning",
-          title: "No te quedes corto",
+          title: "No te quedes corto 😝",
           text: "Escribe una descripción de al menos 50 palabras.",
           confirmButtonText: "Aceptar",
         });
@@ -157,7 +157,7 @@ const CreacionGlamping: React.FC = () => {
     if (pasoActual === 12 && !precioEstandar) {
     Swal.fire({
       icon: "warning",
-      title: "¡No te vayas sin colocar un precio!",
+      title: "¡No te vayas sin colocar un precio! 💵",
       text: "Danos el valor que quieres cobrar por una noche",
       confirmButtonText: "Aceptar",
       });
