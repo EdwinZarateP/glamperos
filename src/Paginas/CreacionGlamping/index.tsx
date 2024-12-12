@@ -154,7 +154,6 @@ const CreacionGlamping: React.FC = () => {
       }
     }
 
-
     // Validación para el paso 12 coloco tarifa
     if (pasoActual === 12 && !precioEstandar) {
     Swal.fire({
@@ -201,7 +200,7 @@ const CreacionGlamping: React.FC = () => {
           className="creacionGlamping-boton-siguiente"
           onClick={() => {
             if (pasoActual === 13) {
-              alert("¡Glamping creado exitosamente!"); // Cambia esta línea por tu lógica personalizada
+              alert("¡Glamping creado exitosamente!"); 
             } else {
               avanzarPaso();
             }
