@@ -1,41 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { ContextoApp } from '../../Contexto/index';
+import { useNavigate } from "react-router-dom"; // Importar el hook de navegación
 import "./estilos.css";
 
 const Registro: React.FC = () => {
-  const [nombre, setNombre] = useState("");
-  const [email, setEmail] = useState("");
-  const [celular, setCelular] = useState("");
-  const [clave, setClave] = useState("");
+  const { setIdUsuario, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
   const [mensaje, setMensaje] = useState<string | null>(null);
-  const [mostrandoClave, setMostrandoClave] = useState(false);
-  const [cargando, setCargando] = useState(false);
+  const navigate = useNavigate(); // Crear la función de navegación
 
   const API_URL = "https://glamperosapi.onrender.com/usuarios";
 
-  // Manejar registro manual
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const datosUsuario = {
-      nombre,
-      email,
-      telefono: celular,
-      clave,
-    };
-
-    try {
-      setCargando(true);
-      const response = await axios.post(API_URL, datosUsuario);
-      setMensaje("¡Registro exitoso!"); 
-      console.log("Usuario registrado:", response.data);
-    } catch (error: any) {
-      manejarError(error);
-    } finally {
-      setCargando(false);
-    }
+  // Función para manejar errores
+  const manejarError = (error: any) => {
+    console.error("Error:", error);
+    const errorMensaje = error.response?.data?.detail || "Hubo un error inesperado.";
+    setMensaje(errorMensaje);
   };
 
   // Manejar inicio de sesión con Google
@@ -45,23 +27,56 @@ const Registro: React.FC = () => {
       return;
     }
 
+    let emailUsuario = ""; // Declaramos emailUsuario aquí para asegurar el acceso en todos los bloques de código
+
     try {
       const decoded: any = jwtDecode(credentialResponse.credential);
       const nombreUsuario = decoded.name;
-      const emailUsuario = decoded.email;
+      emailUsuario = decoded.email; // Asignamos el valor a emailUsuario aquí
 
-      // Intentar registrar o verificar usuario en la API
+      // Intentar registrar el usuario
       const response = await axios.post(API_URL, {
         nombre: nombreUsuario,
         email: emailUsuario,
         telefono: "",
-        clave: "autenticacionGoogle", // Generar clave ficticia
+        clave: "autenticacionGoogle",
       });
 
-      setMensaje("¡Registro exitoso con Google!");
-      console.log("Usuario registrado con Google:", response.data);
+      if (response.status === 200 && response.data.id_usuario) {
+        setIdUsuario(response.data.id_usuario);
+      
+      // Evaluar si siono es true
+      if (siono) {
+        navigate("/CrearGlamping");
+      } else {
+        navigate("/");
+      }
+      } else {
+        if (siono) {
+          navigate("/CrearGlamping");
+        } else {
+          navigate("/");
+        }
+      }
+      
     } catch (error: any) {
-      manejarError(error);
+      if (error.response?.status === 400) {
+        console.log("Correo ya existe");
+        setMensaje("El correo ya está registrado. Intentando redirigir...");
+
+        try {
+          // Aquí usamos emailUsuario para validar el usuario ya existente
+          const errorResponse = await axios.get(`${API_URL}/${emailUsuario}`);
+          if (errorResponse?.data?.id_usuario) {
+            setIdUsuario(errorResponse.data.id_usuario);
+            navigate("/");
+          }
+        } catch (error) {
+          manejarError(error);
+        }
+      } else {
+        manejarError(error);
+      }
     }
   };
 
@@ -69,86 +84,16 @@ const Registro: React.FC = () => {
     setMensaje("Hubo un error al iniciar sesión con Google. Intenta nuevamente.");
   };
 
-  // Función para manejar errores
-  const manejarError = (error: any) => {
-    console.error("Error:", error);
-    if (error.response?.data?.detail) {
-      setMensaje(
-        typeof error.response.data.detail === "string"
-          ? error.response.data.detail
-          : "Ocurrió un error inesperado."
-      );
-    } else {
-      setMensaje("Hubo un error al registrar. Intenta nuevamente.");
-    }
-  };
-
   return (
     <div className="Registro-contenedor">
-      <h1 className="Registro-titulo">Registro de Usuario</h1>
-      {mensaje && <p className="Registro-mensaje">{mensaje}</p>}
-      <form className="Registro-formulario" onSubmit={handleSubmit}>
-        <div className="Registro-campo">
-          <label htmlFor="nombre">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            placeholder="Digite nombre"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            required
-          />
-        </div>
-        <div className="Registro-campo">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Digite email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="Registro-campo">
-          <label htmlFor="celular">Celular</label>
-          <input
-            type="tel"
-            id="celular"
-            placeholder="Digite celular"
-            value={celular}
-            onChange={(e) => setCelular(e.target.value)}
-            required
-          />
-        </div>
-        <div className="Registro-campo">
-          <label htmlFor="clave">Clave</label>
-          <div className="Registro-clave-contenedor">
-            <input
-              type={mostrandoClave ? "text" : "password"}
-              id="clave"
-              placeholder="Digite su clave"
-              value={clave}
-              onChange={(e) => setClave(e.target.value)}
-              required
-            />
-            <span
-              className="Registro-icono-clave"
-              onClick={() => setMostrandoClave(!mostrandoClave)}
-            >
-              {mostrandoClave ? "🙈" : "👁️"}
-            </span>
-          </div>
-        </div>
-        <button type="submit" className="Registro-boton" disabled={cargando}>
-          {cargando ? "Registrando..." : "Registrar"}
-        </button>
-      </form>
+      <h1 className="Registro-titulo">Registro o ingreso</h1>
+      
+      {mensaje && <p className="Mensaje-error">{mensaje}</p>}
+
       <div className="Registro-google">
         <GoogleLogin
           onSuccess={handleGoogleSuccess}
           onError={handleGoogleError}
-          
         />
       </div>
     </div>

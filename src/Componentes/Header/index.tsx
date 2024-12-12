@@ -4,7 +4,8 @@ import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { VscSettings } from "react-icons/vsc";
 import PanelBusqueda from "../PanelBusqueda";
-import { ContextoApp } from "../../Contexto/index"; // Importar el contexto
+import { ContextoApp } from "../../Contexto/index"; 
+import { evaluarVariable } from '../../Funciones/ValidarVariable';
 import "./estilos.css";
 
 const Header: React.FC = () => {
@@ -16,7 +17,7 @@ const Header: React.FC = () => {
     );
   }
 
-  const { totalHuespedes } = almacenVariables; // Extraer totalHuespedes del contexto
+  const { totalHuespedes, idUsuario, setSiono} = almacenVariables; // Extraer totalHuespedes del contexto
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false); // Estado para mostrar el PanelBusqueda
   const [busqueda, setBusqueda] = useState({
@@ -26,17 +27,24 @@ const Header: React.FC = () => {
 
   const manejarClickBusqueda = () => {
     setMostrarPanelBusqueda(true); // Mostrar el PanelBusqueda
-    document.body.style.overflow = "hidden"; // Desactiva el scroll del fondo
+    document.body.style.overflow = "hidden";
   };
 
   const cerrarPanelBusqueda = () => {
     setMostrarPanelBusqueda(false); // Cerrar el PanelBusqueda
-    document.body.style.overflow = "auto"; // Reactiva el scroll del fondo
+    document.body.style.overflow = "auto"; 
+
   };
 
   const manejarBusqueda = (destino: string, fechas: string) => {
     setBusqueda({ destino, fechas }); // Actualiza la búsqueda
-    cerrarPanelBusqueda(); // Cierra el PanelBusqueda
+    cerrarPanelBusqueda(); 
+  };
+
+  const existeId = () => {
+    const resultado = evaluarVariable(idUsuario);
+    setSiono(true)
+    return resultado
   };
 
   return (
@@ -49,7 +57,7 @@ const Header: React.FC = () => {
 
         <div
           className="Header-barraBusqueda"
-          onClick={manejarClickBusqueda} // Activa el PanelBusqueda
+          onClick={manejarClickBusqueda} 
         >
           <span className="Header-opcionBusqueda">
             {busqueda.destino
@@ -71,14 +79,19 @@ const Header: React.FC = () => {
         </div>
 
         <div className="Header-derecha">
-          {/* Link para redirigir a /CrearGlamping */}
-          <Link to="/CrearGlamping" className="Header-botonAnfitrion">
-            Publica tu Glamping
-          </Link>
+          {/* Condicional para mostrar el enlace correspondiente */}
+          {existeId() ? (
+            <Link to="/CrearGlamping" className="Header-botonAnfitrion">
+              Publica tu Glamping 
+            </Link>
+          ) : (
+            <Link to="/Registrarse" className="Header-botonAnfitrion">
+              Publica tu Glamping
+            </Link>
+          )}
 
-          {/* Link para redirigir a /Registrarse */}
-          <Link to="/Registrarse" className="Header-menuUsuario">
-            <FiMenu className="Header-iconoMenu" />
+          <Link to="/Registrarse" className="Header-menuUsuario" >
+            <FiMenu className="Header-iconoMenu" onClick={() => setSiono(false)} />
             <div className="Header-iconoSettingsWrapper">
               <VscSettings className="Header-iconoSettings" />
             </div>

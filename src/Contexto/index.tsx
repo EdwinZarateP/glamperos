@@ -17,11 +17,13 @@ type Libraries = string[];
 
 
 interface ContextProps {
-  // Abrir o cerrar cosas
-  estaAbiertoAlgo: boolean;
-  setEstaAbiertoAlgo: Dispatch<SetStateAction<boolean>>;
-  abrirAlgo: () => void;
-  cerrarAlgo: () => void;
+  //id del usuario
+  idUsuario: string;
+  setIdUsuario: Dispatch<SetStateAction<string>>;
+
+  //Variables boolean
+  siono: boolean;
+  setSiono: Dispatch<SetStateAction<boolean>>;
 
   // Variables de tipo string
   nombreGlamping: string;
@@ -124,10 +126,7 @@ interface ProveedorVariablesProps {
 // 2. Proveedor de variables que utiliza el contexto
 //-------------------------------------------------------------------------------------
 export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) => {
-  const [estaAbiertoAlgo, setEstaAbiertoAlgo] = useState(false);
-  const abrirAlgo = () => setEstaAbiertoAlgo(true);
-  const cerrarAlgo = () => setEstaAbiertoAlgo(false);
-
+  const [idUsuario, setIdUsuario] = useState('');  
   const [nombreGlamping, setNombreGlamping] = useState('');
   const [descripcionGlamping, setDescripcionGlamping] = useState('');
   const [ciudad_departamento, setCiudad_departamento] = useState('');
@@ -145,6 +144,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
   const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);  // Nueva variable para cantidad de huéspedes
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
+  const [siono, setSiono] = useState<boolean>(false); 
   
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
   const [imagenesCargadas, setImagenesCargadas] = useState<File[]>([]);
@@ -174,10 +174,10 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   
 
   const contextValue: ContextProps = {
-    estaAbiertoAlgo,
-    setEstaAbiertoAlgo,
-    abrirAlgo,
-    cerrarAlgo,
+    idUsuario, 
+    siono,
+    setSiono,
+    setIdUsuario,
     nombreGlamping,
     setNombreGlamping,
     descripcionGlamping,

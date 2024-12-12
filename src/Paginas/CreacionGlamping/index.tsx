@@ -14,16 +14,14 @@ import Paso2F from "./Paso2F/index";
 import Paso3A from "./Paso3A/index";
 import Paso3B from "./Paso3B/index";
 import Paso4A from "./Paso4A/index";
-import GuardarGlamping from "./GuardarGlamping/index";
-
 import Swal from "sweetalert2";
 import "./estilos.css";
 
 
 const CreacionGlamping: React.FC = () => {
   const [pasoActual, setPasoActual] = useState<number>(0);
-  const { latitud, ubicacion, ciudad_departamento, Cantidad_Huespedes, Acepta_Mascotas, tipoGlamping, amenidadesGlobal, imagenesCargadas,videoSeleccionado, nombreGlamping, setNombreGlamping, descripcionGlamping, precioEstandar,descuento } = useContext(ContextoApp)!;
-
+  const { latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal, imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping, precioEstandar } = useContext(ContextoApp)!;
+  
   useEffect(() => {
     // Establecer el nombre del glamping en vacío al renderizar el componente
     setNombreGlamping("");
@@ -43,7 +41,6 @@ const CreacionGlamping: React.FC = () => {
     <Paso2F key="Paso2F" />,
     <Paso3A key="Paso3A" />,
     <Paso3B key="Paso3B" />,
-    <GuardarGlamping key="guardarGlamping" />,
     <Paso4A key="Paso4A" />,
 
 
@@ -116,19 +113,20 @@ const CreacionGlamping: React.FC = () => {
       });
       return;
     }
+    
     // Validación para el paso 9 y verificar si puso nombre
     if (
       pasoActual === 9 &&
-      (!nombreGlamping || nombreGlamping.trim() === "" || !/^[a-zA-Z0-9 ]+$/.test(nombreGlamping.trim()))
+      (!nombreGlamping || nombreGlamping.trim() === "" || !/^[\p{L}0-9 ]+$/u.test(nombreGlamping.trim()))
     ) {
       Swal.fire({
         icon: "warning",
         title: "¿Quién va sin nombre por la vida? 🪪",
-        text: "Escribe un nombre válido para tu glamping que contenga solo letras o números.",
+        text: "Escribe un nombre válido para tu glamping que contenga solo letras, números y espacios.",
         confirmButtonText: "Aceptar",
       });
       return;
-    }
+    }    
 
 
     // Validación para el paso 10 si la descripción está vacía
@@ -171,18 +169,6 @@ const CreacionGlamping: React.FC = () => {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
-      console.log(tipoGlamping);
-      console.log("La ubicación es: " + ubicacion);   
-      console.log("La ciudad es: " + ciudad_departamento);
-      console.log(Cantidad_Huespedes);
-      console.log(Acepta_Mascotas);
-      console.log(amenidadesGlobal);
-      console.log(imagenesCargadas);
-      console.log("video es: " + videoSeleccionado); 
-      console.log(nombreGlamping);
-      console.log(descripcionGlamping);   
-      console.log("precio es: " +precioEstandar);
-      console.log("descuento es: " +descuento);      
     }
   };
 
@@ -220,10 +206,10 @@ const CreacionGlamping: React.FC = () => {
               avanzarPaso();
             }
           }}
+          style={pasoActual === 13 ? { display: 'none' } : {}}
         >
           {pasoActual === 13 ? "Terminar" : "Siguiente"}
         </button>
-
       </div>
     </div>
   );

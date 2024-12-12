@@ -176,8 +176,7 @@ const Paso1C: React.FC = () => {
       </div>
 
       <div className="Paso1C-coordenadas">
-        <p>Latitud: {coordenadas.lat.toFixed(6)}</p>
-        <p>Longitud: {coordenadas.lng.toFixed(6)}</p>
+        <p>"Arrastra y suelta el ícono del glamping si requieres mayor exactitud"</p>      
       </div>
     </div>
   );

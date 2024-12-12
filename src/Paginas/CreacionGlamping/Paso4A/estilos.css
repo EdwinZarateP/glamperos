@@ -1,66 +1,111 @@
-.Paso4A-contenedor {
-    font-family: inherit;
-    padding: 20px;
-    width: 90%;
-    height: 100%;
-    margin: 0;
-  }
-  
-  .Paso4A-contenido {
-    display: grid;
-    grid-template-columns: 60% 40%; /* Dos columnas: 60% para el texto, 40% para el video */
-    gap: 20px;
-    align-items: center;
+/* Contenedor principal */
+.guardarGlampingP-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80%;
+  margin: 2rem auto;
+  padding: 1.5rem;
+
+}
+
+/* Título principal */
+.guardarGlampingP-titulo {
+  text-align: center;
+  color: #555;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Formulario principal */
+.guardarGlampingP-formulario {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+/* Estilo general para las etiquetas y campos de entrada */
+.guardarGlampingP-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: #555;
+  width: 48%;
+  gap: 0.5rem;
+}
+
+/* Campos de texto, select y textarea */
+.guardarGlampingP-input,
+.guardarGlampingP-select,
+.guardarGlampingP-textarea {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Estilizar los campos activos */
+.guardarGlampingP-input:focus,
+.guardarGlampingP-select:focus,
+.guardarGlampingP-textarea:focus {
+  border-color: #5c9ded;
+  outline: none;
+  box-shadow: 0 0 5px rgba(92, 157, 237, 0.3);
+}
+
+/* Checkbox */
+.guardarGlampingP-checkbox {
+  width: 20px;
+}
+
+/* Botón */
+.guardarGlampingP-boton {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+  align-self: center;
+}
+
+.guardarGlampingP-boton:hover:not([disabled]) {
+  background-color: #555;
+}
+
+.guardarGlampingP-boton:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
+}
+
+/* Mensaje */
+.guardarGlampingP-mensaje {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: green;
+  font-size: 1rem;
+}
+
+/* Estilización para archivos cargados */
+.guardarGlampingP-file {
+  padding: 5px 0;
+  font-size: 0.9rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .guardarGlampingP-label {
     width: 100%;
-    height: 90%;
-  
   }
   
-  .Paso4A-texto {
-    padding: 10px;
-  }
-  
-  .Paso4A-titulo-secundario {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .Paso4A-titulo-principal {
-    font-size: 3rem;
-    margin: 10px 0;
-    color: #222;
-  }
-  
-  .Paso4A-descripcion {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.5;
-  }
-  
-  .Paso4A-video-contenedor {
-    display: flex;
+  .guardarGlampingP-formulario {
     justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    overflow: hidden;
-    height: 100%;
   }
-  
-  .Paso4A-video {
-    width: auto;
-    height: 100%;
-    border-radius: 15px;
-  }
-  
-  /* Responsivo para pantallas de hasta 900px */
-  @media (max-width: 900px) {
-    .Paso4A-contenido {
-      grid-template-columns: 1fr; /* Una sola columna para pantallas pequeñas */
-      gap: 10px;
-    }
-  
-    .Paso4A-texto, .Paso4A-video-contenedor {
-      width: 100%; /* Ambos ocupan el ancho completo */
-    }
-  }
-  
+}

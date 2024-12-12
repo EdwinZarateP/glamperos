@@ -55,6 +55,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setLatitud,
     setLongitud,
     latitud,
+    idUsuario
   } = almacenVariables;
 
   if (!imagenes || imagenes.length === 0) {
@@ -127,7 +128,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     setImagenesSeleccionadas(imagenes);
     setLatitud(ubicacion.lat);
     setLongitud(ubicacion.lng);
-    console.log(latitud)
   };
 
   const renderPrecio = () => {
