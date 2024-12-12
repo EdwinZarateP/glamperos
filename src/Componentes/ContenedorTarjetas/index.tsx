@@ -17,7 +17,7 @@ interface GlampingData {
 const ContenedorTarjetas: React.FC = () => {
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(12); // Cantidad de elementos visibles inicialmente
+  const [visibleCount, setVisibleCount] = useState(14); // Cantidad de elementos visibles inicialmente
 
   useEffect(() => {
     const fetchGlampings = async () => {
