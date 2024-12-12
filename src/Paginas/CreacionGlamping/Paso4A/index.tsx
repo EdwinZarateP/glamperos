@@ -1,5 +1,6 @@
 
 import { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { ContextoApp } from '../../../Contexto/index';
 import confetti from 'canvas-confetti'; 
@@ -24,6 +25,7 @@ const guardarGlampingP: React.FC = () => {
   const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento, idUsuario} = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   // Sincroniza la idUsuario automáticamente al formulario cuando la variable global cambia
   useEffect(() => {
@@ -177,6 +179,7 @@ const guardarGlampingP: React.FC = () => {
       });
       setMensaje("Glamping creado con éxito: " + respuesta.data.nombreGlamping);
       lanzarConfetti();
+      setShowPopup(true);
     } catch (error) {
       setMensaje("Error al crear el glamping: " + error);
     } finally {
@@ -194,20 +197,35 @@ const guardarGlampingP: React.FC = () => {
   };
 
 
-
   return (
     <div className="guardarGlampingP-contenedor">
       <h1 className="guardarGlampingP-titulo">Ya casi eres parte de nuestra familia Glamperos!😊</h1>
-      <p>Puedes dar pasos atras y cambiar cualquier cosas antes de dar clic en "Terminar" </p>
+      <p>Puedes dar pasos atrás y cambiar cualquier cosa antes de dar clic en "Terminar"</p>
       <form className="guardarGlampingP-formulario" onSubmit={manejarEnvio}>
-
-
         <button type="submit" className="guardarGlampingP-boton" disabled={cargando}>
           {cargando ? "Enviando..." : "Terminar"}
         </button>
       </form>
 
       {mensaje && <p className="guardarGlampingP-mensaje">{mensaje}</p>}
+
+      {/* Div Emergente de Felicitaciones */}
+      {showPopup && (
+        <div className="popup-felicitaciones">
+          <div className="popup-contenido">
+            <h2>¡Felicitaciones!</h2>
+            <p>Tu glamping se creó con éxito. 🎉</p>
+            <Link
+              to="/"
+              className="tarjeta-link"
+            >
+              <button className="cerrar-popup">
+                Cerrar
+              </button>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
