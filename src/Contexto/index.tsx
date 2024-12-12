@@ -17,9 +17,11 @@ type Libraries = string[];
 
 
 interface ContextProps {
-  //id del usuario
-  idUsuario: string;
-  setIdUsuario: Dispatch<SetStateAction<string>>;
+  //usuario logeado
+  idUsuario: string | null;
+  setIdUsuario: (id: string | null) => void;
+  logueado: boolean;
+  setLogueado: (estado: boolean) => void;
 
   //Variables boolean
   siono: boolean;
@@ -126,7 +128,8 @@ interface ProveedorVariablesProps {
 // 2. Proveedor de variables que utiliza el contexto
 //-------------------------------------------------------------------------------------
 export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) => {
-  const [idUsuario, setIdUsuario] = useState('');  
+  const [idUsuario, setIdUsuario] = useState<string | null>(null);
+  const [logueado, setLogueado] = useState<boolean>(false);
   const [nombreGlamping, setNombreGlamping] = useState('');
   const [descripcionGlamping, setDescripcionGlamping] = useState('');
   const [ciudad_departamento, setCiudad_departamento] = useState('');
@@ -175,9 +178,11 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
 
   const contextValue: ContextProps = {
     idUsuario, 
-    siono,
-    setSiono,
     setIdUsuario,
+    logueado,
+    setLogueado,
+    siono,
+    setSiono,    
     nombreGlamping,
     setNombreGlamping,
     descripcionGlamping,

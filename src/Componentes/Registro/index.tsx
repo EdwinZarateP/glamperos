@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"; // Importar el hook de navegaci�
 import "./estilos.css";
 
 const Registro: React.FC = () => {
-  const { setIdUsuario, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
+  const { setIdUsuario, setLogueado, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
   const [mensaje, setMensaje] = useState<string | null>(null);
   const navigate = useNavigate(); // Crear la función de navegación
 
@@ -44,31 +44,25 @@ const Registro: React.FC = () => {
 
       if (response.status === 200 && response.data.id_usuario) {
         setIdUsuario(response.data.id_usuario);
-      
-      // Evaluar si siono es true
-      if (siono) {
-        navigate("/CrearGlamping");
-      } else {
-        navigate("/");
-      }
-      } else {
+        setLogueado(true); // Actualiza el estado global para indicar que está logueado
+
+        // Redirección según `siono`
         if (siono) {
           navigate("/CrearGlamping");
         } else {
           navigate("/");
         }
       }
-      
     } catch (error: any) {
       if (error.response?.status === 400) {
-        console.log("Correo ya existe");
         setMensaje("El correo ya está registrado. Intentando redirigir...");
-
         try {
-          // Aquí usamos emailUsuario para validar el usuario ya existente
+          // Buscar al usuario existente por correo
           const errorResponse = await axios.get(`${API_URL}/${emailUsuario}`);
           if (errorResponse?.data?.id_usuario) {
             setIdUsuario(errorResponse.data.id_usuario);
+            setLogueado(true); // Actualiza el estado global aquí también
+            
             navigate("/");
           }
         } catch (error) {
