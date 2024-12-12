@@ -1,12 +1,13 @@
 
 import { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ContextoApp } from '../../../Contexto/index';
 import confetti from 'canvas-confetti'; 
 import "./estilos.css";
 
 const guardarGlampingP: React.FC = () => {
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     nombreGlamping: "",
     tipoGlamping: "",
@@ -196,6 +197,13 @@ const guardarGlampingP: React.FC = () => {
     });
   };
 
+  const cerrarPopup = () => {
+    setShowPopup(false); // Cierra el popup
+    setTimeout(() => {
+      navigate("/"); // Navega a la nueva página después de un breve retraso
+    }, 100); // 100 ms de retraso (puedes ajustar este valor si es necesario)
+  };
+  
 
   return (
     <div className="guardarGlampingP-contenedor">
@@ -203,26 +211,20 @@ const guardarGlampingP: React.FC = () => {
       <p>Puedes dar pasos atrás y cambiar cualquier cosa antes de dar clic en "Terminar"</p>
       <form className="guardarGlampingP-formulario" onSubmit={manejarEnvio}>
         <button type="submit" className="guardarGlampingP-boton" disabled={cargando}>
-          {cargando ? "Enviando..." : "Terminar"}
+          {cargando ? "Estamos creando tu Glamping..." : "Terminar"}
         </button>
       </form>
 
       {mensaje && <p className="guardarGlampingP-mensaje">{mensaje}</p>}
 
-      {/* Div Emergente de Felicitaciones */}
       {showPopup && (
         <div className="popup-felicitaciones">
           <div className="popup-contenido">
             <h2>¡Felicitaciones!</h2>
             <p>Tu glamping se creó con éxito. 🎉</p>
-            <Link
-              to="/"
-              className="tarjeta-link"
-            >
-              <button className="cerrar-popup">
-                Cerrar
-              </button>
-            </Link>
+            <button className="cerrar-popup" onClick={cerrarPopup}>
+              Cerrar
+            </button>
           </div>
         </div>
       )}
