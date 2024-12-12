@@ -56,7 +56,6 @@ const Paso2C: React.FC = () => {
     if (isNaN(targetIndex) || targetIndex === index || targetIndex >= imagenesCargadas.length) return;
 
     const updatedImages = [...imagenesCargadas];
-    // Intercambio directo usando índice para actualizar el estado
     [updatedImages[index], updatedImages[targetIndex]] = [updatedImages[targetIndex], updatedImages[index]];
     setImagenesCargadas(updatedImages);
   };
@@ -79,6 +78,13 @@ const Paso2C: React.FC = () => {
           id="inputImagenes"
           style={{ display: "none" }}
         />
+
+        {/* Mensaje de instrucciones visible solo si hay imágenes cargadas */}
+        {imagenesCargadas.length > 0 && (
+          <div className="instrucciones-arrastrar">
+            Puedes arrastrar y cambiar de lugar las imágenes.
+          </div>
+        )}
 
         {imagenesCargadas.map((imagen, index) => (
           <div
@@ -110,26 +116,18 @@ const Paso2C: React.FC = () => {
       <div className="Paso2C-seccionDerecha-contenedor">
         <h4>Así se verán en tu portada</h4>
         <div className="Paso2C-seccionDerecha">
-          {/* Contenedor para la imagen principal */}
           <div className="Paso2C-principal">
             {primerasCincoImagenes.slice(0, 1).map((imagen, index) => (
               <div key={index} className="Paso2C-seccionDerecha principal">
-                <img
-                  src={URL.createObjectURL(imagen)}
-                  alt={`Imagen ${index}`}
-                />
+                <img src={URL.createObjectURL(imagen)} alt={`Imagen ${index}`} />
               </div>
             ))}
           </div>
 
-          {/* Contenedor para las imágenes secundarias */}
           <div className="Paso2C-secundaria">
             {primerasCincoImagenes.slice(1).map((imagen, index) => (
               <div key={index} className="Paso2C-seccionDerecha secundaria">
-                <img
-                  src={URL.createObjectURL(imagen)}
-                  alt={`Imagen ${index}`}
-                />
+                <img src={URL.createObjectURL(imagen)} alt={`Imagen ${index}`} />
               </div>
             ))}
           </div>
