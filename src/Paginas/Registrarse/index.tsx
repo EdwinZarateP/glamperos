@@ -1,8 +1,9 @@
 import Registro from '../../Componentes/Registro/index'; 
+import "./estilos.css";
 
 function Registrarse() {
   return (
-    <div>
+    <div className='Registrarse-contenedor'>
         <Registro />
     </div>
   );

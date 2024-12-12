@@ -86,7 +86,7 @@ const Registro: React.FC = () => {
 
   return (
     <div className="Registro-contenedor">
-      <h1 className="Registro-titulo">Registro o ingreso</h1>
+      <h1 className="Registro-titulo">Ingreso y/o registro</h1>
       
       {mensaje && <p className="Mensaje-error">{mensaje}</p>}
 

@@ -1,12 +1,15 @@
 /* Contenedor principal */
 .Registro-contenedor {
-  max-width: 450px;
-  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: 200px;
   padding: 20px;
-  background-color: #ffffff; /* Fondo blanco */
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   font-family: 'Arial', sans-serif;
+
 }
 
 /* Título */
