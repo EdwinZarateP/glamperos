@@ -48,18 +48,16 @@ const Paso2C: React.FC = () => {
     setImagenesCargadas((prev) => prev.filter((_, i) => i !== index));
   };
 
-  /** Manejo de arrastrar imágenes con optimización */
+  /** Optimización para arrastrar imágenes con mejor velocidad */
   const manejarArrastrar = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-    e.preventDefault(); // Necesario para permitir el evento drop
+    e.preventDefault();
     const targetIndex = parseInt(e.dataTransfer.getData("index"), 10);
 
-    // Validación para evitar operaciones inválidas
     if (isNaN(targetIndex) || targetIndex === index || targetIndex >= imagenesCargadas.length) return;
 
-    // Realizar intercambio de posiciones
     const updatedImages = [...imagenesCargadas];
+    // Intercambio directo usando índice para actualizar el estado
     [updatedImages[index], updatedImages[targetIndex]] = [updatedImages[targetIndex], updatedImages[index]];
-
     setImagenesCargadas(updatedImages);
   };
 
@@ -88,7 +86,7 @@ const Paso2C: React.FC = () => {
             className="Paso2C-imagenContenedor"
             draggable
             onDragStart={(e) => e.dataTransfer.setData("index", index.toString())}
-            onDragOver={(e) => e.preventDefault()} // Necesario para permitir el drop
+            onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => manejarArrastrar(e, index)}
           >
             <img src={URL.createObjectURL(imagen)} alt={`Imagen ${index}`} className="Paso2C-imagen" />
