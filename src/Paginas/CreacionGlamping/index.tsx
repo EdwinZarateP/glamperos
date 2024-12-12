@@ -160,7 +160,7 @@ if (pasoActual === 12) {
     Swal.fire({
       icon: "warning",
       title: "¡No te vayas sin colocar un precio! 💵",
-      text: "Danos el valor que quieres cobrar por una noche",
+      text: "Especifica el valor que quieres cobrar por una noche",
       confirmButtonText: "Aceptar",
     });
     return;

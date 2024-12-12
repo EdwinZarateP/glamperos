@@ -28,7 +28,7 @@ const Paso2C: React.FC = () => {
       }
 
       if (archivo.size > 10 * 1024 * 1024) {
-        Swal.fire("Error", "Una o más imágenes superan el tamaño máximo de 10MB", "error");
+        Swal.fire("Sabemos que eres full HD", "Pero algunas imagenes no se subieron porque superan el tamaño máximo de 10MB", "info");
         continue;
       }
 

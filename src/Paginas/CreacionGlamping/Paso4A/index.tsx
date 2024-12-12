@@ -199,7 +199,7 @@ const guardarGlampingP: React.FC = () => {
 
   return (
     <div className="guardarGlampingP-contenedor">
-      <h1 className="guardarGlampingP-titulo">Ya casi eres parte de nuestra familia Glamperos!😊</h1>
+      <h1 className="guardarGlampingP-titulo">¡Ya casi eres parte de nuestra familia Glamperos!😊</h1>
       <p>Puedes dar pasos atrás y cambiar cualquier cosa antes de dar clic en "Terminar"</p>
       <form className="guardarGlampingP-formulario" onSubmit={manejarEnvio}>
         <button type="submit" className="guardarGlampingP-boton" disabled={cargando}>

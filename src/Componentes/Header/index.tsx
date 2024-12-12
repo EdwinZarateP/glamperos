@@ -17,7 +17,7 @@ const Header: React.FC = () => {
     );
   }
 
-  const { totalHuespedes, idUsuario, setSiono} = almacenVariables; // Extraer totalHuespedes del contexto
+  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud, setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, setPrecioEstandar} = almacenVariables; // Extraer totalHuespedes del contexto
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false); // Estado para mostrar el PanelBusqueda
   const [busqueda, setBusqueda] = useState({
@@ -44,6 +44,15 @@ const Header: React.FC = () => {
   const existeId = () => {
     const resultado = evaluarVariable(idUsuario);
     setSiono(true)
+    setLatitud(4.123456)
+    setLongitud(-74.123456)
+    setCiudad_departamento("")
+    setTipoGlamping("")
+    setAmenidadesGlobal([])
+    setImagenesCargadas([])
+    setNombreGlamping("")
+    setDescripcionGlamping("")
+    setPrecioEstandar(0)
     return resultado
   };
 
