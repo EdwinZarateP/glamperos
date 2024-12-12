@@ -43,17 +43,20 @@ const Header: React.FC = () => {
 
   const existeId = () => {
     const resultado = evaluarVariable(idUsuario);
-    setSiono(true)
-    setLatitud(4.123456)
-    setLongitud(-74.123456)
-    setCiudad_departamento("")
-    setTipoGlamping("")
-    setAmenidadesGlobal([])
-    setImagenesCargadas([])
-    setNombreGlamping("")
-    setDescripcionGlamping("")
-    setPrecioEstandar(0)
     return resultado
+  };
+
+  const quitarSetters = () => {
+    setSiono(true); // Cambia el estado a "sí o no"
+    setLatitud(4.123456); // Restablece la latitud a un valor predeterminado
+    setLongitud(-74.123456); // Restablece la longitud a un valor predeterminado
+    setCiudad_departamento(""); // Limpia el campo de ciudad y departamento
+    setTipoGlamping(""); // Restablece el tipo de glamping a vacío
+    setAmenidadesGlobal([]); // Reinicia las amenidades a un arreglo vacío
+    setImagenesCargadas([]); // Limpia las imágenes cargadas
+    setNombreGlamping(""); // Limpia el nombre del glamping
+    setDescripcionGlamping(""); // Limpia la descripción del glamping
+    setPrecioEstandar(0); // Restablece el precio estándar a 0
   };
 
   return (
@@ -90,11 +93,11 @@ const Header: React.FC = () => {
         <div className="Header-derecha">
           {/* Condicional para mostrar el enlace correspondiente */}
           {existeId() ? (
-            <Link to="/CrearGlamping" className="Header-botonAnfitrion">
+            <Link to="/CrearGlamping" className="Header-botonAnfitrion" onClick={quitarSetters}>
               Publica tu Glamping 
             </Link>
           ) : (
-            <Link to="/Registrarse" className="Header-botonAnfitrion">
+            <Link to="/Registrarse" className="Header-botonAnfitrion" onClick={quitarSetters}>
               Publica tu Glamping
             </Link>
           )}

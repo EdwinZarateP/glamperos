@@ -201,7 +201,7 @@ const guardarGlampingP: React.FC = () => {
     setShowPopup(false); // Cierra el popup
     setTimeout(() => {
       navigate("/"); // Navega a la nueva página después de un breve retraso
-    }, 100); // 100 ms de retraso (puedes ajustar este valor si es necesario)
+    }, 50); // 50 ms de retraso (puedes ajustar este valor si es necesario)
   };
   
 
