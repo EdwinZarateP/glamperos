@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ContextoApp } from '../../../Contexto/index';
 import confetti from 'canvas-confetti'; 
+// import HashLoader from "react-spinners/HashLoader";
+import Lottie from "lottie-react"; // Correcto
+import animationData from "../../../Imagenes/Animation.json"; // Ruta del archivo JSON
 import "./estilos.css";
 
 const guardarGlampingP: React.FC = () => {
@@ -27,6 +30,12 @@ const guardarGlampingP: React.FC = () => {
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+  };
 
   // Sincroniza la idUsuario automáticamente al formulario cuando la variable global cambia
   useEffect(() => {
@@ -209,14 +218,28 @@ const guardarGlampingP: React.FC = () => {
     <div className="guardarGlampingP-contenedor">
       <h1 className="guardarGlampingP-titulo">¡Ya casi eres parte de nuestra familia Glamperos!😊</h1>
       <p>Puedes dar pasos atrás y cambiar cualquier cosa antes de dar clic en "Terminar"</p>
+      
       <form className="guardarGlampingP-formulario" onSubmit={manejarEnvio}>
-        <button type="submit" className="guardarGlampingP-boton" disabled={cargando}>
-          {cargando ? "Estamos creando tu Glamping..." : "Terminar"}
-        </button>
+      <button type="submit" className="guardarGlampingP-boton">
+        {cargando ? (
+          <div className="lottie-container" style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>            
+            <Lottie 
+              animationData={defaultOptions.animationData} 
+              loop={defaultOptions.loop}
+              autoplay={defaultOptions.autoplay} 
+              style={{ width: 200, height: 200 }}  
+            />
+            <p className="cargando-mensaje">Estamos Validando tu glamping...</p>
+          </div>
+        ) : (
+          "Terminar"
+        )}
+      </button>
+
       </form>
-
+  
       {mensaje && <p className="guardarGlampingP-mensaje">{mensaje}</p>}
-
+  
       {showPopup && (
         <div className="popup-felicitaciones">
           <div className="popup-contenido">
@@ -229,7 +252,7 @@ const guardarGlampingP: React.FC = () => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default guardarGlampingP;

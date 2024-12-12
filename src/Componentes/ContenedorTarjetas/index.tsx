@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Tarjeta from "../../Componentes/Tarjeta/index";
 import "./estilos.css";
 
@@ -17,21 +17,20 @@ interface GlampingData {
 const ContenedorTarjetas: React.FC = () => {
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(8); // Cantidad de elementos visibles inicialmente
 
   useEffect(() => {
     const fetchGlampings = async () => {
       const storedData = sessionStorage.getItem("glampingsData");
 
       if (storedData) {
-        setGlampings(JSON.parse(storedData));
+        const parsedData = JSON.parse(storedData);
+        setGlampings(parsedData);
         setLoading(false);
       } else {
         try {
-          const response = await fetch(
-            "https://glamperosapi.onrender.com/glampings/"
-          );
-          if (!response.ok)
-            throw new Error("Error al obtener los datos de la API");
+          const response = await fetch("https://glamperosapi.onrender.com/glampings/");
+          if (!response.ok) throw new Error("Error al obtener los datos de la API");
           const data = await response.json();
 
           const parsedData = data.map((glamping: any) => ({
@@ -44,13 +43,9 @@ const ContenedorTarjetas: React.FC = () => {
               lat: glamping.ubicacion.lat,
               lng: glamping.ubicacion.lng,
             },
-          }));          
+          }));
 
-          sessionStorage.setItem(
-            "glampingsData",
-            JSON.stringify(parsedData)
-          );
-
+          sessionStorage.setItem("glampingsData", JSON.stringify(parsedData));
           setGlampings(parsedData);
         } catch (error) {
           console.error("Error al obtener glampings:", error);
@@ -63,14 +58,37 @@ const ContenedorTarjetas: React.FC = () => {
     fetchGlampings();
   }, []);
 
+  // Función para cargar más resultados
+  const handleLoadMore = useCallback(() => {
+    setVisibleCount((prevCount) => Math.min(prevCount + 8, glampings.length));
+  }, [glampings.length]);
+
+  // Función para manejar el evento scroll
+  const handleScroll = useCallback(() => {
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const fullHeight = document.body.scrollHeight;
+
+    if (scrollTop + windowHeight >= fullHeight - 100) {
+      handleLoadMore();
+    }
+  }, [handleLoadMore]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
   if (loading) {
     return (
       <div className="contenedor-tarjetas">
         {[...Array(6)].map((_, index) => (
           <div key={index} className="tarjeta-skeleton">
             <div className="tarjeta-skeleton-imagen" />
-            <div className="tarjeta-skeleton-info">          
-            </div>
+            <div className="tarjeta-skeleton-info" />
           </div>
         ))}
       </div>
@@ -83,7 +101,7 @@ const ContenedorTarjetas: React.FC = () => {
 
   return (
     <div className="contenedor-tarjetas">
-      {glampings.map((glamping, index) => (
+      {glampings.slice(0, visibleCount).map((glamping, index) => (
         <Tarjeta
           key={index}
           imagenes={glamping.imagenes}

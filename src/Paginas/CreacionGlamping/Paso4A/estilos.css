@@ -151,6 +151,23 @@
   background-color:  #1d4527;
 }
 
+.lottie-container {
+  background-color:transparent; /* Cambia el color según tu preferencia */
+  padding: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+.cargando-mensaje {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  font-weight: bold;
+}
+
+
 
 /* Responsividad */
 @media (max-width: 768px) {
