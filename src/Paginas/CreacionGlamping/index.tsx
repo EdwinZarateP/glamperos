@@ -154,17 +154,28 @@ const CreacionGlamping: React.FC = () => {
       }
     }
 
-    // Validación para el paso 12 coloco tarifa
-    if (pasoActual === 12 && !precioEstandar) {
+// Validación para el paso 12 coloco tarifa
+if (pasoActual === 12) {
+  if (!precioEstandar) {
     Swal.fire({
       icon: "warning",
       title: "¡No te vayas sin colocar un precio! 💵",
       text: "Danos el valor que quieres cobrar por una noche",
       confirmButtonText: "Aceptar",
-      });
+    });
     return;
-    }
+  }
 
+  if (precioEstandar < 50000) {
+    Swal.fire({
+      icon: "warning",
+      title: "¡El precio debe ser al menos 50,000! 💸",
+      text: "El precio estándar no puede ser menor a 50,000",
+      confirmButtonText: "Aceptar",
+    });
+    return;
+  }
+}
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
