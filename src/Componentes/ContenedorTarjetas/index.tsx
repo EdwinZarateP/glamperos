@@ -60,8 +60,9 @@ const ContenedorTarjetas: React.FC = () => {
 
   // Función para cargar más resultados
   const handleLoadMore = useCallback(() => {
-    setVisibleCount((prevCount) => Math.min(prevCount + 8, glampings.length));
-  }, [glampings.length]);
+    const cantidadNueva = Math.min(visibleCount + 8, glampings.length);
+    setVisibleCount(cantidadNueva);
+  }, [visibleCount, glampings.length]);
 
   // Función para manejar el evento scroll
   const handleScroll = useCallback(() => {
@@ -69,7 +70,8 @@ const ContenedorTarjetas: React.FC = () => {
     const windowHeight = window.innerHeight;
     const fullHeight = document.body.scrollHeight;
 
-    if (scrollTop + windowHeight >= fullHeight - 100) {
+    // Se carga más contenido al llegar cerca del final
+    if (scrollTop + windowHeight >= fullHeight - 200) {
       handleLoadMore();
     }
   }, [handleLoadMore]);
