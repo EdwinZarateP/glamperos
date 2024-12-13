@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import { ContextoApp } from '../../Contexto/index';
 import { useNavigate } from "react-router-dom"; // Importar el hook de navegación
 import "./estilos.css";
 
 const Registro: React.FC = () => {
-  const { setIdUsuario, setLogueado, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
+  const { setIdUsuario, setLogueado, setNombreUsuario, setCorreoUsuario, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
   const [mensaje, setMensaje] = useState<string | null>(null);
   const navigate = useNavigate(); // Crear la función de navegación
 
@@ -18,6 +18,24 @@ const Registro: React.FC = () => {
     console.error("Error:", error);
     const errorMensaje = error.response?.data?.detail || "Hubo un error inesperado.";
     setMensaje(errorMensaje);
+  };
+
+  // Función para buscar usuario existente
+  const buscarUsuarioExistente = async (email: string) => {
+    try {
+      const response = await axios.get(`${API_URL}?email=${email}`);
+      if (response?.data?.usuario) {
+        setIdUsuario(response.data.usuario._id);
+        setNombreUsuario(response.data.usuario.nombre);
+        setCorreoUsuario(response.data.usuario.email);
+        setLogueado(true);
+        navigate("/");
+      } else {
+        setMensaje("No se encontró el usuario, intenta nuevamente.");
+      }
+    } catch (error) {
+      manejarError(error);
+    }
   };
 
   // Manejar inicio de sesión con Google
@@ -44,8 +62,9 @@ const Registro: React.FC = () => {
 
       if (response.status === 200 && response.data) {
         setIdUsuario(response.data.usuario._id);
-        setLogueado(true); 
-
+        setNombreUsuario(response.data.usuario.nombre);
+        setCorreoUsuario(response.data.usuario.email);
+        setLogueado(true);
 
         // Redirección según `siono`
         if (siono) {
@@ -57,18 +76,9 @@ const Registro: React.FC = () => {
     } catch (error: any) {
       if (error.response?.status === 400) {
         setMensaje("El correo ya está registrado. Intentando redirigir...");
-        try {
-          // Buscar al usuario existente por correo
-          const errorResponse = await axios.get(`${API_URL}/${emailUsuario}`);
-          if (errorResponse?.data?.usuario) {
-            setIdUsuario(errorResponse.data.usuario._id);
-            setLogueado(true); // Actualiza el estado global aquí también
-            
-            navigate("/");
-          }
-        } catch (error) {
-          manejarError(error);
-        }
+
+        // Buscar al usuario existente
+        await buscarUsuarioExistente(emailUsuario);
       } else {
         manejarError(error);
       }
@@ -82,7 +92,7 @@ const Registro: React.FC = () => {
   return (
     <div className="Registro-contenedor">
       <h1 className="Registro-titulo">Ingreso y/o registro</h1>
-      
+
       {mensaje && <p className="Mensaje-error">{mensaje}</p>}
 
       <div className="Registro-google">

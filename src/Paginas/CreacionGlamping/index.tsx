@@ -179,6 +179,7 @@ if (pasoActual === 12) {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
+      // console.log(idUsuario, nombreUsuario,correoUsuario)
     }
   };
 

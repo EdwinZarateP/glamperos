@@ -22,6 +22,10 @@ interface ContextProps {
   setIdUsuario: (id: string | null) => void;
   logueado: boolean;
   setLogueado: (estado: boolean) => void;
+  nombreUsuario: string;
+  setNombreUsuario: Dispatch<SetStateAction<string>>;
+  correoUsuario: string;
+  setCorreoUsuario: Dispatch<SetStateAction<string>>;
 
   //Variables boolean
   siono: boolean;
@@ -129,6 +133,8 @@ interface ProveedorVariablesProps {
 //-------------------------------------------------------------------------------------
 export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) => {
   const [idUsuario, setIdUsuario] = useState<string | null>(null);
+  const [nombreUsuario, setNombreUsuario] = useState('');
+  const [correoUsuario, setCorreoUsuario] = useState('');
   const [logueado, setLogueado] = useState<boolean>(false);
   const [nombreGlamping, setNombreGlamping] = useState('');
   const [descripcionGlamping, setDescripcionGlamping] = useState('');
@@ -181,6 +187,10 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setIdUsuario,
     logueado,
     setLogueado,
+    nombreUsuario,
+    setNombreUsuario,
+    correoUsuario,
+    setCorreoUsuario,
     siono,
     setSiono,    
     nombreGlamping,
