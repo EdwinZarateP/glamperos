@@ -107,7 +107,7 @@ const Paso2C: React.FC = () => {
 
         {mostrarBotonSubir && (
           <label className="Paso2C-botonAgregar" htmlFor="inputImagenes">
-            Subir Imágenes (Tienes espacio para {calcularCupoRestante()} imágenes)
+            Subir Imágenes Horizontales (Tienes espacio para {calcularCupoRestante()} imágenes)
           </label>
         )}
       </div>

@@ -1,5 +1,5 @@
 
-import { useState, useContext, useEffect } from "react";
+import { useRef, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ContextoApp } from '../../../Contexto/index';
@@ -167,6 +167,15 @@ const guardarGlampingP: React.FC = () => {
           }));
         }
       }, [Cantidad_Huespedes]);
+  
+    // Referencia al botón "Cerrar"
+  const cerrarPopupRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (showPopup && cerrarPopupRef.current) {
+      cerrarPopupRef.current.focus(); // Coloca el foco en el botón "Cerrar" cuando se activa el popup
+    }
+  }, [showPopup]);
 
   const manejarEnvio = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,7 +254,7 @@ const guardarGlampingP: React.FC = () => {
           <div className="popup-contenido">
             <h2>¡Felicitaciones!</h2>
             <p>Tu glamping se creó con éxito. 🎉</p>
-            <button className="cerrar-popup" onClick={cerrarPopup}>
+            <button className="cerrar-popup" onClick={cerrarPopup} ref={cerrarPopupRef}>
               Cerrar
             </button>
           </div>
