@@ -42,9 +42,10 @@ const Registro: React.FC = () => {
         clave: "autenticacionGoogle",
       });
 
-      if (response.status === 200 && response.data.id_usuario) {
-        setIdUsuario(response.data.id_usuario);
-        setLogueado(true); // Actualiza el estado global para indicar que está logueado
+      if (response.status === 200 && response.data) {
+        setIdUsuario(response.data.usuario._id);
+        setLogueado(true); 
+
 
         // Redirección según `siono`
         if (siono) {
@@ -59,8 +60,8 @@ const Registro: React.FC = () => {
         try {
           // Buscar al usuario existente por correo
           const errorResponse = await axios.get(`${API_URL}/${emailUsuario}`);
-          if (errorResponse?.data?.id_usuario) {
-            setIdUsuario(errorResponse.data.id_usuario);
+          if (errorResponse?.data?.usuario) {
+            setIdUsuario(errorResponse.data.usuario._id);
             setLogueado(true); // Actualiza el estado global aquí también
             
             navigate("/");
