@@ -62,10 +62,20 @@ const Header: React.FC = () => {
   return (
     <div className="contenedor-Header">
       <header className="Header">
-        <Link to="/" className="Header-izquierda">
-          <img src={logo} alt="Glamperos logo" className="Header-logo" />
-          <span className="Header-nombreMarca">Glamperos</span>
-        </Link>
+      <Link
+        to="/"
+        className="Header-izquierda"
+        onClick={(e) => {
+          e.preventDefault(); // Previene la redirección inmediata
+          window.scrollTo({ top: 0, behavior: "smooth" }); // Realiza el scroll hacia arriba suavemente
+          setTimeout(() => {
+            window.location.href = "/"; // Redirige al inicio después de un pequeño retraso
+          }, 0); // Ajusta el tiempo según la duración del scroll
+        }}
+      >
+        <img src={logo} alt="Glamperos logo" className="Header-logo" />
+        <span className="Header-nombreMarca">Glamperos</span>
+      </Link>
 
         <div
           className="Header-barraBusqueda"

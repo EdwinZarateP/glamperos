@@ -24,34 +24,44 @@ const ContenedorTarjetas: React.FC = () => {
       const storedData = sessionStorage.getItem("glampingsData");
 
       if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        setGlampings(parsedData);
-        setLoading(false);
-      } else {
         try {
-          const response = await fetch("https://glamperosapi.onrender.com/glampings/");
-          if (!response.ok) throw new Error("Error al obtener los datos de la API");
-          const data = await response.json();
-
-          const parsedData = data.map((glamping: any) => ({
-            nombreGlamping: glamping.nombreGlamping || "Nombre no disponible",
-            ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
-            precioEstandar: glamping.precioEstandar || 0,
-            calificacion: glamping.calificacion,
-            imagenes: glamping.imagenes || [],
-            ubicacion: {
-              lat: glamping.ubicacion.lat,
-              lng: glamping.ubicacion.lng,
-            },
-          }));
-
-          sessionStorage.setItem("glampingsData", JSON.stringify(parsedData));
+          const parsedData = JSON.parse(storedData);
           setGlampings(parsedData);
-        } catch (error) {
-          console.error("Error al obtener glampings:", error);
-        } finally {
           setLoading(false);
+        } catch (error) {
+          console.error("Error al parsear los datos de sessionStorage:", error);
+          sessionStorage.removeItem("glampingsData"); // Elimina datos corruptos
+          await fetchDataFromAPI();
         }
+      } else {
+        await fetchDataFromAPI();
+      }
+    };
+
+    const fetchDataFromAPI = async () => {
+      try {
+        const response = await fetch("https://glamperosapi.onrender.com/glampings/");
+        if (!response.ok) throw new Error("Error al obtener los datos de la API");
+        const data = await response.json();
+
+        const parsedData = data.map((glamping: any) => ({
+          nombreGlamping: glamping.nombreGlamping || "Nombre no disponible",
+          ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
+          precioEstandar: glamping.precioEstandar || 0,
+          calificacion: glamping.calificacion,
+          imagenes: glamping.imagenes || [],
+          ubicacion: {
+            lat: glamping.ubicacion.lat,
+            lng: glamping.ubicacion.lng,
+          },
+        }));
+
+        sessionStorage.setItem("glampingsData", JSON.stringify(parsedData));
+        setGlampings(parsedData);
+      } catch (error) {
+        console.error("Error al obtener glampings:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
