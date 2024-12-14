@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { VscSettings } from "react-icons/vsc";
@@ -9,6 +10,7 @@ import { evaluarVariable } from '../../Funciones/ValidarVariable';
 import "./estilos.css";
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -62,23 +64,19 @@ const Header: React.FC = () => {
     setAcepta_Mascotas(false);
   };
 
+  const irAInicio = () => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+    setTimeout(() => navigate("/"), 1); // Retardo para permitir el scroll
+  };
+
   return (
     <div className="contenedor-Header">
       <header className="Header">
-      <Link
-        to="/glamperos/"
-        className="Header-izquierda"
-        onClick={(e) => {
-          e.preventDefault(); // Previene la redirección inmediata
-          window.scrollTo({ top: 0, behavior: "smooth" }); // Realiza el scroll hacia arriba suavemente
-          setTimeout(() => {
-            window.location.href = "/"; // Redirige al inicio después de un pequeño retraso
-          }, 1); // Ajusta el tiempo según la duración del scroll
-        }}
-      >
-        <img src={logo} alt="Glamperos logo" className="Header-logo" />
-        <span className="Header-nombreMarca">Glamperos</span>
-      </Link>
+        {/* Reemplazo de Link con un botón de navegación */}
+        <div className="Header-izquierda" onClick={irAInicio}>
+          <img src={logo} alt="Glamperos logo" className="Header-logo" />
+          <span className="Header-nombreMarca">Glamperos</span>
+        </div>
 
         <div
           className="Header-barraBusqueda"
@@ -104,31 +102,29 @@ const Header: React.FC = () => {
         </div>
 
         <div className="Header-derecha">
-          {/* Condicional para mostrar el enlace correspondiente */}
           {existeId() ? (
-            <Link to="/CrearGlamping" className="Header-botonAnfitrion" onClick={quitarSetters}>
-              Publica tu Glamping 
-            </Link>
-          ) : (
-            <Link to="/Registrarse" className="Header-botonAnfitrion" onClick={quitarSetters}>
+            <div className="Header-botonAnfitrion" onClick={() => { quitarSetters(); navigate("/CrearGlamping"); }}>
               Publica tu Glamping
-            </Link>
+            </div>
+          ) : (
+            <div className="Header-botonAnfitrion" onClick={() => { quitarSetters(); navigate("/Registrarse"); }}>
+              Publica tu Glamping
+            </div>
           )}
 
-          <Link to="/Registrarse" className="Header-menuUsuario" >
-            <FiMenu className="Header-iconoMenu" onClick={() => setSiono(false)} />
+          <div className="Header-menuUsuario" onClick={() => navigate("/Registrarse")}>
+            <FiMenu className="Header-iconoMenu" />
             <div className="Header-iconoSettingsWrapper">
               <VscSettings className="Header-iconoSettings" />
             </div>
-          </Link>
+          </div>
         </div>
       </header>
 
-      {/* Renderiza el PanelBusqueda si mostrarPanelBusqueda es true */}
       {mostrarPanelBusqueda && (
         <PanelBusqueda
-          onBuscar={(destino, fechas) => manejarBusqueda(destino, fechas)} // Callback para manejar la búsqueda
-          onCerrar={cerrarPanelBusqueda} // Callback para cerrar el panel
+          onBuscar={(destino, fechas) => manejarBusqueda(destino, fechas)}
+          onCerrar={cerrarPanelBusqueda}
         />
       )}
     </div>
