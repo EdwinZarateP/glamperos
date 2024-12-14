@@ -17,6 +17,7 @@ import { obtenerGlampingPorId } from "../../Funciones/obtenerGlamping"; //para i
 import Lottie from 'lottie-react';
 import animationData from "../../Imagenes/AnimationPuntos.json";
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './estilos.css';
 
 interface Glamping {
@@ -41,6 +42,13 @@ interface Ubicacion {
 
 
 function ExplorarGlamping() {
+
+  const navigate = useNavigate();
+  
+  const irAInicio = () => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+
   const { glampingId } = useParams<{ glampingId: string }>();
   const almacenVariables = useContext(ContextoApp);
   if (!almacenVariables) {
@@ -126,6 +134,18 @@ function ExplorarGlamping() {
       fotoPerfil: 'https://via.placeholder.com/48',
     },
   ];
+
+  useEffect(() => {
+    const manejarNavegacion = (_: PopStateEvent) => {
+      irAInicio();
+    };
+  
+    window.addEventListener("popstate", manejarNavegacion);
+  
+    return () => {
+      window.removeEventListener("popstate", manejarNavegacion);
+    };
+  }, [navigate]);  
 
   return (
     <div className='contenedor-principal-exploracion'>

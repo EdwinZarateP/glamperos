@@ -237,7 +237,7 @@ const guardarGlampingP: React.FC = () => {
               autoplay={defaultOptions.autoplay} 
               style={{ width: 200, height: 200 }}  
             />
-            <p className="cargando-mensaje">Estamos Validando tu glamping...</p>
+            <p className="cargando-mensaje">Estamos creando tu glamping...</p>
           </div>
         ) : (
           "Terminar"
