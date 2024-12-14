@@ -43,7 +43,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
 
       setTotalDias(dias);
     } else {
-      setTotalDias(0);
+      setTotalDias(1);
     }
   }, [fechaInicio, fechaFin, FechasReservadas, setTotalDias]);
 
@@ -71,7 +71,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
   const manejarBorrarFechas = () => {
     setFechaInicio(null);
     setFechaFin(null);
-    setTotalDias(0);
+    setTotalDias(1);
   };
 
   const esFechaSeleccionada = (fecha: Date): boolean => {

@@ -34,7 +34,7 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const nuevoPrecio = totalSinImpuestos ;
+    const nuevoPrecio = totalSinImpuestos * totalDias ;
     setPrecioBase(Math.round(nuevoPrecio));
     setIsLoading(false);
   }, [totalSinImpuestos, totalDias]);
