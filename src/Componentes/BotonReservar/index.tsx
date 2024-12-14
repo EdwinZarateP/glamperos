@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ContextoApp } from '../../Contexto/index';
 import { GiCampingTent } from 'react-icons/gi';
 import CalendarioGeneral from "../CalendarioGeneral";
 import './estilos.css';
 
+// Cambié Promise<number> por number
 interface ReservarBotonProps {
-  totalSinImpuestos: number;
+  totalSinImpuestos: number; 
 }
 
 const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
@@ -19,7 +20,6 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
     fechaInicio,
     fechaFin,
     totalDias,
-    precioPorNoche,
     setMostrarCalendario,
     mostrarCalendario,
   } = almacenVariables;
@@ -30,21 +30,22 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
     new Date(2024, 10, 29),
   ];
 
-  // Determinar el precio a mostrar
-  const precioBase = totalDias > 0 ? totalSinImpuestos : precioPorNoche || 0;
+  const [precioBase, setPrecioBase] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Redondear el precio
-  const precioRedondeado = Math.round(precioBase);
+  useEffect(() => {
+    const nuevoPrecio = totalSinImpuestos ;
+    setPrecioBase(Math.round(nuevoPrecio));
+    setIsLoading(false);
+  }, [totalSinImpuestos, totalDias]);
 
-  // Formatear como dinero en COP con separadores de miles
-  const precioFormateado = precioRedondeado.toLocaleString('es-CO', {
+  const precioFormateado = precioBase.toLocaleString('es-CO', {
     style: 'currency',
     currency: 'COP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   });
 
-  // Formatear las fechas
   const formatearFecha = (fecha: Date | null): string => {
     if (!fecha) return "-";
     const opciones: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
@@ -61,12 +62,16 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
     alert(mensaje);
   };
 
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
+
   return (
     <>
       <div className="reservar-contenedor">
         <div
           className="reservar-total"
-          onClick={() => setMostrarCalendario(true)} // Abre el calendario
+          onClick={() => setMostrarCalendario(true)} 
         >
           <div className="reservar-precio">{precioFormateado}</div>
           {totalDias > 0 ? (
@@ -88,7 +93,7 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
           <button
             className="reservar-boton"
             onClick={manejarReserva}
-            aria-label={`Reservar por ${precioFormateado}`} /* Mejora de accesibilidad */
+            aria-label={`Reservar por ${precioFormateado}`}
           >
             <GiCampingTent className="reservar-boton-icono" /> Reservar
           </button>
