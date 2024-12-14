@@ -66,7 +66,7 @@ const Header: React.FC = () => {
 
   const irAInicio = () => {
     window.scrollTo({ top: 0, behavior: "auto" });
-    setTimeout(() => navigate("/"), 1); // Retardo para permitir el scroll
+    setTimeout(() => navigate("/"), 100); // Retardo para permitir el scroll
   };
 
   return (
