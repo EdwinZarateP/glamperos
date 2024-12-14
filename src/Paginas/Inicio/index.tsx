@@ -1,6 +1,6 @@
-import Header from '../../Componentes/Header'; // Importa el componente Header
-import ContenedorTarjetas from '../../Componentes/ContenedorTarjetas/index'; // Importa ContenedorTarjetas
-import MenuIconos from '../../Componentes/MenuIconos/index'; // Importa ContenedorTarjetas
+import Header from '../../Componentes/Header';
+import ContenedorTarjetas from '../../Componentes/ContenedorTarjetas/index';
+import MenuIconos from '../../Componentes/MenuIconos/index'; 
 import './estilos.css';
 
 function Inicio() {
@@ -10,7 +10,7 @@ function Inicio() {
       <Header /> 
       <MenuIconos /> 
       <main>
-        <ContenedorTarjetas /> {/* Renderiza el contenedor de tarjetas */}
+        <ContenedorTarjetas /> 
       </main>
     </div>
   );

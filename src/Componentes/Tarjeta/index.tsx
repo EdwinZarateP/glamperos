@@ -8,6 +8,7 @@ import { ContextoApp } from "../../Contexto/index";
 import "./estilos.css";
 
 interface TarjetaProps {
+  glampingId:string;
   imagenes: string[];
   ciudad: string;
   precio: number;
@@ -24,6 +25,7 @@ interface TarjetaProps {
 }
 
 const Tarjeta: React.FC<TarjetaProps> = ({
+  glampingId,
   imagenes,
   ciudad,
   precio,
@@ -32,7 +34,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   tarifaServicio,
   nombreGlamping,
-  ubicacion,
   
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
@@ -48,12 +49,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
   const {
     totalDias,
-    setPrecioPorNoche,
-    setCiudad_Elegida,
-    setNombreGlamping,
-    setImagenesSeleccionadas,
-    setLatitud,
-    setLongitud,
   } = almacenVariables;
 
   if (!imagenes || imagenes.length === 0) {
@@ -119,14 +114,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       maximumFractionDigits: 0,
     });
 
-  const handleClicTarjeta = () => {
-    setPrecioPorNoche(precioConTarifa);
-    setCiudad_Elegida(ciudad);
-    setNombreGlamping(nombreGlamping);
-    setImagenesSeleccionadas(imagenes);
-    setLatitud(ubicacion.lat);
-    setLongitud(ubicacion.lng);
-  };
 
   const renderPrecio = () => {
     if (totalDias === 0 || totalDias === 1) {
@@ -152,9 +139,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   return (
     <div className="tarjeta">
       <Link
-        to="/TarjetaExclusiva"
+        to={`/ExplorarGlamping/${glampingId}`}
         className="tarjeta-link"
-        onClick={handleClicTarjeta}
       >
         <div
           className="tarjeta-imagen-container"

@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import Header from '../../Componentes/Header';
 import ImagenesExploradas from '../../Componentes/ImgExploradas/index';
 import EncabezadoExplorado from '../../Componentes/EncabezadoExplorado/index';
@@ -13,16 +13,41 @@ import Comentarios from '../../Componentes/Comentarios/index';
 import ReservarBoton from '../../Componentes/BotonReservar/index';
 import { ContextoApp } from '../../Contexto/index';
 import ManejoErrores from '../../Funciones/ManejoErrores';
+import { obtenerGlampingPorId } from "../../Funciones/obtenerGlamping"; //para importar la funcion que obtiene de la api la info glamping
+import Lottie from 'lottie-react';
+import animationData from "../../Imagenes/AnimationPuntos.json";
+import { useParams } from 'react-router-dom';
 import './estilos.css';
 
-function ExplorarGlamping() {
-  const almacenVariables = useContext(ContextoApp);
+interface Glamping {
+  nombreGlamping: string;
+  ciudad_departamento: string;
+  tipoGlamping: string;
+  Acepta_Mascotas: boolean;
+  precioEstandar: number;
+  descuento: number;
+  Cantidad_Huespedes: number;
+  descripcionGlamping: string;
+  imagenes: string[];
+  ubicacion: Ubicacion | null;
+  amenidadesGlobal: string[];
+}
 
+//para ubicacion
+interface Ubicacion {
+  lat: number;
+  lng: number;
+}
+
+
+function ExplorarGlamping() {
+  const { glampingId } = useParams<{ glampingId: string }>();
+  const almacenVariables = useContext(ContextoApp);
   if (!almacenVariables) {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { setTarifaServicio, precioPorNoche, ciudad_Elegida, nombreGlamping, imagenesSeleccionadas, latitud, longitud } = almacenVariables;
+  const { setTarifaServicio, totalSinImpuestos } = almacenVariables;
 
   // Establece la tarifa de servicio predeterminada
   useEffect(() => {
@@ -36,18 +61,40 @@ function ExplorarGlamping() {
     });
   }, []);
 
-  // Validación para evitar errores si no hay imágenes seleccionadas
-  if (!imagenesSeleccionadas || imagenesSeleccionadas.length === 0) {
-    return <div>No hay imágenes disponibles para mostrar.</div>;
-  }
+//vamos a extraer la info del glamping
 
-  const caracteristicas = [
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Secadora de pelo' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Champú' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Jabón corporal' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Agua caliente' },
-    { icono: 'https://via.placeholder.com/24', descripcion: 'Gel de ducha' },
-  ];
+  const [informacionGlamping, setInformacionGlamping] = useState<Glamping | null>(null);
+
+  useEffect(() => {
+    const consultarGlamping = async () => {
+      if (!glampingId) {
+        console.error("No se proporcionó un ID de glamping.");
+        return;
+      }
+
+      const datos = await obtenerGlampingPorId(glampingId);
+
+      if (datos) {
+        setInformacionGlamping({
+          nombreGlamping: datos.nombreGlamping || "No disponible",
+          ciudad_departamento: datos.ciudad_departamento || "No disponible",
+          tipoGlamping: datos.tipoGlamping || "No disponible",
+          Acepta_Mascotas: datos.Acepta_Mascotas ?? false,
+          precioEstandar: datos.precioEstandar || 0,
+          descuento: Number(datos.descuento) || 0,
+          Cantidad_Huespedes: datos.Cantidad_Huespedes || 0,
+          descripcionGlamping: datos.descripcionGlamping || "No disponible",
+          imagenes: datos.imagenes || [],
+          ubicacion: datos.ubicacion
+          ? { lat: datos.ubicacion.lat, lng: datos.ubicacion.lng }
+          : null,
+          amenidadesGlobal: datos.amenidadesGlobal || [],
+        });
+      }
+    };
+
+    consultarGlamping();
+  }, [glampingId]);
 
   const fechasReservadas = [
     new Date(2024, 10, 20),
@@ -82,62 +129,82 @@ function ExplorarGlamping() {
 
   return (
     <div className='contenedor-principal-exploracion'>
-      <div className="header-container">
-        <Header />
-      </div>
-      <main>
-        <div className="encabezado-explorado-container">
-          <EncabezadoExplorado 
-            nombreGlamping={`${nombreGlamping} - ${ciudad_Elegida.split(" - ")[0]}`} />            
-        </div>
-        <div className="imagenes-exploradas-container">
-          <ImagenesExploradas imagenes={imagenesSeleccionadas} />
-        </div>
-        <div className="img-exploradas-individual-container">
-          <ImgExploradasIndividual imagenes={imagenesSeleccionadas} />
-        </div>
-        <div className="nombre-glamping-container">
-          <NombreGlamping nombreGlamping={`${nombreGlamping}  - ${ciudad_Elegida.split(" - ")[0]}`} />
-          
-        </div>
-        <div className='contenedor-descripcion-glamping'>
-          <div className='contenedor-descripcion-glamping-izq'>
-            <DescripcionGlamping
-              calificacionNumero={5}
-              calificacionEvaluaciones={2}
-              calificacionMasAlta="Su piscina fue lo mejor calificado"
-              descripcion_glamping='Disfruta de una experiencia única en contacto con la naturaleza, combinando comodidad y aventura. 
-              Explora las mejores vistas, servicios de primera calidad y una piscina que hará de tu estadía un recuerdo inolvidable.'
-            />
-
-            <div className='contenedor-lo-que-ofrece'>
-              <LoQueOfrece
-                titulo="Lo que este lugar ofrece"
-                caracteristicas={caracteristicas}
-              />
-            </div>
-
-            <div className='contenedor-calendario'>
-              <Calendario 
-                nombreGlamping={`${nombreGlamping}  - ${ciudad_Elegida.split(" - ")[0]}`}
-                FechasReservadas={fechasReservadas} 
-              />
-            </div>
+      {informacionGlamping ? (
+        <>
+          <div className="header-container">
+            <Header />
           </div>
-          <div className='contenedor-descripcion-glamping-der'>
-            <FormularioFechas
-              precioPorNoche={precioPorNoche || 0}
-            />
-          </div>
+          <main>
+            <div className="encabezado-explorado-container">
+              <EncabezadoExplorado 
+                nombreGlamping={`${informacionGlamping?.nombreGlamping} - ${informacionGlamping?.ciudad_departamento?.split(" - ")[0] || ''}`} 
+              />            
+            </div>
+            <div className="imagenes-exploradas-container">
+              {informacionGlamping?.imagenes && informacionGlamping?.imagenes.length > 0 ? (
+                <ImagenesExploradas imagenes={informacionGlamping?.imagenes} />
+              ) : (
+                <div className="lottie-container">
+                  <Lottie 
+                    animationData={animationData} 
+                    style={{ height: 200, width: '100%', margin: 'auto' }} 
+                  />
+                </div>
+              )}
+            </div>
+            <div className="img-exploradas-individual-container">
+              {informacionGlamping?.imagenes && informacionGlamping?.imagenes.length > 0 ? (
+                <ImgExploradasIndividual imagenes={informacionGlamping?.imagenes} />
+              ) : null}
+            </div>
+            <div className="nombre-glamping-container">
+              <NombreGlamping nombreGlamping={`${informacionGlamping?.nombreGlamping}  - ${informacionGlamping?.ciudad_departamento?.split(" - ")[0] || ''}`} />
+            </div>
+            <div className='contenedor-descripcion-glamping'>
+              <div className='contenedor-descripcion-glamping-izq'>
+                <DescripcionGlamping
+                  calificacionNumero={5}
+                  calificacionEvaluaciones={2}
+                  calificacionMasAlta="Su piscina fue lo mejor calificado"
+                  descripcion_glamping={informacionGlamping?.descripcionGlamping}  
+                />
+  
+                <div className='contenedor-lo-que-ofrece'>
+                  <LoQueOfrece amenidades={informacionGlamping?.amenidadesGlobal} />
+                </div>
+  
+                <div className='contenedor-calendario'>
+                  <Calendario 
+                    nombreGlamping={`${informacionGlamping?.nombreGlamping}  - ${informacionGlamping?.ciudad_departamento?.split(" - ")[0] || ''}`}
+                    FechasReservadas={fechasReservadas} 
+                  />
+                </div>
+              </div>
+              <div className='contenedor-descripcion-glamping-der'>
+                <FormularioFechas
+                  precioPorNoche={informacionGlamping?.precioEstandar || 0}
+                />
+              </div>
+            </div>
+  
+            <ManejoErrores>        
+              <MapaGlampings lat={informacionGlamping?.ubicacion?.lat ?? 0 }  lng={informacionGlamping?.ubicacion?.lng ?? 0} />          
+            </ManejoErrores>
+            <Comentarios comentarios={datosComentarios} />
+            <ReservarBoton totalSinImpuestos={totalSinImpuestos || 0} />
+          </main>
+        </>
+      ) : (
+        <div className="lottie-cargando">
+          <Lottie 
+            animationData={animationData} 
+            style={{ height: 200, width: 200, margin: 'auto' }} 
+          />
         </div>
-        <ManejoErrores>
-        <MapaGlampings lat={latitud} lng={longitud} />
-        </ManejoErrores>
-        <Comentarios comentarios={datosComentarios} />
-        <ReservarBoton totalSinImpuestos={almacenVariables.totalSinImpuestos || 0} />
-      </main>
+      )}
     </div>
   );
+  
 }
 
 export default ExplorarGlamping;

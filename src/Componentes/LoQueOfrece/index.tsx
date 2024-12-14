@@ -1,63 +1,82 @@
-// LoQueOfrece.tsx
 import React, { useState, useEffect } from 'react';
+import { opcionesAmenidades } from '../../Componentes/Amenidades/index';
 import './estilos.css';
-import LoqueOfreceAmpliado from '../LoqueOfreceAmpliado/index';
+import { GiCircleClaws } from "react-icons/gi";
 
-type Caracteristica = {
-  icono: string;
-  descripcion: string;
-};
+interface Props {
+  amenidades: string[];
+}
 
-type LoQueOfreceProps = {
-  titulo: string;
-  caracteristicas: Caracteristica[];
-};
+const LoQueOfrece: React.FC<Props> = ({ amenidades }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-const LoQueOfrece: React.FC<LoQueOfreceProps> = ({ titulo, caracteristicas }) => {
-  const [mostrarAmpliado, setMostrarAmpliado] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-  const abrirAmpliado = () => {
-    setMostrarAmpliado(true);
-    document.body.style.overflow = 'hidden'; // Desactiva el scroll del fondo
-  };
-
-  const cerrarAmpliado = () => {
-    setMostrarAmpliado(false);
-    document.body.style.overflow = 'auto'; // Reactiva el scroll del fondo
-  };
-
+  // Bloquear el scroll del fondo al abrir el modal
   useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
     return () => {
-      document.body.style.overflow = 'auto'; // Asegura el scroll cuando el componente se desmonta
+      document.body.style.overflow = 'auto';
     };
-  }, []);
-
-  // Determina el número máximo de elementos visibles en función del tamaño de pantalla.
-  const maxVisible = window.innerWidth < 600 ? 4 : 6; 
-  const caracteristicasVisibles = caracteristicas.slice(0, maxVisible);
+  }, [isModalOpen]);
 
   return (
-    <div className="loQueOfrece-contenedor">
-      <h2 className="loQueOfrece-titulo">{titulo}</h2>
-      <div className="loQueOfrece-lista">
-        {caracteristicasVisibles.map((caracteristica, index) => (
-          <div key={index} className="loQueOfrece-item">
-            <img src={caracteristica.icono} alt="" className="loQueOfrece-icono" />
-            <span className="loQueOfrece-descripcion">{caracteristica.descripcion}</span>
-          </div>
-        ))}
+    <div className="LoQueOfrece-contenedor">
+      <h2 className="LoQueOfrece-titulo">Lo que ofrece</h2>
+
+      <div className="LoQueOfrece-lista-contenida">
+        <div className="LoQueOfrece-lista">
+          {amenidades.slice(0, 8).map((amenidad, index) => {
+            const opcionEncontrada = opcionesAmenidades.find(
+              opcion =>
+                opcion.label.trim().toLowerCase() === amenidad.trim().toLowerCase()
+            );
+
+            return (
+              <div key={index} className="LoQueOfrece-item">
+                <span className="LoQueOfrece-icono">
+                  {opcionEncontrada?.icono || <GiCircleClaws />}
+                </span>
+                <span className="LoQueOfrece-etiqueta">{amenidad}</span>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      {caracteristicas.length > maxVisible && (
-        <button className="loQueOfrece-boton" onClick={abrirAmpliado}>
-          {`Mostrar las ${caracteristicas.length } amenidades`}
-        </button>
+
+      {amenidades.length > 6 && (
+        <p className="mostrar-mas-texto" onClick={openModal}>Mostrar más &gt;  </p>
       )}
-      {mostrarAmpliado && (
-        <LoqueOfreceAmpliado
-          titulo={titulo}
-          caracteristicas={caracteristicas}
-          cerrar={cerrarAmpliado}
-        />
+
+      {isModalOpen && (
+        <div className="LoQueOfrece-modal">
+          <div className="LoQueOfrece-modal-contenido">
+            <button className="LoQueOfrece-cerrar" onClick={closeModal}>×</button>
+            <h1>Lo que este lugar te ofrece</h1>
+            <div className="LoQueOfrece-lista">
+              {amenidades.map((amenidad, index) => {
+                const opcionEncontrada = opcionesAmenidades.find(
+                  opcion =>
+                    opcion.label.trim().toLowerCase() === amenidad.trim().toLowerCase()
+                );
+
+                return (
+                  <div key={index} className="LoQueOfrece-item">
+                    <span className="LoQueOfrece-icono">
+                      {opcionEncontrada?.icono || <GiCircleClaws />}
+                    </span>
+                    <span className="LoQueOfrece-etiqueta">{amenidad}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

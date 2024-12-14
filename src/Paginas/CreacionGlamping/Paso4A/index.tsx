@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ContextoApp } from '../../../Contexto/index';
 import confetti from 'canvas-confetti'; 
-// import HashLoader from "react-spinners/HashLoader";
-import Lottie from "lottie-react"; // Correcto
+import Lottie from "lottie-react"; 
 import animationData from "../../../Imagenes/Animation.json"; // Ruta del archivo JSON
 import "./estilos.css";
 

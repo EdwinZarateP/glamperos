@@ -1,7 +1,7 @@
 // DescripcionGlamping.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Calificacion from '../Calificacion/index';
-import DetalleAmpliado from '../DetalleAmpliado';
+import DetalleGlampingTexto from '../DetalleGlampingTexto';
 import './estilos.css';
 
 interface DescripcionGlampingProps {
@@ -17,18 +17,7 @@ const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
   calificacionMasAlta,
   descripcion_glamping
 }) => {
-  const [mostrarDetalle, setMostrarDetalle] = useState(false);
-
-  const handleMostrarMas = () => {
-    setMostrarDetalle(true);
-    document.body.style.overflow = 'hidden'; // Desactiva el scroll del fondo
-  };
-
-  const handleCerrar = () => {
-    setMostrarDetalle(false);
-    document.body.style.overflow = 'auto'; // Reactiva el scroll del fondo
-  };
-
+ 
   useEffect(() => {
     return () => {
       document.body.style.overflow = 'auto'; // Asegura el scroll cuando el componente se desmonta
@@ -43,15 +32,8 @@ const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
         calificacionMasAlta={calificacionMasAlta}
       />
       <p className="descripcion-glamping-detalle">
-        {descripcion_glamping}
+      <DetalleGlampingTexto descripcionGlamping={descripcion_glamping} />
       </p>
-      <p className="mostrar-mas-texto" onClick={handleMostrarMas}>
-        Mostrar más &gt;
-      </p>
-      
-      {mostrarDetalle && (
-        <DetalleAmpliado descripcion_glamping={descripcion_glamping} onClose={handleCerrar} />
-      )}
     </div>
   );
 };

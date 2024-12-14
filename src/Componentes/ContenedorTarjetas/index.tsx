@@ -3,6 +3,7 @@ import Tarjeta from "../../Componentes/Tarjeta/index";
 import "./estilos.css";
 
 interface GlampingData {
+  glampingId: string;
   nombreGlamping: string;
   ciudad_departamento: string;
   precioEstandar: number;
@@ -30,7 +31,7 @@ const ContenedorTarjetas: React.FC = () => {
           setLoading(false);
         } catch (error) {
           console.error("Error al parsear los datos de sessionStorage:", error);
-          sessionStorage.removeItem("glampingsData"); // Elimina datos corruptos
+          sessionStorage.removeItem("glampingsData");
           await fetchDataFromAPI();
         }
       } else {
@@ -45,6 +46,7 @@ const ContenedorTarjetas: React.FC = () => {
         const data = await response.json();
 
         const parsedData = data.map((glamping: any) => ({
+          glampingId:  glamping._id,
           nombreGlamping: glamping.nombreGlamping || "Nombre no disponible",
           ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
           precioEstandar: glamping.precioEstandar || 0,
@@ -116,6 +118,7 @@ const ContenedorTarjetas: React.FC = () => {
       {glampings.slice(0, visibleCount).map((glamping, index) => (
         <Tarjeta
           key={index}
+          glampingId={glamping.glampingId}
           imagenes={glamping.imagenes}
           ciudad={glamping.ciudad_departamento}
           precio={glamping.precioEstandar}

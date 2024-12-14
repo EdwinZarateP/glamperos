@@ -17,7 +17,7 @@ const Header: React.FC = () => {
     );
   }
 
-  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud, setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, setPrecioEstandar} = almacenVariables; // Extraer totalHuespedes del contexto
+  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud, setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, setPrecioEstandar, setCantidad_Huespedes, setDescuento, setAcepta_Mascotas} = almacenVariables; 
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false); // Estado para mostrar el PanelBusqueda
   const [busqueda, setBusqueda] = useState({
@@ -57,6 +57,9 @@ const Header: React.FC = () => {
     setNombreGlamping(""); // Limpia el nombre del glamping
     setDescripcionGlamping(""); // Limpia la descripción del glamping
     setPrecioEstandar(0); // Restablece el precio estándar a 0
+    setCantidad_Huespedes(1); // Restablece el precio estándar a 0
+    setDescuento(0);
+    setAcepta_Mascotas(false);
   };
 
   return (
@@ -70,7 +73,7 @@ const Header: React.FC = () => {
           window.scrollTo({ top: 0, behavior: "smooth" }); // Realiza el scroll hacia arriba suavemente
           setTimeout(() => {
             window.location.href = "/"; // Redirige al inicio después de un pequeño retraso
-          }, 0); // Ajusta el tiempo según la duración del scroll
+          }, 1); // Ajusta el tiempo según la duración del scroll
         }}
       >
         <img src={logo} alt="Glamperos logo" className="Header-logo" />

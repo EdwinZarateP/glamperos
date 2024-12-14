@@ -39,6 +39,14 @@
   padding-top: 0;
 }
 
+.lottie-cargando {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Centrado total en la pantalla */
+}
+
+
 /* Ajustes para pantallas pequeñas (máximo ancho 600px) */
 @media (max-width: 600px) {
   .header-container,
