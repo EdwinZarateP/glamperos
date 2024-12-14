@@ -25,7 +25,7 @@ const guardarGlampingP: React.FC = () => {
     propietario_id: "",
   });
 
-  const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento, idUsuario} = useContext(ContextoApp)!; 
+  const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento, idUsuario, correoUsuario} = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -35,6 +35,16 @@ const guardarGlampingP: React.FC = () => {
     autoplay: true,
     animationData: animationData,
   };
+
+  const enviarCorreo = async (correo: string) => {
+    try {
+      await axios.post("https://glamperosapi.onrender.com/correos/send-email", { correo });
+      console.log("Correo enviado con éxito");
+    } catch (error) {
+      console.error("Error al enviar el correo: ", error);
+    }
+  };
+  
 
   // Sincroniza la idUsuario automáticamente al formulario cuando la variable global cambia
   useEffect(() => {
@@ -198,6 +208,8 @@ const guardarGlampingP: React.FC = () => {
       setMensaje("Glamping creado con éxito: " + respuesta.data.nombreGlamping);
       lanzarConfetti();
       setShowPopup(true);
+      // Llamar a la función para enviar correo
+      enviarCorreo(correoUsuario);
     } catch (error) {
       setMensaje("Error al crear el glamping: " + error);
     } finally {
