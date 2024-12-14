@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Inicio from '../Inicio/index';
 import Registrarse from '../Registrarse/index';
 import CreacionGlamping from '../CreacionGlamping/index';
@@ -12,17 +12,17 @@ const App: React.FC = () => {
     // Encerramos todo en el ProveedorVariables para que puedan acceder a ellas
     <ProveedorVariables 
       hijo={
-        <Router>
-          <Routes>
-            <Route path="/" element={<Inicio />} />
-            <Route path="/Registrarse" element={<Registrarse />} />
-            <Route path="/ExplorarGlamping/:glampingId" element={<ExplorarGlamping />} />
-            <Route path="/CrearGlamping" element={<CreacionGlamping />} />
-            <Route path="*" element={<NoEncontrado />} />
-          </Routes>
-        </Router>
-      }
-    />
+    <Router basename="/glamperos">
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/Registrarse" element={<Registrarse />} />  
+        <Route path="/ExplorarGlamping/:glampingId" element={<ExplorarGlamping />} />
+        <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
+        <Route path="*" element={<NoEncontrado />} />
+      </Routes>
+    </Router>
+    }
+  />
   );
 }
 

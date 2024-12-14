@@ -66,7 +66,7 @@ const Header: React.FC = () => {
     <div className="contenedor-Header">
       <header className="Header">
       <Link
-        to="/"
+        to="/glamperos/"
         className="Header-izquierda"
         onClick={(e) => {
           e.preventDefault(); // Previene la redirección inmediata
