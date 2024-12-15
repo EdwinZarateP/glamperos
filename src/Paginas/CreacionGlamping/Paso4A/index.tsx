@@ -23,9 +23,10 @@ const guardarGlampingP: React.FC = () => {
     ciudad_departamento: "",
     video_youtube: "",
     propietario_id: "",
+    nombrePropietario: "",
   });
 
-  const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento, idUsuario, correoUsuario} = useContext(ContextoApp)!; 
+  const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento, idUsuario, correoUsuario, nombreUsuario } = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -36,14 +37,17 @@ const guardarGlampingP: React.FC = () => {
     animationData: animationData,
   };
 
-  const enviarCorreo = async (correo: string) => {
+  const enviarCorreo = async (correo: string, nombre: string) => {
     try {
-      await axios.post("https://glamperosapi.onrender.com/correos/send-email", { correo });
+      await axios.post("https://glamperosapi.onrender.com/correos/send-email", {
+        email: correo,
+        name: nombre,
+      });
       console.log("Correo enviado con éxito");
     } catch (error) {
       console.error("Error al enviar el correo: ", error);
     }
-  };
+  };  
   
 
   // Sincroniza la idUsuario automáticamente al formulario cuando la variable global cambia
@@ -55,6 +59,15 @@ const guardarGlampingP: React.FC = () => {
       }));
     }
   }, [idUsuario]);
+// Sincroniza nombre propietario 
+  useEffect(() => {
+    if (nombreUsuario) {
+      setFormulario((prev) => ({
+        ...prev,
+        nombrePropietario: nombreUsuario, // Actualiza el nombre del propietario
+      }));
+    }
+  }, [nombreUsuario]);  
 
   // Sincroniza la ubicación automáticamente al formulario cuando la variable global cambia
   useEffect(() => {
@@ -209,7 +222,7 @@ const guardarGlampingP: React.FC = () => {
       lanzarConfetti();
       setShowPopup(true);
       // Llamar a la función para enviar correo
-      enviarCorreo(correoUsuario);
+      enviarCorreo(correoUsuario, nombreUsuario);
     } catch (error) {
       setMensaje("Error al crear el glamping: " + error);
     } finally {
