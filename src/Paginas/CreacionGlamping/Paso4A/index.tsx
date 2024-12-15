@@ -43,7 +43,7 @@ const guardarGlampingP: React.FC = () => {
         email: correo,
         name: nombre,
       });
-      console.log("Correo enviado con éxito");
+      console.log(`Correo enviado con éxito: ${nombreUsuario}`);
     } catch (error) {
       console.error("Error al enviar el correo: ", error);
     }
