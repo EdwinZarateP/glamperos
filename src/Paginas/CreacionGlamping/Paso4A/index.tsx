@@ -263,8 +263,8 @@ const guardarGlampingP: React.FC = () => {
       {showPopup && (
         <div className="popup-felicitaciones">
           <div className="popup-contenido">
-            <h2>¡Felicitaciones!</h2>
-            <p>Tu glamping se creó con éxito. 🎉</p>
+            <h2>¡Felicitaciones! 🎉</h2>
+            <p>Tu glamping se registró con éxito, te enviamos un correo con algunas reglas</p>
             <button className="cerrar-popup" onClick={cerrarPopup} ref={cerrarPopupRef}>
               Cerrar
             </button>
