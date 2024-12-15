@@ -20,7 +20,7 @@ import "./estilos.css";
 
 const CreacionGlamping: React.FC = () => {
   const [pasoActual, setPasoActual] = useState<number>(0);
-  const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal, imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping, precioEstandar } = useContext(ContextoApp)!;
+  const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal, imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping, precioEstandar, nombreUsuario, correoUsuario } = useContext(ContextoApp)!;
   
   useEffect(() => {
     // Establecer el nombre del glamping en vacío al renderizar el componente
@@ -179,7 +179,7 @@ if (pasoActual === 12) {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
-      // console.log(idUsuario, nombreUsuario,correoUsuario)
+      console.log(correoUsuario, nombreUsuario)
     }
   };
 
