@@ -12,7 +12,7 @@ const App: React.FC = () => {
     // Encerramos todo en el ProveedorVariables para que puedan acceder a ellas
     <ProveedorVariables 
       hijo={
-    <Router basename="/glamperos">
+    <Router basename="/">
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/Registrarse" element={<Registrarse />} />  
