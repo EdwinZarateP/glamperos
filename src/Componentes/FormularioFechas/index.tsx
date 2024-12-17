@@ -152,11 +152,11 @@ const fechaFinRender = fechaFin
           <div className="FormularioFechas-item">
             <span>
               ${precioPorNoche.toLocaleString()} COP x{" "}
-              {totalDiasRender === 0 ? 1 : totalDiasRender} noche
-              {totalDiasRender > 1 ? "s" : ""}
+              {totalDias === 0 ? 1 : totalDias} noche
+              {totalDias > 1 ? "s" : ""}
             </span>
             <span>
-              ${(precioPorNoche * (totalDiasRender === 0 ? 1 : totalDiasRender)).toLocaleString()} COP
+              ${(precioPorNoche * (totalDias === 0 ? 1 : totalDias)).toLocaleString()} COP
             </span>
           </div>
         </div>

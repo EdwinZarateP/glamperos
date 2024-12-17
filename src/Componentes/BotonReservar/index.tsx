@@ -40,9 +40,12 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   ? new Date(fechaFinUrl)
   : null; // Si no hay fechas en el contexto, se toma de la URL
 
-  const totalDiasRender = totalDias === 1
-  ? parseInt(totalDiasUrl ?? "1", 10) // Reemplaza undefined con un valor por defecto
-  : totalDias || (totalDiasUrl ? parseInt(totalDiasUrl, 10) : 1);
+  const totalDiasRender = 
+  totalDias !== undefined && totalDias !== null 
+    ? totalDias 
+    : totalDiasUrl 
+    ? parseInt(totalDiasUrl, 10) 
+    : 1;
 
   const FechasReservadas = [
     new Date(2024, 10, 20),
@@ -91,13 +94,15 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
       <div className="reservar-contenedor">
         <div
           className="reservar-total"
-          onClick={() => setMostrarCalendario(true)} 
+          onClick={() =>{ 
+            setMostrarCalendario(true);
+          }} 
         >
           <div className="reservar-precio">{precioFormateado}</div>
-          {totalDias > 0 ? (
+          {totalDiasRender > 0 ? (
             <div className="reservar-detalles">
               <span className="reservar-detalles-noche">
-                {totalDiasRender} {totalDias === 1 ? "noche" : "noches"}
+                {totalDiasRender} {totalDiasRender === 1 ? "noche" : "noches"}
               </span>
               <span className="reservar-fechas">
                 {formatearFecha(fechaInicioRender)} – {formatearFecha(fechaFinRender)}
