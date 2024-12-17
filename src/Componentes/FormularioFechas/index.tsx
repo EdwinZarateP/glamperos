@@ -3,6 +3,7 @@ import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
 import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
+import { useParams } from "react-router-dom";
 import Visitantes from "../Visitantes";
 
 interface FormularioFechasProps {
@@ -20,8 +21,11 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
 
   const {
     fechaInicio,
+    setFechaInicio,
     fechaFin,
+    setFechaFin,
     totalDias,
+    setTotalDias,
     totalHuespedes,
     setTotalSinImpuestos,
     mostrarCalendario,
@@ -29,6 +33,44 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
     mostrarVisitantes,
     setMostrarVisitantes,
   } = almacenVariables;
+
+  const {glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{glampingId: string, fechaInicioUrl: string; fechaFinUrl: string; totalDiasUrl:string }>();
+
+// Función para actualizar la URL completa
+const actualizarUrl = (fechaInicioParam: Date, fechaFinParam: Date, totalDias: number) => {
+  const fechaInicioStr = fechaInicioParam.toISOString().split("T")[0];
+  const fechaFinStr = fechaFinParam.toISOString().split("T")[0];
+  const totalDiasStr = totalDias.toString();
+
+  const nuevaUrl = `/ExplorarGlamping/${glampingId}/${fechaInicioStr}/${fechaFinStr}/${totalDiasStr}`;
+  window.history.replaceState(null, '', nuevaUrl);
+  };
+
+  useEffect(() => {
+    if (fechaInicio && fechaFin && totalDias) {
+      actualizarUrl(fechaInicio, fechaFin, totalDias);
+    }
+  }, [fechaInicio, fechaFin, totalDias]);
+
+
+
+// Prioridad: primero usar el contexto si existe, de lo contrario usar la URL.
+const fechaInicioRender = fechaInicio
+  ? fechaInicio
+  : fechaInicioUrl
+  ? new Date(fechaInicioUrl)
+  : null; // Si no hay fechas en el contexto, se toma de la URL
+
+const fechaFinRender = fechaFin
+  ? fechaFin
+  : fechaFinUrl
+  ? new Date(fechaFinUrl)
+  : null; // Si no hay fechas en el contexto, se toma de la URL
+
+  const totalDiasRender = totalDias === 1
+  ? parseInt(totalDiasUrl ?? "1", 10) // Reemplaza undefined con un valor por defecto
+  : totalDias || (totalDiasUrl ? parseInt(totalDiasUrl, 10) : 1);
+
 
   const FechasReservadas = [
     new Date(2024, 10, 20),
@@ -42,6 +84,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
       day: "numeric",
       month: "short",
       year: "numeric",
+      timeZone: "UTC",
     };
     return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
   };
@@ -51,6 +94,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
   useEffect(() => {
     setTotalSinImpuestos(totalSinImpuestos);
   }, [totalSinImpuestos, setTotalSinImpuestos]);
+
 
   useEffect(() => {
     if (mostrarVisitantes) {
@@ -72,15 +116,20 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
 
         <div
           className="FormularioFechas-fechas"
-          onClick={() => setMostrarCalendario(true)}
+          onClick={() => {
+            setFechaInicio(fechaInicioRender);
+            setFechaFin(fechaFinRender);
+            setTotalDias(totalDiasRender);
+            setMostrarCalendario(true);
+          }}
         >
           <div className="FormularioFechas-fecha">
             <span className="FormularioFechas-fechaTitulo">LLEGADA</span>
-            <span>{formatearFecha(fechaInicio)}</span>
+            <span>{formatearFecha(fechaInicioRender)}</span>
           </div>
           <div className="FormularioFechas-fecha">
             <span className="FormularioFechas-fechaTitulo">SALIDA</span>
-            <span>{formatearFecha(fechaFin)}</span>
+            <span>{formatearFecha(fechaFinRender)}</span>
           </div>
         </div>
 
@@ -104,11 +153,11 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) =
           <div className="FormularioFechas-item">
             <span>
               ${precioPorNoche.toLocaleString()} COP x{" "}
-              {totalDias === 0 ? 1 : totalDias} noche
-              {totalDias > 1 ? "s" : ""}
+              {totalDiasRender === 0 ? 1 : totalDiasRender} noche
+              {totalDiasRender > 1 ? "s" : ""}
             </span>
             <span>
-              ${(precioPorNoche * (totalDias === 0 ? 1 : totalDias)).toLocaleString()} COP
+              ${(precioPorNoche * (totalDiasRender === 0 ? 1 : totalDiasRender)).toLocaleString()} COP
             </span>
           </div>
         </div>

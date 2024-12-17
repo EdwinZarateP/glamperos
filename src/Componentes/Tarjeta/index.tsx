@@ -49,6 +49,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
   const {
     totalDias,
+    fechaInicio,
+    fechaFin
   } = almacenVariables;
 
   if (!imagenes || imagenes.length === 0) {
@@ -135,11 +137,30 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       </>
     );
   };
+  
+  const hoy = new Date();
+  const fechaInicioPorDefecto = new Date();
+  fechaInicioPorDefecto.setDate(hoy.getDate() + 1); // Día de mañana
+  const fechaFinPorDefecto = new Date();
+  fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
+
+  const fechaInicioUrl = fechaInicio
+  ? fechaInicio.toISOString().split('T')[0]
+  : fechaInicioPorDefecto.toISOString().split('T')[0];
+
+  const fechaFinUrl = fechaFin
+  ? fechaFin.toISOString().split('T')[0]
+  : fechaFinPorDefecto.toISOString().split('T')[0];
+
+  const totalDiasUrl = totalDias
+  ? totalDias
+  : 1
+
 
   return (
     <div className="tarjeta">
       <Link
-        to={`/ExplorarGlamping/${glampingId}`}
+        to={`/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`}
         className="tarjeta-link"
       >
         <div
