@@ -75,6 +75,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     onFavoritoChange(nuevoEstado);
   };
 
+
   const siguienteImagen = () => {
     setImagenActual((prev) => (prev < imagenes.length - 1 ? prev + 1 : prev));
   };
@@ -155,7 +156,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const totalDiasUrl = totalDias
   ? totalDias
   : 1
-
 
   return (
     <div className="tarjeta">

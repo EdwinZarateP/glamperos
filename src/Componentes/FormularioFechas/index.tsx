@@ -53,7 +53,6 @@ const actualizarUrl = (fechaInicioParam: Date, fechaFinParam: Date, totalDias: n
   }, [fechaInicio, fechaFin, totalDias]);
 
 
-
 // Prioridad: primero usar el contexto si existe, de lo contrario usar la URL.
 const fechaInicioRender = fechaInicio
   ? fechaInicio

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ContextoApp } from '../../Contexto/index';
 import { GiCampingTent } from 'react-icons/gi';
 import CalendarioGeneral from "../CalendarioGeneral";
+import { useParams } from "react-router-dom";
 import './estilos.css';
 
 // Cambié Promise<number> por number
@@ -11,7 +12,7 @@ interface ReservarBotonProps {
 
 const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   const almacenVariables = useContext(ContextoApp);
-
+  
   if (!almacenVariables) {
     throw new Error('ReservarBoton debe ser usado dentro de un proveedor de ContextoApp');
   }
@@ -24,6 +25,25 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
     mostrarCalendario,
   } = almacenVariables;
 
+   const {fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{glampingId: string, fechaInicioUrl: string; fechaFinUrl: string; totalDiasUrl:string }>();
+   
+  // Prioridad: primero usar el contexto si existe, de lo contrario usar la URL.
+  const fechaInicioRender = fechaInicio
+  ? fechaInicio
+  : fechaInicioUrl
+  ? new Date(fechaInicioUrl)
+  : null; // Si no hay fechas en el contexto, se toma de la URL
+
+  const fechaFinRender = fechaFin
+  ? fechaFin
+  : fechaFinUrl
+  ? new Date(fechaFinUrl)
+  : null; // Si no hay fechas en el contexto, se toma de la URL
+
+  const totalDiasRender = totalDias === 1
+  ? parseInt(totalDiasUrl ?? "1", 10) // Reemplaza undefined con un valor por defecto
+  : totalDias || (totalDiasUrl ? parseInt(totalDiasUrl, 10) : 1);
+
   const FechasReservadas = [
     new Date(2024, 10, 20),
     new Date(2024, 10, 28),
@@ -34,10 +54,10 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const nuevoPrecio = totalSinImpuestos * totalDias ;
+    const nuevoPrecio = totalSinImpuestos * totalDiasRender ;
     setPrecioBase(Math.round(nuevoPrecio));
     setIsLoading(false);
-  }, [totalSinImpuestos, totalDias]);
+  }, [totalSinImpuestos, totalDiasRender]);
 
   const precioFormateado = precioBase.toLocaleString('es-CO', {
     style: 'currency',
@@ -53,9 +73,9 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   };
 
   const manejarReserva = () => {
-    const mensaje = totalDias > 0
+    const mensaje = totalDiasRender > 0
       ? `Estás reservando por ${precioFormateado}.
-        - Noches: ${totalDias}
+        - Noches: ${totalDiasRender}
         - Desde: ${formatearFecha(fechaInicio)}
         - Hasta: ${formatearFecha(fechaFin)}`
       : `Estás reservando por ${precioFormateado} por noche.`;
@@ -77,10 +97,10 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
           {totalDias > 0 ? (
             <div className="reservar-detalles">
               <span className="reservar-detalles-noche">
-                {totalDias} {totalDias === 1 ? "noche" : "noches"}
+                {totalDiasRender} {totalDias === 1 ? "noche" : "noches"}
               </span>
               <span className="reservar-fechas">
-                {formatearFecha(fechaInicio)} – {formatearFecha(fechaFin)}
+                {formatearFecha(fechaInicioRender)} – {formatearFecha(fechaFinRender)}
               </span>
             </div>
           ) : (
