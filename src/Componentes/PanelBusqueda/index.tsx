@@ -189,7 +189,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               setCiudad_departamento("");
               setFechaInicio(null);
               setFechaFin(null);
-              setTotalDias(1);
+              setTotalDias(0);
               setTotalHuespedes(1);
               setCantidad_Adultos(1);
               setCantidad_Niños(0);

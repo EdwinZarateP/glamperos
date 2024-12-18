@@ -8,7 +8,7 @@ interface DescripcionGlampingTextoProps {
 const DescripcionGlampingTexto: React.FC<DescripcionGlampingTextoProps> = ({ descripcionGlamping }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const textoRef = useRef<HTMLParagraphElement>(null);
+  const textoRef = useRef<HTMLDivElement>(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -17,20 +17,14 @@ const DescripcionGlampingTexto: React.FC<DescripcionGlampingTextoProps> = ({ des
     const paragraph = textoRef.current;
 
     if (paragraph) {
-      console.log('scrollHeight:', paragraph.scrollHeight);
-      console.log('clientHeight:', paragraph.clientHeight);
-
       if (paragraph.scrollHeight > paragraph.clientHeight) {
-        console.log('Botón debe mostrarse');
         setShowButton(true);
       } else {
-        console.log('No se necesita mostrar el botón');
         setShowButton(false);
       }
     }
   }, [descripcionGlamping]);
 
-  
   // Bloquear el scroll del fondo al abrir el modal
   useEffect(() => {
     if (isModalOpen) {
@@ -46,15 +40,18 @@ const DescripcionGlampingTexto: React.FC<DescripcionGlampingTextoProps> = ({ des
   return (
     <div className="DescripcionGlampingTexto-contenedor">
       {/* Texto limitado a 3 líneas */}
-      <p className="DescripcionGlampingTexto-parrafo" ref={textoRef}>
+      <div className="DescripcionGlampingTexto-parrafo" ref={textoRef}>
         {descripcionGlamping}
-      </p>
+      </div>
 
       {/* Botón de Mostrar Más */}
       {showButton && (
-        <p className="DescripcionGlampingTexto-mostrar-mas-texto" onClick={openModal}>
+        <span
+          className="DescripcionGlampingTexto-mostrar-mas-texto"
+          onClick={openModal}
+        >
           Mostrar más &gt;
-        </p>
+        </span>
       )}
 
       {/* Modal para la descripción completa */}
@@ -62,10 +59,13 @@ const DescripcionGlampingTexto: React.FC<DescripcionGlampingTextoProps> = ({ des
         <div className="DescripcionGlampingTexto-modal">
           <div className="DescripcionGlampingTexto-modal-contenido">
             <h2 className="DescripcionGlampingTexto-titulo">Tenemos para ti</h2>
-            <button className="DescripcionGlampingTexto-cerrar-boton" onClick={closeModal}>
+            <button
+              className="DescripcionGlampingTexto-cerrar-boton"
+              onClick={closeModal}
+            >
               ×
             </button>
-            <p>{descripcionGlamping}</p>
+            <div>{descripcionGlamping}</div>
           </div>
         </div>
       )}

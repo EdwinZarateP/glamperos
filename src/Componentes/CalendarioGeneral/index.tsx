@@ -57,7 +57,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
 
       setTotalDias(dias);
     } else {
-      setTotalDias(1);
+      setTotalDias(0);
     }
   }, [fechaInicio, fechaFin, FechasReservadas, setTotalDias]);
 
@@ -78,7 +78,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   const manejarBorrarFechas = () => {
     setFechaInicio(null);
     setFechaFin(null);
-    setTotalDias(1);
+    setTotalDias(0);
   };
 
   const esFechaSeleccionada = (fecha: Date): boolean => {
