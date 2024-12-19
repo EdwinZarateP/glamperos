@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     );
   }
 
-  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud, setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, setPrecioEstandar, setCantidad_Huespedes, setDescuento, setAcepta_Mascotas} = almacenVariables; 
+  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud, setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, setPrecioEstandar, setCantidad_Huespedes, setDescuento, setAcepta_Mascotas, setMostrarFiltros} = almacenVariables; 
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false); // Estado para mostrar el PanelBusqueda
   const [busqueda, setBusqueda] = useState({
@@ -112,10 +112,10 @@ const Header: React.FC = () => {
             </div>
           )}
 
-          <div className="Header-menuUsuario" onClick={() => navigate("/Registrarse")}>
-            <FiMenu className="Header-iconoMenu" />
+          <div className="Header-menuUsuario" >
+            <FiMenu className="Header-iconoMenu" onClick={() => navigate("/Registrarse")}/>
             <div className="Header-iconoSettingsWrapper">
-              <VscSettings className="Header-iconoSettings" />
+              <VscSettings onClick={() => setMostrarFiltros(true)} />
             </div>
           </div>
         </div>

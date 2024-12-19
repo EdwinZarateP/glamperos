@@ -1,0 +1,40 @@
+.filtros-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Debe estar detrás del contenedor */
+}
+
+.FiltrosContenedor-contenedor {
+  position: relative;
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  height: 50%;
+  z-index: 1000;
+}
+
+.boton-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.boton-cerrar:hover {
+  color: #ff0000; /* Cambia a rojo al pasar el cursor */
+}

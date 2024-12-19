@@ -11,6 +11,17 @@ const libraries: Libraries = ["places"];
 
 type Libraries = string[];
 
+// Definir la interfaz de Filtros
+interface Filtros {
+  precioFiltrado?: number[]; // Suponiendo que sea un array de números
+  tipoGlampingFiltrado?: string;
+  amenidadesGlobalFiltrado?: string[];
+  precioMenorA?: number;
+  ciudadDepartamento?: string;
+  rangoFechas?: { inicio: string, fin: string };
+  cantidadHuespedes?: number;
+}
+
 //-------------------------------------------------------------------------------------
 // 1. Define la interfaz para el contexto
 //-------------------------------------------------------------------------------------
@@ -119,6 +130,12 @@ interface ContextProps {
   setPrecioEstandar: React.Dispatch<React.SetStateAction<number>>;
   descuento: number;
   setDescuento: React.Dispatch<React.SetStateAction<number>>;
+
+  // Filtros
+  filtros: Filtros;
+  setFiltros: Dispatch<SetStateAction<Filtros>>;
+  mostrarFiltros: boolean;
+  setMostrarFiltros: Dispatch<SetStateAction<boolean>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -181,6 +198,13 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [precioEstandar, setPrecioEstandar] = useState<number>(0);
   const [descuento, setDescuento] = useState<number>(0);
   
+  // Estado para filtros
+  const [filtros, setFiltros] = useState<Filtros>({});
+  const [mostrarFiltros, setMostrarFiltros] = useState<boolean>(false);
+
+//-------------------------------------------------------------------------------------
+// 3.  Nombra las variables
+//-------------------------------------------------------------------------------------
 
   const contextValue: ContextProps = {
     idUsuario, 
@@ -253,7 +277,11 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     precioEstandar,
     setPrecioEstandar,
     descuento,
-    setDescuento
+    setDescuento,
+    filtros,
+    setFiltros,
+    mostrarFiltros, 
+    setMostrarFiltros
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;

@@ -1,33 +1,36 @@
 .MenuIconos-contenedor {
-  position: fixed; 
-  top: 70px; 
-  left: 0; 
+  position: fixed;
+  top: 70px;
+  left: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
+  justify-content: center; /* Centrar contenido horizontalmente */
+  align-items: center;    /* Centrar contenido verticalmente */
   height: 70px;
   width: 100%;
-  padding: 10px 0;
-  z-index: 999; 
+  background-color: white;
+  z-index: 999;
 }
 
+.MenuIconos-contenedor-menuConIcono {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85%;
+  height: 100%;
+}
 
-/* Contenedor principal del menú */
 .MenuIconos-contenedor-menu {
   display: flex;
   align-items: center;
-  position: relative;
-  font-family: inherit; 
+  height: 100%;
   width: 85%;
+  border-radius: 8px;
 }
 
-/* Contenedor de iconos con desplazamiento horizontal */
 .MenuIconos-lista-iconos {
   display: flex;
   align-items: center;
   overflow-x: auto;
-  padding: 10px;
   white-space: nowrap;
   scroll-behavior: smooth;
   flex: 1;
@@ -37,24 +40,17 @@
   display: none;
 }
 
-.MenuIconos-lista-iconos {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Estilo para cada ítem de icono */
 .MenuIconos-icono-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-right: 20px;
+  margin: 0 15px;
   color: #333;
   text-align: center;
   font-size: 14px;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.3s ease;
-  font-family: inherit; /* Usa la fuente predeterminada de la página */
 }
 
 .MenuIconos-icono-item .MenuIconos-icono {
@@ -66,15 +62,13 @@
   transform: scale(1.1);
 }
 
-/* Estilo para el icono seleccionado */
 .MenuIconos-icono-seleccionado {
   color: #000;
   font-weight: bold;
 }
 
-/* Estilo para las flechas de navegación */
-.MenuIconos-flecha-izquierda, .MenuIconos-flecha-derecha {
-  position: absolute;
+.MenuIconos-flecha-izquierda,
+.MenuIconos-flecha-derecha {
   font-size: 20px;
   color: rgba(0, 0, 0, 0.6);
   background-color: white;
@@ -89,23 +83,52 @@
 }
 
 .MenuIconos-flecha-izquierda {
-  left: 10px;
+  margin-right: 10px;
 }
 
 .MenuIconos-flecha-derecha {
-  right: 10px;
+  margin-left: 10px;
 }
 
-.MenuIconos-flecha-izquierda:hover, .MenuIconos-flecha-derecha:hover {
-  transform: scale(1.2); /* Incrementa ligeramente el tamaño */
+.MenuIconos-flecha-izquierda:hover,
+.MenuIconos-flecha-derecha:hover {
+  transform: scale(1.2);
 }
 
-/* Responsividad: Oculta las flechas en pantallas pequeñas */
+.MenuIconos-settings {
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  width: auto;
+}
+
+.MenuIconos-settings span {
+  font-size: 16px;
+}
+
 @media (max-width: 540px) {
-  .MenuIconos-flecha-izquierda, .MenuIconos-flecha-derecha {
+  .MenuIconos-flecha-izquierda,
+  .MenuIconos-flecha-derecha {
     display: none;
   }
   .MenuIconos-contenedor-menu {
     width: 100%;
-  } 
+  }
 }
+
+@media (max-width: 900px) {
+  .MenuIconos-settings {
+    display: none;
+  }
+
+  .MenuIconos-contenedor-menu {
+    width: 100%;
+  }
+
+}
+

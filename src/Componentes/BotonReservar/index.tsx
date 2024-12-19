@@ -40,12 +40,12 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   ? new Date(fechaFinUrl)
   : null; // Si no hay fechas en el contexto, se toma de la URL
 
-  const totalDiasRender = 
-  totalDias !== undefined && totalDias !== null 
-    ? totalDias 
-    : totalDiasUrl 
-    ? parseInt(totalDiasUrl, 10) 
-    : 1;
+    
+  let totalDiasRender = totalDias 
+  ? totalDias
+  : totalDiasUrl
+  ? parseInt(totalDiasUrl, 10)
+  : 1;
 
   const FechasReservadas = [
     new Date(2024, 10, 20),

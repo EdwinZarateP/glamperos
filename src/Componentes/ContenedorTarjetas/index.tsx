@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
+import { ContextoApp } from '../../Contexto/index'
 import Tarjeta from "../../Componentes/Tarjeta/index";
 import "./estilos.css";
 
@@ -14,11 +15,20 @@ interface GlampingData {
     lng: number;
   };
 }
-
 const ContenedorTarjetas: React.FC = () => {
+    const almacenVariables = useContext(ContextoApp);
+  
+    if (!almacenVariables) {
+      throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
+    }
+  
+    const {
+      filtros,
+    } = almacenVariables;
+
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(18); // Cantidad de elementos visibles inicialmente
+  const [visibleCount, setVisibleCount] = useState(18);
 
   useEffect(() => {
     const fetchGlampings = async () => {
@@ -96,26 +106,50 @@ const ContenedorTarjetas: React.FC = () => {
     };
   }, [handleScroll]);
 
-  if (loading) {
-    return (
-      <div className="contenedor-tarjetas">
-        {[...Array(6)].map((_, index) => (
-          <div key={index} className="tarjeta-skeleton">
-            <div className="tarjeta-skeleton-imagen" />
-            <div className="tarjeta-skeleton-info" />
-          </div>
-        ))}
-      </div>
-    );
-  }
+    // Función para aplicar filtros dinámicos
+    const aplicarFiltros = (glampings: GlampingData[]): GlampingData[] => {
+      return glampings.filter((item) => {
+        // Verificar si el filtro de precio está definido y si el precio está fuera del rango
+        if (
+          filtros.precioFiltrado &&
+          (item.precioEstandar > filtros.precioFiltrado[0] || item.precioEstandar > filtros.precioFiltrado[1])
+        ) {
+          return false;
+        }
 
-  if (glampings.length === 0) {
-    return <div>No se encontraron glampings.</div>;
-  }
+        // Verificar si el filtro de ciudad está definido y si no coincide con la ciudad
+        if (filtros.ciudadDepartamento && item.ciudad_departamento !== filtros.ciudadDepartamento) {
+          return false;
+        }
+
+        return true;
+      });
+    };
+  
+    // Filtrar los datos según los filtros activos
+    const glampingsFiltrados = aplicarFiltros(glampings).slice(0, visibleCount);
+
+    if (loading) {
+      return (
+        <div className="contenedor-tarjetas">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="tarjeta-skeleton">
+              <div className="tarjeta-skeleton-imagen" />
+              <div className="tarjeta-skeleton-info" />
+            </div>
+          ))}
+        </div>
+      );
+    }
+  
+    if (glampingsFiltrados.length === 0) {
+      return <div>No se encontraron glampings.</div>;
+    }
 
   return (
     <div className="contenedor-tarjetas">
-      {glampings.slice(0, visibleCount).map((glamping, index) => (
+      
+      {glampingsFiltrados.map((glamping, index) => (
         <Tarjeta
           key={index}
           glampingId={glamping.glampingId}
