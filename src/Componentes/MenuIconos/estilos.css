@@ -14,31 +14,37 @@
 .MenuIconos-contenedor-menuConIcono {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 85%;
   height: 100%;
+  gap: 5px;
 }
 
 .MenuIconos-contenedor-menu {
+  flex-grow: 1; /* Ocupa el espacio restante */
   display: flex;
   align-items: center;
   height: 100%;
-  width: 85%;
+  min-width: 0; /* Evita que el contenido desborde */
   border-radius: 8px;
 }
 
 .MenuIconos-lista-iconos {
+  flex-grow: 0; /* No crece */
+  flex-shrink: 1; /* Puede reducirse si es necesario */
+  flex-basis: auto; /* Su tamaño depende del contenido */
   display: flex;
   align-items: center;
-  overflow-x: auto;
+  overflow-x: auto; /* Habilita el scroll horizontal */
   white-space: nowrap;
   scroll-behavior: smooth;
-  flex: 1;
+  -webkit-overflow-scrolling: touch; /* Suaviza el scroll en dispositivos táctiles */
 }
 
 .MenuIconos-lista-iconos::-webkit-scrollbar {
-  display: none;
+  display: none; /* Ocultar la barra de desplazamiento */
 }
+
+
 
 .MenuIconos-icono-item {
   display: flex;
@@ -105,6 +111,11 @@
   padding: 10px;
   border: 1px solid #ddd;
   width: auto;
+}
+
+.MenuIconos-settings:hover  {
+  border: 1px solid rgb(0, 0, 0);
+  background-color: #f8f8f8;
 }
 
 .MenuIconos-settings span {

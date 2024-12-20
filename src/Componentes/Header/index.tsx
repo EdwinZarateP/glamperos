@@ -28,7 +28,7 @@ const Header: React.FC = () => {
   });
 
   const manejarClickBusqueda = () => {
-    setMostrarPanelBusqueda(true); // Mostrar el PanelBusqueda
+    setMostrarPanelBusqueda(true); 
     document.body.style.overflow = "hidden";
   };
 

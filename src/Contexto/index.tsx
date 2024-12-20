@@ -14,12 +14,6 @@ type Libraries = string[];
 // Definir la interfaz de Filtros
 interface Filtros {
   precioFiltrado?: number[]; // Suponiendo que sea un array de números
-  tipoGlampingFiltrado?: string;
-  amenidadesGlobalFiltrado?: string[];
-  precioMenorA?: number;
-  ciudadDepartamento?: string;
-  rangoFechas?: { inicio: string, fin: string };
-  cantidadHuespedes?: number;
 }
 
 //-------------------------------------------------------------------------------------
@@ -132,10 +126,17 @@ interface ContextProps {
   setDescuento: React.Dispatch<React.SetStateAction<number>>;
 
   // Filtros
+  activarFiltros: boolean;
+  setActivarFiltros: Dispatch<SetStateAction<boolean>>;
   filtros: Filtros;
   setFiltros: Dispatch<SetStateAction<Filtros>>;
   mostrarFiltros: boolean;
   setMostrarFiltros: Dispatch<SetStateAction<boolean>>;
+  precioFiltrado: number[];
+  setPrecioFiltrado: Dispatch<SetStateAction<number[]>>;
+  tipoGlampingFiltrado: string | undefined;
+  setTipoGlampingFiltrado: Dispatch<SetStateAction<string | undefined>>;
+  
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -199,8 +200,11 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [descuento, setDescuento] = useState<number>(0);
   
   // Estado para filtros
+  const [activarFiltros, setActivarFiltros] = useState<boolean>(false);
   const [filtros, setFiltros] = useState<Filtros>({});
   const [mostrarFiltros, setMostrarFiltros] = useState<boolean>(false);
+  const [precioFiltrado, setPrecioFiltrado] = useState<number[]>([100000,1000000]);
+  const [tipoGlampingFiltrado, setTipoGlampingFiltrado] = useState<string | undefined>(undefined);
 
 //-------------------------------------------------------------------------------------
 // 3.  Nombra las variables
@@ -278,10 +282,16 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setPrecioEstandar,
     descuento,
     setDescuento,
+    activarFiltros,
+    setActivarFiltros,
     filtros,
     setFiltros,
     mostrarFiltros, 
-    setMostrarFiltros
+    setMostrarFiltros,
+    precioFiltrado,
+    setPrecioFiltrado,
+    tipoGlampingFiltrado,
+    setTipoGlampingFiltrado
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;

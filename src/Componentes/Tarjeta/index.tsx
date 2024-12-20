@@ -5,6 +5,7 @@ import { BsBalloonHeartFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ContextoApp } from "../../Contexto/index";
+import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import "./estilos.css";
 
 interface TarjetaProps {
@@ -16,6 +17,7 @@ interface TarjetaProps {
   favorito: boolean;
   onFavoritoChange: (nuevoEstado: boolean) => void;
   tarifaServicio?: number;
+  tipoGlamping: string;
   nombreGlamping: string;
   ubicacion: {
     lat: number;
@@ -34,6 +36,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   tarifaServicio,
   nombreGlamping,
+  tipoGlamping,
   
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
@@ -56,16 +59,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   if (!imagenes || imagenes.length === 0) {
     return <div>No hay imágenes para mostrar.</div>;
   }
-
-  const calcularTarifaServicio = (precio: number): number => {
-    if (precio > 0 && precio <= 299999) return 1.15;
-    if (precio >= 300000 && precio <= 400000) return 1.12;
-    if (precio >= 401000 && precio <= 500000) return 1.11;
-    if (precio >= 501000 && precio <= 600000) return 1.1;
-    if (precio >= 601000 && precio <= 800000) return 1.09;
-    if (precio >= 801000 && precio <= 2000000) return 1.08;
-    return 1;
-  };
 
   const tarifa = tarifaServicio ?? calcularTarifaServicio(precio);
 
@@ -225,7 +218,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">{nombreGlamping   }</span>
+          <span className="tarjeta-nombre">{nombreGlamping}{tipoGlamping}</span>
           <div className="tarjeta-calificacion">
             <FaStar className="estrella" />
             <span>{calificacion}</span>

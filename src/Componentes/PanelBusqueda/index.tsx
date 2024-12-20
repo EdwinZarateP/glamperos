@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { FiSearch } from "react-icons/fi";
 import { MdClose } from "react-icons/md"; // Icono de "X" para borrar
 import CalendarioGeneral from "../CalendarioGeneral";
@@ -111,13 +111,6 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       }
     }
   };
-
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
 
   return (
     <>

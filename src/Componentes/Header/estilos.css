@@ -108,12 +108,22 @@
 }
 
 .Header-botonAnfitrion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 0.9rem;
   color: #333;
   background: none;
   border: none;
   cursor: pointer;
   white-space: nowrap;
+  padding: 5px;
+  height: 40px;
+}
+
+.Header-botonAnfitrion:hover{
+  background-color: #f8f8f8;
+  border-radius: 15px;
 }
 
 .Header-icono {

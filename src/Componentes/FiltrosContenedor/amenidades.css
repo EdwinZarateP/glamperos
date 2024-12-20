@@ -1,0 +1,39 @@
+/* amenidades.css */
+
+.FiltrosAmenidades-container {
+  margin-top: 20px;
+  background-color: aliceblue;
+}
+
+.FiltrosAmenidades-label {
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.FiltrosAmenidades-option {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.FiltrosAmenidades-checkbox {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.FiltrosAmenidades-checkbox-label {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.FiltrosAmenidades-checkbox:checked + .FiltrosAmenidades-checkbox-label {
+  font-weight: bold;
+  color: #0056b3; /* Color para el texto cuando el checkbox está marcado */
+}
+
+.FiltrosAmenidades-checkbox:focus {
+  outline: none;
+  border-color: #007bff;
+}

@@ -61,6 +61,12 @@ const MenuIconos: React.FC = () => {
         setIconoSeleccionado(indice);
     };
 
+    const manejarClickAbrirFiltros = () => {
+      setMostrarFiltros(true); 
+      document.body.style.overflow = "hidden";
+    };
+
+
   return (
     <div className="MenuIconos-contenedor">
       <div className="MenuIconos-contenedor-menuConIcono">
@@ -88,8 +94,8 @@ const MenuIconos: React.FC = () => {
             <MdOutlineKeyboardArrowRight />
           </div>
         </div>
-        <div className="MenuIconos-settings">
-          <VscSettings onClick={() => setMostrarFiltros(true)} />
+        <div className="MenuIconos-settings" onClick={manejarClickAbrirFiltros}>
+          <VscSettings />
             <span>Filtros</span> 
         </div>
       </div>

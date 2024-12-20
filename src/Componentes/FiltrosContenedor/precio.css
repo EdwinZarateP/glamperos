@@ -1,0 +1,76 @@
+.FiltroPrecios-Rango-precios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 180px; /* Ajustamos la altura para que haya espacio suficiente */
+}
+
+.FiltroPrecios-Rango-precios label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.FiltroPrecios-Input-Contenedor {
+    display: flex;
+    flex-direction: column; /* Colocamos los inputs uno encima del otro */
+    width: 100%;
+}
+
+.FiltroPrecios-Rango-precios input[type="range"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    outline: none;
+    margin: 5px 0; /* Añadimos un margen entre los inputs */
+    transition: background 0.3s ease;
+}
+
+.FiltroPrecios-Rango-precios input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 25px;
+    background-color: #2F6B3E;
+    border: 2px solid #fff;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.FiltroPrecios-Rango-precios input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.FiltroPrecios-Rango-precios span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #0b0c0c;
+    background-color: #eef7ff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-top: 20px; /* Reducimos el margen superior */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+@media (max-width: 600px) {
+    .FiltroPrecios-Rango-precios span {
+        font-size: 12px;
+
+    }
+}
+

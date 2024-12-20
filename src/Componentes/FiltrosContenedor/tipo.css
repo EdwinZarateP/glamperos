@@ -1,0 +1,69 @@
+/* FiltrosTipo */
+.FiltrosContenedor-Tipo {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .FiltrosContenedor-Tipo label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .FiltrosContenedor-Tipo-opciones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .FiltrosContenedor-Tipo-opcion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px 10px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: background-color 0.3s, border 0.3s;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .FiltrosContenedor-Tipo-opcion:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .FiltrosContenedor-Tipo-opcion.seleccionado {
+    background-color: #2F6B3E;
+    color: white;
+    border: 2px solid #2F6B3E;
+  }
+  
+  .FiltrosContenedor-Tipo-icono {
+    font-size: 24px;
+    margin-right: 8px;
+  }
+  
+  .FiltrosContenedor-Tipo-opcion span {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .FiltrosContenedor-Tipo-opcion:active {
+    background-color:#2F6B3E; /* Sombra al hacer clic */
+  }
+  
+
+  @media (max-width: 600px) {
+  .FiltrosContenedor-Tipo-opcion {
+    width: 120px;
+    height: 40px;  
+  }
+}
