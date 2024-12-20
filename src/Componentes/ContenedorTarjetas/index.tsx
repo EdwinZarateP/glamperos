@@ -126,34 +126,53 @@ const ContenedorTarjetas: React.FC = () => {
   }
 
   // Filtrar los glampings según los criterios del diccionario de filtros
-  const glampingsFiltrados = glampings.filter((glamping) => {
-    // Filtros de precio y tipo si activarFiltros es true
-    const cumplePrecio =
-      !activarFiltros || (filtros?.precioFilter?.[0] !== undefined &&
-      filtros?.precioFilter?.[1] !== undefined &&
-      glamping.precioEstandar >= filtros.precioFilter[0] &&
-      glamping.precioEstandar <= filtros.precioFilter[1]);
-      
-    const cumpleTipo =
-      !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
-    
-    // Filtro de coordenadas solo si activarFiltrosUbicacion es true
-    const cumpleCoordenadas =
-      !activarFiltrosUbicacion || 
-      (filtros?.cordenadasFilter?.LATITUD !== undefined &&
-      filtros?.cordenadasFilter?.LONGITUD !== undefined &&
-      calcularDistancia(
-        filtros.cordenadasFilter.LATITUD,
-        filtros.cordenadasFilter.LONGITUD,
-        glamping.ubicacion.lat,
-        glamping.ubicacion.lng
-      ) <= 100);
+const glampingsFiltrados = glampings.filter((glamping) => {
+  // Filtros de precio y tipo si activarFiltros es true
+  const cumplePrecio =
+    !activarFiltros || (filtros?.precioFilter?.[0] !== undefined &&
+    filtros?.precioFilter?.[1] !== undefined &&
+    glamping.precioEstandar >= filtros.precioFilter[0] &&
+    glamping.precioEstandar <= filtros.precioFilter[1]);
 
-    return cumplePrecio && cumpleTipo && cumpleCoordenadas;
-  });
+  const cumpleTipo =
+    !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
 
-  // Limitar la cantidad de glampings visibles según visibleCount
-  const glampingsMostrados = glampingsFiltrados.slice(0, visibleCount);
+  // Filtro de coordenadas solo si activarFiltrosUbicacion es true
+  const cumpleCoordenadas =
+    !activarFiltrosUbicacion || 
+    (filtros?.cordenadasFilter?.LATITUD !== undefined &&
+    filtros?.cordenadasFilter?.LONGITUD !== undefined &&
+    calcularDistancia(
+      filtros.cordenadasFilter?.LATITUD,  // Uso del encadenamiento opcional
+      filtros.cordenadasFilter?.LONGITUD, // Uso del encadenamiento opcional
+      glamping.ubicacion.lat,
+      glamping.ubicacion.lng
+    ) <= 100);
+
+  return cumplePrecio && cumpleTipo && cumpleCoordenadas;
+});
+
+// Ordenar los glampings por distancia si activarFiltrosUbicacion es true
+const glampingsOrdenados = activarFiltrosUbicacion && filtros?.cordenadasFilter
+  ? glampingsFiltrados.sort((a, b) => {
+      const distanciaA = calcularDistancia(
+        filtros.cordenadasFilter?.LATITUD ?? 0,  // Valor por defecto si es undefined
+        filtros.cordenadasFilter?.LONGITUD ?? 0, // Valor por defecto si es undefined
+        a.ubicacion.lat,
+        a.ubicacion.lng
+      );
+      const distanciaB = calcularDistancia(
+        filtros.cordenadasFilter?.LATITUD ?? 0,  // Valor por defecto si es undefined
+        filtros.cordenadasFilter?.LONGITUD ?? 0, // Valor por defecto si es undefined
+        b.ubicacion.lat,
+        b.ubicacion.lng
+      );
+      return distanciaA - distanciaB; // Orden ascendente por distancia (más cercano primero)
+    })
+  : glampingsFiltrados;
+
+// Limitar la cantidad de glampings visibles según visibleCount
+const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
 
 
   if (loading) {
