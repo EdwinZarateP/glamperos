@@ -13,7 +13,8 @@ type Libraries = string[];
 
 // Definir la interfaz de Filtros
 interface Filtros {
-  precioFiltrado?: number[]; // Suponiendo que sea un array de números
+  precioFilter?: number[]; 
+  tipoFilter?:string
 }
 
 //-------------------------------------------------------------------------------------
@@ -201,9 +202,13 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   
   // Estado para filtros
   const [activarFiltros, setActivarFiltros] = useState<boolean>(false);
-  const [filtros, setFiltros] = useState<Filtros>({});
+  // Estado para filtros con valores por defecto
+  const [filtros, setFiltros] = useState<Filtros>({
+    precioFilter: [50000, 2200000], // Rango de precios por defecto
+    tipoFilter: '',    // Tipo de glamping por defecto
+  });
   const [mostrarFiltros, setMostrarFiltros] = useState<boolean>(false);
-  const [precioFiltrado, setPrecioFiltrado] = useState<number[]>([100000,1000000]);
+  const [precioFiltrado, setPrecioFiltrado] = useState<number[]>([50000,2200000]);
   const [tipoGlampingFiltrado, setTipoGlampingFiltrado] = useState<string | undefined>(undefined);
 
 //-------------------------------------------------------------------------------------

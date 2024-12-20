@@ -24,7 +24,7 @@ const ContenedorTarjetas: React.FC = () => {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { precioFiltrado, activarFiltros, tipoGlamping } = almacenVariables;
+  const { activarFiltros, filtros} = almacenVariables;
 
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -108,13 +108,16 @@ const ContenedorTarjetas: React.FC = () => {
   }, [handleScroll]);
 
 
-  // Filtrar los glampings según los criterios de precio y tipo solo si activarFiltros es true
-  const glampingsFiltrados = activarFiltros
-    ? glampings.filter((glamping) =>
-        glamping.precioEstandar > precioFiltrado[0] && glamping.precioEstandar < precioFiltrado[1]
-        && (tipoGlamping === '' || glamping.tipoGlamping === tipoGlamping)
-      )
-    : glampings;  // Si activarFiltros es false, no se aplica ningún filtro
+// Filtrar los glampings según los criterios del diccionario de filtros solo si activarFiltros es true
+const glampingsFiltrados = activarFiltros
+  ? glampings.filter((glamping) =>
+      filtros?.precioFilter?.[0] !== undefined &&
+      filtros?.precioFilter?.[1] !== undefined &&
+      glamping.precioEstandar >= filtros.precioFilter[0] &&
+      glamping.precioEstandar <= filtros.precioFilter[1] &&
+      (filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter)
+    )
+  : glampings;
 
   // Limitar la cantidad de glampings visibles según visibleCount
   const glampingsMostrados = glampingsFiltrados.slice(0, visibleCount);

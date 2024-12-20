@@ -9,7 +9,7 @@ const Paso3B: React.FC = () => {
   const manejarPreciosEstandar = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valor = e.target.value.replace(/\D/g, ''); // Eliminar no numéricos
     const valorNumerico = Number(valor);
-    if (valorNumerico <= 5000000) {
+    if (valorNumerico <= 2000000) {
       setPrecioEstandar(valorNumerico); // Almacenar siempre como número
     }
   };

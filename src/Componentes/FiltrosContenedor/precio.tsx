@@ -43,8 +43,8 @@ const FiltroPrecios: React.FC = () => {
         {/* Rango inferior (valor mínimo) */}
         <input
           type="range"
-          min="100000"
-          max="1000000"
+          min="50000"
+          max="2200000"
           step="20000"
           value={precioFiltrado[0]}
           onChange={(e) => handlePrecioChange(e, 0)}
@@ -53,8 +53,8 @@ const FiltroPrecios: React.FC = () => {
         {/* Rango superior (valor máximo) */}
         <input
           type="range"
-          min="100000"
-          max="1000000"
+          min="50000"
+          max="2200000"
           step="20000"
           value={precioFiltrado[1]}
           onChange={(e) => handlePrecioChange(e, 1)}
