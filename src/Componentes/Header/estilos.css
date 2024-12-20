@@ -160,6 +160,22 @@
   color: #000000;
 }
 
+.Header-badge {
+  position: absolute;
+  top: -9px;
+  right: 2px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 /* Responsividad */
 
 /* Pantallas pequeñas (máximo ancho: 900px) */

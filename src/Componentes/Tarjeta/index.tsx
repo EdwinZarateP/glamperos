@@ -4,6 +4,7 @@ import { AiTwotoneHeart } from "react-icons/ai";
 import { BsBalloonHeartFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { MdOutlinePets } from "react-icons/md";
 import { ContextoApp } from "../../Contexto/index";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import "./estilos.css";
@@ -23,6 +24,7 @@ interface TarjetaProps {
     lat: number;
     lng: number;
   };
+  Acepta_Mascotas:boolean;
   onImagenCargada?: () => void;
 }
 
@@ -36,7 +38,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   tarifaServicio,
   nombreGlamping,
-  tipoGlamping,
+  Acepta_Mascotas,  
   
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
@@ -176,6 +178,12 @@ const Tarjeta: React.FC<TarjetaProps> = ({
               />
             ))}
           </div>
+
+          {/* Aquí agregamos el ícono de mascota, condicionado a Acepta_Mascotas */}
+          {Acepta_Mascotas && (
+            <MdOutlinePets className="tarjeta-icono-mascota" />
+          )}
+
           <div className="puntos">
             {puntosVisibles.map((_, index) => (
               <span
@@ -218,7 +226,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">{nombreGlamping}{tipoGlamping}</span>
+          <span className="tarjeta-nombre">{nombreGlamping}</span>
           <div className="tarjeta-calificacion">
             <FaStar className="estrella" />
             <span>{calificacion}</span>

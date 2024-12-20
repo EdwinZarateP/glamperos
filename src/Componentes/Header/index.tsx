@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-// import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
@@ -19,13 +18,13 @@ const Header: React.FC = () => {
     );
   }
 
-  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud, setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, setPrecioEstandar, setCantidad_Huespedes, setDescuento, setAcepta_Mascotas, setMostrarFiltros} = almacenVariables; 
+  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud,
+     setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, 
+     setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, 
+     setPrecioEstandar, setCantidad_Huespedes, setDescuento, setAcepta_Mascotas,
+     setMostrarFiltros, cantiadfiltrosAplicados, busqueda, setBusqueda } = almacenVariables; 
 
-  const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false); // Estado para mostrar el PanelBusqueda
-  const [busqueda, setBusqueda] = useState({
-    destino: "",
-    fechas: "",
-  });
+  const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false);
 
   const manejarClickBusqueda = () => {
     setMostrarPanelBusqueda(true); 
@@ -65,9 +64,9 @@ const Header: React.FC = () => {
   };
 
   const irAInicio = () => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-    setTimeout(() => navigate("/"), 100); // Retardo para permitir el scroll
-  };
+    navigate("/"); // Navega a la ruta "/"
+    window.location.reload(); // Recarga la página
+  };  
 
   return (
     <div className="contenedor-Header">
@@ -116,6 +115,9 @@ const Header: React.FC = () => {
             <FiMenu className="Header-iconoMenu" onClick={() => navigate("/Registrarse")}/>
             <div className="Header-iconoSettingsWrapper">
               <VscSettings onClick={() => setMostrarFiltros(true)} />
+              {cantiadfiltrosAplicados > 0 && (
+                <div className="Header-badge">{cantiadfiltrosAplicados}</div>
+              )}
             </div>
           </div>
         </div>

@@ -44,8 +44,6 @@
   display: none; /* Ocultar la barra de desplazamiento */
 }
 
-
-
 .MenuIconos-icono-item {
   display: flex;
   flex-direction: column;
@@ -111,6 +109,7 @@
   padding: 10px;
   border: 1px solid #ddd;
   width: auto;
+  position: relative; /* Necesario para el badge */
 }
 
 .MenuIconos-settings:hover  {
@@ -120,6 +119,29 @@
 
 .MenuIconos-settings span {
   font-size: 16px;
+}
+
+/* Círculo con el número 2 sobre el ícono de configuración */
+.MenuIconos-settings-icono {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.MenuIconos-badge {
+  position: absolute;
+  top: -5px;  /* Posición vertical del círculo (ajústalo si es necesario) */
+  right: -5px;  /* Posición horizontal del círculo (ajústalo si es necesario) */
+  width: 18px;  /* Tamaño del círculo */
+  height: 18px;  /* Tamaño del círculo */
+  background-color: red;  /* Color de fondo del círculo */
+  color: white;  /* Color del texto (número) */
+  border-radius: 50%;  /* Forma redonda */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;  /* Tamaño del número */
+  font-weight: bold;
 }
 
 @media (max-width: 540px) {
@@ -140,6 +162,4 @@
   .MenuIconos-contenedor-menu {
     width: 100%;
   }
-
 }
-

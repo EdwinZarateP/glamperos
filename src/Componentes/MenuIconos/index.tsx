@@ -18,7 +18,7 @@ const MenuIconos: React.FC = () => {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
     }
 
-    const { setMostrarFiltros } = almacenVariables;
+    const { setMostrarFiltros, cantiadfiltrosAplicados } = almacenVariables;
 
     const [iconoSeleccionado, setIconoSeleccionado] = useState<number | null>(null);
     const iconos = [
@@ -95,8 +95,13 @@ const MenuIconos: React.FC = () => {
           </div>
         </div>
         <div className="MenuIconos-settings" onClick={manejarClickAbrirFiltros}>
-          <VscSettings />
-            <span>Filtros</span> 
+          <div className="MenuIconos-settings-icono">
+            <VscSettings />
+          </div>
+          <span>Filtros</span> 
+          {cantiadfiltrosAplicados > 0 && (
+            <div className="MenuIconos-badge">{cantiadfiltrosAplicados}</div>
+          )}
         </div>
       </div>
     </div>

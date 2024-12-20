@@ -166,11 +166,11 @@ if (pasoActual === 12) {
     return;
   }
 
-  if (precioEstandar < 50000) {
+  if (precioEstandar < 60000) {
     Swal.fire({
       icon: "warning",
-      title: "¡El precio debe ser al menos 50,000! 💸",
-      text: "El precio estándar no puede ser menor a 50,000",
+      title: "¡El precio debe ser al menos 60,000! 💸",
+      text: "El precio estándar no puede ser menor a 60,000",
       confirmButtonText: "Aceptar",
     });
     return;

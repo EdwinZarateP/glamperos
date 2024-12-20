@@ -58,7 +58,6 @@ body.no-scroll {
 
 .FiltrosContenedor-botones-fijos {
   position: absolute;
-
   bottom: 0;
   left: 0;
   width: 100%;
@@ -72,19 +71,35 @@ body.no-scroll {
   z-index: 10;
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);}
 
-.FiltrosContenedor-botones-fijos button {
+
+.FiltrosContenedor-boton-aplicar {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #b1b3b2;
-  color: white;
-  border: none;
   border-radius: 5px;
+  color: white;
+  border:none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background-color: #2F6B3E; /* Color verde (puedes cambiarlo por el color que desees) */
 }
 
-.FiltrosContenedor-botones-fijos button:hover {
-  background-color: #585959;
+.FiltrosContenedor-boton-aplicar:hover {
+  background-color: #418f54; /* Un tono más oscuro cuando se pase el cursor */
+}
+
+.FiltrosContenedor-boton-limpiar {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border:none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #626563; /* Color verde (puedes cambiarlo por el color que desees) */
+}
+
+.FiltrosContenedor-boton-limpiar:hover {
+  background-color: #aeb0ae; /* Un tono más oscuro cuando se pase el cursor */
 }
 
 

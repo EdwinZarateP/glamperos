@@ -12,21 +12,41 @@ const FiltrosContenedor = () => {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const {  setMostrarFiltros, setActivarFiltros, tipoGlamping,setPrecioFiltrado, setTipoGlamping, precioFiltrado, setFiltros,filtros} = almacenVariables;
+  const {  setMostrarFiltros, setActivarFiltros, tipoGlamping,setPrecioFiltrado, setTipoGlamping, 
+    precioFiltrado, setFiltros, setCantiadfiltrosAplicados} = almacenVariables;
 
     
-  const aplicarFiltros = () => {
-    // Actualiza el estado global de filtros con el valor de precioFiltrado
-    setFiltros((prevFiltros) => ({
-      ...prevFiltros, // Mantiene las demás propiedades
-      precioFilter: precioFiltrado, // Actualiza solo el precioFilter con el valor actual
-      tipoFilter: tipoGlamping, // Si también quieres guardar el tipo de glamping, puedes incluirlo aquí
-    }));
-    setMostrarFiltros(false); 
-    setActivarFiltros(true); 
-    console.log(filtros)
-    document.body.style.overflow = "auto"; // Restaura el overflow de la página
-  };
+ const aplicarFiltros = () => {
+  // Verificar la cantidad de filtros aplicados
+  let filtrosActivos = 0;
+  
+  // Comprobar si el filtro de precio es distinto al valor por defecto
+  const valorPorDefectoPrecio: [number, number] = [60000, 2200000];
+  if (JSON.stringify(precioFiltrado) !== JSON.stringify(valorPorDefectoPrecio)) {
+    filtrosActivos++; // Filtro de precio activo
+  }
+
+  // Comprobar si el filtro de tipoGlamping tiene un valor
+  if (tipoGlamping && tipoGlamping !== '') {
+    filtrosActivos++; // Filtro de tipoGlamping activo
+  }
+  // Actualizar el contador de filtros aplicados
+  setCantiadfiltrosAplicados(filtrosActivos);
+
+  // Actualiza el estado global de filtros con el valor de precioFiltrado
+  setFiltros((prevFiltros) => ({
+    ...prevFiltros, // Mantiene las demás propiedades
+    precioFilter: precioFiltrado.length === 2 ? precioFiltrado : [60000, 2200000],
+    tipoFilter: tipoGlamping
+    
+  }));
+  
+  setMostrarFiltros(false);
+  setActivarFiltros(true);
+  document.body.style.overflow = "auto";
+};
+
+
 
   const cerrarFiltros = () => {
     setMostrarFiltros(false); 
@@ -35,8 +55,9 @@ const FiltrosContenedor = () => {
 
   const limpiarFiltros = () => {
     setTipoGlamping('')
-    setPrecioFiltrado([50000,2200000])
-    setActivarFiltros(false); 
+    setPrecioFiltrado([60000,2200000])
+    setActivarFiltros(false);
+    setCantiadfiltrosAplicados(0); 
   };
   
   return (
@@ -71,8 +92,8 @@ const FiltrosContenedor = () => {
         </div>
                   
             <div className="FiltrosContenedor-botones-fijos">
-                <button onClick={limpiarFiltros}>Limpiar filtros</button>
-                <button onClick={aplicarFiltros}>Aplicar</button>
+              <button className="FiltrosContenedor-boton-limpiar" onClick={limpiarFiltros}>Limpiar filtros</button>
+              <button className="FiltrosContenedor-boton-aplicar" onClick={aplicarFiltros}>Aplicar</button>
             </div>  
       </div>
       

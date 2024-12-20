@@ -31,6 +31,15 @@
   border-radius: 8px;
 }
 
+
+.tarjeta-icono-mascota {
+  position: absolute;
+  bottom: 10px; /* Ajusta según tus necesidades */
+  left: 10px; /* Ajusta según tus necesidades */
+  font-size: 1.5rem; /* Ajusta el tamaño del ícono según lo necesites */  color: white; /* O cualquier color que quieras */
+  z-index: 10; /* Para asegurarte de que esté encima de las imágenes */
+}
+
 /* Skeleton loader */
 .tarjeta-skeleton {
   width: 100%;

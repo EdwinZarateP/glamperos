@@ -13,8 +13,12 @@ type Libraries = string[];
 
 // Definir la interfaz de Filtros
 interface Filtros {
-  precioFilter?: number[]; 
-  tipoFilter?:string
+  precioFilter?: number[];
+  tipoFilter?: string;
+  cordenadasFilter?: {
+    LATITUD: number;
+    LONGITUD: number;
+  };
 }
 
 //-------------------------------------------------------------------------------------
@@ -125,12 +129,20 @@ interface ContextProps {
   setPrecioEstandar: React.Dispatch<React.SetStateAction<number>>;
   descuento: number;
   setDescuento: React.Dispatch<React.SetStateAction<number>>;
+  
+  // Busqueda del Header
+  busqueda: { destino: string, fechas: string };
+  setBusqueda: Dispatch<SetStateAction<{ destino: string, fechas: string }>>;
 
   // Filtros
   activarFiltros: boolean;
   setActivarFiltros: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosUbicacion: boolean;
+  setActivarFiltrosUbicacion: Dispatch<SetStateAction<boolean>>;
   filtros: Filtros;
   setFiltros: Dispatch<SetStateAction<Filtros>>;
+  cantiadfiltrosAplicados: number;
+  setCantiadfiltrosAplicados: Dispatch<SetStateAction<number>>;
   mostrarFiltros: boolean;
   setMostrarFiltros: Dispatch<SetStateAction<boolean>>;
   precioFiltrado: number[];
@@ -202,13 +214,22 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   
   // Estado para filtros
   const [activarFiltros, setActivarFiltros] = useState<boolean>(false);
+  const [activarFiltrosUbicacion, setActivarFiltrosUbicacion] = useState<boolean>(false);
   // Estado para filtros con valores por defecto
   const [filtros, setFiltros] = useState<Filtros>({
     precioFilter: [50000, 2200000], // Rango de precios por defecto
-    tipoFilter: '',    // Tipo de glamping por defecto
-  });
+    tipoFilter: '',
+    cordenadasFilter: { LATITUD: 4.123456, LONGITUD: -74.123456 }, // Aquí como un objeto, no un array
+  });  
+  
+
+  // Busqueda del Header
+  const [busqueda, setBusqueda] = useState({ destino: "", fechas: "" });
+
+  //filtros
   const [mostrarFiltros, setMostrarFiltros] = useState<boolean>(false);
-  const [precioFiltrado, setPrecioFiltrado] = useState<number[]>([50000,2200000]);
+  const [cantiadfiltrosAplicados, setCantiadfiltrosAplicados] = useState<number>(0);
+  const [precioFiltrado, setPrecioFiltrado] = useState<number[]>([60000,2200000]);
   const [tipoGlampingFiltrado, setTipoGlampingFiltrado] = useState<string | undefined>(undefined);
 
 //-------------------------------------------------------------------------------------
@@ -289,10 +310,16 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setDescuento,
     activarFiltros,
     setActivarFiltros,
+    activarFiltrosUbicacion,
+    setActivarFiltrosUbicacion,
+    busqueda,
+    setBusqueda,
     filtros,
     setFiltros,
     mostrarFiltros, 
     setMostrarFiltros,
+    cantiadfiltrosAplicados,
+    setCantiadfiltrosAplicados,
     precioFiltrado,
     setPrecioFiltrado,
     tipoGlampingFiltrado,

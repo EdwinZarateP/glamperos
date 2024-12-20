@@ -5,6 +5,7 @@ import CalendarioGeneral from "../CalendarioGeneral";
 import Visitantes from "../Visitantes";
 import { ContextoApp } from "../../Contexto/index";
 import municipios from "../BaseCiudades/municipios.json";
+import { useNavigate } from "react-router-dom";
 import "./estilos.css";
 
 interface PanelBusquedaProps {
@@ -37,18 +38,35 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setMostrarCalendario,
     mostrarVisitantes,
     setMostrarVisitantes,
+    setFiltros,
+    setActivarFiltrosUbicacion,
+    setBusqueda
   } = almacenVariables;
-
+  
+  const navigate = useNavigate();
+  const [cordenadasElegidas, setCordenadasElegidas] = useState<{ LATITUD: number; LONGITUD: number }[]>([]);
   const [destino, setDestino] = useState(ciudad_departamento || "");
   const [sugerencias, setSugerencias] = useState<string[]>([]);
   const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
   const [sugerenciaActiva, setSugerenciaActiva] = useState<number>(-1);
 
   const manejarBuscar = () => {
-    const fechas = fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "";
-    onBuscar(destino, fechas, totalHuespedes);
+    navigate("/");
+    if (!destino) {
+      setActivarFiltrosUbicacion(false);
+      setBusqueda({ destino: "", fechas: "" })
+    } else {
+      setCiudad_departamento(destino); // Guardar en ciudad_departamento al hacer clic en buscar
+      const fechas = fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "";
+      onBuscar(destino, fechas, totalHuespedes);
+      setFiltros((prevFiltros) => ({
+        ...prevFiltros,
+        cordenadasFilter: cordenadasElegidas.length > 0 ? cordenadasElegidas[0] : undefined, // Asignamos el primer objeto o undefined
+      }));
+      setActivarFiltrosUbicacion(true);
+    }
     onCerrar();
-  };
+  };  
 
   const formatFecha = (fecha: Date): string => {
     return fecha.toLocaleDateString("es-ES", {
@@ -58,18 +76,19 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     });
   };
 
+  
   const buscarSugerenciasDesdeJSON = useCallback(
     (query: string) => {
       if (query.length > 1) {
-        const resultados = municipios
-          .filter((municipio: any) =>
-            municipio.CIUDAD_DEPARTAMENTO.toLowerCase().includes(query.toLowerCase())
-          )
-          .map((municipio: any) => municipio.CIUDAD_DEPARTAMENTO)
-          .slice(0, 10);
-        setSugerencias(resultados);
+        const resultados = municipios.filter((municipio: any) =>
+          municipio.CIUDAD_DEPARTAMENTO.toLowerCase().includes(query.toLowerCase())
+        );
+
+        setSugerencias(resultados.map((municipio: any) => municipio.CIUDAD_DEPARTAMENTO).slice(0, 10));
+        setCordenadasElegidas(resultados.map((municipio: any) => ({ LATITUD: municipio.LATITUD, LONGITUD: municipio.LONGITUD })).slice(0, 10));
       } else {
         setSugerencias([]);
+        setCordenadasElegidas([]);
       }
     },
     []
@@ -88,14 +107,25 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
 
   const manejarSeleccionSugerencia = (sugerencia: string) => {
     setDestino(sugerencia);
-    setCiudad_departamento(sugerencia);
     setSugerencias([]);
     setSugerenciaActiva(-1);
-
+  
+    // Encontrar el municipio seleccionado en el JSON
+    const municipioSeleccionado = municipios.find(
+      (municipio: any) => municipio.CIUDAD_DEPARTAMENTO === sugerencia
+    );
+    if (municipioSeleccionado) {
+      setCordenadasElegidas([
+        { LATITUD: municipioSeleccionado.LATITUD, LONGITUD: municipioSeleccionado.LONGITUD },
+      ]);
+    } else {
+      setCordenadasElegidas([]); // Limpiar si no se encuentra
+    }  
     if (!fechaFin) {
       setMostrarCalendario(true);
     }
   };
+  
 
   const manejarTecla = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (sugerencias.length === 0) return;
@@ -125,7 +155,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
             <div className="PanelBusqueda-inputWrapper">
               <input
                 type="text"
-                placeholder="Explora destinos"
+                placeholder="Explora Municipios"
                 className="PanelBusqueda-input"
                 value={destino}
                 onChange={(e) => manejarCambioDestino(e.target.value)}
@@ -188,6 +218,9 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               setCantidad_Niños(0);
               setCantidad_Bebes(0);
               setCantidad_Mascotas(0);
+              setCordenadasElegidas([])
+              setActivarFiltrosUbicacion(false)
+              setBusqueda({ destino: "", fechas: "" })
             }}
           >
             Limpiar todo
