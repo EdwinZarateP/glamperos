@@ -4,7 +4,7 @@ import Tarjeta from "../../Componentes/Tarjeta/index";
 import "./estilos.css";
 
 interface GlampingData {
-  glampingId: string;
+  _id: string;  // Cambié _id por glampingId
   nombreGlamping: string;
   tipoGlamping: string;
   ciudad_departamento: string;
@@ -12,8 +12,8 @@ interface GlampingData {
   calificacion: number | null;
   imagenes: string[];
   ubicacion: {
-    lat: number;
-    lng: number;
+    lat: number | null;
+    lng: number | null;
   };
   Acepta_Mascotas: boolean;
 }
@@ -31,6 +31,51 @@ const ContenedorTarjetas: React.FC = () => {
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(18);
+  const [page, setPage] = useState(1);
+
+  const fetchDataFromAPI = useCallback(async (page = 1, limit = 18) => {
+    try {
+      const response = await fetch(`https://glamperosapi.onrender.com/glampings?page=${page}&limit=${limit}`);
+      if (!response.ok) throw new Error("Error al obtener los datos de la API");
+      
+      const data: GlampingData[] = await response.json();
+  
+      if (data.length === 0) {
+        // Si no hay más datos, no incrementes la página
+        return;
+      }
+  
+      const parsedData = data.map((glamping) => ({
+        _id: glamping._id,
+        nombreGlamping: glamping.nombreGlamping || "Nombre no disponible",
+        tipoGlamping: glamping.tipoGlamping || "Choza",
+        ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
+        precioEstandar: glamping.precioEstandar || 0,
+        calificacion: glamping.calificacion || null, 
+        imagenes: glamping.imagenes || [],
+        ubicacion: {
+          lat: glamping.ubicacion?.lat || null,
+          lng: glamping.ubicacion?.lng || null,
+        },
+        Acepta_Mascotas: glamping.Acepta_Mascotas || false,
+      }));
+  
+      setGlampings((prevData) => {
+        // Filtrar para evitar elementos duplicados antes de agregar
+        const newData = parsedData.filter(
+          (newGlamping) => !prevData.some((glamping) => glamping._id === newGlamping._id)
+        );
+        return [...prevData, ...newData];  // Asegúrate de que se agreguen los datos nuevos
+      });
+  
+      setPage((prevPage) => prevPage + 1);
+  
+    } catch (error) {
+      console.error("Error al obtener glampings:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);     
 
   useEffect(() => {
     const fetchGlampings = async () => {
@@ -44,51 +89,23 @@ const ContenedorTarjetas: React.FC = () => {
         } catch (error) {
           console.error("Error al parsear los datos de sessionStorage:", error);
           sessionStorage.removeItem("glampingsData");
-          await fetchDataFromAPI();
+          await fetchDataFromAPI(page);
         }
       } else {
-        await fetchDataFromAPI();
-      }
-    };
-
-    const fetchDataFromAPI = async () => {
-      try {
-        const response = await fetch("https://glamperosapi.onrender.com/glampings/");
-        if (!response.ok) throw new Error("Error al obtener los datos de la API");
-        const data = await response.json();
-
-        const parsedData = data.map((glamping: any) => ({
-          glampingId: glamping._id,
-          nombreGlamping: glamping.nombreGlamping || "Nombre no disponible",
-          tipoGlamping: glamping.tipoGlamping || "Choza",
-          ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
-          precioEstandar: glamping.precioEstandar || 0,
-          calificacion: glamping.calificacion,
-          imagenes: glamping.imagenes || [],
-          ubicacion: {
-            lat: glamping.ubicacion.lat,
-            lng: glamping.ubicacion.lng,
-          },
-          Acepta_Mascotas: glamping.Acepta_Mascotas || false,
-        }));
-
-        sessionStorage.setItem("glampingsData", JSON.stringify(parsedData));
-        setGlampings(parsedData);
-      } catch (error) {
-        console.error("Error al obtener glampings:", error);
-      } finally {
-        setLoading(false);
+        await fetchDataFromAPI(page);
       }
     };
 
     fetchGlampings();
-  }, []);
+  }, [page, fetchDataFromAPI]);
 
   // Función para cargar más resultados
   const handleLoadMore = useCallback(() => {
-    const cantidadNueva = Math.min(visibleCount + 8, glampings.length);
-    setVisibleCount(cantidadNueva);
-  }, [visibleCount, glampings.length]);
+    if (!loading) {
+      fetchDataFromAPI(page, 18);  // Se cargan siempre 18 registros
+      setVisibleCount(prevCount => prevCount + 18);  // Aumentar en 18
+    }
+  }, [loading, page, fetchDataFromAPI]);  
 
   // Función para manejar el evento scroll
   const handleScroll = useCallback(() => {
@@ -112,7 +129,7 @@ const ContenedorTarjetas: React.FC = () => {
 
   // Función para calcular la distancia entre dos puntos geográficos usando la fórmula de Haversine
   function calcularDistancia(lat1: number, lng1: number, lat2: number, lng2: number): number {
-    const R = 6371; // Radio de la Tierra en kilómetros
+    const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLng = ((lng2 - lng1) * Math.PI) / 180;
     const a =
@@ -122,7 +139,7 @@ const ContenedorTarjetas: React.FC = () => {
         Math.sin(dLng / 2) *
         Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distancia en kilómetros
+    return R * c;
   }
 
   // Filtrar los glampings según los criterios del diccionario de filtros
@@ -145,9 +162,9 @@ const glampingsFiltrados = glampings.filter((glamping) => {
     calcularDistancia(
       filtros.cordenadasFilter?.LATITUD,  // Uso del encadenamiento opcional
       filtros.cordenadasFilter?.LONGITUD, // Uso del encadenamiento opcional
-      glamping.ubicacion.lat,
-      glamping.ubicacion.lng
-    ) <= 100);
+      glamping.ubicacion.lat ?? 0, 
+      glamping.ubicacion.lng ?? 0
+    ) <= 150);
 
   return cumplePrecio && cumpleTipo && cumpleCoordenadas;
 });
@@ -158,14 +175,14 @@ const glampingsOrdenados = activarFiltrosUbicacion && filtros?.cordenadasFilter
       const distanciaA = calcularDistancia(
         filtros.cordenadasFilter?.LATITUD ?? 0,  // Valor por defecto si es undefined
         filtros.cordenadasFilter?.LONGITUD ?? 0, // Valor por defecto si es undefined
-        a.ubicacion.lat,
-        a.ubicacion.lng
+        a.ubicacion.lat ?? 0, 
+        a.ubicacion.lng ?? 0 
       );
       const distanciaB = calcularDistancia(
         filtros.cordenadasFilter?.LATITUD ?? 0,  // Valor por defecto si es undefined
         filtros.cordenadasFilter?.LONGITUD ?? 0, // Valor por defecto si es undefined
-        b.ubicacion.lat,
-        b.ubicacion.lng
+        b.ubicacion.lat ?? 0,
+        b.ubicacion.lng ?? 0 
       );
       return distanciaA - distanciaB; // Orden ascendente por distancia (más cercano primero)
     })
@@ -196,21 +213,24 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
     <div className="contenedor-tarjetas">
       {glampingsMostrados.map((glamping, index) => (
         <Tarjeta
-          key={index}
-          glampingId={glamping.glampingId}
-          imagenes={glamping.imagenes}
-          ciudad={glamping.ciudad_departamento}
-          precio={glamping.precioEstandar}
-          calificacion={glamping.calificacion || 0}
-          favorito={false}
-          nombreGlamping={glamping.nombreGlamping}
-          tipoGlamping={glamping.tipoGlamping}
-          ubicacion={glamping.ubicacion}
-          onFavoritoChange={(nuevoEstado) =>
-            console.log(`Favorito en tarjeta ${index + 1}:`, nuevoEstado)
-          }
-          Acepta_Mascotas={glamping.Acepta_Mascotas}
-        />
+        key={index}
+        glampingId={glamping._id}
+        imagenes={glamping.imagenes}
+        ciudad={glamping.ciudad_departamento}
+        precio={glamping.precioEstandar}
+        calificacion={glamping.calificacion || 0}
+        favorito={false}
+        nombreGlamping={glamping.nombreGlamping}
+        tipoGlamping={glamping.tipoGlamping}
+        ubicacion={{
+          lat: glamping.ubicacion.lat ?? 0, // Valor por defecto si es null
+          lng: glamping.ubicacion.lng ?? 0, // Valor por defecto si es null
+        }}
+        onFavoritoChange={(nuevoEstado) =>
+          console.log(`Favorito en tarjeta ${index + 1}:`, nuevoEstado)
+        }
+        Acepta_Mascotas={glamping.Acepta_Mascotas}
+      />      
       ))}
     </div>
   );
