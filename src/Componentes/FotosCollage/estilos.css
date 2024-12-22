@@ -166,23 +166,23 @@
   }
   .modal-contenido {
     width: 90%;
-    height: 50%;
+    height: 60%;
   }
   .navegar {
-    align-items: end;
-    justify-content: baseline;
-    width: 35px;
-    height:35px;
-    font-size: 35px;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height:42px;
+    font-size: 42px;
   }
   .cerrar {
-    top: -45px;
+    top: -42px;
     right: 0;
   }
 
   .navegar.izquierda {
     left: 20px;
-    bottom: -55px;
+    bottom: -54px;
   }
   .navegar.izquierda:hover{
     transform: none;
