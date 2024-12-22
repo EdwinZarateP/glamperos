@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiTwotoneHeart } from 'react-icons/ai';
 import { BsBalloonHeartFill } from 'react-icons/bs';
 import { IoShareSocialSharp } from "react-icons/io5";
+import { useParams, useNavigate } from 'react-router-dom';
 import './estilos.css';
 
 interface ImgExploradasIndividualProps {
@@ -13,6 +14,15 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
   const [esFavorito, setEsFavorito] = useState(false); 
   let touchStartX = 0;
   let touchEndX = 0;
+
+  const { glampingId } = useParams<{ glampingId: string }>();
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (glampingId) {
+      navigate(`/ColeccionImagenes/${glampingId}`);
+    }
+  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX = e.touches[0].clientX;
@@ -60,7 +70,13 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
         style={{ transform: `translateX(-${indiceActual * 100}%)` }}
       >
         {imagenes.map((imagen, index) => (
-          <img key={index} src={imagen} alt={`Imagen ${index + 1}`} className="imgExp-img" />
+          <img 
+            key={index} 
+            src={imagen} 
+            alt={`Imagen ${index + 1}`} 
+            className="imgExp-img"
+            onClick={handleNavigate} // Hacer que la imagen también navegue
+          />
         ))}
       </div>
 

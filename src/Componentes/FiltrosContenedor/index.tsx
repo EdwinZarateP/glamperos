@@ -61,7 +61,7 @@ const FiltrosContenedor = () => {
   };
   
   return (
-    <div className="FiltrosContenedor-overlay"onClick={(e) => {
+    <div className="FiltrosContenedor-overlay" onClick={(e) => {
       if (e.target === e.currentTarget) { // Verifica si el clic fue en el overlay y no en sus hijos
         setMostrarFiltros(false);
         document.body.style.overflow = "auto";

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiGrid } from 'react-icons/fi'; 
+import { useParams, useNavigate } from 'react-router-dom';
 import './estilos.css';
 
 interface ImgExploradasProps {
@@ -8,19 +9,33 @@ interface ImgExploradasProps {
 
 const ImgExploradas: React.FC<ImgExploradasProps> = ({ imagenes }) => {
   const imagenesMostrar = imagenes.slice(0, 5);
+  const { glampingId } = useParams<{ glampingId: string }>();
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (glampingId) {
+      navigate(`/ColeccionImagenes/${glampingId}`);
+    }
+  };
 
   return (
-    <div className="contenedor-imagenes-exploradas">
-      <div className="imagenes-principal">
-        <img src={imagenesMostrar[0]} alt="Principal" />
+    <div className="ImgExploradas-contenedor">
+      <div className="ImgExploradas-principal" onClick={handleNavigate}>
+        <img src={imagenesMostrar[0]} alt="Imagen principal" />
       </div>
-      <div className="imagenes-secundarias">
+      <div className="ImgExploradas-secundarias">
         {imagenesMostrar.slice(1).map((imagen, index) => (
-          <img key={index} src={imagen} alt={`Secundaria ${index + 1}`} />
+          <img 
+            key={index} 
+            src={imagen} 
+            alt={`Imagen secundaria ${index + 1}`} 
+            className="ImgExploradas-imagenSecundaria"
+            onClick={handleNavigate}
+          />
         ))}
       </div>
-      <button className="mostrar-fotos-boton">
-      <FiGrid className="icono" /> Mostrar todas las fotos
+      <button className="ImgExploradas-botonMostrar" onClick={handleNavigate}>
+        <FiGrid className="ImgExploradas-icono" /> Mostrar todas las fotos
       </button>
     </div>
   );
