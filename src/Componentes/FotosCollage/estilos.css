@@ -165,8 +165,11 @@
     pointer-events: auto; /* Bloquea clics sobre el fondo solo en pantallas pequeñas */
   }
   .modal-contenido {
-    width: 90%;
-    height: 65%;
+    width: 100%;
+    height: 60%;
+  }
+  .modal-imagen {
+    border-radius: 0 ;
   }
   .navegar {
     align-items: center;
@@ -176,8 +179,8 @@
     font-size: 42px;
   }
   .cerrar {
-    top: -42px;
-    right: 0;
+    top: -48px;
+    right:14px;
   }
 
   .navegar.izquierda {
