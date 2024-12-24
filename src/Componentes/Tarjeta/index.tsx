@@ -25,6 +25,7 @@ interface TarjetaProps {
     lng: number;
   };
   Acepta_Mascotas:boolean;
+  fechasReservadas: string[];
   onImagenCargada?: () => void;
 }
 
@@ -38,7 +39,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   tarifaServicio,
   nombreGlamping,
-  Acepta_Mascotas,  
+  Acepta_Mascotas,
+  fechasReservadas  
   
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
@@ -226,7 +228,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">{nombreGlamping}</span>
+          <span className="tarjeta-nombre">{nombreGlamping}{fechasReservadas}</span>
           <div className="tarjeta-calificacion">
             <FaStar className="estrella" />
             <span>{calificacion}</span>

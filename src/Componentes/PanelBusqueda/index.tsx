@@ -40,33 +40,56 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setMostrarVisitantes,
     setFiltros,
     setActivarFiltrosUbicacion,
-    setBusqueda
+    setActivarFiltrosFechas,
+    setBusqueda,
+    cordenadasElegidas,
+    setCordenadasElegidas 
   } = almacenVariables;
   
   const navigate = useNavigate();
-  const [cordenadasElegidas, setCordenadasElegidas] = useState<{ LATITUD: number; LONGITUD: number }[]>([]);
-  const [destino, setDestino] = useState(ciudad_departamento || "");
   const [sugerencias, setSugerencias] = useState<string[]>([]);
   const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
   const [sugerenciaActiva, setSugerenciaActiva] = useState<number>(-1);
 
   const manejarBuscar = () => {
     navigate("/");
-    if (!destino) {
-      setActivarFiltrosUbicacion(false);
-      setBusqueda({ destino: "", fechas: "" })
+    
+    // Lógica para el destino (usamos ciudad_departamento en lugar de destino)
+    if (ciudad_departamento) {
+      setActivarFiltrosUbicacion(true);
     } else {
-      setCiudad_departamento(destino); // Guardar en ciudad_departamento al hacer clic en buscar
-      const fechas = fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "";
-      onBuscar(destino, fechas, totalHuespedes);
+      setActivarFiltrosUbicacion(false);
+    }
+
+    // Lógica para las fechas
+    if (fechaInicio && fechaFin) {
+      setActivarFiltrosFechas(true);
+    } else {
+      setActivarFiltrosFechas(false);
+    }
+  
+    // Configurar filtros para la búsqueda
+    const fechas =
+      fechaInicio && fechaFin ? `${formatFecha(fechaInicio)} - ${formatFecha(fechaFin)}` : "";
+    setBusqueda({ destino: ciudad_departamento || "", fechas });
+    // Asignar coordenadas predeterminadas si no están presentes
+    const coordenadasPredeterminadas = {
+      LATITUD: 10.463433617,
+      LONGITUD: -75.45889915,
+    };
+
+    if (ciudad_departamento || (fechaInicio && fechaFin)) {
       setFiltros((prevFiltros) => ({
         ...prevFiltros,
-        cordenadasFilter: cordenadasElegidas.length > 0 ? cordenadasElegidas[0] : undefined, // Asignamos el primer objeto o undefined
+        cordenadasFilter: cordenadasElegidas.length > 0
+          ? cordenadasElegidas[0]
+          : coordenadasPredeterminadas, // Usar coordenadas predeterminadas si no hay coordenadas elegidas
       }));
-      setActivarFiltrosUbicacion(true);
     }
+    onBuscar(ciudad_departamento, fechas, totalHuespedes);
     onCerrar();
-  };  
+  };
+    
 
   const formatFecha = (fecha: Date): string => {
     return fecha.toLocaleDateString("es-ES", {
@@ -95,7 +118,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
   );
 
   const manejarCambioDestino = (query: string) => {
-    setDestino(query);
+    setCiudad_departamento(query); // Actualizamos ciudad_departamento en lugar de destino
     setSugerenciaActiva(-1);
     if (timeoutId) clearTimeout(timeoutId);
 
@@ -106,7 +129,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
   };
 
   const manejarSeleccionSugerencia = (sugerencia: string) => {
-    setDestino(sugerencia);
+    setCiudad_departamento(sugerencia); // Actualizamos ciudad_departamento en lugar de destino
     setSugerencias([]);
     setSugerenciaActiva(-1);
   
@@ -153,21 +176,23 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
           <div className="PanelBusqueda-destino">
             <FiSearch className="PanelBusqueda-icono" />
             <div className="PanelBusqueda-inputWrapper">
-              <input
+            <input
                 type="text"
                 placeholder="Explora Municipios"
                 className="PanelBusqueda-input"
-                value={destino}
+                value={ciudad_departamento} // Usamos ciudad_departamento aquí
                 onChange={(e) => manejarCambioDestino(e.target.value)}
                 onKeyDown={manejarTecla}
               />
-              {destino && (
+              {ciudad_departamento && (
                 <button
                   className="PanelBusqueda-botonBorrar"
-                  onClick={() => setDestino("")}
+                  onClick={() => {
+                    setCiudad_departamento(''); // Limpiar ciudad_departamento
+                  }}
                 >
                   <MdClose />
-                </button>
+                </button>        
               )}
             </div>
             {sugerencias.length > 0 && (
@@ -207,8 +232,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
         <div className="PanelBusqueda-botones">
           <button
             className="PanelBusqueda-limpiar"
-            onClick={() => {
-              setDestino("");
+            onClick={() => {          
               setCiudad_departamento("");
               setFechaInicio(null);
               setFechaFin(null);
@@ -219,7 +243,8 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               setCantidad_Bebes(0);
               setCantidad_Mascotas(0);
               setCordenadasElegidas([])
-              setActivarFiltrosUbicacion(false)
+              setActivarFiltrosUbicacion(false);
+              setActivarFiltrosFechas(false);
               setBusqueda({ destino: "", fechas: "" })
             }}
           >

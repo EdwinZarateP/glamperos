@@ -139,6 +139,8 @@ interface ContextProps {
   setActivarFiltros: Dispatch<SetStateAction<boolean>>;
   activarFiltrosUbicacion: boolean;
   setActivarFiltrosUbicacion: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosFechas: boolean;
+  setActivarFiltrosFechas: Dispatch<SetStateAction<boolean>>;
   filtros: Filtros;
   setFiltros: Dispatch<SetStateAction<Filtros>>;
   cantiadfiltrosAplicados: number;
@@ -149,6 +151,9 @@ interface ContextProps {
   setPrecioFiltrado: Dispatch<SetStateAction<number[]>>;
   tipoGlampingFiltrado: string | undefined;
   setTipoGlampingFiltrado: Dispatch<SetStateAction<string | undefined>>;
+  cordenadasElegidas: { LATITUD: number; LONGITUD: number }[];
+  setCordenadasElegidas: Dispatch<SetStateAction<{ LATITUD: number; LONGITUD: number }[]>>;
+
   
 }
 
@@ -215,6 +220,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   // Estado para filtros
   const [activarFiltros, setActivarFiltros] = useState<boolean>(false);
   const [activarFiltrosUbicacion, setActivarFiltrosUbicacion] = useState<boolean>(false);
+  const [activarFiltrosFechas, setActivarFiltrosFechas] = useState<boolean>(false);
   // Estado para filtros con valores por defecto
   const [filtros, setFiltros] = useState<Filtros>({
     precioFilter: [50000, 2200000], // Rango de precios por defecto
@@ -231,6 +237,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [cantiadfiltrosAplicados, setCantiadfiltrosAplicados] = useState<number>(0);
   const [precioFiltrado, setPrecioFiltrado] = useState<number[]>([60000,2200000]);
   const [tipoGlampingFiltrado, setTipoGlampingFiltrado] = useState<string | undefined>(undefined);
+  const [cordenadasElegidas, setCordenadasElegidas] = useState<{ LATITUD: number; LONGITUD: number }[]>([]);
 
 //-------------------------------------------------------------------------------------
 // 3.  Nombra las variables
@@ -312,6 +319,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setActivarFiltros,
     activarFiltrosUbicacion,
     setActivarFiltrosUbicacion,
+    activarFiltrosFechas,
+    setActivarFiltrosFechas,
     busqueda,
     setBusqueda,
     filtros,
@@ -323,7 +332,9 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     precioFiltrado,
     setPrecioFiltrado,
     tipoGlampingFiltrado,
-    setTipoGlampingFiltrado
+    setTipoGlampingFiltrado,
+    cordenadasElegidas,
+    setCordenadasElegidas,
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;

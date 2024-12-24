@@ -16,6 +16,7 @@ interface GlampingData {
     lng: number | null;
   };
   Acepta_Mascotas: boolean;
+  fechasReservadas: string[];
 }
 
 
@@ -26,7 +27,7 @@ const ContenedorTarjetas: React.FC = () => {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { activarFiltros, filtros, activarFiltrosUbicacion } = almacenVariables;
+  const { activarFiltros, filtros, activarFiltrosUbicacion, activarFiltrosFechas, fechaInicio, fechaFin } = almacenVariables;
 
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,6 +59,7 @@ const ContenedorTarjetas: React.FC = () => {
           lng: glamping.ubicacion?.lng || null,
         },
         Acepta_Mascotas: glamping.Acepta_Mascotas || false,
+        fechasReservadas: glamping.fechasReservadas || [],
       }));
   
       setGlampings((prevData) => {
@@ -142,32 +144,54 @@ const ContenedorTarjetas: React.FC = () => {
     return R * c;
   }
 
+  const noTieneFechasReservadasEnRango = (fechasReservadas: string[]) => {
+    if (!fechaInicio || !fechaFin) {
+      return true; // Si las fechas no están definidas, no aplicar filtro
+    }
+  
+    return !fechasReservadas.some(
+      (fecha) =>
+        new Date(fecha) >= new Date(fechaInicio) &&
+        new Date(fecha) <= new Date(fechaFin)
+    );
+  };
+  
   // Filtrar los glampings según los criterios del diccionario de filtros
-const glampingsFiltrados = glampings.filter((glamping) => {
-  // Filtros de precio y tipo si activarFiltros es true
-  const cumplePrecio =
-    !activarFiltros || (filtros?.precioFilter?.[0] !== undefined &&
-    filtros?.precioFilter?.[1] !== undefined &&
-    glamping.precioEstandar >= filtros.precioFilter[0] &&
-    glamping.precioEstandar <= filtros.precioFilter[1]);
+  const glampingsFiltrados = glampings.filter((glamping) => {
+    // const latitud = filtros?.cordenadasFilter?.LATITUD;
+    // const longitud = filtros?.cordenadasFilter?.LONGITUD;
+  
+    // // Imprimir las coordenadas
+    // console.log("Coordenadas de filtro:", { LATITUD: latitud, LONGITUD: longitud });
 
-  const cumpleTipo =
-    !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
-
-  // Filtro de coordenadas solo si activarFiltrosUbicacion es true
-  const cumpleCoordenadas =
-    !activarFiltrosUbicacion || 
-    (filtros?.cordenadasFilter?.LATITUD !== undefined &&
-    filtros?.cordenadasFilter?.LONGITUD !== undefined &&
-    calcularDistancia(
-      filtros.cordenadasFilter?.LATITUD,  // Uso del encadenamiento opcional
-      filtros.cordenadasFilter?.LONGITUD, // Uso del encadenamiento opcional
-      glamping.ubicacion.lat ?? 0, 
-      glamping.ubicacion.lng ?? 0
-    ) <= 150);
-
-  return cumplePrecio && cumpleTipo && cumpleCoordenadas;
-});
+    const cumplePrecio =
+      !activarFiltros ||
+      (filtros?.precioFilter?.[0] !== undefined &&
+        filtros?.precioFilter?.[1] !== undefined &&
+        glamping.precioEstandar >= filtros.precioFilter[0] &&
+        glamping.precioEstandar <= filtros.precioFilter[1]);
+  
+    const cumpleTipo =
+      !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
+  
+    const cumpleCoordenadas =
+      !activarFiltrosUbicacion ||
+      (filtros?.cordenadasFilter?.LATITUD !== undefined &&
+        filtros?.cordenadasFilter?.LONGITUD !== undefined &&
+        calcularDistancia(
+          filtros.cordenadasFilter?.LATITUD,
+          filtros.cordenadasFilter?.LONGITUD,
+          glamping.ubicacion.lat ?? 0,
+          glamping.ubicacion.lng ?? 0
+        ) <= 150);
+  
+    // Filtro de fechas reservadas
+    const cumpleFechasReservadas =
+      !activarFiltrosFechas || noTieneFechasReservadasEnRango(glamping.fechasReservadas);
+  
+    return cumplePrecio && cumpleTipo && cumpleCoordenadas && cumpleFechasReservadas;
+  });
+    
 
 // Ordenar los glampings por distancia si activarFiltrosUbicacion es true
 const glampingsOrdenados = activarFiltrosUbicacion && filtros?.cordenadasFilter
@@ -206,8 +230,40 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
   }
 
   if (glampingsMostrados.length === 0) {
-    return <div>No se encontraron glampings.</div>;
-  }
+    const razonesNoEncontrados = [];
+    
+    // Comprobar cada filtro y agregar la razón si no se cumple
+    if (activarFiltros) {
+      if (filtros?.precioFilter?.[0] !== undefined && filtros?.precioFilter?.[1] !== undefined) {
+        razonesNoEncontrados.push(`Precio fuera del rango (${filtros.precioFilter[0]} - ${filtros.precioFilter[1]})`);
+      }
+      if (filtros.tipoFilter && filtros.tipoFilter !== '') {
+        razonesNoEncontrados.push(`Tipo de glamping: ${filtros.tipoFilter}`);
+      }
+    }
+  
+    if (activarFiltrosUbicacion && (filtros?.cordenadasFilter?.LATITUD === undefined || filtros?.cordenadasFilter?.LONGITUD === undefined)) {
+      razonesNoEncontrados.push('Ubicación no definida o fuera del área filtrada');
+    }
+  
+    if (activarFiltrosFechas && fechaInicio && fechaFin) {
+      razonesNoEncontrados.push(`Fechas reservadas no disponibles en el rango de ${fechaInicio} a ${fechaFin}`);
+    }
+  
+    return (
+      <div>
+        <p>No se encontraron glampings</p>
+        {razonesNoEncontrados.length > 0 && (
+          <ul>
+            {razonesNoEncontrados.map((razon, index) => (
+              <li key={index}>{razon}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  }  
+
 
   return (
     <div className="contenedor-tarjetas">
@@ -230,6 +286,7 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
           console.log(`Favorito en tarjeta ${index + 1}:`, nuevoEstado)
         }
         Acepta_Mascotas={glamping.Acepta_Mascotas}
+        fechasReservadas={glamping.fechasReservadas}
       />      
       ))}
     </div>
