@@ -53,6 +53,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
 
   const manejarBuscar = () => {
     navigate("/");
+    window.scrollTo(0, 0);
     
     // Lógica para el destino (usamos ciudad_departamento en lugar de destino)
     if (ciudad_departamento) {
