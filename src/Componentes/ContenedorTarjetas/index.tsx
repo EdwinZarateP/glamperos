@@ -232,7 +232,7 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
     // Comprobar cada filtro y agregar la razón si no se cumple
     if (activarFiltros) {
       if (filtros?.precioFilter?.[0] !== undefined && filtros?.precioFilter?.[1] !== undefined) {
-        razonesNoEncontrados.push(`Precio fuera del rango (${filtros.precioFilter[0]} - ${filtros.precioFilter[1]})`);
+        razonesNoEncontrados.push(`No tenemos Glamping en ese rango de precios que elegiste 😔`); 
       }
       if (filtros.tipoFilter && filtros.tipoFilter !== '') {
         razonesNoEncontrados.push(`Tipo de glamping: ${filtros.tipoFilter}`);
@@ -240,7 +240,7 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
     }
   
     if (activarFiltrosUbicacion && (filtros?.cordenadasFilter?.LATITUD === undefined || filtros?.cordenadasFilter?.LONGITUD === undefined)) {
-      razonesNoEncontrados.push('Ubicación no definida o fuera del área filtrada');
+      razonesNoEncontrados.push('Ubicación no definida');
     }
   
     if (activarFiltrosFechas && fechaInicio && fechaFin) {
