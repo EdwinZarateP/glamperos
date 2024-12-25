@@ -38,7 +38,7 @@ const Header: React.FC = () => {
   };
 
   const manejarBusqueda = (destino: string, fechas: string) => {
-    setBusqueda({ destino, fechas }); // Actualiza la búsqueda
+    setBusqueda({ destino, fechas });
     cerrarPanelBusqueda(); 
   };
 

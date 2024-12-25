@@ -7,6 +7,7 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 import { MdOutlinePets } from "react-icons/md";
 import { ContextoApp } from "../../Contexto/index";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
+import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
 import "./estilos.css";
 
 interface TarjetaProps {
@@ -17,7 +18,7 @@ interface TarjetaProps {
   calificacion: number;
   favorito: boolean;
   onFavoritoChange: (nuevoEstado: boolean) => void;
-  tarifaServicio?: number;
+  descuento?: number;
   tipoGlamping: string;
   nombreGlamping: string;
   ubicacion: {
@@ -37,10 +38,9 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   calificacion,
   favorito,
   onFavoritoChange,
-  tarifaServicio,
+  descuento,
   nombreGlamping,
-  Acepta_Mascotas,
-  fechasReservadas  
+  Acepta_Mascotas,  
   
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
@@ -57,15 +57,36 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const {
     totalDias,
     fechaInicio,
-    fechaFin
+    fechaFin,
+    fechaInicioConfirmado,
+    fechaFinConfirmado
   } = almacenVariables;
 
   if (!imagenes || imagenes.length === 0) {
     return <div>No hay imágenes para mostrar.</div>;
   }
 
-  const tarifa = tarifaServicio ?? calcularTarifaServicio(precio);
+  const hoy = new Date();
+  const fechaInicioPorDefecto = new Date();
+  fechaInicioPorDefecto.setDate(hoy.getDate() + 1); // Día de mañana
+  const fechaFinPorDefecto = new Date();
+  fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
 
+  const fechaInicioUrl = fechaInicio
+  ? fechaInicio.toISOString().split('T')[0]
+  : fechaInicioPorDefecto.toISOString().split('T')[0];
+
+  const fechaFinUrl = fechaFin
+  ? fechaFin.toISOString().split('T')[0]
+  : fechaFinPorDefecto.toISOString().split('T')[0];
+
+  const totalDiasUrl = totalDias
+  ? totalDias
+  : 1
+
+  const precioConTarifa = calcularTarifaServicio(precio, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
+  const precioFinalNoche=precioConTarifa/totalDias
+  
   const handleFavoritoChange = () => {
     const nuevoEstado = !esFavorito;
     setEsFavorito(nuevoEstado);
@@ -104,8 +125,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const end = Math.min(imagenes.length, start + maxPuntos);
   const puntosVisibles = imagenes.slice(start, end);
 
-  const precioConTarifa = precio * tarifa;
-
   const precioConFormato = (valor: number) =>
     valor.toLocaleString("es-CO", {
       style: "currency",
@@ -119,7 +138,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     if (totalDias === 0 || totalDias === 1) {
       return (
         <span className="tarjeta-precio">
-          {precioConFormato(precioConTarifa * Math.max(totalDias, 1))} por noche
+          {precioConFormato(precioFinalNoche)} por noche
         </span>
       );
     }
@@ -127,32 +146,16 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     return (
       <>
         <span className="tarjeta-precio-base">
-          {precioConFormato(precioConTarifa)} por noche
+          {precioConFormato(precioFinalNoche)} por noche
         </span>
         <span className="tarjeta-precio">
-          {precioConFormato(precioConTarifa * totalDias)} por {totalDias} noches
+          {precioConFormato(precioConTarifa)} por {totalDias} noches
         </span>
       </>
     );
   };
   
-  const hoy = new Date();
-  const fechaInicioPorDefecto = new Date();
-  fechaInicioPorDefecto.setDate(hoy.getDate() + 1); // Día de mañana
-  const fechaFinPorDefecto = new Date();
-  fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
 
-  const fechaInicioUrl = fechaInicio
-  ? fechaInicio.toISOString().split('T')[0]
-  : fechaInicioPorDefecto.toISOString().split('T')[0];
-
-  const fechaFinUrl = fechaFin
-  ? fechaFin.toISOString().split('T')[0]
-  : fechaFinPorDefecto.toISOString().split('T')[0];
-
-  const totalDiasUrl = totalDias
-  ? totalDias
-  : 1
 
   return (
     <div className="tarjeta">
@@ -228,7 +231,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">{nombreGlamping}{fechasReservadas}</span>
+          <span className="tarjeta-nombre">{nombreGlamping}</span>
           <div className="tarjeta-calificacion">
             <FaStar className="estrella" />
             <span>{calificacion}</span>

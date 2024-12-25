@@ -25,6 +25,8 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     fechaFin,
     setFechaInicio,
     setFechaFin,
+    setFechaInicioConfirmado,
+    setFechaFinConfirmado,
     setTotalDias,
     ciudad_departamento,
     setCiudad_departamento,
@@ -43,7 +45,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setActivarFiltrosFechas,
     setBusqueda,
     cordenadasElegidas,
-    setCordenadasElegidas 
+    setCordenadasElegidas,
   } = almacenVariables;
   
   const navigate = useNavigate();
@@ -65,6 +67,8 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     // Lógica para las fechas
     if (fechaInicio && fechaFin) {
       setActivarFiltrosFechas(true);
+      setFechaInicioConfirmado(fechaInicio);
+      setFechaFinConfirmado(fechaFin);
     } else {
       setActivarFiltrosFechas(false);
     }
@@ -233,11 +237,14 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
         <div className="PanelBusqueda-botones">
           <button
             className="PanelBusqueda-limpiar"
-            onClick={() => {          
+            onClick={() => { 
+     
               setCiudad_departamento("");
               setFechaInicio(null);
               setFechaFin(null);
-              setTotalDias(0);
+              setFechaInicioConfirmado(null);
+              setFechaFinConfirmado(null);
+              setTotalDias(1);
               setTotalHuespedes(1);
               setCantidad_Adultos(1);
               setCantidad_Niños(0);
@@ -247,6 +254,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               setActivarFiltrosUbicacion(false);
               setActivarFiltrosFechas(false);
               setBusqueda({ destino: "", fechas: "" })
+              
             }}
           >
             Limpiar todo

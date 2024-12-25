@@ -56,6 +56,10 @@ interface ContextProps {
   setFechaInicio: Dispatch<SetStateAction<Date | null>>;
   fechaFin: Date | null;
   setFechaFin: Dispatch<SetStateAction<Date | null>>;
+  fechaInicioConfirmado: Date | null;
+  setFechaInicioConfirmado: Dispatch<SetStateAction<Date | null>>;
+  fechaFinConfirmado: Date | null;
+  setFechaFinConfirmado: Dispatch<SetStateAction<Date | null>>;
 
   // Variables de tipo número
   totalDias: number;
@@ -178,6 +182,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [ciudad_Elegida, setCiudad_Elegida] = useState('');
   const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
   const [fechaFin, setFechaFin] = useState<Date | null>(null);
+  const [fechaInicioConfirmado, setFechaInicioConfirmado] = useState<Date | null>(null);
+  const [fechaFinConfirmado, setFechaFinConfirmado] = useState<Date | null>(null);
   const [totalDias, setTotalDias] = useState<number>(1);
   const [precioPorNoche, setPrecioPorNoche] = useState<number | undefined>(undefined);
   const [tarifaServicio, setTarifaServicio] = useState<number | undefined>(undefined);
@@ -266,6 +272,10 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     setFechaInicio,
     fechaFin,
     setFechaFin,
+    fechaInicioConfirmado,
+    setFechaInicioConfirmado,
+    fechaFinConfirmado,
+    setFechaFinConfirmado,
     totalDias,
     setTotalDias,
     precioPorNoche,

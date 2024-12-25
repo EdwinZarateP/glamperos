@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
 import { ContextoApp } from '../../Contexto/index';
 import Tarjeta from "../../Componentes/Tarjeta/index";
-import "./estilos.css";
+import { precioConRecargo } from '../../Funciones/precioConRecargo'; 
+import "./estilos.css"; 
 
 interface GlampingData {
   _id: string;  // Cambié _id por glampingId
@@ -9,6 +10,7 @@ interface GlampingData {
   tipoGlamping: string;
   ciudad_departamento: string;
   precioEstandar: number;
+  descuento: number;
   calificacion: number | null;
   imagenes: string[];
   ubicacion: {
@@ -18,7 +20,6 @@ interface GlampingData {
   Acepta_Mascotas: boolean;
   fechasReservadas: string[];
 }
-
 
 const ContenedorTarjetas: React.FC = () => {
   const almacenVariables = useContext(ContextoApp);
@@ -52,6 +53,7 @@ const ContenedorTarjetas: React.FC = () => {
         tipoGlamping: glamping.tipoGlamping || "Choza",
         ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
         precioEstandar: glamping.precioEstandar || 0,
+        descuento: glamping.descuento || 0,
         calificacion: glamping.calificacion || null, 
         imagenes: glamping.imagenes || [],
         ubicacion: {
@@ -158,18 +160,13 @@ const ContenedorTarjetas: React.FC = () => {
   
   // Filtrar los glampings según los criterios del diccionario de filtros
   const glampingsFiltrados = glampings.filter((glamping) => {
-    // const latitud = filtros?.cordenadasFilter?.LATITUD;
-    // const longitud = filtros?.cordenadasFilter?.LONGITUD;
-  
-    // // Imprimir las coordenadas
-    // console.log("Coordenadas de filtro:", { LATITUD: latitud, LONGITUD: longitud });
 
     const cumplePrecio =
       !activarFiltros ||
       (filtros?.precioFilter?.[0] !== undefined &&
         filtros?.precioFilter?.[1] !== undefined &&
-        glamping.precioEstandar >= filtros.precioFilter[0] &&
-        glamping.precioEstandar <= filtros.precioFilter[1]);
+        precioConRecargo(glamping.precioEstandar) >= filtros.precioFilter[0] &&
+        precioConRecargo(glamping.precioEstandar) <= filtros.precioFilter[1]);
   
     const cumpleTipo =
       !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
@@ -274,6 +271,7 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
         imagenes={glamping.imagenes}
         ciudad={glamping.ciudad_departamento}
         precio={glamping.precioEstandar}
+        descuento={glamping.descuento}
         calificacion={glamping.calificacion || 0}
         favorito={false}
         nombreGlamping={glamping.nombreGlamping}
