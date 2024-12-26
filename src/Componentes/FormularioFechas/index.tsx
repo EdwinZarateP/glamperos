@@ -159,12 +159,12 @@
           <div className="FormularioFechas-detalleCosto">
             <div className="FormularioFechas-item">
               <span>
-              ${(Math.round((precioConTarifa / totalDias) *(1-porcentajeGlamperos))).toLocaleString()} COP x{" "}
+              ${(Math.round((precioConTarifa / totalDias) *(1/(1+porcentajeGlamperos)))).toLocaleString()} COP x{" "}        
                 {totalDiasRender === 1 ? totalDiasRender : totalDiasRender} noche
                 {totalDiasRender > 1 ? "s" : ""}
               </span>              
               <span>
-                ${(precioConTarifa * (1-porcentajeGlamperos)).toLocaleString()} COP
+                ${Math.round(precioConTarifa *(1/(1+porcentajeGlamperos))).toLocaleString()} COP
               </span>
             </div>
             {/* Tarifa glamperos */}
@@ -173,7 +173,7 @@
                 Tarifa por servicio Glamperos
               </span>              
               <span>
-                ${(precioConTarifa*porcentajeGlamperos).toLocaleString()} COP
+                ${Math.round(precioConTarifa-precioConTarifa *(1/(1+porcentajeGlamperos))).toLocaleString()} COP
               </span>
             </div>
           </div>
