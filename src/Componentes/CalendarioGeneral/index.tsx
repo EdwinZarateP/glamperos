@@ -19,7 +19,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     );
   }
 
-  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, setTotalDias } = almacenVariables;
+  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, setTotalDias,setFechaInicioConfirmado, setFechaFinConfirmado } = almacenVariables;
 
   const [mesesVisibles, setMesesVisibles] = useState<{ mes: number; anio: number }[]>([]);
 
@@ -56,6 +56,8 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       }
 
       setTotalDias(dias);
+      // setFechaInicioConfirmado(fechaInicio);
+      // setFechaFinConfirmado(fechaFin);
     } else {
       setTotalDias(1);
     }
@@ -176,7 +178,11 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
             Borrar fechas
           </button>
           <button
-            onClick={cerrarCalendario}
+            onClick={() => {
+              cerrarCalendario(); // Llamar a la función cerrarCalendario
+              setFechaInicioConfirmado(fechaInicio);
+              setFechaFinConfirmado(fechaFin);              
+            }}            
             className="CalendarioGeneral-boton-siguiente"
             disabled={!fechaFin} // Deshabilitado si no se ha seleccionado una fecha de fin
           >

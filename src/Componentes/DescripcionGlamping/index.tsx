@@ -31,9 +31,9 @@ const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
         calificacionEvaluaciones={calificacionEvaluaciones}
         calificacionMasAlta={calificacionMasAlta}
       />
-      <p className="descripcion-glamping-detalle">
+      <div className="descripcion-glamping-detalle">
       <DetalleGlampingTexto descripcionGlamping={descripcion_glamping} />
-      </p>
+      </div>
     </div>
   );
 };

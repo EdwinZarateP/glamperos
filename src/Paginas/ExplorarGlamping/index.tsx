@@ -203,6 +203,7 @@ function ExplorarGlamping() {
               <div className='contenedor-descripcion-glamping-der'>
                 <FormularioFechas
                   precioPorNoche={informacionGlamping?.precioEstandar || 0}
+                  descuento={informacionGlamping?.descuento || 0}
                 />
               </div>
             </div>
@@ -211,7 +212,8 @@ function ExplorarGlamping() {
               <MapaGlampings lat={informacionGlamping?.ubicacion?.lat ?? 0 }  lng={informacionGlamping?.ubicacion?.lng ?? 0} />          
             </ManejoErrores>
             <Comentarios comentarios={datosComentarios} />
-            <ReservarBoton totalSinImpuestos={(informacionGlamping?.precioEstandar || 0)} />
+            <ReservarBoton precioPorNoche={informacionGlamping?.precioEstandar || 0}
+                  descuento={informacionGlamping?.descuento || 0} />
 
           </main>
         </>

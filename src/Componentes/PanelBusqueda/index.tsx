@@ -267,7 +267,8 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       </div>
 
       {mostrarCalendario && (
-        <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} />
+        <CalendarioGeneral cerrarCalendario={() =>
+          setMostrarCalendario(false)} />
       )}
 
       {mostrarVisitantes && (

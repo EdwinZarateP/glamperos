@@ -1,16 +1,20 @@
   import React, { useContext, useEffect } from "react";
-  import "./estilos.css";
   import { ContextoApp } from "../../Contexto/index";
   import { GiCampingTent } from "react-icons/gi";
   import CalendarioGeneral from "../CalendarioGeneral";
   import { useParams } from "react-router-dom";
   import Visitantes from "../Visitantes";
+  import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
+  import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
+  import { ExtraerTarifaGlamperos } from "../../Funciones/ExtraerTarifaGlamperos";
+  import "./estilos.css";
 
   interface FormularioFechasProps {
     precioPorNoche: number;
+    descuento: number;
   }
 
-  const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche }) => {
+  const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, descuento }) => {
     const almacenVariables = useContext(ContextoApp);
 
     if (!almacenVariables) {
@@ -27,11 +31,12 @@
       totalDias,
       setTotalDias,
       totalHuespedes,
-      setTotalSinImpuestos,
       mostrarCalendario,
       setMostrarCalendario,
       mostrarVisitantes,
       setMostrarVisitantes,
+      fechaInicioConfirmado,
+      fechaFinConfirmado
     } = almacenVariables;
 
     let {glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{glampingId: string, fechaInicioUrl: string; fechaFinUrl: string; totalDiasUrl:string }>();
@@ -46,7 +51,6 @@
     };
     useEffect(() => {
       if (fechaInicio && fechaFin && totalDias) {
-        console.log("Valor de totalDias:", totalDiasUrl);
         actualizarUrl(fechaInicio, fechaFin, totalDias);
       }
     }, [fechaInicio, fechaFin, totalDias]);
@@ -71,6 +75,15 @@
     ? parseInt(totalDiasUrl, 10)
     : 1;
     
+    //fechas por defecto
+    const hoy = new Date();
+    const fechaInicioPorDefecto = new Date();
+    fechaInicioPorDefecto.setDate(hoy.getDate() + 1); // Día de mañana
+    const fechaFinPorDefecto = new Date();
+    fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
+
+    const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
+    const porcentajeGlamperos=ExtraerTarifaGlamperos(precioPorNoche)
 
     const FechasReservadas = [
       new Date(2024, 10, 20),
@@ -89,13 +102,6 @@
       return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
     };
 
-    const totalSinImpuestos = precioPorNoche * (totalDias === 0 ? 1 : totalDias);
-
-    useEffect(() => {
-      setTotalSinImpuestos(totalSinImpuestos);
-    }, [totalSinImpuestos, setTotalSinImpuestos]);
-
-
     useEffect(() => {
       if (mostrarVisitantes) {
         document.body.classList.add("no-scroll");
@@ -109,7 +115,7 @@
         <div className="FormularioFechas-contenedor">
           <div className="FormularioFechas-precio">
             <span className="FormularioFechas-precioNoche">
-              ${precioPorNoche.toLocaleString()} COP
+              ${(Math.round(precioConTarifa/totalDias)).toLocaleString()} COP
             </span>
             <span>/ noche</span>
           </div>
@@ -153,20 +159,28 @@
           <div className="FormularioFechas-detalleCosto">
             <div className="FormularioFechas-item">
               <span>
-                ${precioPorNoche.toLocaleString()} COP x{" "}
+              ${(Math.round((precioConTarifa / totalDias) *(1-porcentajeGlamperos))).toLocaleString()} COP x{" "}
                 {totalDiasRender === 1 ? totalDiasRender : totalDiasRender} noche
                 {totalDiasRender > 1 ? "s" : ""}
-              </span>
+              </span>              
               <span>
-                ${(precioPorNoche * totalDiasRender).toLocaleString()} COP
+                ${(precioConTarifa * (1-porcentajeGlamperos)).toLocaleString()} COP
               </span>
-
+            </div>
+            {/* Tarifa glamperos */}
+            <div className="FormularioFechas-item">
+              <span>
+                Tarifa por servicio Glamperos
+              </span>              
+              <span>
+                ${(precioConTarifa*porcentajeGlamperos).toLocaleString()} COP
+              </span>
             </div>
           </div>
 
           <div className="FormularioFechas-total">
             <span>Total</span>
-            <span>${totalSinImpuestos.toLocaleString()} COP</span>
+            <span>${precioConTarifa.toLocaleString()} COP</span>
           </div>
         </div>
 

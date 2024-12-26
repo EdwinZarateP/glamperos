@@ -14,7 +14,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
     throw new Error("El almacenVariables no está disponible. Asegúrate de envolver el componente en un proveedor de almacenVariables.");
   }
 
-  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, totalDias, setTotalDias } = almacenVariables;
+  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, totalDias, setTotalDias, setFechaInicioConfirmado, setFechaFinConfirmado, } = almacenVariables;
 
   const [mesActual, setMesActual] = useState<number>(new Date().getMonth());
   const [anioActual, setAnioActual] = useState<number>(new Date().getFullYear());
@@ -59,9 +59,13 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
   const manejarClickFecha = (fecha: Date) => {
     if (!fechaInicio || (fechaInicio && fechaFin)) {
       setFechaInicio(fecha);
+      
       setFechaFin(null);
     } else if (fechaInicio && !fechaFin && fecha >= fechaInicio) {
       setFechaFin(fecha);
+      // Actualizar fechas confirmadas cuando la fecha final es seleccionada
+      setFechaInicioConfirmado(fechaInicio);
+      setFechaFinConfirmado(fecha);
     } else {
       setFechaInicio(fecha);
       setFechaFin(null);

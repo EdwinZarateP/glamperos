@@ -8,17 +8,18 @@
   box-sizing: border-box;
   position: relative; /* Necesario para la animación global */
   overflow: hidden;
-
 }
 
 /* Skeleton Loader */
 .tarjeta-skeleton {
   width: 95%; /* Ocupa todo el ancho disponible */
   height: 320px;
-  background: #f4f4f4;
-  border-radius: 8px;
+  background: #e8f0e9; /* Verde claro natural */
+  border-radius: 12px; /* Esquinas ligeramente más redondeadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
   position: relative;
   overflow: hidden; /* Ocultar animación fuera del borde */
+  margin: 1rem auto; /* Espaciado uniforme */
 }
 
 /* Animación avanzada del skeleton */
@@ -31,12 +32,12 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    rgba(171, 200, 23, 0) 0%,
-    rgba(192, 221, 164, 0.3) 50%,
-    rgba(190, 218, 154, 0) 100%
+    rgba(232, 240, 233, 0) 0%,
+    rgba(255, 255, 255, 0.6) 50%, /* Luz sutil */
+    rgba(200, 230, 201, 0) 100% /* Verde pastel */
   );
   animation: skeleton-wave 2s infinite;
-  transform: skewX(-20deg); /* Inclina las líneas para un efecto dinámico */
+  transform: skewX(-45deg); /* Inclina las líneas para un efecto dinámico */
 }
 
 /* Keyframes para la animación */

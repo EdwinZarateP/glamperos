@@ -3,14 +3,17 @@ import { ContextoApp } from '../../Contexto/index';
 import { GiCampingTent } from 'react-icons/gi';
 import CalendarioGeneral from "../CalendarioGeneral";
 import { useParams } from "react-router-dom";
+import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
+import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
 import './estilos.css';
 
 // Cambié Promise<number> por number
 interface ReservarBotonProps {
-  totalSinImpuestos: number; 
+  precioPorNoche: number; 
+  descuento: number;
 }
 
-const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
+const ReservarBoton: React.FC<ReservarBotonProps> = ({ precioPorNoche, descuento }) => {
   const almacenVariables = useContext(ContextoApp);
   
   if (!almacenVariables) {
@@ -23,6 +26,8 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
     totalDias,
     setMostrarCalendario,
     mostrarCalendario,
+    fechaInicioConfirmado,
+    fechaFinConfirmado
   } = almacenVariables;
 
    const {fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{glampingId: string, fechaInicioUrl: string; fechaFinUrl: string; totalDiasUrl:string }>();
@@ -47,6 +52,15 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   ? parseInt(totalDiasUrl, 10)
   : 1;
 
+  //fechas por defecto
+  const hoy = new Date();
+  const fechaInicioPorDefecto = new Date();
+  fechaInicioPorDefecto.setDate(hoy.getDate() + 1); // Día de mañana
+  const fechaFinPorDefecto = new Date();
+  fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
+
+  const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
+
   const FechasReservadas = [
     new Date(2024, 10, 20),
     new Date(2024, 10, 28),
@@ -57,10 +71,10 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ totalSinImpuestos }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const nuevoPrecio = totalSinImpuestos * totalDiasRender ;
+    const nuevoPrecio = precioConTarifa ;
     setPrecioBase(Math.round(nuevoPrecio));
     setIsLoading(false);
-  }, [totalSinImpuestos, totalDiasRender]);
+  }, [precioConTarifa, totalDiasRender]);
 
   const precioFormateado = precioBase.toLocaleString('es-CO', {
     style: 'currency',

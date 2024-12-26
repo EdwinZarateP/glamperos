@@ -65,7 +65,7 @@ const DescripcionGlampingTexto: React.FC<DescripcionGlampingTextoProps> = ({ des
             >
               ×
             </button>
-            <div>{descripcionGlamping}</div>
+            <p>{descripcionGlamping}</p>
           </div>
         </div>
       )}
