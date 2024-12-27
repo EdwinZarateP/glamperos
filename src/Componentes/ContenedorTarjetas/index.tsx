@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useContext } from "react";
 import { ContextoApp } from '../../Contexto/index';
 import Tarjeta from "../../Componentes/Tarjeta/index";
 import { precioConRecargo } from '../../Funciones/precioConRecargo'; 
+import meme from '../../Imagenes/meme.jpg'
 import "./estilos.css"; 
 
 interface GlampingData {
@@ -20,6 +21,7 @@ interface GlampingData {
   Acepta_Mascotas: boolean;
   fechasReservadas: string[];
   amenidadesGlobal:string[];
+  Cantidad_Huespedes:number;
 }
 
 const ContenedorTarjetas: React.FC = () => {
@@ -29,11 +31,12 @@ const ContenedorTarjetas: React.FC = () => {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { activarFiltros, filtros, activarFiltrosUbicacion, activarFiltrosFechas, fechaInicio,
-    fechaFin, activarFiltrosDomo, activarFiltrosTienda, activarFiltrosCabaña, activarFiltrosCasaArbol,
+  const { activarFiltros, filtros, activarFiltrosUbicacion,activarFiltrosUbicacionBogota,activarFiltrosUbicacionMedellin,
+    activarFiltrosUbicacionCali, activarFiltrosFechas, activarFiltrosHuespedes,huespedesConfirmado,
+    fechaInicio,fechaFin, activarFiltrosDomo, activarFiltrosTienda, activarFiltrosCabaña, activarFiltrosCasaArbol,
     activarFiltrosRemolques, activarFiltrosChoza, activarFiltrosMascotas, activarFiltrosClimaCalido,
     activarFiltrosClimaFrio, activarFiltrosPlaya, activarFiltrosNaturaleza, activarFiltrosRio,
-    activarFiltrosCascada, activarFiltrosMontana, activarFiltrosCaminata, activarFiltrosDesierto } = almacenVariables;
+    activarFiltrosCascada, activarFiltrosMontana, activarFiltrosCaminata, activarFiltrosDesierto,activarFiltrosJacuzzi } = almacenVariables;
 
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -68,6 +71,7 @@ const ContenedorTarjetas: React.FC = () => {
         Acepta_Mascotas: glamping.Acepta_Mascotas || false,
         fechasReservadas: glamping.fechasReservadas || [],
         amenidadesGlobal: glamping.amenidadesGlobal || [],
+        Cantidad_Huespedes:glamping.Cantidad_Huespedes || 1,
       }));
   
       setGlampings((prevData) => {
@@ -157,6 +161,7 @@ const ContenedorTarjetas: React.FC = () => {
       return true; // Si las fechas no están definidas, no aplicar filtro
     }
   
+  
     return !fechasReservadas.some(
       (fecha) =>
         new Date(fecha) >= new Date(fechaInicio) &&
@@ -173,10 +178,7 @@ const ContenedorTarjetas: React.FC = () => {
         filtros?.precioFilter?.[1] !== undefined &&
         precioConRecargo(glamping.precioEstandar) >= filtros.precioFilter[0] &&
         precioConRecargo(glamping.precioEstandar) <= filtros.precioFilter[1]);
-  
-    // const cumpleTipo =
-    //   !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
-  
+
     const cumpleCoordenadas =
       !activarFiltrosUbicacion ||
       (filtros?.cordenadasFilter?.LATITUD !== undefined &&
@@ -187,11 +189,43 @@ const ContenedorTarjetas: React.FC = () => {
           glamping.ubicacion.lat ?? 0,
           glamping.ubicacion.lng ?? 0
         ) <= 150);
+
+    const cumpleCoordenadasBogota =
+      !activarFiltrosUbicacionBogota ||
+      calcularDistancia(
+        4.316107698, // Coordenada fija para Bogotá
+        -74.181072702, // Coordenada fija para Bogotá
+        glamping.ubicacion.lat ?? 0, // Latitud del glamping (puede ser null o undefined)
+        glamping.ubicacion.lng ?? 0  // Longitud del glamping (puede ser null o undefined)
+      ) <= 150; // Verifica si está dentro de los 150 metros
+  
+    const cumpleCoordenadasMedellin =
+      !activarFiltrosUbicacionMedellin ||
+      calcularDistancia(
+        6.257590259, // Coordenada fija para Bogotá
+        -75.611031065, // Coordenada fija para Bogotá
+        glamping.ubicacion.lat ?? 0, // Latitud del glamping (puede ser null o undefined)
+        glamping.ubicacion.lng ?? 0  // Longitud del glamping (puede ser null o undefined)
+      ) <= 150; // Verifica si está dentro de los 150 metros
+
+      const cumpleCoordenadasCali =
+      !activarFiltrosUbicacionCali ||
+      calcularDistancia(
+        3.399043723, // Coordenada fija para Bogotá
+        -76.576492589, // Coordenada fija para Bogotá
+        glamping.ubicacion.lat ?? 0, // Latitud del glamping (puede ser null o undefined)
+        glamping.ubicacion.lng ?? 0  // Longitud del glamping (puede ser null o undefined)
+      ) <= 150; // Verifica si está dentro de los 150 metros
+
   
     // Filtro de fechas reservadas
     const cumpleFechasReservadas =
       !activarFiltrosFechas || noTieneFechasReservadasEnRango(glamping.fechasReservadas);
-    
+      
+    // Filtro de Huespedes
+    const cumpleHuespedes = 
+    !activarFiltrosHuespedes || (huespedesConfirmado && glamping.Cantidad_Huespedes >= huespedesConfirmado);
+        
     const filtraDomo =
     !activarFiltrosDomo || glamping.tipoGlamping === "Domo";
 
@@ -240,10 +274,15 @@ const ContenedorTarjetas: React.FC = () => {
     const filtraDesierto=
     !activarFiltrosDesierto || glamping.amenidadesGlobal.includes("Desierto");
 
-    return cumplePrecio && cumpleCoordenadas && cumpleFechasReservadas && filtraDomo
+    const filtraJacuzzi=
+    !activarFiltrosJacuzzi || glamping.amenidadesGlobal.includes("Jacuzzi");
+
+    return cumplePrecio && cumpleCoordenadas && cumpleCoordenadasBogota &&cumpleCoordenadasMedellin
+    && cumpleCoordenadasCali && cumpleFechasReservadas && cumpleHuespedes && filtraDomo
     && filtraTienda && filtraCabaña && filtraCasaArbol && filtraRemolque && filtraChoza
     && filtraMascotas && filtraClimaCalido && filtraClimaFrio && filtraPlaya 
-    && filtraNaturaleza && filtraRio && filtraCascada && filtraMontana && filtraCaminata && filtraDesierto;
+    && filtraNaturaleza && filtraRio && filtraCascada && filtraMontana && filtraCaminata
+    && filtraDesierto && filtraJacuzzi; 
   });
     
 
@@ -284,37 +323,14 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
   }
 
   if (glampingsMostrados.length === 0) {
-    const razonesNoEncontrados = [];
-    
-    // Comprobar cada filtro y agregar la razón si no se cumple
-    if (activarFiltros) {
-      if (filtros?.precioFilter?.[0] !== undefined && filtros?.precioFilter?.[1] !== undefined) {
-        razonesNoEncontrados.push(`No tenemos Glamping en ese rango de precios que elegiste 😔`); 
-      }
-      if (filtros.tipoFilter && filtros.tipoFilter !== '') {
-        razonesNoEncontrados.push(`Tipo de glamping: ${filtros.tipoFilter}`);
-      }
-    }
-  
-    if (activarFiltrosUbicacion && (filtros?.cordenadasFilter?.LATITUD === undefined || filtros?.cordenadasFilter?.LONGITUD === undefined)) {
-      razonesNoEncontrados.push('Ubicación no definida');
-    }
-  
-    if (activarFiltrosFechas && fechaInicio && fechaFin) {
-      razonesNoEncontrados.push(`Fechas reservadas no disponibles en el rango de ${fechaInicio} a ${fechaFin}`);
-    }
-  
     return (
-      <div>
-        <p>No se encontraron glampings</p>
-        {razonesNoEncontrados.length > 0 && (
-          <ul>
-            {razonesNoEncontrados.map((razon, index) => (
-              <li key={index}>{razon}</li>
-            ))}
-          </ul>
-        )}
+      <div className="no-glampings-container">
+      <div className="no-glampings-message">
+        <img src={meme} alt="Meme divertido" className="meme-imagen" />
+        <h2>Lo sentimos, no hemos encontrado glamping con tus filtros</h2>
+        <p>Pero no te preocupes, ¡estamos trabajando para agregar más opciones!</p>
       </div>
+    </div>
     );
   }  
 

@@ -40,6 +40,32 @@
   transform: skewX(-45deg); /* Inclina las líneas para un efecto dinámico */
 }
 
+.no-glampings-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  padding: 20px;
+}
+
+.no-glampings-message{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.meme-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.meme-imagen {
+  width: 150px; /* O cualquier tamaño que desees */
+  height: auto;
+  border-radius: 8px;
+}
+
 /* Keyframes para la animación */
 @keyframes skeleton-wave {
   0% {

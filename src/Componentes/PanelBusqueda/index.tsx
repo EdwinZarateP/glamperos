@@ -36,6 +36,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setCantidad_Niños,
     setCantidad_Bebes,
     setCantidad_Mascotas,
+    Cantidad_Mascotas,
     mostrarCalendario,
     setMostrarCalendario,
     mostrarVisitantes,
@@ -43,9 +44,12 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setFiltros,
     setActivarFiltrosUbicacion,
     setActivarFiltrosFechas,
+    setActivarFiltrosHuespedes,
+    setHuespedesConfirmado,
     setBusqueda,
     cordenadasElegidas,
     setCordenadasElegidas,
+    setActivarFiltrosMascotas,
   } = almacenVariables;
   
   const navigate = useNavigate();
@@ -63,7 +67,6 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     } else {
       setActivarFiltrosUbicacion(false);
     }
-
     // Lógica para las fechas
     if (fechaInicio && fechaFin) {
       setActivarFiltrosFechas(true);
@@ -71,6 +74,21 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
       setFechaFinConfirmado(fechaFin);
     } else {
       setActivarFiltrosFechas(false);
+    }
+
+    // Lógica para los huespedes
+    if (totalHuespedes) {
+      setHuespedesConfirmado(totalHuespedes)
+      setActivarFiltrosHuespedes(true)
+    } else {
+      setActivarFiltrosHuespedes(false);
+    }
+
+    // Lógica para las mascotas
+    if (Cantidad_Mascotas>0) {
+      setActivarFiltrosMascotas(true)
+    } else {
+      setActivarFiltrosMascotas(false);
     }
   
     // Configurar filtros para la búsqueda

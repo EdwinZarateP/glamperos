@@ -33,7 +33,7 @@
     background: #ddd;
     border-radius: 4px;
     outline: none;
-    margin: 5px 0; /* Añadimos un margen entre los inputs */
+    margin: 7px 0; /* Añadimos un margen entre los inputs */
     transition: background 0.3s ease;
 }
 

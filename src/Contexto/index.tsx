@@ -60,6 +60,8 @@ interface ContextProps {
   setFechaInicioConfirmado: Dispatch<SetStateAction<Date | null>>;
   fechaFinConfirmado: Date | null;
   setFechaFinConfirmado: Dispatch<SetStateAction<Date | null>>;
+  huespedesConfirmado: number;
+  setHuespedesConfirmado: Dispatch<SetStateAction<number>>;
 
   // Variables de tipo número
   totalDias: number;
@@ -144,7 +146,15 @@ interface ContextProps {
   activarFiltrosUbicacion: boolean;
   setActivarFiltrosUbicacion: Dispatch<SetStateAction<boolean>>;
   activarFiltrosFechas: boolean;
+  activarFiltrosUbicacionBogota: boolean;
+  setActivarFiltrosUbicacionBogota: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosUbicacionMedellin: boolean;
+  setActivarFiltrosUbicacionMedellin: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosUbicacionCali:  boolean;
+  setActivarFiltrosUbicacionCali: Dispatch<SetStateAction<boolean>>;
   setActivarFiltrosFechas: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosHuespedes: boolean;
+  setActivarFiltrosHuespedes: Dispatch<SetStateAction<boolean>>;
   filtros: Filtros;
   setFiltros: Dispatch<SetStateAction<Filtros>>;
   cantiadfiltrosAplicados: number;
@@ -191,6 +201,8 @@ interface ContextProps {
   setActivarFiltrosDesierto: Dispatch<SetStateAction<boolean>>;
   activarFiltrosCaminata: boolean;
   setActivarFiltrosCaminata: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosJacuzzi: boolean;
+  setActivarFiltrosJacuzzi: Dispatch<SetStateAction<boolean>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -216,6 +228,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [fechaFin, setFechaFin] = useState<Date | null>(null);
   const [fechaInicioConfirmado, setFechaInicioConfirmado] = useState<Date | null>(null);
   const [fechaFinConfirmado, setFechaFinConfirmado] = useState<Date | null>(null);
+  const [huespedesConfirmado, setHuespedesConfirmado] = useState<number>(1);
   const [totalDias, setTotalDias] = useState<number>(1);
   const [precioPorNoche, setPrecioPorNoche] = useState<number | undefined>(undefined);
   const [tarifaServicio, setTarifaServicio] = useState<number | undefined>(undefined);
@@ -227,8 +240,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
   const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);  // Nueva variable para cantidad de huéspedes
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
-  const [siono, setSiono] = useState<boolean>(false); 
-  
+  const [siono, setSiono] = useState<boolean>(false);   
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
   const [imagenesCargadas, setImagenesCargadas] = useState<File[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
@@ -258,7 +270,13 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   // Estado para filtros
   const [activarFiltros, setActivarFiltros] = useState<boolean>(false);
   const [activarFiltrosUbicacion, setActivarFiltrosUbicacion] = useState<boolean>(false);
+  const [activarFiltrosUbicacionBogota, setActivarFiltrosUbicacionBogota] = useState<boolean>(false);
+  const [activarFiltrosUbicacionMedellin,setActivarFiltrosUbicacionMedellin] = useState<boolean>(false);
+  const [activarFiltrosUbicacionCali,setActivarFiltrosUbicacionCali] = useState<boolean>(false);
+
   const [activarFiltrosFechas, setActivarFiltrosFechas] = useState<boolean>(false);
+  const [activarFiltrosHuespedes, setActivarFiltrosHuespedes] = useState<boolean>(false);
+  
   // Estado para filtros con valores por defecto
   const [filtros, setFiltros] = useState<Filtros>({
     precioFilter: [50000, 2200000], // Rango de precios por defecto
@@ -292,7 +310,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [activarFiltrosCascada, setActivarFiltrosCascada] = useState<boolean>(false);  
   const [activarFiltrosMontana, setActivarFiltrosMontana] = useState<boolean>(false);  
   const [activarFiltrosCaminata, setActivarFiltrosCaminata] = useState<boolean>(false);  
-  const [activarFiltrosDesierto, setActivarFiltrosDesierto] = useState<boolean>(false);  
+  const [activarFiltrosDesierto, setActivarFiltrosDesierto] = useState<boolean>(false);
+  const [activarFiltrosJacuzzi, setActivarFiltrosJacuzzi] = useState<boolean>(false);  
 
 //-------------------------------------------------------------------------------------
 // 3.  Nombra las variables
@@ -312,6 +331,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     fechaFin, setFechaFin,
     fechaInicioConfirmado, setFechaInicioConfirmado,
     fechaFinConfirmado, setFechaFinConfirmado,
+    huespedesConfirmado, setHuespedesConfirmado,
     totalDias,setTotalDias,
     precioPorNoche, setPrecioPorNoche,
     tarifaServicio,setTarifaServicio,
@@ -339,7 +359,11 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     descuento, setDescuento,
     activarFiltros, setActivarFiltros,
     activarFiltrosUbicacion, setActivarFiltrosUbicacion,
+    activarFiltrosUbicacionBogota, setActivarFiltrosUbicacionBogota,
+    activarFiltrosUbicacionMedellin, setActivarFiltrosUbicacionMedellin,
+    activarFiltrosUbicacionCali, setActivarFiltrosUbicacionCali,
     activarFiltrosFechas, setActivarFiltrosFechas,
+    activarFiltrosHuespedes, setActivarFiltrosHuespedes,
     busqueda, setBusqueda,
     filtros, setFiltros,
     mostrarFiltros, setMostrarFiltros,
@@ -363,7 +387,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     activarFiltrosCascada, setActivarFiltrosCascada,
     activarFiltrosMontana, setActivarFiltrosMontana,
     activarFiltrosCaminata, setActivarFiltrosDesierto,
-    activarFiltrosDesierto, setActivarFiltrosCaminata
+    activarFiltrosDesierto, setActivarFiltrosCaminata,
+    activarFiltrosJacuzzi, setActivarFiltrosJacuzzi
     
   };
 
