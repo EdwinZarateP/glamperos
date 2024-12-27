@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../Imagenes/icono.png";
+// import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import PanelBusqueda from "../PanelBusqueda";
 import { ContextoApp } from "../../Contexto/index"; 
 import { evaluarVariable } from '../../Funciones/ValidarVariable';
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
+import animal from '../../Imagenes//animal.png'
 import "./estilos.css";
 
 const Header: React.FC = () => {
@@ -73,7 +74,7 @@ const Header: React.FC = () => {
       <header className="Header">
         {/* Reemplazo de Link con un botón de navegación */}
         <div className="Header-izquierda" onClick={irAInicio}>
-          <img src={logo} alt="Glamperos logo" className="Header-logo" />
+          <img src={animal} alt="Glamperos logo" className="Header-logo" />
           <span className="Header-nombreMarca">Glamperos</span>
         </div>
 
