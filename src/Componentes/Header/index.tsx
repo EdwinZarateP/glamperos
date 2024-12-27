@@ -2,10 +2,10 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
-import { VscSettings } from "react-icons/vsc";
 import PanelBusqueda from "../PanelBusqueda";
 import { ContextoApp } from "../../Contexto/index"; 
 import { evaluarVariable } from '../../Funciones/ValidarVariable';
+import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 import "./estilos.css";
 
 const Header: React.FC = () => {
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
           <div className="Header-menuUsuario" >
             <FiMenu className="Header-iconoMenu" onClick={() => navigate("/Registrarse")}/>
             <div className="Header-iconoSettingsWrapper">
-              <VscSettings onClick={() => setMostrarFiltros(true)} />
+              <HiMiniAdjustmentsHorizontal onClick={() => setMostrarFiltros(true)} />
               {cantiadfiltrosAplicados > 0 && (
                 <div className="Header-badge">{cantiadfiltrosAplicados}</div>
               )}

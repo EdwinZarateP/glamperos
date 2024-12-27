@@ -1,7 +1,7 @@
 import { ContextoApp } from '../../Contexto/index';
 import { useContext } from "react";
 import FiltroPrecios from "./precio"; 
-import FiltrosTipo from './tipo'; 
+// import FiltrosTipo from './tipo'; 
 // import FiltrosAmenidades from './amenidades';
 import "./estilos.css";
 
@@ -79,9 +79,9 @@ const FiltrosContenedor = () => {
           <div className="FiltrosContenedor-Rango-precios">
             <FiltroPrecios/>
           </div>
-          <div className="FiltrosContenedor-Tipo">
+          {/* <div className="FiltrosContenedor-Tipo">
             <FiltrosTipo />
-          </div>
+          </div> */}
           <div className="FiltrosContenedor-Amenidades">
             {/* <FiltrosAmenidades
               amenidadesGlobalFiltrado={filtrosTemporales.amenidadesGlobalFiltrado}

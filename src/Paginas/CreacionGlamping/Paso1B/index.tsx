@@ -13,7 +13,7 @@ const Paso1B: React.FC = () => {
   const opciones = [
     { id: 'Tienda', label: 'Tienda', icono: <GiCampingTent /> },
     { id: 'Domo', label: 'Domo', icono: <GiHabitatDome /> },
-    { id: 'Casa_arbol', label: 'Casa del árbol', icono: <GiTreehouse /> },
+    { id: 'Casa del arbol', label: 'Casa del arbol', icono: <GiTreehouse /> },
     { id: 'Remolque', label: 'Remolque', icono: <FaCaravan /> },
     { id: 'Cabaña', label: 'Cabaña', icono: <MdOutlineCabin /> },
     { id: 'Choza', label: 'Choza', icono: <GiHut /> },

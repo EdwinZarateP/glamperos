@@ -19,6 +19,7 @@ interface GlampingData {
   };
   Acepta_Mascotas: boolean;
   fechasReservadas: string[];
+  amenidadesGlobal:string[];
 }
 
 const ContenedorTarjetas: React.FC = () => {
@@ -28,7 +29,11 @@ const ContenedorTarjetas: React.FC = () => {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { activarFiltros, filtros, activarFiltrosUbicacion, activarFiltrosFechas, fechaInicio, fechaFin } = almacenVariables;
+  const { activarFiltros, filtros, activarFiltrosUbicacion, activarFiltrosFechas, fechaInicio,
+    fechaFin, activarFiltrosDomo, activarFiltrosTienda, activarFiltrosCabaña, activarFiltrosCasaArbol,
+    activarFiltrosRemolques, activarFiltrosChoza, activarFiltrosMascotas, activarFiltrosClimaCalido,
+    activarFiltrosClimaFrio, activarFiltrosPlaya, activarFiltrosNaturaleza, activarFiltrosRio,
+    activarFiltrosCascada, activarFiltrosMontana, activarFiltrosCaminata, activarFiltrosDesierto } = almacenVariables;
 
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,6 +67,7 @@ const ContenedorTarjetas: React.FC = () => {
         },
         Acepta_Mascotas: glamping.Acepta_Mascotas || false,
         fechasReservadas: glamping.fechasReservadas || [],
+        amenidadesGlobal: glamping.amenidadesGlobal || [],
       }));
   
       setGlampings((prevData) => {
@@ -168,8 +174,8 @@ const ContenedorTarjetas: React.FC = () => {
         precioConRecargo(glamping.precioEstandar) >= filtros.precioFilter[0] &&
         precioConRecargo(glamping.precioEstandar) <= filtros.precioFilter[1]);
   
-    const cumpleTipo =
-      !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
+    // const cumpleTipo =
+    //   !activarFiltros || filtros.tipoFilter === '' || glamping.tipoGlamping === filtros.tipoFilter;
   
     const cumpleCoordenadas =
       !activarFiltrosUbicacion ||
@@ -185,8 +191,59 @@ const ContenedorTarjetas: React.FC = () => {
     // Filtro de fechas reservadas
     const cumpleFechasReservadas =
       !activarFiltrosFechas || noTieneFechasReservadasEnRango(glamping.fechasReservadas);
-  
-    return cumplePrecio && cumpleTipo && cumpleCoordenadas && cumpleFechasReservadas;
+    
+    const filtraDomo =
+    !activarFiltrosDomo || glamping.tipoGlamping === "Domo";
+
+    const filtraTienda =
+    !activarFiltrosTienda || glamping.tipoGlamping === "Tienda";
+    
+    const filtraCabaña =
+    !activarFiltrosCabaña || glamping.tipoGlamping === "Cabaña";
+   
+    const filtraCasaArbol =
+    !activarFiltrosCasaArbol  || glamping.tipoGlamping === "Casa del arbol";
+    
+    const filtraRemolque =
+    !activarFiltrosRemolques  || glamping.tipoGlamping === "Remolque";
+    
+    const filtraChoza =
+    !activarFiltrosChoza  || glamping.tipoGlamping === "Choza";
+    
+    const filtraMascotas =
+    !activarFiltrosMascotas  || glamping.Acepta_Mascotas === true;
+
+    const filtraClimaCalido =
+    !activarFiltrosClimaCalido || glamping.amenidadesGlobal.includes("Clima Calido");
+
+    const filtraClimaFrio =
+    !activarFiltrosClimaFrio || glamping.amenidadesGlobal.includes("Clima Frio");
+
+    const filtraPlaya =
+    !activarFiltrosPlaya || glamping.amenidadesGlobal.includes("Playa");
+
+    const filtraNaturaleza=
+    !activarFiltrosNaturaleza || glamping.amenidadesGlobal.includes("Naturaleza");
+    
+    const filtraRio=
+    !activarFiltrosRio || glamping.amenidadesGlobal.includes("Rio");
+    
+    const filtraCascada=
+    !activarFiltrosCascada || glamping.amenidadesGlobal.includes("Cascada");
+
+    const filtraMontana=
+    !activarFiltrosMontana || glamping.amenidadesGlobal.includes("En la montaña");
+
+    const filtraCaminata=
+    !activarFiltrosCaminata || glamping.amenidadesGlobal.includes("Caminata");
+
+    const filtraDesierto=
+    !activarFiltrosDesierto || glamping.amenidadesGlobal.includes("Desierto");
+
+    return cumplePrecio && cumpleCoordenadas && cumpleFechasReservadas && filtraDomo
+    && filtraTienda && filtraCabaña && filtraCasaArbol && filtraRemolque && filtraChoza
+    && filtraMascotas && filtraClimaCalido && filtraClimaFrio && filtraPlaya 
+    && filtraNaturaleza && filtraRio && filtraCascada && filtraMontana && filtraCaminata && filtraDesierto;
   });
     
 

@@ -158,7 +158,39 @@ interface ContextProps {
   cordenadasElegidas: { LATITUD: number; LONGITUD: number }[];
   setCordenadasElegidas: Dispatch<SetStateAction<{ LATITUD: number; LONGITUD: number }[]>>;
 
-  
+  // Filtros del menuIcons
+  activarFiltrosDomo: boolean;
+  setActivarFiltrosDomo: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosTienda: boolean;
+  setActivarFiltrosTienda: Dispatch<SetStateAction<boolean>>;  
+  activarFiltrosCabaña: boolean;
+  setActivarFiltrosCabaña: Dispatch<SetStateAction<boolean>>;  
+  activarFiltrosCasaArbol: boolean;
+  setActivarFiltrosCasaArbol: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosRemolques: boolean;
+  setActivarFiltrosRemolques: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosChoza: boolean;
+  setActivarFiltrosChoza: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosMascotas: boolean;
+  setActivarFiltrosMascotas: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosClimaCalido: boolean;
+  setActivarFiltrosClimaCalido: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosClimaFrio: boolean;
+  setActivarFiltrosClimaFrio: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosPlaya: boolean;
+  setActivarFiltrosPlaya: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosNaturaleza: boolean;
+  setActivarFiltrosNaturaleza: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosRio: boolean;
+  setActivarFiltrosRio: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosCascada: boolean;
+  setActivarFiltrosCascada: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosMontana: boolean;
+  setActivarFiltrosMontana: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosDesierto: boolean;
+  setActivarFiltrosDesierto: Dispatch<SetStateAction<boolean>>;
+  activarFiltrosCaminata: boolean;
+  setActivarFiltrosCaminata: Dispatch<SetStateAction<boolean>>;
 }
 
 // Crea el contexto con un valor inicial undefined
@@ -234,7 +266,6 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     cordenadasFilter: { LATITUD: 4.123456, LONGITUD: -74.123456 }, // Aquí como un objeto, no un array
   });  
   
-
   // Busqueda del Header
   const [busqueda, setBusqueda] = useState({ destino: "", fechas: "" });
 
@@ -245,106 +276,95 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [tipoGlampingFiltrado, setTipoGlampingFiltrado] = useState<string | undefined>(undefined);
   const [cordenadasElegidas, setCordenadasElegidas] = useState<{ LATITUD: number; LONGITUD: number }[]>([]);
 
+  // Estado para filtros MenuIcons
+  const [activarFiltrosDomo, setActivarFiltrosDomo] = useState<boolean>(false);
+  const [activarFiltrosTienda, setActivarFiltrosTienda] = useState<boolean>(false);
+  const [activarFiltrosCabaña, setActivarFiltrosCabaña] = useState<boolean>(false);
+  const [activarFiltrosCasaArbol, setActivarFiltrosCasaArbol] = useState<boolean>(false);
+  const [activarFiltrosRemolques, setActivarFiltrosRemolques] = useState<boolean>(false);
+  const [activarFiltrosChoza, setActivarFiltrosChoza] = useState<boolean>(false);
+  const [activarFiltrosMascotas, setActivarFiltrosMascotas] = useState<boolean>(false);
+  const [activarFiltrosClimaCalido, setActivarFiltrosClimaCalido] = useState<boolean>(false);  
+  const [activarFiltrosClimaFrio, setActivarFiltrosClimaFrio] = useState<boolean>(false);  
+  const [activarFiltrosPlaya, setActivarFiltrosPlaya] = useState<boolean>(false);  
+  const [activarFiltrosNaturaleza, setActivarFiltrosNaturaleza] = useState<boolean>(false);  
+  const [activarFiltrosRio, setActivarFiltrosRio] = useState<boolean>(false);  
+  const [activarFiltrosCascada, setActivarFiltrosCascada] = useState<boolean>(false);  
+  const [activarFiltrosMontana, setActivarFiltrosMontana] = useState<boolean>(false);  
+  const [activarFiltrosCaminata, setActivarFiltrosCaminata] = useState<boolean>(false);  
+  const [activarFiltrosDesierto, setActivarFiltrosDesierto] = useState<boolean>(false);  
+
 //-------------------------------------------------------------------------------------
 // 3.  Nombra las variables
 //-------------------------------------------------------------------------------------
 
   const contextValue: ContextProps = {
-    idUsuario, 
-    setIdUsuario,
-    logueado,
-    setLogueado,
-    nombreUsuario,
-    setNombreUsuario,
-    correoUsuario,
-    setCorreoUsuario,
-    siono,
-    setSiono,    
-    nombreGlamping,
-    setNombreGlamping,
-    descripcionGlamping,
-    setDescripcionGlamping,
-    ciudad_departamento,
-    setCiudad_departamento,
-    ciudad_Elegida,
-    setCiudad_Elegida,
-    fechaInicio,
-    setFechaInicio,
-    fechaFin,
-    setFechaFin,
-    fechaInicioConfirmado,
-    setFechaInicioConfirmado,
-    fechaFinConfirmado,
-    setFechaFinConfirmado,
-    totalDias,
-    setTotalDias,
-    precioPorNoche,
-    setPrecioPorNoche,
-    tarifaServicio,
-    setTarifaServicio,
-    totalSinImpuestos,
-    setTotalSinImpuestos,
-    Cantidad_Adultos,
-    setCantidad_Adultos,
-    Cantidad_Niños,
-    setCantidad_Niños,
-    Cantidad_Bebes,
-    setCantidad_Bebes,
-    Cantidad_Mascotas,
-    setCantidad_Mascotas,
-    totalHuespedes,
-    setTotalHuespedes,
-    Cantidad_Huespedes,
-    setCantidad_Huespedes,
-    Acepta_Mascotas,
-    setAcepta_Mascotas,
-    mostrarVisitantes,
-    setMostrarVisitantes,
-    mostrarCalendario,
-    setMostrarCalendario,
-    tipoGlamping,
-    setTipoGlamping,
-    latitud,
-    setLatitud,
-    longitud,
-    setLongitud,
-    ubicacion,
-    setUbicacion,
-    imagenesSeleccionadas,
-    setImagenesSeleccionadas,
-    imagenesCargadas, 
-    setImagenesCargadas,
+    idUsuario, setIdUsuario,
+    logueado, setLogueado,
+    nombreUsuario, setNombreUsuario,
+    correoUsuario, setCorreoUsuario,
+    siono, setSiono,    
+    nombreGlamping, setNombreGlamping,
+    descripcionGlamping, setDescripcionGlamping,
+    ciudad_departamento, setCiudad_departamento,
+    ciudad_Elegida, setCiudad_Elegida,
+    fechaInicio,setFechaInicio,
+    fechaFin, setFechaFin,
+    fechaInicioConfirmado, setFechaInicioConfirmado,
+    fechaFinConfirmado, setFechaFinConfirmado,
+    totalDias,setTotalDias,
+    precioPorNoche, setPrecioPorNoche,
+    tarifaServicio,setTarifaServicio,
+    totalSinImpuestos,setTotalSinImpuestos,
+    Cantidad_Adultos,setCantidad_Adultos,
+    Cantidad_Niños,setCantidad_Niños,
+    Cantidad_Bebes,setCantidad_Bebes,
+    Cantidad_Mascotas,setCantidad_Mascotas,
+    totalHuespedes, setTotalHuespedes,
+    Cantidad_Huespedes,setCantidad_Huespedes,
+    Acepta_Mascotas, setAcepta_Mascotas,
+    mostrarVisitantes, setMostrarVisitantes,
+    mostrarCalendario,setMostrarCalendario,
+    tipoGlamping,setTipoGlamping,
+    latitud,setLatitud,
+    longitud, setLongitud,
+    ubicacion, setUbicacion,
+    imagenesSeleccionadas, setImagenesSeleccionadas,
+    imagenesCargadas, setImagenesCargadas,
     libraries,
-    amenidadesGlobal,
-    setAmenidadesGlobal,
-    videoSeleccionado,
-    setVideoSeleccionado,
-    fotosSeleccionadas,
-    setFotosSeleccionadas,
-    precioEstandar,
-    setPrecioEstandar,
-    descuento,
-    setDescuento,
-    activarFiltros,
-    setActivarFiltros,
-    activarFiltrosUbicacion,
-    setActivarFiltrosUbicacion,
-    activarFiltrosFechas,
-    setActivarFiltrosFechas,
-    busqueda,
-    setBusqueda,
-    filtros,
-    setFiltros,
-    mostrarFiltros, 
-    setMostrarFiltros,
-    cantiadfiltrosAplicados,
-    setCantiadfiltrosAplicados,
-    precioFiltrado,
-    setPrecioFiltrado,
-    tipoGlampingFiltrado,
-    setTipoGlampingFiltrado,
-    cordenadasElegidas,
-    setCordenadasElegidas,
+    amenidadesGlobal, setAmenidadesGlobal,
+    videoSeleccionado, setVideoSeleccionado,
+    fotosSeleccionadas, setFotosSeleccionadas,
+    precioEstandar, setPrecioEstandar,
+    descuento, setDescuento,
+    activarFiltros, setActivarFiltros,
+    activarFiltrosUbicacion, setActivarFiltrosUbicacion,
+    activarFiltrosFechas, setActivarFiltrosFechas,
+    busqueda, setBusqueda,
+    filtros, setFiltros,
+    mostrarFiltros, setMostrarFiltros,
+    cantiadfiltrosAplicados, setCantiadfiltrosAplicados,
+    precioFiltrado, setPrecioFiltrado,
+    tipoGlampingFiltrado,setTipoGlampingFiltrado,
+    cordenadasElegidas, setCordenadasElegidas,
+    // filtros menuIcons
+    activarFiltrosDomo, setActivarFiltrosDomo,
+    activarFiltrosTienda, setActivarFiltrosTienda,
+    activarFiltrosCabaña, setActivarFiltrosCabaña,
+    activarFiltrosCasaArbol, setActivarFiltrosCasaArbol,
+    activarFiltrosRemolques, setActivarFiltrosRemolques,
+    activarFiltrosChoza, setActivarFiltrosChoza,
+    activarFiltrosMascotas, setActivarFiltrosMascotas,
+    activarFiltrosClimaCalido, setActivarFiltrosClimaCalido,
+    activarFiltrosClimaFrio, setActivarFiltrosClimaFrio,
+    activarFiltrosPlaya, setActivarFiltrosPlaya,
+    activarFiltrosNaturaleza, setActivarFiltrosNaturaleza,
+    activarFiltrosRio, setActivarFiltrosRio,
+    activarFiltrosCascada, setActivarFiltrosCascada,
+    activarFiltrosMontana, setActivarFiltrosMontana,
+    activarFiltrosCaminata, setActivarFiltrosDesierto,
+    activarFiltrosDesierto, setActivarFiltrosCaminata
+    
   };
 
   return <ContextoApp.Provider value={contextValue}>{hijo}</ContextoApp.Provider>;
