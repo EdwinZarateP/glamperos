@@ -21,35 +21,23 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
   }
 
   const {
-    fechaInicio,
-    fechaFin,
-    setFechaInicio,
-    setFechaFin,
-    setFechaInicioConfirmado,
-    setFechaFinConfirmado,
-    setTotalDias,
-    ciudad_departamento,
-    setCiudad_departamento,
-    totalHuespedes,
-    setTotalHuespedes,
-    setCantidad_Adultos,
-    setCantidad_Niños,
-    setCantidad_Bebes,
-    setCantidad_Mascotas,
-    Cantidad_Mascotas,
-    mostrarCalendario,
-    setMostrarCalendario,
-    mostrarVisitantes,
-    setMostrarVisitantes,
-    setFiltros,
-    setActivarFiltrosUbicacion,
-    setActivarFiltrosFechas,
-    setActivarFiltrosHuespedes,
-    setHuespedesConfirmado,
-    setBusqueda,
-    cordenadasElegidas,
-    setCordenadasElegidas,
-    setActivarFiltrosMascotas,
+    fechaInicio,fechaFin,
+    setFechaInicio,setFechaFin,
+    setFechaInicioConfirmado,setFechaFinConfirmado,
+    setTotalDias,ciudad_departamento,
+    setCiudad_departamento,totalHuespedes,
+    setTotalHuespedes,setCantidad_Adultos,
+    setCantidad_Niños,setCantidad_Bebes,
+    setCantidad_Mascotas, Cantidad_Mascotas,
+    mostrarCalendario,setMostrarCalendario,
+    mostrarVisitantes,setMostrarVisitantes,
+    setFiltros, setActivarFiltrosUbicacion,
+    setIconoSeleccionado, setActivarFiltrosFechas,setActivarFiltrosHuespedes,
+    setHuespedesConfirmado, setBusqueda,cordenadasElegidas,setCordenadasElegidas, setActivarFiltrosMascotas,setActivarFiltrosDomo, setActivarFiltrosTienda, setActivarFiltrosCabaña, setActivarFiltrosCasaArbol,
+    setActivarFiltrosRemolques, setActivarFiltrosChoza, setActivarFiltrosClimaCalido, setActivarFiltrosClimaFrio, setActivarFiltrosPlaya,
+    setActivarFiltrosNaturaleza, setActivarFiltrosRio, setActivarFiltrosCascada, setActivarFiltrosMontana,
+    setActivarFiltrosDesierto, setActivarFiltrosCaminata, setActivarFiltrosJacuzzi,
+    setActivarFiltrosUbicacionBogota,setActivarFiltrosUbicacionMedellin, setActivarFiltrosUbicacionCali
   } = almacenVariables;
   
   const navigate = useNavigate();
@@ -60,6 +48,27 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
   const manejarBuscar = () => {
     navigate("/");
     window.scrollTo(0, 0);
+    setActivarFiltrosTienda(false);
+    setActivarFiltrosCasaArbol(false);
+    setActivarFiltrosCabaña(false);
+    setActivarFiltrosRemolques(false);
+    setActivarFiltrosChoza(false);
+    setActivarFiltrosDomo(false);
+    setActivarFiltrosMascotas(false); 
+    setActivarFiltrosClimaCalido(false);
+    setActivarFiltrosClimaFrio(false);
+    setActivarFiltrosPlaya(false);
+    setActivarFiltrosNaturaleza(false);
+    setActivarFiltrosRio(false);
+    setActivarFiltrosCascada(false);
+    setActivarFiltrosMontana(false);
+    setActivarFiltrosDesierto(false);
+    setActivarFiltrosCaminata(false);
+    setActivarFiltrosJacuzzi(false); 
+    setActivarFiltrosUbicacionBogota(false);
+    setActivarFiltrosUbicacionMedellin(false);
+    setActivarFiltrosUbicacionCali(false); 
+    setIconoSeleccionado(100)
     
     // Lógica para el destino (usamos ciudad_departamento en lugar de destino)
     if (ciudad_departamento) {

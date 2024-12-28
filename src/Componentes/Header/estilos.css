@@ -21,6 +21,7 @@
   font-family: inherit;
   flex-wrap: wrap; /* Permite que los elementos se ajusten si el espacio es limitado */
   width: 90%;
+  position: relative;
 }
 
 
@@ -134,7 +135,10 @@
 .Header-menuUsuario {
   display: flex;
   align-items: center;
-  position: relative;
+  border-radius:50px;
+  padding: 7px;
+  border: 1px solid #d3d3d3;
+  cursor: pointer;
 }
 
 .Header-iconoMenu {
@@ -149,10 +153,12 @@
   width: 45px;
   height: 45px;
   border: 1px solid #d3d3d3;
-  border-radius: 50%; /* Hace el fondo circular */
   align-items: center;
   justify-content: center;
   font-size: 25px;
+  border-radius:50%;
+  padding: 7px;
+  cursor: pointer;
 }
 
 .Header-iconoSettings {
@@ -176,6 +182,32 @@
 }
 
 
+.Header-inicialUsuario {
+  width: 35px; 
+  height: 35px; 
+  border-radius: 50%; 
+  background-color:#000000;
+  color: #ffffff;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-size: 14px; 
+}
+
+.Header-inicialUsuario-incognito {
+  font-size: 24px;
+}
+
+
+.Header-menuUsuarioLista {
+  position: absolute; /* Se coloca encima del header */
+  top: 60px; 
+  right: 0;
+  align-items: center;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
 /* Responsividad */
 
 /* Pantallas pequeñas (máximo ancho: 900px) */
@@ -186,7 +218,8 @@
   .Header-derecha > .Header-iconoGlobo,
   .Header-opcionBusqueda:not(:first-child),
   .Header-divisor:not(:first-child),
-  .Header-notificacion {
+  .Header-notificacion,
+  .Header-inicialUsuario{
     display: none;
   }
   
@@ -227,6 +260,10 @@
     width: 1%;
     justify-content: flex-end;
   }
+  .Header-menuUsuario {
+    padding: 0;
+    border: none;
+  }
 }
 
 /* Pantallas medianas (entre 540px y 900px) */
@@ -241,6 +278,10 @@
     min-width: 55%;
     height: 50px; /* Mantiene la altura constante */
   }
+  .Header-menuUsuario {
+    padding: 0;
+    border: none;
+  }
 }
 
 /* Pantallas muy pequeñas (menores a 540px) */
@@ -254,10 +295,13 @@
   }
 
   .Header-barraBusqueda {
-    /* width: 350px; */
     min-width: 80%;
     margin-left: 10px;
     height: 50px; /* Mantiene la altura constante */
+  }
+  .Header-menuUsuario {
+    padding: 0;
+    border: none;
   }
 }
 
@@ -281,5 +325,9 @@
 
   .Header-opcionBusqueda {
     margin-left: 10px;
+  }
+  .Header-menuUsuario {
+    padding: 0;
+    border: none;
   }
 }

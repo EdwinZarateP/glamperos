@@ -64,7 +64,7 @@ const guardarGlampingP: React.FC = () => {
     if (nombreUsuario) {
       setFormulario((prev) => ({
         ...prev,
-        nombrePropietario: nombreUsuario, // Actualiza el nombre del propietario
+        nombrePropietario: nombreUsuario, 
       }));
     }
   }, [nombreUsuario]);  

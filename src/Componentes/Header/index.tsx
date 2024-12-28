@@ -7,6 +7,9 @@ import { ContextoApp } from "../../Contexto/index";
 import { evaluarVariable } from '../../Funciones/ValidarVariable';
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 import animal from '../../Imagenes//animal.png'
+import { BsIncognito } from "react-icons/bs";
+import Cookies from 'js-cookie';
+import MenuUsuario from '../MenuUsuario/index'; // Ajusta la ruta si es necesario
 import "./estilos.css";
 
 const Header: React.FC = () => {
@@ -19,13 +22,15 @@ const Header: React.FC = () => {
     );
   }
 
-  const { totalHuespedes, idUsuario, setSiono, setLatitud,setLongitud,
+  const { totalHuespedes, setIdUsuario, setSiono, setLatitud,setLongitud,
      setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, 
      setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, 
      setPrecioEstandar, setCantidad_Huespedes, setDescuento, setAcepta_Mascotas,
-     setMostrarFiltros, cantiadfiltrosAplicados, busqueda, setBusqueda } = almacenVariables; 
+     setMostrarFiltros,setMostrarMenuUsuarios, cantiadfiltrosAplicados, busqueda, setBusqueda } = almacenVariables; 
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false);
+  const nombreUsuarioCookie = Cookies.get('nombreUsuario');
+  const idUsuarioCookie = Cookies.get('idUsuario'); 
 
   const manejarClickBusqueda = () => {
     setMostrarPanelBusqueda(true); 
@@ -44,7 +49,7 @@ const Header: React.FC = () => {
   };
 
   const existeId = () => {
-    const resultado = evaluarVariable(idUsuario);
+    const resultado = evaluarVariable(idUsuarioCookie);
     return resultado
   };
 
@@ -72,6 +77,10 @@ const Header: React.FC = () => {
   return (
     <div className="contenedor-Header">
       <header className="Header">
+        {/* Aquí agregamos el componente MenuUsuario */}
+        <div className="Header-menuUsuarioLista">
+          <MenuUsuario /> {/* Usamos el componente aquí */}
+        </div>
         {/* Reemplazo de Link con un botón de navegación */}
         <div className="Header-izquierda" onClick={irAInicio}>
           <img src={animal} alt="Glamperos logo" className="Header-logo" />
@@ -102,26 +111,54 @@ const Header: React.FC = () => {
         </div>
 
         <div className="Header-derecha">
-          {existeId() ? (
-            <div className="Header-botonAnfitrion" onClick={() => { quitarSetters(); navigate("/CrearGlamping"); }}>
-              Publica tu Glamping
-            </div>
-          ) : (
-            <div className="Header-botonAnfitrion" onClick={() => { quitarSetters(); navigate("/Registrarse"); }}>
-              Publica tu Glamping
-            </div>
-          )}
+        {existeId() ? (
+          <div
+            className="Header-botonAnfitrion"
+            onClick={() => {
+              quitarSetters();
+              setIdUsuario(idUsuarioCookie??"")
+              navigate("/CrearGlamping");
+            }}
+          >
+            Publica tu Glamping
+          </div>
+        ) : (
+          <div
+            className="Header-botonAnfitrion"
+            onClick={() => {
+              quitarSetters();
+              navigate("/Registrarse");
+            }}
+          >
+            Publica tu Glamping
+          </div>
+        )}
 
-          <div className="Header-menuUsuario" >
-            <FiMenu className="Header-iconoMenu" onClick={() => navigate("/Registrarse")}/>
-            <div className="Header-iconoSettingsWrapper">
-              <HiMiniAdjustmentsHorizontal onClick={() => setMostrarFiltros(true)} />
-              {cantiadfiltrosAplicados > 0 && (
-                <div className="Header-badge">{cantiadfiltrosAplicados}</div>
-              )}
-            </div>
+        <div className="Header-menuUsuario" onClick={()=>setMostrarMenuUsuarios(true)}>
+          <FiMenu
+            className="Header-iconoMenu"  
+          />
+          
+          {/* Círculo con la inicial o FaUserSecret */}
+          <div className="Header-inicialUsuario">
+            {nombreUsuarioCookie ? (
+              nombreUsuarioCookie[0].toUpperCase() // Muestra la inicial en mayúscula
+            ) : (
+              <BsIncognito className="Header-inicialUsuario-incognito" />
+            )}
           </div>
         </div>
+
+        <div className="Header-iconoSettingsWrapper">
+          <HiMiniAdjustmentsHorizontal
+            onClick={() => setMostrarFiltros(true)}
+          />
+          {cantiadfiltrosAplicados > 0 && (
+            <div className="Header-badge">{cantiadfiltrosAplicados}</div>
+          )}
+        </div>
+      </div>
+
       </header>
 
       {mostrarPanelBusqueda && (

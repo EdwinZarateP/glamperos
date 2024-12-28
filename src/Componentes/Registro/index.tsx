@@ -4,10 +4,11 @@ import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import {jwtDecode} from "jwt-decode";
 import { ContextoApp } from '../../Contexto/index';
 import { useNavigate } from "react-router-dom"; // Importar el hook de navegación
+import Cookies from 'js-cookie';
 import "./estilos.css";
 
 const Registro: React.FC = () => {
-  const { setIdUsuario, setLogueado, setNombreUsuario, setCorreoUsuario, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
+  const { idUsuario, setIdUsuario, setLogueado, nombreUsuario, setNombreUsuario, setCorreoUsuario, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
   const [mensaje, setMensaje] = useState<string | null>(null);
   const navigate = useNavigate(); // Crear la función de navegación
 
@@ -25,8 +26,16 @@ const Registro: React.FC = () => {
     try {
       const response = await axios.get(`${API_URL}?email=${email}`);
       if (response?.data?.usuario) {
+        //se  guarda en las cookies el id
         setIdUsuario(response.data.usuario._id);
+        if (idUsuario) {
+          Cookies.set('idUsuario', idUsuario, { expires: 7 });
+        }  
+        //se  guarda en las cookies el nombreUsuario      
         setNombreUsuario(response.data.usuario.nombre);
+        if (nombreUsuario) {
+          Cookies.set('nombreUsuario', nombreUsuario, { expires: 7 });
+        }  
         setCorreoUsuario(response.data.usuario.email);
         setLogueado(true);
         navigate("/");
@@ -45,7 +54,7 @@ const Registro: React.FC = () => {
       return;
     }
 
-    let emailUsuario = ""; // Declaramos emailUsuario aquí para asegurar el acceso en todos los bloques de código
+    let emailUsuario = ""; 
 
     try {
       const decoded: any = jwtDecode(credentialResponse.credential);
@@ -61,8 +70,17 @@ const Registro: React.FC = () => {
       });
 
       if (response.status === 200 && response.data) {
-        setIdUsuario(response.data.usuario._id);
+        setIdUsuario(response.data.usuario._id); 
+         //se  guarda en las cookies el idUsuario  
+        if (idUsuario) {
+          Cookies.set('idUsuario', idUsuario, { expires: 7 });
+        }          
         setNombreUsuario(response.data.usuario.nombre);
+        //se  guarda en las cookies el nombreUsuario      
+        setNombreUsuario(response.data.usuario.nombre);
+        if (nombreUsuario) {
+          Cookies.set('nombreUsuario', nombreUsuario, { expires: 7 });
+        }
         setCorreoUsuario(response.data.usuario.email);
         setLogueado(true);
 

@@ -37,10 +37,15 @@
   white-space: nowrap;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch; /* Suaviza el scroll en dispositivos táctiles */
+
 }
 
 .MenuIconos-lista-iconos::-webkit-scrollbar {
   display: none; /* Ocultar la barra de desplazamiento */
+}
+
+.MenuIconos-lista-iconos span {
+  line-height: 1.5; /* Ajusta según sea necesario */
 }
 
 .MenuIconos-icono-item {
@@ -68,7 +73,9 @@
 .MenuIconos-icono-seleccionado {
   color: #2F6B3E;
   font-weight: bold;
+  transform: scale(1.1);
 }
+
 
 .MenuIconos-flecha-izquierda,
 .MenuIconos-flecha-derecha {

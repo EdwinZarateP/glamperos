@@ -6,7 +6,8 @@ import meme from '../../Imagenes/meme.jpg'
 import "./estilos.css"; 
 
 interface GlampingData {
-  _id: string;  // Cambié _id por glampingId
+  _id: string; 
+  habilitado: boolean;
   nombreGlamping: string;
   tipoGlamping: string;
   ciudad_departamento: string;
@@ -36,7 +37,8 @@ const ContenedorTarjetas: React.FC = () => {
     fechaInicio,fechaFin, activarFiltrosDomo, activarFiltrosTienda, activarFiltrosCabaña, activarFiltrosCasaArbol,
     activarFiltrosRemolques, activarFiltrosChoza, activarFiltrosMascotas, activarFiltrosClimaCalido,
     activarFiltrosClimaFrio, activarFiltrosPlaya, activarFiltrosNaturaleza, activarFiltrosRio,
-    activarFiltrosCascada, activarFiltrosMontana, activarFiltrosCaminata, activarFiltrosDesierto,activarFiltrosJacuzzi } = almacenVariables;
+    activarFiltrosCascada, activarFiltrosMontana, activarFiltrosCaminata, activarFiltrosDesierto,
+    activarFiltrosJacuzzi } = almacenVariables;
 
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,6 +59,7 @@ const ContenedorTarjetas: React.FC = () => {
   
       const parsedData = data.map((glamping) => ({
         _id: glamping._id,
+        habilitado:glamping.habilitado || false,
         nombreGlamping: glamping.nombreGlamping || "Nombre no disponible",
         tipoGlamping: glamping.tipoGlamping || "Choza",
         ciudad_departamento: glamping.ciudad_departamento || "Ciudad no disponible",
@@ -171,6 +174,9 @@ const ContenedorTarjetas: React.FC = () => {
   
   // Filtrar los glampings según los criterios del diccionario de filtros
   const glampingsFiltrados = glampings.filter((glamping) => {
+    
+    const filtraHabilitados = 
+      glamping.habilitado === true;
 
     const cumplePrecio =
       !activarFiltros ||
@@ -277,7 +283,7 @@ const ContenedorTarjetas: React.FC = () => {
     const filtraJacuzzi=
     !activarFiltrosJacuzzi || glamping.amenidadesGlobal.includes("Jacuzzi");
 
-    return cumplePrecio && cumpleCoordenadas && cumpleCoordenadasBogota &&cumpleCoordenadasMedellin
+    return filtraHabilitados && cumplePrecio && cumpleCoordenadas && cumpleCoordenadasBogota &&cumpleCoordenadasMedellin
     && cumpleCoordenadasCali && cumpleFechasReservadas && cumpleHuespedes && filtraDomo
     && filtraTienda && filtraCabaña && filtraCasaArbol && filtraRemolque && filtraChoza
     && filtraMascotas && filtraClimaCalido && filtraClimaFrio && filtraPlaya 

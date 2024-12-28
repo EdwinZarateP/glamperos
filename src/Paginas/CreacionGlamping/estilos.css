@@ -1,4 +1,5 @@
 .creacionGlamping-contenedor {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,4 +72,10 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
-  
+  .creacionGlamping-logo {
+    position: fixed;
+    width: 63px;
+    height: auto;
+    bottom: 77px;
+    cursor: pointer;
+  }

@@ -20,7 +20,7 @@ function Inicio() {
       <Header /> 
       <MenuIconos /> 
       {mostrarFiltros && <FiltrosContenedor />}
-      <main>
+      <main >
         <ContenedorTarjetas /> 
       </main>
     </div>

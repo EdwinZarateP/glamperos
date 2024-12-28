@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { FaUmbrellaBeach, FaTemperatureArrowUp, FaTemperatureArrowDown, FaHotTubPerson, FaCat } from "react-icons/fa6";
 import { BsTreeFill } from "react-icons/bs";
 import { PiMountainsBold, PiCoffeeBeanFill  } from "react-icons/pi";
@@ -19,7 +19,7 @@ const MenuIconos: React.FC = () => {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
     }
 
-    const { setMostrarFiltros, cantiadfiltrosAplicados,setActivarFiltrosDomo ,
+    const { setMostrarFiltros, cantiadfiltrosAplicados,iconoSeleccionado, setIconoSeleccionado,setActivarFiltrosDomo ,
        setActivarFiltrosTienda, setActivarFiltrosCabaña, setActivarFiltrosCasaArbol,
        setActivarFiltrosRemolques, setActivarFiltrosChoza, setActivarFiltrosMascotas, 
        setActivarFiltrosClimaCalido, setActivarFiltrosClimaFrio, setActivarFiltrosPlaya,
@@ -27,7 +27,6 @@ const MenuIconos: React.FC = () => {
        setActivarFiltrosDesierto, setActivarFiltrosCaminata, setActivarFiltrosJacuzzi,
        setActivarFiltrosUbicacionBogota,setActivarFiltrosUbicacionMedellin, setActivarFiltrosUbicacionCali} = almacenVariables;
 
-    const [iconoSeleccionado, setIconoSeleccionado] = useState<number | null>(null);
     const iconos = [
         { titulo: "Cerca Bogota", icono: <GiEagleEmblem/> },
         { titulo: "Cerca Medellin", icono: < PiCoffeeBeanFill  /> },

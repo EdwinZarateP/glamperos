@@ -97,6 +97,8 @@ interface ContextProps {
   setMostrarVisitantes: Dispatch<SetStateAction<boolean>>;
   mostrarCalendario: boolean;
   setMostrarCalendario: Dispatch<SetStateAction<boolean>>;
+  mostrarMenuUsuarios: boolean;
+  setMostrarMenuUsuarios: Dispatch<SetStateAction<boolean>>;
 
   //Tipo de glamping
   tipoGlamping: string;
@@ -169,6 +171,8 @@ interface ContextProps {
   setCordenadasElegidas: Dispatch<SetStateAction<{ LATITUD: number; LONGITUD: number }[]>>;
 
   // Filtros del menuIcons
+  iconoSeleccionado: number;
+  setIconoSeleccionado: React.Dispatch<React.SetStateAction<number>>;
   activarFiltrosDomo: boolean;
   setActivarFiltrosDomo: Dispatch<SetStateAction<boolean>>;
   activarFiltrosTienda: boolean;
@@ -248,6 +252,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   // Estados para modales
   const [mostrarVisitantes, setMostrarVisitantes] = useState<boolean>(false);
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
+  const [mostrarMenuUsuarios, setMostrarMenuUsuarios] = useState<boolean>(false);
+
 
   //Tipo de glamping
   const [tipoGlamping, setTipoGlamping] = useState<string>('');
@@ -295,6 +301,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [cordenadasElegidas, setCordenadasElegidas] = useState<{ LATITUD: number; LONGITUD: number }[]>([]);
 
   // Estado para filtros MenuIcons
+  const [iconoSeleccionado, setIconoSeleccionado] = useState<number>(100);
   const [activarFiltrosDomo, setActivarFiltrosDomo] = useState<boolean>(false);
   const [activarFiltrosTienda, setActivarFiltrosTienda] = useState<boolean>(false);
   const [activarFiltrosCabaña, setActivarFiltrosCabaña] = useState<boolean>(false);
@@ -345,6 +352,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     Acepta_Mascotas, setAcepta_Mascotas,
     mostrarVisitantes, setMostrarVisitantes,
     mostrarCalendario,setMostrarCalendario,
+    mostrarMenuUsuarios, setMostrarMenuUsuarios,
     tipoGlamping,setTipoGlamping,
     latitud,setLatitud,
     longitud, setLongitud,
@@ -373,6 +381,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     cordenadasElegidas, setCordenadasElegidas,
     // filtros menuIcons
     activarFiltrosDomo, setActivarFiltrosDomo,
+    iconoSeleccionado, setIconoSeleccionado,
     activarFiltrosTienda, setActivarFiltrosTienda,
     activarFiltrosCabaña, setActivarFiltrosCabaña,
     activarFiltrosCasaArbol, setActivarFiltrosCasaArbol,

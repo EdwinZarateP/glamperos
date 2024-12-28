@@ -15,13 +15,22 @@ import Paso3A from "./Paso3A/index";
 import Paso3B from "./Paso3B/index";
 import Paso4A from "./Paso4A/index";
 import Swal from "sweetalert2";
+import animal from '../../Imagenes//animal.png'
+import { useNavigate } from 'react-router-dom';
 import "./estilos.css";
 
 
 const CreacionGlamping: React.FC = () => {
   const [pasoActual, setPasoActual] = useState<number>(0);
   const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal, imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping, precioEstandar, nombreUsuario, correoUsuario } = useContext(ContextoApp)!;
-  
+  const navigate = useNavigate(); // Inicializar el hook de navegación
+
+  const redirigirInicio = () => {
+    navigate("/"); 
+    window.location.reload();
+  };
+
+
   useEffect(() => {
     // Establecer el nombre del glamping en vacío al renderizar el componente
     setNombreGlamping("");
@@ -193,12 +202,12 @@ if (pasoActual === 12) {
 
   return (
     <div className="creacionGlamping-contenedor">
-      <div className="creacionGlamping-paso">{pasos[pasoActual]}</div>
-
+      <div className="creacionGlamping-paso">{pasos[pasoActual]}</div>  
+      <img src={animal} alt="Glamperos logo" className="creacionGlamping-logo"  onClick={redirigirInicio}/>    
       <div className="creacionGlamping-progreso">
         <div className="creacionGlamping-progreso-barra" style={{ width: `${progreso}%` }}></div>
       </div>
-
+      
       <div className="creacionGlamping-controles">
         <button
           className="creacionGlamping-boton-atras"
