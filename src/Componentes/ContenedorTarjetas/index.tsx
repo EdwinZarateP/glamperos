@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useContext } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { ContextoApp } from '../../Contexto/index';
 import Tarjeta from "../../Componentes/Tarjeta/index";
 import { precioConRecargo } from '../../Funciones/precioConRecargo'; 
@@ -28,6 +28,7 @@ interface GlampingData {
 }
 
 const ContenedorTarjetas: React.FC = () => {
+
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -48,10 +49,10 @@ const ContenedorTarjetas: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(18);
   const [page, setPage] = useState(1);
   const idUsuarioCookie = Cookies.get('idUsuario'); 
-  const esFavorito = (glampingId: string, favoritos: string[]): boolean => {
-    return favoritos.includes(glampingId);
-  };
   
+  const esFavorito = (glampingId: string, favoritos: string[] = []): boolean => {
+    return Array.isArray(favoritos) && favoritos.includes(glampingId);
+  };  
 
   // Obtener favoritos desde la API
   useEffect(() => {
@@ -60,7 +61,7 @@ const ContenedorTarjetas: React.FC = () => {
         try {
           const response = await fetch(`https://glamperosapi.onrender.com/favoritos/${idUsuarioCookie}`);
           const data = await response.json();
-          setFavoritos(data); // 'data' es ahora un arreglo directo de glamping_id
+          setFavoritos(data); 
         } catch (error) {
           console.error("Error al obtener los favoritos:", error);
         }
