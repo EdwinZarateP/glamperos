@@ -46,7 +46,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Asegurar que el modal esté encima del contenido */
+  z-index: 10000; /* Asegurar que el modal esté encima del contenido */
 }
 
 .boton-compartir-modal-content {
