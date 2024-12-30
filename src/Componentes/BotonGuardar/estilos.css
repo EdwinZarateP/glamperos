@@ -16,14 +16,23 @@
   background-color: #f7f4f4;
 }
 
-.icono-compartir {
+.icono-guardar {
   font-size: 16px;
 }
 
-.texto-compartir {
+.texto-guardar {
+  /* Asegúrate de que el texto tiene un estilo base antes de aplicar el subrayado */
+  font-size: 14px;
+}
+
+.texto-guardar.subrayado {
   text-decoration: underline;
 }
 
-.icono-guardar-lleno{
-  color:red;
+.texto-guardado.subrayado {
+  text-decoration: underline;
+}
+
+.icono-guardar-lleno {
+  color: red;
 }

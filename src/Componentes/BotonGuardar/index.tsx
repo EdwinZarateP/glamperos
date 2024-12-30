@@ -3,10 +3,12 @@ import Cookies from 'js-cookie';
 import { useParams } from 'react-router-dom';
 import { AiTwotoneHeart } from "react-icons/ai";
 import { BsBalloonHeartFill } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import './estilos.css';
 
 const BotonGuardar: React.FC = () => {
+  const navigate = useNavigate();
   const idUsuarioCookie = Cookies.get('idUsuario');
   const { glampingId } = useParams<{ glampingId: string }>();
   const [esFavorito, setEsFavorito] = useState(false);
@@ -27,9 +29,9 @@ const BotonGuardar: React.FC = () => {
     fetchFavoritos();
   }, [idUsuarioCookie, glampingId]);
 
-  const handleFavoritoChange = async () => {
+  const handleFavoritoChange = async () => {        
     if (!idUsuarioCookie) {
-      alert("Debes iniciar sesión para guardar este glamping como favorito.");
+      navigate('/Registrarse');
       return;
     }
 
@@ -61,7 +63,9 @@ const BotonGuardar: React.FC = () => {
       ) : (
         <AiTwotoneHeart className="icono-guardar-vacio" />
       )}
-      <span className="texto-guardar">{esFavorito ? "Guardado" : "Guardar"}</span>
+      <span className={`texto-guardar ${esFavorito ? 'subrayado' : ''}`}>
+        {esFavorito ? "Guardado" : "Guardar"}
+      </span>
     </button>
   );
 };

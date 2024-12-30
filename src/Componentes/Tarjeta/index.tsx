@@ -95,7 +95,6 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   
   const handleFavoritoChange = async () => {
     
-    console.log(idUsuarioCookie)
     if (!idUsuarioCookie) {
       navigate('/Registrarse');
       return;
