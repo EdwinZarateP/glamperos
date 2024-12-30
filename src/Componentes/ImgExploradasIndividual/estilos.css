@@ -43,10 +43,10 @@
 /* Controles superiores (corazón y compartir) */
 .imgExp-controles {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 20px;
+  right: 20px;
   display: flex;
-  gap: 15px;
+  gap: 21px;
   color: white;
   transform: translate(0, 0); /* Corrige cualquier desplazamiento inesperado */
   margin: 0; /* Resetea márgenes para asegurar compatibilidad */
@@ -55,7 +55,7 @@
 
 /* Ícono de compartir */
 .imgExp-compartir {
-  font-size: 28px;
+  font-size: 35px;
   color: black;
   cursor: pointer;
   background-color: white; /* Fondo blanco */
@@ -70,7 +70,7 @@
 
 /* Ícono de corazón */
 .imgExp-corazon {
-  font-size: 32px;
+  font-size: 35px;
   cursor: pointer;
   color: red; /* Color del corazón */
   background: none; /* Sin fondo */
