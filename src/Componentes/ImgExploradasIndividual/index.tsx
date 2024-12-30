@@ -113,13 +113,14 @@ const ImgExploradasIndividual: React.FC<ImgExploradasIndividualProps> = ({ image
     setShowModal(false);
   };
 
-  // Función para compartir el enlace por WhatsApp Web
+  // Función para compartir el enlace por WhatsApp (abriendo la aplicación móvil)
   const compartirWhatsApp = () => {
     const mensaje = `¡Mira este glamping! ${currentUrl}`;
-    const urlWhatsApp = `https://web.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
+    const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
     window.open(urlWhatsApp, "_blank");
     setShowModal(false);
   };
+
 
   // Lógica para limitar el número de puntos visibles a 5
   const maxPuntos = 5; // Número máximo de puntos visibles
