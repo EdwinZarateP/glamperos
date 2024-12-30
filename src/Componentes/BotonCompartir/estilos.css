@@ -50,18 +50,22 @@
 }
 
 .boton-compartir-modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   width: 300px;
 }
 
 .boton-compartir-modal h3 {
+  align-items: center;
   margin-bottom: 15px;
   font-size: 16px;
+  align-items: center;
+
 }
 
 /* Botones del modal */
@@ -111,7 +115,7 @@
 /* Estilo de la notificación */
 .notificacion {
   position: fixed;
-  bottom: 100px;
+  bottom: 200px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #4caf50; /* Verde para éxito */

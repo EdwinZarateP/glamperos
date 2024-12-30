@@ -41,7 +41,7 @@ const BotonCompartir: React.FC = () => {
       {showModal && (
         <div className="boton-compartir-modal">
           <div className="boton-compartir-modal-content">
-            <h3>Selecciona una opción</h3>
+            <h3>Elige una opción para compartir este lugar mágico 😍</h3>
             <button className="boton-compartir-modal-button" onClick={copiarEnlace}>
               <FaClipboard className="icono-copiar" /> Copiar enlace
             </button>
