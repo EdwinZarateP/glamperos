@@ -8,6 +8,9 @@ import { MdOutlinePets } from "react-icons/md";
 import { ContextoApp } from "../../Contexto/index";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import "./estilos.css";
 
 interface TarjetaProps {
@@ -47,6 +50,9 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const [imagenActual, setImagenActual] = useState(0);
   let touchStartX = 0;
   let touchEndX = 0;
+  
+  const navigate = useNavigate();
+  const idUsuarioCookie = Cookies.get('idUsuario'); 
 
   const almacenVariables = useContext(ContextoApp);
 
@@ -61,7 +67,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     fechaInicioConfirmado,
     fechaFinConfirmado
   } = almacenVariables;
-
+  
   if (!imagenes || imagenes.length === 0) {
     return <div>No hay imágenes para mostrar.</div>;
   }
@@ -87,13 +93,38 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const precioConTarifa = calcularTarifaServicio(precio, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
   const precioFinalNoche=precioConTarifa/totalDias
   
-  const handleFavoritoChange = () => {
-    const nuevoEstado = !esFavorito;
-    setEsFavorito(nuevoEstado);
-    onFavoritoChange(nuevoEstado);
+  const handleFavoritoChange = async () => {
+    
+    console.log(idUsuarioCookie)
+    if (!idUsuarioCookie) {
+      navigate('/Registrarse');
+      return;
+    }
+  
+    try {
+      const nuevoEstado = !esFavorito;
+      setEsFavorito(nuevoEstado);
+      onFavoritoChange(nuevoEstado);
+  
+      if (nuevoEstado) {
+        // Añadir a favoritos
+        await axios.post('https://glamperosapi.onrender.com/favoritos/', {
+          usuario_id: idUsuarioCookie,
+          glamping_id: glampingId,
+        });
+      } else {
+        // Eliminar de favoritos
+        await axios.delete(`https://glamperosapi.onrender.com/favoritos/?usuario_id=${idUsuarioCookie}&glamping_id=${glampingId}`);        
+      }
+    } catch (error) {
+      console.error('Error al actualizar el favorito:', error);
+      alert('Hubo un problema al actualizar el favorito. Intenta nuevamente.');
+      // Revertir el estado si falla la solicitud
+      setEsFavorito(!esFavorito);
+      onFavoritoChange(!esFavorito);
+    }
   };
-
-
+  
   const siguienteImagen = () => {
     setImagenActual((prev) => (prev < imagenes.length - 1 ? prev + 1 : prev));
   };
@@ -154,6 +185,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
       </>
     );
   };
+
+
   
 
 

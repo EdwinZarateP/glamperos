@@ -3,6 +3,7 @@ import { ContextoApp } from '../../Contexto/index';
 import Tarjeta from "../../Componentes/Tarjeta/index";
 import { precioConRecargo } from '../../Funciones/precioConRecargo'; 
 import meme from '../../Imagenes/meme.jpg'
+import Cookies from 'js-cookie';
 import "./estilos.css"; 
 
 interface GlampingData {
@@ -23,6 +24,7 @@ interface GlampingData {
   fechasReservadas: string[];
   amenidadesGlobal:string[];
   Cantidad_Huespedes:number;
+  favorito?: boolean;
 }
 
 const ContenedorTarjetas: React.FC = () => {
@@ -41,9 +43,31 @@ const ContenedorTarjetas: React.FC = () => {
     activarFiltrosJacuzzi } = almacenVariables;
 
   const [glampings, setGlampings] = useState<GlampingData[]>([]);
+  const [favoritos, setFavoritos] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(18);
   const [page, setPage] = useState(1);
+  const idUsuarioCookie = Cookies.get('idUsuario'); 
+  const esFavorito = (glampingId: string, favoritos: string[]): boolean => {
+    return favoritos.includes(glampingId);
+  };
+  
+
+  // Obtener favoritos desde la API
+  useEffect(() => {
+    const fetchFavoritos = async () => {
+      if (idUsuarioCookie) {
+        try {
+          const response = await fetch(`https://glamperosapi.onrender.com/favoritos/${idUsuarioCookie}`);
+          const data = await response.json();
+          setFavoritos(data); // 'data' es ahora un arreglo directo de glamping_id
+        } catch (error) {
+          console.error("Error al obtener los favoritos:", error);
+        }
+      }
+    };
+    fetchFavoritos();
+  }, [idUsuarioCookie]);
 
   const fetchDataFromAPI = useCallback(async (page = 1, limit = 18) => {
     try {
@@ -75,6 +99,7 @@ const ContenedorTarjetas: React.FC = () => {
         fechasReservadas: glamping.fechasReservadas || [],
         amenidadesGlobal: glamping.amenidadesGlobal || [],
         Cantidad_Huespedes:glamping.Cantidad_Huespedes || 1,
+
       }));
   
       setGlampings((prevData) => {
@@ -82,7 +107,7 @@ const ContenedorTarjetas: React.FC = () => {
         const newData = parsedData.filter(
           (newGlamping) => !prevData.some((glamping) => glamping._id === newGlamping._id)
         );
-        return [...prevData, ...newData];  // Asegúrate de que se agreguen los datos nuevos
+        return [...prevData, ...newData];
       });
   
       setPage((prevPage) => prevPage + 1);
@@ -352,12 +377,12 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
         precio={glamping.precioEstandar}
         descuento={glamping.descuento}
         calificacion={glamping.calificacion || 0}
-        favorito={false}
+        favorito={esFavorito(glamping._id, favoritos)}
         nombreGlamping={glamping.nombreGlamping}
         tipoGlamping={glamping.tipoGlamping}
         ubicacion={{
-          lat: glamping.ubicacion.lat ?? 0, // Valor por defecto si es null
-          lng: glamping.ubicacion.lng ?? 0, // Valor por defecto si es null
+          lat: glamping.ubicacion.lat ?? 0, 
+          lng: glamping.ubicacion.lng ?? 0, 
         }}
         onFavoritoChange={(nuevoEstado) =>
           console.log(`Favorito en tarjeta ${index + 1}:`, nuevoEstado)

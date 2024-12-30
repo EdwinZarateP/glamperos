@@ -7,16 +7,16 @@ import "./estilos.css";
 const MenuUsuario: React.FC = () => {
   const navigate = useNavigate();
   const almacenVariables = useContext(ContextoApp);
-  
+
   if (!almacenVariables) {
     throw new Error(
       "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
     );
   }
-  
+
   const { mostrarMenuUsuarios, setMostrarMenuUsuarios } = almacenVariables;
   const nombreUsuarioCookie = Cookies.get('nombreUsuario');
-  
+
   // Referencia al contenedor del menú
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -25,9 +25,13 @@ const MenuUsuario: React.FC = () => {
     // Remover las cookies
     Cookies.remove('nombreUsuario');
     Cookies.remove('idUsuario');
-    
+
     // Actualizar el estado para ocultar el menú
     setMostrarMenuUsuarios(false);
+
+    // Redirigir al inicio y recargar la página
+    navigate("/");
+    window.location.reload();
   };
 
   // Función para detectar clics fuera del menú
@@ -55,15 +59,19 @@ const MenuUsuario: React.FC = () => {
   return (
     <div ref={menuRef} className="MenuUsuario-contenedor">
       <ul className="MenuUsuario-lista">
-        <li className="MenuUsuario-opcion" onClick={() => navigate("/mensajes")}>
-          Mensajes
-        </li>
-        <li className="MenuUsuario-opcion" onClick={() => navigate("/favoritos")}>
-          Lista de favoritos
-        </li>
-        <li className="MenuUsuario-opcion" onClick={() => navigate("/cuenta")}>
-          Cuenta
-        </li>
+        {nombreUsuarioCookie && (
+          <>
+            <li className="MenuUsuario-opcion" onClick={() => navigate("/mensajes")}>
+              Mensajes
+            </li>
+            <li className="MenuUsuario-opcion" onClick={() => navigate("/favoritos")}>
+              Lista de favoritos
+            </li>
+            <li className="MenuUsuario-opcion" onClick={() => navigate("/cuenta")}>
+              Cuenta
+            </li>
+          </>
+        )}
         <li className="MenuUsuario-opcion" onClick={() => navigate("/centro-ayuda")}>
           Centro de ayuda
         </li>
@@ -73,9 +81,8 @@ const MenuUsuario: React.FC = () => {
             nombreUsuarioCookie ? cerrarSesion() : (navigate("/Registrarse"), setMostrarMenuUsuarios(false));
           }}
         >
-          {nombreUsuarioCookie ? "Cerrar sesión" : "Iniciar sesión"}
+          {nombreUsuarioCookie ? "Cerrar sesión" : "Registro/Iniciar sesión"}
         </li>
-
       </ul>
     </div>
   );
