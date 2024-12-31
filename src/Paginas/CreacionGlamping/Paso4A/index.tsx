@@ -5,11 +5,15 @@ import axios from "axios";
 import { ContextoApp } from '../../../Contexto/index';
 import confetti from 'canvas-confetti'; 
 import Lottie from "lottie-react"; 
+import Cookies from 'js-cookie';
 import animationData from "../../../Imagenes/Animation.json"; // Ruta del archivo JSON
 import "./estilos.css";
 
 const guardarGlampingP: React.FC = () => {
   const navigate = useNavigate();
+  const nombreUsuarioCookie = Cookies.get('nombreUsuario'); 
+  const correoUsuarioCookie = Cookies.get('correoUsuario'); 
+
   const [formulario, setFormulario] = useState({
     nombreGlamping: "",
     tipoGlamping: "",
@@ -26,7 +30,9 @@ const guardarGlampingP: React.FC = () => {
     nombrePropietario: "",
   });
 
-  const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes, Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping, precioEstandar, descuento, idUsuario, correoUsuario, nombreUsuario } = useContext(ContextoApp)!; 
+  const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes,
+     Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping,
+     precioEstandar, descuento, idUsuario, nombreUsuario } = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -222,7 +228,7 @@ const guardarGlampingP: React.FC = () => {
       lanzarConfetti();
       setShowPopup(true);
       // Llamar a la función para enviar correo
-      enviarCorreo(correoUsuario, nombreUsuario);
+      enviarCorreo(correoUsuarioCookie || "", nombreUsuarioCookie || "");
     } catch (error) {
       setMensaje("Error al crear el glamping: " + error);
     } finally {
@@ -277,7 +283,7 @@ const guardarGlampingP: React.FC = () => {
         <div className="popup-felicitaciones">
           <div className="popup-contenido">
             <h2>¡Felicitaciones! 🎉</h2>
-            <p>Tu glamping se registró con éxito, te enviamos un correo con algunas reglas</p>
+            <p>Tu glamping se registró con éxito, te enviamos un correo con algunas indicaciones</p>
             <button className="cerrar-popup" onClick={cerrarPopup} ref={cerrarPopupRef}>
               Cerrar
             </button>

@@ -22,7 +22,9 @@ import "./estilos.css";
 
 const CreacionGlamping: React.FC = () => {
   const [pasoActual, setPasoActual] = useState<number>(0);
-  const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal, imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping, precioEstandar, nombreUsuario, correoUsuario } = useContext(ContextoApp)!;
+  const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal,
+     imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping,
+      precioEstandar } = useContext(ContextoApp)!;
   const navigate = useNavigate(); // Inicializar el hook de navegación
 
   const redirigirInicio = () => {
@@ -188,7 +190,6 @@ if (pasoActual === 12) {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
-      console.log(correoUsuario, nombreUsuario)
     }
   };
 
