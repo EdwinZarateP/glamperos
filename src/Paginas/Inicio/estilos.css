@@ -1,8 +1,8 @@
 .contenedor-principal {
-    width: 90%;    /* Ancho por defecto del 90% */
-    margin: 0 auto; /* Centra el contenedor */
+    width: 90%;    
+    margin: 0 auto; 
     margin-top: 150px; /* Espacio igual a la altura del Header */
-    
+    position: relative;
 }
 
 /* Para pantallas pequeñas (móviles) */

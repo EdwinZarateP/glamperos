@@ -4,6 +4,7 @@ import ContenedorTarjetas from '../../Componentes/ContenedorTarjetas/index';
 import MenuIconos from '../../Componentes/MenuIconos/index'; 
 import FiltrosContenedor from "../../Componentes/FiltrosContenedor/index";
 import { ContextoApp } from "../../Contexto/index";
+import MenuUsuariosInferior from '../../Componentes/MenuUsuariosInferior/index'; 
 import './estilos.css';
 
 function Inicio() {
@@ -23,6 +24,7 @@ function Inicio() {
       <main >
         <ContenedorTarjetas /> 
       </main>
+      <MenuUsuariosInferior/>
     </div>
   );
 }
