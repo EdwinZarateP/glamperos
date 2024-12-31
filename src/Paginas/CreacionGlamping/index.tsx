@@ -16,11 +16,13 @@ import Paso3B from "./Paso3B/index";
 import Paso4A from "./Paso4A/index";
 import Swal from "sweetalert2";
 import animal from '../../Imagenes//animal.png'
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import "./estilos.css";
 
 
 const CreacionGlamping: React.FC = () => {
+  const correoUsuarioCookie = Cookies.get('correoUsuario'); 
   const [pasoActual, setPasoActual] = useState<number>(0);
   const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal,
      imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping,
@@ -190,6 +192,7 @@ if (pasoActual === 12) {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
+      console.log(correoUsuarioCookie)
     }
   };
 

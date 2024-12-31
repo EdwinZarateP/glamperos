@@ -72,6 +72,7 @@ const Registro: React.FC = () => {
         // Guardar en las cookies con los valores recibidos
         Cookies.set('idUsuario', usuario._id, { expires: 7 });
         Cookies.set('nombreUsuario', usuario.nombre, { expires: 7 });
+        Cookies.set('correoUsuario', usuario.email, { expires: 7 });
   
         setIdUsuario(usuario._id); // Actualizar estado
         setNombreUsuario(usuario.nombre);
