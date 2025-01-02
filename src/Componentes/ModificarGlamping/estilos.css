@@ -1,0 +1,37 @@
+.ModificarGlamping {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .ModificarGlamping-formulario {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ModificarGlamping-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .ModificarGlamping-input {
+    margin-bottom: 15px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .ModificarGlamping-boton {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .ModificarGlamping-boton:hover {
+    background-color: #45a049;
+  }
+  

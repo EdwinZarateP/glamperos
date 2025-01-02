@@ -47,7 +47,7 @@ const Comentarios: React.FC<ComentariosProps> = ({ glampingId }) => {
   return (
     <div className="Comentarios-contenedor">
       <h2 className="Comentarios-titulo">Opiniones</h2>
-      <div className="Comentarios-carrusel">
+      <div className={comentarios.length > 0 ? "Comentarios-carrusel-con" : "Comentarios-carrusel-sin"}>
         {comentarios.length > 0 ? (
           comentarios.map((comentario, index) => (
             <Comentario key={index} {...comentario} />
@@ -58,7 +58,8 @@ const Comentarios: React.FC<ComentariosProps> = ({ glampingId }) => {
             <p>Sin reseñas (por ahora)</p>          
           </div>
         )}
-      </div>
+</div>
+
     </div>
   );
 };

@@ -15,7 +15,7 @@
 }
 
 /* Estilo para el carrusel en pantallas pequeñas */
-.Comentarios-carrusel {
+.Comentarios-carrusel-con {
   display: flex;
   justify-content: left;
   overflow-x: auto; /* Permite el desplazamiento horizontal */
@@ -23,11 +23,31 @@
   scroll-snap-type: x mandatory; /* "Engancha" los comentarios al deslizar */
 }
 
-.Comentarios-carrusel::-webkit-scrollbar {
+/* Estilo para el carrusel en pantallas pequeñas */
+.Comentarios-carrusel-sin {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto; /* Permite el desplazamiento horizontal */
+  gap: 16px; /* Espaciado entre comentarios */
+  scroll-snap-type: x mandatory; /* "Engancha" los comentarios al deslizar */
+}
+
+.Comentarios-carrusel-con::-webkit-scrollbar {
   display: none; /* Oculta la barra de desplazamiento en navegadores Webkit */
 }
 
-.Comentarios-carrusel > * {
+.Comentarios-carrusel-con > * {
+  flex: 0 0 80%; /* Cada comentario ocupa el 80% del ancho visible */
+  scroll-snap-align: start; /* Asegura que cada comentario se alinee al inicio */
+  border-radius: 8px; /* Bordes redondeados */
+  box-sizing: border-box;
+}
+
+.Comentarios-carrusel-sin::-webkit-scrollbar {
+  display: none; /* Oculta la barra de desplazamiento en navegadores Webkit */
+}
+
+.Comentarios-carrusel-sin > * {
   flex: 0 0 80%; /* Cada comentario ocupa el 80% del ancho visible */
   scroll-snap-align: start; /* Asegura que cada comentario se alinee al inicio */
   border-radius: 8px; /* Bordes redondeados */
@@ -41,7 +61,7 @@
 
 /* Grid para pantallas grandes */
 @media (min-width: 601px) {
-  .Comentarios-carrusel {
+  .Comentarios-carrusel-con {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -50,7 +70,7 @@
     padding: 0;
   }
 
-  .Comentarios-carrusel > * {
+  .Comentarios-carrusel-con > * {
     flex: 0 0 calc(50% - 16px); /* Dos columnas con espaciado */
     scroll-snap-align: unset; /* Sin comportamiento de "enganche" */
   }
@@ -69,7 +89,13 @@
 
 /* Regla para pantallas pequeñas */
 @media (max-width: 600px) {
-  .Comentarios-carrusel {
+  .Comentarios-carrusel-con {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 120px;
+  }
+
+  .Comentarios-carrusel-sin {
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 120px;
@@ -87,6 +113,6 @@
     height: auto;
     margin: 0 auto;
     margin-top: 30px;
-    overflow-y: visible; /* Para pantallas pequeñas, no hay scroll vertical */
+    overflow-y: visible; 
   }
 }
