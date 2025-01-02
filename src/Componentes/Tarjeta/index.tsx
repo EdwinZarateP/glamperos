@@ -265,8 +265,8 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         <div className="tarjeta-contenido">
           <span className="tarjeta-nombre">{nombreGlamping}</span>
           <div className="tarjeta-calificacion">
-            <FaStar className="estrella" />
-            <span>{calificacion}</span>
+            <FaStar className="tarjeta-estrella" />
+            <span>{calificacion.toFixed(1)}</span>
           </div>
         </div>
         <p className="tarjeta-ciudad">{ciudad}</p>

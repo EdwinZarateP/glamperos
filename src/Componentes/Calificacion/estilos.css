@@ -2,7 +2,7 @@
 .calificacion-contenedor {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 10px;
@@ -18,13 +18,13 @@
 }
 
 .calificacion-numero {
-  font-size: 1.2em;
+  font-size: 1.8em;
   font-weight: bold;
 }
 
 .calificacion-estrellas {
   color: #000000;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 .calificacion-texto {
@@ -91,5 +91,16 @@
   .calificacion-mas-alta{
     display: none;
   }
+
+  .calificacion-numero {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .calificacion-estrellas {
+    color: #000000;
+    font-size: 1em;
+  }
+  
 
 }

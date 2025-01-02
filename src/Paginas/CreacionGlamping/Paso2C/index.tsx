@@ -35,8 +35,8 @@ const Paso2C: React.FC = () => {
       imagenesArray.push(archivo);
     }
 
-    if (imagenesCargadas.length + imagenesArray.length > 10) {
-      Swal.fire("Error", `Tienes cupo para 10 imágenes en total.`, "error");
+    if (imagenesCargadas.length + imagenesArray.length > 20) {
+      Swal.fire("Error", `Tienes cupo para 20 imágenes en total.`, "error");
       return;
     }
 
@@ -62,7 +62,7 @@ const Paso2C: React.FC = () => {
 
   const primerasCincoImagenes = imagenesCargadas.slice(0, 5);
 
-  const calcularCupoRestante = () => 10 - imagenesCargadas.length;
+  const calcularCupoRestante = () => 20 - imagenesCargadas.length;
 
   const mostrarBotonSubir = calcularCupoRestante() > 0;
 

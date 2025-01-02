@@ -110,30 +110,30 @@ function ExplorarGlamping() {
     new Date(2024, 10, 29),
   ];
 
-  const datosComentarios = [
-    {
-      nombre: 'Luisa Fernanda',
-      calificacionNumero: 5,
-      comentario: 'Fue una experiencia que repetiría, ideal para una escapada de fin de semana.',
-      fotoPerfil: 'https://via.placeholder.com/48',
-    },
-    {
-      nombre: 'Carlos Pérez',
-      calificacionNumero: 4.3,
-      comentario: 'Muy buena experiencia, aunque podrían mejorar en los servicios ofrecidos.',
-    },
-    {
-      nombre: 'Ana',
-      calificacionNumero: 3.8,
-      comentario: 'La estadía fue buena, pero el lugar no cumplió todas mis expectativas.',
-    },
-    {
-      nombre: 'Sofía López',
-      calificacionNumero: 4.8,
-      comentario: 'El lugar es hermoso, y la atención fue excepcional. Definitivamente regresaré.',
-      fotoPerfil: 'https://via.placeholder.com/48',
-    },
-  ];
+  // Definir el estado para calificaciones
+  const [calificacionEvaluaciones, setCalificacionEvaluaciones] = useState<number | null>(null);
+  const [calificacionPromedio, setCalificacionPromedio] = useState<number>(4.5); // Valor predeterminado
+
+  useEffect(() => {
+    if (glampingId) {
+      const obtenerCalificaciones = async () => {
+        try {
+          const response = await fetch(`https://glamperosapi.onrender.com/evaluaciones/glamping/${glampingId}/promedio`);                                        
+          const data = await response.json();
+
+          if (data) {
+            setCalificacionPromedio(data.calificacion_promedio || 4.5);  // Actualización con el valor obtenido
+            setCalificacionEvaluaciones(data.calificacionEvaluaciones|| 1);  // Actualización con el valor obtenido
+          }
+        } catch (error) {
+          console.error("Error al obtener las calificaciones:", error);
+        }
+      };
+
+      obtenerCalificaciones();
+    }
+  }, [glampingId]);
+
 
   useEffect(() => {
     const manejarNavegacion = (_: PopStateEvent) => {
@@ -183,8 +183,8 @@ function ExplorarGlamping() {
             <div className='contenedor-descripcion-glamping'>
               <div className='contenedor-descripcion-glamping-izq'>
                 <DescripcionGlamping
-                  calificacionNumero={5}
-                  calificacionEvaluaciones={2}
+                  calificacionNumero={calificacionPromedio || 4.5}
+                  calificacionEvaluaciones={calificacionEvaluaciones || 1}
                   calificacionMasAlta="Su piscina fue lo mejor calificado"
                   descripcion_glamping={informacionGlamping?.descripcionGlamping}  
                 />
@@ -211,7 +211,7 @@ function ExplorarGlamping() {
             <ManejoErrores>        
               <MapaGlampings lat={informacionGlamping?.ubicacion?.lat ?? 0 }  lng={informacionGlamping?.ubicacion?.lng ?? 0} />          
             </ManejoErrores>
-            <Comentarios comentarios={datosComentarios} />
+            <Comentarios glampingId={glampingId || ''} />
             <ReservarBoton precioPorNoche={informacionGlamping?.precioEstandar || 0}
                   descuento={informacionGlamping?.descuento || 0} />
 

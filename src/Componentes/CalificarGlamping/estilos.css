@@ -1,0 +1,89 @@
+.CalificarGlamping-contenedor {
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.CalificarGlamping-titulo {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.CalificarGlamping-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.CalificarGlamping-campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.CalificarGlamping-etiqueta {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.CalificarGlamping-select,
+.CalificarGlamping-textarea,
+.CalificarGlamping-boton {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.CalificarGlamping-textarea {
+  resize: none;
+  height: 100px;
+}
+
+.CalificarGlamping-boton {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.CalificarGlamping-boton:hover {
+  background-color: #45a049;
+}
+
+.CalificarGlamping-mensaje {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 16px;
+  color: #444;
+}
+
+/* Estilos para las estrellas de calificación */
+.CalificarGlamping-estrellas {
+  display: flex;
+  gap: 5px;
+  cursor: pointer;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.estrella {
+  font-size: 2rem;
+  color: #ddd;
+  transition: color 0.3s ease-in-out;
+}
+
+.estrella.activo,
+.estrella:hover {
+  color: #ffc107; /* Color dorado para estrellas activas o al pasar el cursor */
+}
+
+.estrella:hover ~ .estrella {
+  color: #ddd; /* Asegura que las estrellas posteriores no cambien al pasar el cursor */
+}

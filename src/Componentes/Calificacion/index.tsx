@@ -5,10 +5,10 @@ import './estilos.css';
 interface CalificacionProps {
   calificacionNumero: number;
   calificacionEvaluaciones: number;
-  calificacionMasAlta: String;
+  // calificacionMasAlta: String;
 }
 
-const Calificacion: React.FC<CalificacionProps> = ({ calificacionNumero, calificacionEvaluaciones, calificacionMasAlta }) => {
+const Calificacion: React.FC<CalificacionProps> = ({ calificacionNumero, calificacionEvaluaciones }) => {
   const getEstrellas = () => {
     if (calificacionNumero > 4.5) return "★★★★★";
     if (calificacionNumero >= 4 && calificacionNumero <= 4.5) return "★★★★☆";
@@ -34,9 +34,9 @@ const Calificacion: React.FC<CalificacionProps> = ({ calificacionNumero, calific
         <span className="calificacion-numero">{calificacionNumero.toFixed(1)}</span>
         <div className="calificacion-estrellas">{getEstrellas()}</div>
       </div>
-      <div className="calificacion-mas-alta">
+      {/* <div className="calificacion-mas-alta">
         <span>{calificacionMasAlta}</span>
-      </div>
+      </div> */}
       <div className="calificacion-evaluaciones">
         <span className="calificacion-numero-evaluaciones">{calificacionEvaluaciones}</span>
         <span className="calificacion-texto-evaluaciones">Evaluaciones</span>

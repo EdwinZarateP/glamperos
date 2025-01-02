@@ -16,6 +16,7 @@ const Comentario: React.FC<ComentarioProps> = ({
 }) => {
   const [mostrarTodo, setMostrarTodo] = useState(false);
 
+  // Función para obtener las estrellas según la calificación
   const getEstrellas = () => {
     if (calificacionNumero > 4.5) return '★★★★★';
     if (calificacionNumero >= 4 && calificacionNumero <= 4.5) return '★★★★☆';
@@ -25,7 +26,12 @@ const Comentario: React.FC<ComentarioProps> = ({
     return '☆☆☆☆☆';
   };
 
-  const getPrimeraLetra = () => nombre.charAt(0).toUpperCase();
+  // Función para obtener la primera letra del nombre del usuario (para el caso sin foto de perfil)
+  const getPrimeraLetra = () => {
+    // Asegura que 'nombre' no sea undefined ni null, usando un valor predeterminado
+    const nombreSeguro = nombre || 'Anónimo';  // 'Anónimo' como valor por defecto
+    return nombreSeguro.charAt(0).toUpperCase();
+  };
 
   return (
     <div className="comentario-contenedor">
@@ -42,7 +48,10 @@ const Comentario: React.FC<ComentarioProps> = ({
       <div className="comentario-detalles">
         <span className="comentario-calificacion">{getEstrellas()}</span>
       </div>
-      <p className={`comentario-texto ${mostrarTodo ? 'expandido' : ''}`}>{comentario}</p>
+      <p className={`comentario-texto ${mostrarTodo ? 'expandido' : ''}`}>
+        {comentario}
+      </p>
+      {/* Si el comentario tiene más de 20 palabras, muestra un enlace para expandir o contraer el texto */}
       {comentario.split(' ').length > 20 && (
         <p
           className="comentario-mostrar"

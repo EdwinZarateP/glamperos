@@ -14,7 +14,7 @@ interface DescripcionGlampingProps {
 const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
   calificacionNumero,
   calificacionEvaluaciones,
-  calificacionMasAlta,
+  // calificacionMasAlta,
   descripcion_glamping
 }) => {
  
@@ -29,7 +29,7 @@ const DescripcionGlamping: React.FC<DescripcionGlampingProps> = ({
       <Calificacion 
         calificacionNumero={calificacionNumero}
         calificacionEvaluaciones={calificacionEvaluaciones}
-        calificacionMasAlta={calificacionMasAlta}
+        // calificacionMasAlta={calificacionMasAlta}
       />
       <div className="descripcion-glamping-detalle">
       <DetalleGlampingTexto descripcionGlamping={descripcion_glamping} />
