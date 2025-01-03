@@ -16,13 +16,13 @@ import Paso3B from "./Paso3B/index";
 import Paso4A from "./Paso4A/index";
 import Swal from "sweetalert2";
 import animal from '../../Imagenes//animal.png'
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import "./estilos.css";
 
 
 const CreacionGlamping: React.FC = () => {
-  const correoUsuarioCookie = Cookies.get('correoUsuario'); 
+  // const correoUsuarioCookie = Cookies.get('correoUsuario');
   const [pasoActual, setPasoActual] = useState<number>(0);
   const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal,
      imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping,
@@ -30,7 +30,7 @@ const CreacionGlamping: React.FC = () => {
   const navigate = useNavigate(); // Inicializar el hook de navegación
 
   const redirigirInicio = () => {
-    navigate("/"); 
+    navigate("/");
     window.location.reload();
   };
 
@@ -126,7 +126,7 @@ const CreacionGlamping: React.FC = () => {
       });
       return;
     }
-    
+
     // Validación para el paso 9 y verificar si puso nombre
     if (
       pasoActual === 9 &&
@@ -139,7 +139,7 @@ const CreacionGlamping: React.FC = () => {
         confirmButtonText: "Aceptar",
       });
       return;
-    }    
+    }
 
 
     // Validación para el paso 10 si la descripción está vacía
@@ -192,7 +192,7 @@ if (pasoActual === 12) {
 
     if (pasoActual < pasos.length - 1) {
       setPasoActual(pasoActual + 1);
-      console.log(correoUsuarioCookie)
+      console.log(amenidadesGlobal)
     }
   };
 
@@ -206,12 +206,12 @@ if (pasoActual === 12) {
 
   return (
     <div className="creacionGlamping-contenedor">
-      <div className="creacionGlamping-paso">{pasos[pasoActual]}</div>  
-      <img src={animal} alt="Glamperos logo" className="creacionGlamping-logo"  onClick={redirigirInicio}/>    
+      <div className="creacionGlamping-paso">{pasos[pasoActual]}</div>
+      <img src={animal} alt="Glamperos logo" className="creacionGlamping-logo"  onClick={redirigirInicio}/>
       <div className="creacionGlamping-progreso">
         <div className="creacionGlamping-progreso-barra" style={{ width: `${progreso}%` }}></div>
       </div>
-      
+
       <div className="creacionGlamping-controles">
         <button
           className="creacionGlamping-boton-atras"
@@ -225,7 +225,7 @@ if (pasoActual === 12) {
           className="creacionGlamping-boton-siguiente"
           onClick={() => {
             if (pasoActual === 13) {
-              alert("¡Glamping creado exitosamente!"); 
+              alert("¡Glamping creado exitosamente!");
             } else {
               avanzarPaso();
             }
