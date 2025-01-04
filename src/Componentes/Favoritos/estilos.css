@@ -10,21 +10,6 @@
   overflow: hidden; /* Evita scroll no deseado en el contenedor principal */
 }
 
-.favoritos-titulo {
-  display: flex;
-  width: 100%;
-  justify-content: left;
-  align-items: center;
-  gap: 21px;
-  margin-bottom: 35px;
-}
-
-.favoritos-titulo h1 {
-  font-size:1.5rem; /* Tamaño de fuente mayor para destacar */
-  font-weight: 600; /* Negrita para resaltar el título */
-  color: #333; /* Color más oscuro para el título */
-}
-
 .favoritos-contenedor-tarjetas {
   display: flex;
   flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente fila */
@@ -78,7 +63,8 @@
   
   .favoritos-contenedor {
     width: 100%;
-    padding: 5px;
+    padding: 0;
+    margin-top: 70px;
   }
 
 
@@ -86,7 +72,7 @@
     flex: 1 1 100%; /* Tamaño base de 250px, pero puede reducirse si no cabe */
     max-width: 100%; /* Tamaño máximo de cada tarjeta */
     box-sizing: border-box; /* Incluye padding y border en las dimensiones */
-    margin: 0;
+
   }
 
   .favoritos-titulo {

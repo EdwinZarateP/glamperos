@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-// import logo from "../../Imagenes/icono.png";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import PanelBusqueda from "../PanelBusqueda";
 import { ContextoApp } from "../../Contexto/index"; 

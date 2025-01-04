@@ -1,0 +1,70 @@
+.Cuenta-contenedor {
+    padding: 20px;
+    width: 80%;
+  }
+  
+  .Cuenta-titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .Cuenta-informacion {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .Cuenta-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .Cuenta-tarjeta {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    cursor: pointer;
+  }
+ 
+  .Cuenta-tarjeta:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  .Cuenta-tarjeta h3 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  
+  .Cuenta-tarjeta p {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .icono-datos-personales:before {
+    content: "📄";
+  }
+  
+  .icono-seguridad:before {
+    content: "🔒";
+  }
+  
+  .icono-pagos:before {
+    content: "💳";
+  }
+
+  .icono-cobros:before {
+    content: "💵";
+  }
+  
+  .icono-notificaciones:before {
+    content: "🔔";
+  }
+  
+  .icono-glampings:before {
+    content: "⛺";
+  }
+  

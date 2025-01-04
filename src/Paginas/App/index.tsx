@@ -7,6 +7,7 @@ import ColeccionImagenes from '../ColeccionImagenes/index';
 import ListaDeseos from '../ListaDeseos/index';
 import EvaluacionFinal from '../EvaluacionFinal/index';
 import Modificacion from '../Modificacion/index';
+import GestionarCuenta from '../GestionarCuenta/index';
 import NoEncontrado from '../NoEncontrado/index';
 import { ProveedorVariables } from '../../Contexto/index';
 import './estilos.css';
@@ -25,7 +26,8 @@ const App: React.FC = () => {
         <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
         <Route path="/ListaDeseos" element={<ListaDeseos />} />          
         <Route path="/Modificacion/:glampingId" element={<Modificacion />} />            
-        <Route path="/EvaluacionFinal/:glampingId" element={<EvaluacionFinal />} />          
+        <Route path="/EvaluacionFinal/:glampingId" element={<EvaluacionFinal />} />      
+        <Route path="/GestionarCuenta/" element={<GestionarCuenta />} />                
         <Route path="*" element={<NoEncontrado />} />
       </Routes>
     </Router>

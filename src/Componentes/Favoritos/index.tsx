@@ -4,6 +4,7 @@ import axios from 'axios';
 import Tarjeta from "../../Componentes/Tarjeta/index";
 import animal from '../../Imagenes/animal.png';
 import { useNavigate } from "react-router-dom";
+import HeaderIcono from '../../Componentes/HeaderIcono/index'; 
 import './estilos.css';
 
 interface Glamping {
@@ -98,9 +99,7 @@ const Favoritos: React.FC = () => {
       <div className='favoritos-titulo'>
         {glampings.length > 0 ? (
           <>
-            <img src={animal} alt="Glamperos logo" className="favoritos-logo-titulo" onClick={irAInicio} />
-            <h1>Tu lista de deseos</h1>
-            
+            <HeaderIcono descripcion="Tu lista de deseos" />            
           </>
         ) : null}
       </div>

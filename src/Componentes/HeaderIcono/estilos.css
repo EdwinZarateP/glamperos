@@ -1,0 +1,74 @@
+/* Contenedor general del Header */
+.HeaderIcono-contenedor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e6e3df;
+  background-color: #ffffff;
+  height: 70px;
+}
+
+/* Estilos para el Header */
+.HeaderIcono-Header {
+  display: flex;
+  width: 90%;
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Logo y nombre de la marca */
+.HeaderIcono-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.HeaderIcono-logo {
+  width: 40px;
+  height: auto;
+}
+
+.HeaderIcono-nombreMarca {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2F6B3E;
+}
+
+/* Responsividad */
+
+/* Pantallas pequeñas (máximo ancho: 900px) */
+@media (max-width: 900px) {
+  .Header {
+    width: 100%; /* Asegura que ocupe todo el ancho */
+  }
+
+  .HeaderIcono-izquierda {
+    gap: 8px;
+  }
+
+  .HeaderIcono-logo {
+    width: 35px; /* Ajusta el tamaño del logo para pantallas pequeñas */
+  }
+
+  .HeaderIcono-nombreMarca {
+    font-size: 1.2rem; /* Reduce el tamaño de la fuente en pantallas pequeñas */
+  }
+}
+
+/* Pantallas muy pequeñas (menores a 540px) */
+@media (max-width: 540px) {
+  .HeaderIcono-nombreMarca {
+    font-size: 1rem; /* Reduce aún más el tamaño en pantallas muy pequeñas */
+  }
+
+  .HeaderIcono-logo {
+    width: 30px; /* Ajusta el logo para pantallas muy pequeñas */
+  }
+}

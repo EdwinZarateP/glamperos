@@ -68,7 +68,7 @@ const MenuUsuario: React.FC = () => {
             <li className="MenuUsuario-opcion" onClick={() =>{navigate("/ListaDeseos"), setMostrarMenuUsuarios(false)}}>
               Lista de favoritos
             </li>
-            <li className="MenuUsuario-opcion" onClick={() => navigate("/Modificacion/6765ec4dd88a28903688b6e8")}>
+            <li className="MenuUsuario-opcion" onClick={() => navigate("/GestionarCuenta")}>
               Cuenta
             </li>
           </>
