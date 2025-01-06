@@ -1,0 +1,44 @@
+.EditarGlamping {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .EditarGlamping-titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .EditarGlamping-lista {
+    margin-bottom: 20px;
+  }
+  
+  .EditarGlamping-label {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .EditarGlamping-select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .EditarGlamping-boton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .EditarGlamping-boton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

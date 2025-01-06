@@ -16,7 +16,6 @@ const MenuUsuario: React.FC = () => {
 
   const { mostrarMenuUsuarios, setMostrarMenuUsuarios } = almacenVariables;
   const nombreUsuarioCookie = Cookies.get('nombreUsuario');
-  // const idUsuarioCookie = Cookies.get('idUsuario');
 
   // Referencia al contenedor del menú
   const menuRef = useRef<HTMLDivElement>(null);
@@ -68,7 +67,7 @@ const MenuUsuario: React.FC = () => {
             <li className="MenuUsuario-opcion" onClick={() =>{navigate("/ListaDeseos"), setMostrarMenuUsuarios(false)}}>
               Lista de favoritos
             </li>
-            <li className="MenuUsuario-opcion" onClick={() => navigate("/GestionarCuenta")}>
+            <li className="MenuUsuario-opcion" onClick={() => {navigate("/GestionarCuenta"), setMostrarMenuUsuarios(false)}}>
               Cuenta
             </li>
           </>

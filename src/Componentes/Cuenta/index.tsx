@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Lottie from 'lottie-react';
 import animationData from "../../Imagenes/AnimationPuntos.json"; // Asegúrate de tener la animación
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import "./estilos.css";
 
 const Cuenta: React.FC = () => {
   const [usuario, setUsuario] = useState<{ nombre: string; email: string; glampings: any[] | undefined } | null>(null);
   const [loading, setLoading] = useState<boolean>(true); // Estado de carga
+  const navigate = useNavigate(); // Inicializamos useNavigate
 
   useEffect(() => {
     const obtenerDatosUsuario = async () => {
@@ -51,6 +53,14 @@ const Cuenta: React.FC = () => {
     );
   }
 
+  // Función para redirigir a la página de edición de glamping
+  const manejarEditarGlamping = () => {
+    const propietarioId = Cookies.get('idUsuario'); // Obtener el propietarioId desde la cookie
+    if (propietarioId) {
+      navigate(`/EdicionGlamping/${propietarioId}`); // Redirigir a EditarGlamping
+    }
+  };
+
   return (
     <div className="Cuenta-contenedor">
       <h1 className="Cuenta-titulo">Cuenta</h1>
@@ -90,7 +100,7 @@ const Cuenta: React.FC = () => {
         </div>
 
         {usuario?.glampings && usuario.glampings.length > 0 && (
-          <div className="Cuenta-tarjeta">
+          <div className="Cuenta-tarjeta" onClick={manejarEditarGlamping}> {/* Agrega onClick */}
             <i className="icono-glampings"></i>
             <h3>Editar información de tus glamping</h3>
             <p>Cambia información básica y fotos</p>

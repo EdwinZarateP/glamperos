@@ -101,7 +101,7 @@ const ModificarGlamping: React.FC = () => {
       }
 
       // Redirigir a "/EditarFotos" después de una actualización exitosa
-      navigate("/EditarFotos");
+      navigate("/GestionarCuenta");
     } catch (error) {
       console.error('Error:', error);
     }
