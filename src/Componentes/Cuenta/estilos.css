@@ -1,7 +1,6 @@
 .Cuenta-contenedor {
   padding: 20px;
   width: 80%;
-  margin: 0 auto;
 }
 
 .Cuenta-titulo {
@@ -68,6 +67,28 @@
   content: "⛺";
 }
 
+.Cuenta-cerrar-sesion {
+  cursor: pointer;
+  color: #f44336; 
+  font-size: 16px;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+  margin-top: 40px; /* Separación desde los elementos superiores */
+  display: inline-block;
+  padding: 10px 20px; /* Agregado un poco de padding */
+  text-align: right;
+}
+
+.Cuenta-cerrar-sesion:hover {
+  color: #d32f2f; /* Cambiar color al pasar el mouse */
+}
+
+.Cuenta-cerrar-sesion-container {
+  display: flex;
+  justify-content: flex-end; /* Mover a la derecha */
+  padding-right: 20px; /* Espacio a la derecha */
+}
+
 /* Media Queries para hacer el diseño responsive */
 
 @media (max-width: 1024px) {
@@ -82,8 +103,9 @@
 
 @media (max-width: 768px) {
   .Cuenta-contenedor {
-    margin-top: 77px;
-    width: 95%; /* Reduce el ancho para pantallas pequeñas */
+    margin-top: 160px;
+    width: 95%;
+
   }
 
   .Cuenta-tarjetas {

@@ -48,3 +48,12 @@
   font-size: 12px;
   color: #333;
 }
+
+/* Estilo adicional para los botones */
+.MenuUsuariosInferior .MenuUsuariosInferior-enlace:active {
+  background-color: #f0f0f0;
+}
+
+.MenuUsuariosInferior .MenuUsuariosInferior-enlace:hover {
+  background-color: #f8f8f8;
+}

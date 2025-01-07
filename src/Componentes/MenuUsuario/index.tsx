@@ -25,6 +25,7 @@ const MenuUsuario: React.FC = () => {
     // Remover las cookies
     Cookies.remove('nombreUsuario');
     Cookies.remove('idUsuario');
+    Cookies.remove('correoUsuario');
 
     // Actualizar el estado para ocultar el menú
     setMostrarMenuUsuarios(false);

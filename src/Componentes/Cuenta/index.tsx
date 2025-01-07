@@ -12,7 +12,7 @@ const Cuenta: React.FC = () => {
 
   useEffect(() => {
     const obtenerDatosUsuario = async () => {
-      const correoUsuario = Cookies.get("correoUsuario");  // Usamos el correo almacenado en cookies
+      const correoUsuario = Cookies.get("correoUsuario");
 
       if (correoUsuario) {
         try {
@@ -42,6 +42,31 @@ const Cuenta: React.FC = () => {
     obtenerDatosUsuario();
   }, []);
 
+  // Función para manejar el cierre de sesión
+  const cerrarSesion = () => {
+    // Remover las cookies
+    Cookies.remove('nombreUsuario');
+    Cookies.remove('idUsuario');
+    Cookies.remove('correoUsuario');
+
+    // Redirigir al inicio y recargar la página
+    navigate("/");
+    window.location.reload();
+  };
+
+  // Función para redirigir a la página de edición de glamping
+  const manejarEditarGlamping = () => {
+    const propietarioId = Cookies.get('idUsuario'); // Obtener el propietarioId desde la cookie
+    if (propietarioId) {
+      navigate(`/EdicionGlamping/${propietarioId}`); // Redirigir a EditarGlamping
+    }
+  };
+
+  // Función para redirigir a la página de edición de perfil
+  const manejarEditarPerfil = () => {
+    navigate("/EdicionPerfil");
+  };
+
   if (loading) {
     return (
       <div className="lottie-container">
@@ -52,21 +77,6 @@ const Cuenta: React.FC = () => {
       </div>
     );
   }
-
-  // Función para redirigir a la página de edición de glamping
-  const manejarEditarGlamping = () => {
-    const propietarioId = Cookies.get('idUsuario'); // Obtener el propietarioId desde la cookie
-    if (propietarioId) {
-      navigate(`/EdicionGlamping/${propietarioId}`); // Redirigir a EditarGlamping
-    }
-  };
-
-   // Función para redirigir a la página de edición de glamping
-   const manejarEditarPerfil = () => {
-    navigate("/EdicionPerfil");
-  };
-
-  
 
   return (
     <div className="Cuenta-contenedor">
@@ -80,12 +90,12 @@ const Cuenta: React.FC = () => {
       )}
 
       <div className="Cuenta-tarjetas">
-        <div className="Cuenta-tarjeta"  onClick={manejarEditarPerfil}>
-          <i className="icono-datos-personales" ></i>
+        <div className="Cuenta-tarjeta" onClick={manejarEditarPerfil}>
+          <i className="icono-datos-personales"></i>
           <h3>Datos personales</h3>
           <p>Proporciona tus datos personales e indícanos cómo podemos ponernos en contacto contigo</p>
         </div>
-        
+
         <div className="Cuenta-tarjeta">
           <i className="icono-pagos"></i>
           <h3>Pagos</h3>
@@ -107,12 +117,17 @@ const Cuenta: React.FC = () => {
         </div>
 
         {usuario?.glampings && usuario.glampings.length > 0 && (
-          <div className="Cuenta-tarjeta" onClick={manejarEditarGlamping}> {/* Agrega onClick */}
+          <div className="Cuenta-tarjeta" onClick={manejarEditarGlamping}>
             <i className="icono-glampings"></i>
             <h3>Editar información de tus glamping</h3>
             <p>Cambia información básica y fotos</p>
           </div>
         )}
+      </div>
+
+      {/* Contenedor para el botón de Cerrar Sesión alineado a la derecha */}
+      <div className="Cuenta-cerrar-sesion-container">
+        <span onClick={cerrarSesion} className="Cuenta-cerrar-sesion">Cerrar sesión</span>
       </div>
     </div>
   );
