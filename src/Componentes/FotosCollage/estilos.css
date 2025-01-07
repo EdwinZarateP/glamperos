@@ -1,7 +1,7 @@
 /* Estilo para el contenedor de las fotos */
 .fotosCollage-contenedor {
   width: 55%;
-  margin: 0 auto;
+  margin-top: 60px;
   padding: 20px;
   box-sizing: border-box;
 }

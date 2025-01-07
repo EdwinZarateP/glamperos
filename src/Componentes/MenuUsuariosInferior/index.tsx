@@ -28,7 +28,7 @@ const MenuUsuariosInferior: React.FC = () => {
         </Link>
       </div>
       <div className="MenuUsuariosInferior-icono">
-        <Link to="/" className="MenuUsuariosInferior-enlace">
+        <Link to="/GestionarCuenta" className="MenuUsuariosInferior-enlace">
           <FaRegUser className="MenuUsuariosInferior-iconoImagen" />
           <span className="MenuUsuariosInferior-texto">Perfil</span>
         </Link>

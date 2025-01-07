@@ -28,6 +28,12 @@ const ModificarFotos: React.FC = () => {
     fetchImagenes();
   }, [glampingId]);
 
+  useEffect(() => {
+    if (imagenesArchivo.length > 0) {
+      cargarImagenes();
+    }
+  }, [imagenesArchivo]);
+
   const reorganizarImagenesEnAPI = async (nuevoOrdenImagenes: string[]) => {
     try {
       const response = await fetch(
@@ -49,7 +55,6 @@ const ModificarFotos: React.FC = () => {
 
       const data = await response.json();
       setImagenes(data.imagenes || []);
-      // Swal.fire("Éxito", "El orden de las imágenes fue actualizado.", "success");
     } catch (error: any) {
       Swal.fire("Error", error.message || "Error al reorganizar las imágenes.", "error");
       console.error("Error detallado:", error.message || error);
@@ -89,18 +94,14 @@ const ModificarFotos: React.FC = () => {
     }
   };
 
-
-
   const cargarImagenes = async () => {
     if (imagenesArchivo.length === 0) return;
 
-    // Validación para asegurarse de que no se sobrepasen las 20 imágenes
     if (imagenes.length + imagenesArchivo.length > MAX_IMAGENES) {
       Swal.fire("Error", `No puedes añadir más de ${MAX_IMAGENES} imágenes.`, "error");
       return;
     }
 
-    // Validación para los tipos de archivo y tamaño
     const imagenesValidas: File[] = [];
     for (let archivo of imagenesArchivo) {
       if (!archivo.type.startsWith("image/")) {
@@ -109,7 +110,11 @@ const ModificarFotos: React.FC = () => {
       }
 
       if (archivo.size > 10 * 1024 * 1024) {
-        Swal.fire("Sabemos que eres full HD", "Pero algunas imágenes no se subieron porque superan el tamaño máximo de 10MB", "info");
+        Swal.fire(
+          "Sabemos que eres full HD",
+          "Pero algunas imágenes no se subieron porque superan el tamaño máximo de 10MB",
+          "info"
+        );
         continue;
       }
 
@@ -118,7 +123,6 @@ const ModificarFotos: React.FC = () => {
 
     if (imagenesValidas.length === 0) return;
 
-    // Subir las imágenes válidas
     const formData = new FormData();
     imagenesValidas.forEach((archivo) => formData.append("imagenes", archivo));
     setCargando(true);
@@ -138,13 +142,13 @@ const ModificarFotos: React.FC = () => {
 
       const data = await response.json();
       setImagenes(data.imagenes || []);
-      setImagenesArchivo([]); // Limpiar los archivos seleccionados
+      setImagenesArchivo([]);
     } catch (error: any) {
       Swal.fire("Error", error.message || "No se pudieron cargar las imágenes.", "error");
-    }finally {
-      setCargando(false);}
+    } finally {
+      setCargando(false);
+    }
   };
-
 
   return (
     <div className="ModificarFotos-contenedor">
@@ -182,9 +186,6 @@ const ModificarFotos: React.FC = () => {
           multiple
           onChange={(e) => setImagenesArchivo(Array.from(e.target.files || []))}
         />
-        <button onClick={cargarImagenes} disabled={cargando} className="ModificarFotos-botonCargar">
-          {cargando ? "Cargando..." : "Cargar Imágenes"}
-        </button>
         {cargando && <p>Estamos cargando tus imágenes...</p>}
       </div>
     </div>

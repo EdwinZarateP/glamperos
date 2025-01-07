@@ -61,6 +61,13 @@ const Cuenta: React.FC = () => {
     }
   };
 
+   // Función para redirigir a la página de edición de glamping
+   const manejarEditarPerfil = () => {
+    navigate("/EdicionPerfil");
+  };
+
+  
+
   return (
     <div className="Cuenta-contenedor">
       <h1 className="Cuenta-titulo">Cuenta</h1>
@@ -73,8 +80,8 @@ const Cuenta: React.FC = () => {
       )}
 
       <div className="Cuenta-tarjetas">
-        <div className="Cuenta-tarjeta">
-          <i className="icono-datos-personales"></i>
+        <div className="Cuenta-tarjeta"  onClick={manejarEditarPerfil}>
+          <i className="icono-datos-personales" ></i>
           <h3>Datos personales</h3>
           <p>Proporciona tus datos personales e indícanos cómo podemos ponernos en contacto contigo</p>
         </div>

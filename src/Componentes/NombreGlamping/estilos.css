@@ -1,8 +1,14 @@
 .titulo-glamping {
-    font-size: 24px;
     font-weight: 700;
     color: #1a1a1a;
     margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    text-transform: capitalize; /* Capitaliza solo la primera letra */
+    font-size: 1.5rem; /* Ajusta según el diseño */
+    max-width: 100%; 
   }
   
 /* Aplica margin-left de 10px en pantallas pequeñas */

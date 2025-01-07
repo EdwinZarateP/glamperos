@@ -100,6 +100,13 @@ const ModificarGlamping: React.FC = () => {
         throw new Error('Error al actualizar el glamping');
       }
 
+      // SweetAlert para éxito
+      Swal.fire({
+        icon: 'success',
+        title: '¡Actualización exitosa!',
+        text: 'El Glamping se ha actualizado correctamente.',
+      });
+
       // Redirigir a "/EditarFotos" después de una actualización exitosa
       navigate("/GestionarCuenta");
     } catch (error) {

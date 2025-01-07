@@ -1,70 +1,117 @@
 .Cuenta-contenedor {
-    padding: 20px;
-    width: 80%;
-  }
-  
-  .Cuenta-titulo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .Cuenta-informacion {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.Cuenta-titulo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.Cuenta-informacion {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.Cuenta-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.Cuenta-tarjeta {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  cursor: pointer;
+}
+
+.Cuenta-tarjeta:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.Cuenta-tarjeta h3 {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.Cuenta-tarjeta p {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.icono-datos-personales:before {
+  content: "📄";
+}
+
+.icono-seguridad:before {
+  content: "🔒";
+}
+
+.icono-pagos:before {
+  content: "💳";
+}
+
+.icono-cobros:before {
+  content: "💵";
+}
+
+.icono-notificaciones:before {
+  content: "🔔";
+}
+
+.icono-glampings:before {
+  content: "⛺";
+}
+
+/* Media Queries para hacer el diseño responsive */
+
+@media (max-width: 1024px) {
   .Cuenta-tarjetas {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  
-  .Cuenta-tarjeta {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    cursor: pointer;
-  }
- 
-  .Cuenta-tarjeta:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  }
-  
-  .Cuenta-tarjeta h3 {
-    margin-top: 10px;
-    font-size: 18px;
-  }
-  
-  .Cuenta-tarjeta p {
-    font-size: 14px;
-    color: #6c757d;
-  }
-  
-  .icono-datos-personales:before {
-    content: "📄";
-  }
-  
-  .icono-seguridad:before {
-    content: "🔒";
-  }
-  
-  .icono-pagos:before {
-    content: "💳";
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas para pantallas medianas */
   }
 
-  .icono-cobros:before {
-    content: "💵";
+  .Cuenta-tarjeta {
+    padding: 15px; /* Menos padding en pantallas medianas */
   }
-  
-  .icono-notificaciones:before {
-    content: "🔔";
+}
+
+@media (max-width: 768px) {
+  .Cuenta-contenedor {
+    margin-top: 77px;
+    width: 95%; /* Reduce el ancho para pantallas pequeñas */
   }
-  
+
+  .Cuenta-tarjetas {
+    grid-template-columns: 1fr; /* 1 columna para pantallas pequeñas */
+  }
+
+  .Cuenta-titulo {
+    font-size: 20px; /* Tamaño de fuente más pequeño para pantallas pequeñas */
+  }
+
+  .Cuenta-informacion {
+    font-size: 14px; /* Reduce el tamaño de fuente para pantallas pequeñas */
+  }
+
+  .Cuenta-tarjeta h3 {
+    font-size: 16px; /* Tamaño más pequeño en pantallas pequeñas */
+  }
+
+  .Cuenta-tarjeta p {
+    font-size: 12px; /* Ajuste de fuente para pantallas pequeñas */
+  }
+
+  .icono-datos-personales:before,
+  .icono-seguridad:before,
+  .icono-pagos:before,
+  .icono-cobros:before,
+  .icono-notificaciones:before,
   .icono-glampings:before {
-    content: "⛺";
+    font-size: 24px; /* Aumentar el tamaño del icono para pantallas pequeñas */
   }
-  
+}

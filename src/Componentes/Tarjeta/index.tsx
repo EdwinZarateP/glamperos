@@ -263,7 +263,9 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
       <div className="tarjeta-info">
         <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">{nombreGlamping}</span>
+          <span className="tarjeta-nombre">
+            {nombreGlamping.toLowerCase().replace(/\b\w/, (c) => c.toUpperCase())}
+           </span>
           <div className="tarjeta-calificacion">
             <FaStar className="tarjeta-estrella" />
             <span>{calificacion.toFixed(1)}</span>
