@@ -185,18 +185,33 @@ const ContenedorTarjetas: React.FC = () => {
     return R * c;
   }
 
+
+  
   const noTieneFechasReservadasEnRango = (fechasReservadas: string[]) => {
     if (!fechaInicio || !fechaFin) {
       return true; // Si las fechas no están definidas, no aplicar filtro
-    }
+    }  
+  
+    // Convertir las fechas de inicio y fin a objetos Date
+    let inicio = new Date(fechaInicio);
+    let fin = new Date(fechaFin);
+    
+    // Restar un día a la fecha de inicio
+    inicio.setDate(inicio.getDate() - 1);
+  
+    // Restar un día a la fecha de fin
+    fin.setDate(fin.getDate() - 1);
+  
+    // Comprobar si alguna de las fechas reservadas está dentro del rango
+    return !fechasReservadas.some((fecha) => {
+      const fechaReservada = new Date(fecha);
+      
+      // Evaluar si la fecha reservada está dentro del rango, incluyendo los límites
+      return fechaReservada >= inicio && fechaReservada <= fin;
+    });
+  };  
   
   
-    return !fechasReservadas.some(
-      (fecha) =>
-        new Date(fecha) >= new Date(fechaInicio) &&
-        new Date(fecha) <= new Date(fechaFin)
-    );
-  };
   
   // Filtrar los glampings según los criterios del diccionario de filtros
   const glampingsFiltrados = glampings.filter((glamping) => {
