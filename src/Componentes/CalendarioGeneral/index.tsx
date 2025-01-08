@@ -4,12 +4,10 @@ import { ContextoApp } from "../../Contexto/index";
 
 interface CalendarioGeneralProps {
   cerrarCalendario: () => void;
-  FechasReservadas?: Date[]; // Ahora es opcional
 }
 
 const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   cerrarCalendario,
-  FechasReservadas = [], // Valor por defecto: array vacío
 }) => {
   const almacenVariables = useContext(ContextoApp);
 
@@ -19,13 +17,14 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     );
   }
 
-  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, setTotalDias,setFechaInicioConfirmado, setFechaFinConfirmado } = almacenVariables;
+  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, setTotalDias,
+    setFechaInicioConfirmado, setFechaFinConfirmado, FechasSeparadas } = almacenVariables;
 
   const [mesesVisibles, setMesesVisibles] = useState<{ mes: number; anio: number }[]>([]);
 
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
-
+  
   useEffect(() => {
     const meses = [];
     for (let i = 0; i < 18; i++) {
@@ -40,12 +39,12 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       let diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
       let dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
 
-      if (FechasReservadas.length > 0) {
+      if (FechasSeparadas.length > 0) {
         const diasReservadosEnRango = [];
         for (let i = 0; i < dias; i++) {
           const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
           if (
-            FechasReservadas.some(
+            FechasSeparadas.some(
               (fechaReservada) => fechaReservada.toDateString() === dia.toDateString()
             )
           ) {
@@ -56,12 +55,10 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       }
 
       setTotalDias(dias);
-      // setFechaInicioConfirmado(fechaInicio);
-      // setFechaFinConfirmado(fechaFin);
     } else {
       setTotalDias(1);
     }
-  }, [fechaInicio, fechaFin, FechasReservadas, setTotalDias]);
+  }, [fechaInicio, fechaFin, FechasSeparadas, setTotalDias]);
 
   const manejarClickFecha = (fecha: Date) => {
     if (esFechaReservada(fecha)) return;
@@ -91,14 +88,39 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
   };
 
   const esFechaReservada = (fecha: Date): boolean => {
-    return FechasReservadas.length > 0
-      ? FechasReservadas.some(
+    return FechasSeparadas.length > 0
+      ? FechasSeparadas.some(
           (fechaReservada) => fecha.toDateString() === fechaReservada.toDateString()
         )
       : false;
   };
 
-  const esFechaDeshabilitada = (fecha: Date): boolean => fecha <= hoy;
+  const esFechaDeshabilitada = (fecha: Date): boolean => {
+    if (fecha <= hoy) {
+      return true;
+    }
+
+    if (esFechaReservada(fecha)) {
+      const fechaAnterior = new Date(fecha);
+      fechaAnterior.setDate(fecha.getDate() - 1); 
+
+      if (esFechaReservada(fechaAnterior)) {
+        return true;
+      }
+    }
+
+    if (fechaInicio) {
+      const fechaPosterior = FechasSeparadas
+        .filter((fechaSeparada) => fechaSeparada > fechaInicio) 
+        .sort((a, b) => a.getTime() - b.getTime())[0];
+
+      if (fechaPosterior && fecha >= fechaPosterior) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   const renderizarEncabezadoDias = () => {
     const diasSemana = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];
@@ -179,12 +201,13 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
           </button>
           <button
             onClick={() => {
-              cerrarCalendario(); // Llamar a la función cerrarCalendario
+              cerrarCalendario(); 
               setFechaInicioConfirmado(fechaInicio);
-              setFechaFinConfirmado(fechaFin);              
+              setFechaFinConfirmado(fechaFin);  
+              console.log(FechasSeparadas);          
             }}            
             className="CalendarioGeneral-boton-siguiente"
-            disabled={!fechaFin} // Deshabilitado si no se ha seleccionado una fecha de fin
+            disabled={!fechaFin} 
           >
             Quiero estas Fechas
           </button>

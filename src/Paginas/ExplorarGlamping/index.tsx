@@ -25,6 +25,7 @@ interface Glamping {
   ciudad_departamento: string;
   tipoGlamping: string;
   Acepta_Mascotas: boolean;
+  fechasReservadas?: string[];
   precioEstandar: number;
   descuento: number;
   Cantidad_Huespedes: number;
@@ -55,7 +56,7 @@ function ExplorarGlamping() {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
 
-  const { setTarifaServicio } = almacenVariables;
+  const { setTarifaServicio, setFechasSeparadas } = almacenVariables;
 
   // Establece la tarifa de servicio predeterminada
   useEffect(() => {
@@ -79,35 +80,46 @@ function ExplorarGlamping() {
         console.error("No se proporcionó un ID de glamping.");
         return;
       }
-
+  
       const datos = await obtenerGlampingPorId(glampingId);
-
+  
       if (datos) {
         setInformacionGlamping({
           nombreGlamping: datos.nombreGlamping || "No disponible",
           ciudad_departamento: datos.ciudad_departamento || "No disponible",
           tipoGlamping: datos.tipoGlamping || "No disponible",
           Acepta_Mascotas: datos.Acepta_Mascotas ?? false,
+          fechasReservadas: datos.fechasReservadas || [],
           precioEstandar: datos.precioEstandar || 0,
           descuento: Number(datos.descuento) || 0,
           Cantidad_Huespedes: datos.Cantidad_Huespedes || 0,
           descripcionGlamping: datos.descripcionGlamping || "No disponible",
           imagenes: datos.imagenes || [],
           ubicacion: datos.ubicacion
-          ? { lat: datos.ubicacion.lat, lng: datos.ubicacion.lng }
-          : null,
+            ? { lat: datos.ubicacion.lat, lng: datos.ubicacion.lng }
+            : null,
           amenidadesGlobal: datos.amenidadesGlobal || [],
         });
+  
+        // Convierte las fechas de string a Date y asegura que no haya problemas de husos horarios
+        if (datos.fechasReservadas) {
+          const fechasComoDate = datos.fechasReservadas.map((fechaString: string) => {
+            const [year, month, day] = fechaString.split('-').map(Number);
+            return new Date(year, month - 1, day); // Crear Date con mes ajustado (0-indexado)
+          });
+          setFechasSeparadas(fechasComoDate); // Guardar en el contexto
+        }
       }
     };
-
+  
     consultarGlamping();
-  }, [glampingId]);
-
+  }, [glampingId, setFechasSeparadas]);
+  
+  
   const fechasReservadas = [
-    new Date(2024, 10, 20),
-    new Date(2024, 10, 28),
-    new Date(2024, 10, 29),
+    new Date(2025, 2, 12),
+    new Date(2025, 2, 13),
+    new Date(2025, 2, 14),
   ];
 
   // Definir el estado para calificaciones

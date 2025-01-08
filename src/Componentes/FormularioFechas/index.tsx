@@ -37,7 +37,8 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
     mostrarVisitantes,
     setMostrarVisitantes,
     fechaInicioConfirmado,
-    fechaFinConfirmado
+    fechaFinConfirmado,
+    // setFechasSeparadas
   } = almacenVariables;
 
   let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{ glampingId: string; fechaInicioUrl: string; fechaFinUrl: string; totalDiasUrl: string }>();
@@ -86,11 +87,6 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
   const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
   const porcentajeGlamperos = ExtraerTarifaGlamperos(precioPorNoche);
 
-  const FechasReservadas = [
-    new Date(2024, 10, 20),
-    new Date(2024, 10, 28),
-    new Date(2024, 10, 29),
-  ];
 
   const formatearFecha = (fecha: Date | null): string => {
     if (!fecha) return "-";
@@ -174,6 +170,11 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
             setFechaFin(fechaFinRender);
             setTotalDias(totalDiasRender);
             setMostrarCalendario(true);
+            // setFechasSeparadas( [
+            //   new Date(2025, 1, 2),
+            //   new Date(2025, 1, 3),
+            //   new Date(2025, 1, 8),
+            // ])
           }}
         >
           <div className="FormularioFechas-fecha">
@@ -234,7 +235,6 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
       {mostrarCalendario && (
         <CalendarioGeneral
           cerrarCalendario={() => setMostrarCalendario(false)}
-          FechasReservadas={FechasReservadas}
         />
       )}
 

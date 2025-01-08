@@ -141,6 +141,7 @@
 .CalendarioGeneral-dia-deshabilitado {
   color: #bbb;
   background: transparent;
+  text-decoration: line-through;
   cursor: not-allowed;
 }
 

@@ -4,17 +4,17 @@ import { ContextoApp } from "../../Contexto/index";
 
 interface CalendarioProps {
   nombreGlamping: string;
-  FechasReservadas: Date[];
 }
 
-const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservadas }) => {
+const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
     throw new Error("El almacenVariables no está disponible. Asegúrate de envolver el componente en un proveedor de almacenVariables.");
   }
 
-  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, totalDias, setTotalDias, setFechaInicioConfirmado, setFechaFinConfirmado, } = almacenVariables;
+  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, totalDias, 
+    setTotalDias, setFechaInicioConfirmado, setFechaFinConfirmado,FechasSeparadas } = almacenVariables;
 
   const [mesActual, setMesActual] = useState<number>(new Date().getMonth());
   const [anioActual, setAnioActual] = useState<number>(new Date().getFullYear());
@@ -32,8 +32,8 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
       for (let i = 0; i < dias; i++) {
         const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
         if (
-          FechasReservadas.some(
-            (fechaReservada) => fechaReservada.toDateString() === dia.toDateString()
+          FechasSeparadas.some(
+            (FechasSeparada) => FechasSeparada.toDateString() === dia.toDateString()
           )
         ) {
           diasReservadosEnRango.push(dia);
@@ -45,7 +45,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
     } else {
       setTotalDias(1);
     }
-  }, [fechaInicio, fechaFin, FechasReservadas, setTotalDias]);
+  }, [fechaInicio, fechaFin, FechasSeparadas, setTotalDias]);
 
   const formatearFecha = (fecha: Date): string => {
     const opciones: Intl.DateTimeFormatOptions = {
@@ -85,9 +85,9 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
     return fechaInicio?.toDateString() === fecha.toDateString();
   };
 
-  const esFechaReservada = (fecha: Date): boolean => {
-    return FechasReservadas.some(
-      (fechaReservada) => fecha.toDateString() === fechaReservada.toDateString()
+  const esFechasSeparada = (fecha: Date): boolean => {
+    return FechasSeparadas.some(
+      (FechasSeparada) => fecha.toDateString() === FechasSeparada.toDateString()
     );
   };
 
@@ -120,7 +120,7 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping, FechasReservada
     for (let dia = 1; dia <= totalDiasMes; dia++) {
       const fecha = new Date(anio, mes, dia);
       const deshabilitada = esFechaDeshabilitada(fecha);
-      const reservada = esFechaReservada(fecha);
+      const reservada = esFechasSeparada(fecha);
       const seleccionado = esFechaSeleccionada(fecha);
 
       dias.push(
