@@ -115,13 +115,6 @@ function ExplorarGlamping() {
     consultarGlamping();
   }, [glampingId, setFechasSeparadas]);
   
-  
-  const fechasReservadas = [
-    new Date(2025, 2, 12),
-    new Date(2025, 2, 13),
-    new Date(2025, 2, 14),
-  ];
-
   // Definir el estado para calificaciones
   const [calificacionEvaluaciones, setCalificacionEvaluaciones] = useState<number | null>(null);
   const [calificacionPromedio, setCalificacionPromedio] = useState<number>(4.5); // Valor predeterminado
@@ -208,7 +201,6 @@ function ExplorarGlamping() {
                 <div className='contenedor-calendario'>
                   <Calendario 
                     nombreGlamping={`${informacionGlamping?.nombreGlamping}  - ${informacionGlamping?.ciudad_departamento?.split(" - ")[0] || ''}`}
-                    FechasReservadas={fechasReservadas} 
                   />
                 </div>
               </div>
