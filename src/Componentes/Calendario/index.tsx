@@ -10,11 +10,15 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
-    throw new Error("El almacenVariables no está disponible. Asegúrate de envolver el componente en un proveedor de almacenVariables.");
+    throw new Error(
+      "El almacenVariables no está disponible. Asegúrate de envolver el componente en un proveedor de almacenVariables."
+    );
   }
 
-  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, totalDias, 
-    setTotalDias, setFechaInicioConfirmado, setFechaFinConfirmado,FechasSeparadas } = almacenVariables;
+  const {
+    fechaInicio, setFechaInicio, fechaFin, setFechaFin, totalDias,
+    setTotalDias, setFechaInicioConfirmado, setFechaFinConfirmado, FechasSeparadas,
+  } = almacenVariables;
 
   const [mesActual, setMesActual] = useState<number>(new Date().getMonth());
   const [anioActual, setAnioActual] = useState<number>(new Date().getFullYear());
@@ -22,12 +26,15 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
 
+  // Fecha límite definida (por ejemplo, un año a partir de hoy)
+  const fechaLimite = new Date(hoy);
+  fechaLimite.setFullYear(fechaLimite.getFullYear() + 1);
+
   useEffect(() => {
     if (fechaInicio && fechaFin) {
       let diferenciaTiempo = fechaFin.getTime() - fechaInicio.getTime();
       let dias = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
-
-      // Restar días reservados que están dentro del rango seleccionado
+      
       const diasReservadosEnRango = [];
       for (let i = 0; i < dias; i++) {
         const dia = new Date(fechaInicio.getTime() + i * (1000 * 60 * 60 * 24));
@@ -59,11 +66,9 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
   const manejarClickFecha = (fecha: Date) => {
     if (!fechaInicio || (fechaInicio && fechaFin)) {
       setFechaInicio(fecha);
-      
       setFechaFin(null);
     } else if (fechaInicio && !fechaFin && fecha >= fechaInicio) {
       setFechaFin(fecha);
-      // Actualizar fechas confirmadas cuando la fecha final es seleccionada
       setFechaInicioConfirmado(fechaInicio);
       setFechaFinConfirmado(fecha);
     } else {
@@ -91,7 +96,9 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
     );
   };
 
-  const esFechaDeshabilitada = (fecha: Date): boolean => fecha <= hoy;
+  const esFechaDeshabilitada = (fecha: Date): boolean => {
+    return fecha <= hoy || fecha > fechaLimite;
+  };
 
   const renderizarEncabezadoDias = () => {
     const diasSemana = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"];
@@ -225,5 +232,6 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
     </div>
   );
 };
+
 
 export default Calendario;
