@@ -61,13 +61,7 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ precioPorNoche, descuento
 
   const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
 
-  const FechasReservadas = [
-    new Date(2024, 10, 20),
-    new Date(2024, 10, 28),
-    new Date(2024, 10, 29),
-  ];
-
-  const [precioBase, setPrecioBase] = useState<number>(0);
+   const [precioBase, setPrecioBase] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -142,7 +136,6 @@ const ReservarBoton: React.FC<ReservarBotonProps> = ({ precioPorNoche, descuento
       {mostrarCalendario && (
         <CalendarioGeneral
           cerrarCalendario={() => setMostrarCalendario(false)}
-          FechasReservadas={FechasReservadas}
         />
       )}
     </>
