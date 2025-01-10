@@ -10,16 +10,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex-direction: row; 
+  flex-direction: row;
   height: 120px;
 }
 
 /* Contenedor de las fechas */
 .ReservarBoton-fechas {
   display: flex;
-  justify-content: start; 
-  align-items: flex-start;
-  cursor: pointer;
+  justify-content: start;
+
 }
 
 /* Estilo de cada fecha */
@@ -27,15 +26,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
-  margin-right: 21px; 
+  margin-right: 21px;
 }
 
-.ReservarBoton-fecha-dias{
+.ReservarBoton-fecha-dias {
   text-decoration: underline;
 }
-
 /* Botón de reserva */
 .ReservarBoton-boton {
   background-color: #4CAF50;
@@ -51,14 +49,39 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 255, 0, 0); /* Sin brillo por defecto */
-  transition: box-shadow 0.3s ease; /* Transición suave */
+  overflow: hidden; /* Para que el reflejo no se salga del borde */
+  position: relative;
 }
 
-.ReservarBoton-boton:hover {
-  background-color: #45a049;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.7); /* Efecto de brillo */
+/* Efecto de reflejo dinámico */
+.ReservarBoton-boton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%; /* Comienza fuera del botón */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-45deg); /* Inclinar el efecto */
+  animation: mirrorEffect 7s ease-in-out 14s infinite; /* Animación infinita */
 }
 
+/* Animación del efecto espejo */
+@keyframes mirrorEffect {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Icono del botón */
 .ReservarBoton-boton-icono {
   margin-right: 10px;
 }
@@ -71,7 +94,8 @@
   font-weight: bold;
   display: flex;
   justify-content: center; /* Alinea el total a la izquierda */
-  margin-right: 15px; /* Espacio entre el total y el botón */
+  margin-right: 7px; 
+  margin-left: 14px; 
 }
 
 /* Ocultar en pantallas menores a 600px */
