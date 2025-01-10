@@ -44,31 +44,10 @@
 /* Responsividad */
 
 /* Pantallas pequeñas (máximo ancho: 900px) */
-@media (max-width: 900px) {
-  .Header {
-    width: 100%; /* Asegura que ocupe todo el ancho */
+@media (max-width: 600px) {
+  .HeaderIcono-contenedor {
+    display: none; /* Asegura que ocupe todo el ancho */
   }
 
-  .HeaderIcono-izquierda {
-    gap: 8px;
-  }
-
-  .HeaderIcono-logo {
-    width: 35px; /* Ajusta el tamaño del logo para pantallas pequeñas */
-  }
-
-  .HeaderIcono-nombreMarca {
-    font-size: 1.2rem; /* Reduce el tamaño de la fuente en pantallas pequeñas */
-  }
 }
 
-/* Pantallas muy pequeñas (menores a 540px) */
-@media (max-width: 540px) {
-  .HeaderIcono-nombreMarca {
-    font-size: 1rem; /* Reduce aún más el tamaño en pantallas muy pequeñas */
-  }
-
-  .HeaderIcono-logo {
-    width: 30px; /* Ajusta el logo para pantallas muy pequeñas */
-  }
-}
