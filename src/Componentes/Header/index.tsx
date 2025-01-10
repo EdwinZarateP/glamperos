@@ -25,7 +25,7 @@ const Header: React.FC = () => {
      setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, 
      setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, 
      setPrecioEstandar, setCantidad_Huespedes, setDescuento, setAcepta_Mascotas,
-     setMostrarFiltros,setMostrarMenuUsuarios, cantiadfiltrosAplicados, busqueda, setBusqueda } = almacenVariables; 
+     setMostrarFiltros,setMostrarMenuUsuarios, cantiadfiltrosAplicados, busqueda, setBusqueda, setFechasSeparadas } = almacenVariables; 
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false);
   const nombreUsuarioCookie = Cookies.get('nombreUsuario');
@@ -33,6 +33,7 @@ const Header: React.FC = () => {
 
   const manejarClickBusqueda = () => {
     setMostrarPanelBusqueda(true); 
+    setFechasSeparadas([]);
     document.body.style.overflow = "hidden";
   };
 
