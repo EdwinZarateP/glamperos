@@ -149,7 +149,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, descuento 
               {totalDiasRender === 1 ? totalDiasRender : totalDiasRender} noche
               {totalDiasRender > 1 ? "s" : ""}
             </span>
-          <span>{formatearFecha(fechaInicioRender)}-{formatearFecha(fechaFinRender)}</span>
+          <span>{formatearFecha(fechaInicioRender)} - {formatearFecha(fechaFinRender)}</span>
         </div>
       </div>
       

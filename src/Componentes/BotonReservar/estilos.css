@@ -4,14 +4,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 10px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   border-top: 2px solid #ccc;
   z-index: 100;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: row; /* Cambiado a row para alinearlos horizontalmente */
+  flex-direction: row; 
+  height: 120px;
 }
 
 /* Contenedor de las fechas */
@@ -26,9 +26,10 @@
 .ReservarBoton-fecha {
   display: flex;
   flex-direction: column;
-  font-size: 0.7rem;
-
-  margin-right: 5px; /* Espacio entre las fechas */
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-right: 21px; 
 }
 
 .ReservarBoton-fecha-dias{
@@ -46,7 +47,6 @@
   align-items: center;
   border-radius: 8px;
   font-size: 16px;
-  margin-bottom: 10px;
   width: auto; /* Ajuste para que el botón no ocupe todo el ancho */
   justify-content: center;
   cursor: pointer;
