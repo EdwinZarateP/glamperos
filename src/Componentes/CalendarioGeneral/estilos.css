@@ -159,7 +159,7 @@
   border-top: 1px solid #ddd;
   position: sticky;
   bottom: 0;
-  z-index: 100;
+  z-index: 1001;
 }
 
 .CalendarioGeneral-boton-borrar,

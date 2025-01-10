@@ -36,6 +36,8 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
     mostrarVisitantes,
     setMostrarVisitantes,
     fechaInicioConfirmado,
+    setFechaInicioConfirmado,
+    setFechaFinConfirmado,
     fechaFinConfirmado,
     // setFechasSeparadas
   } = almacenVariables;
@@ -69,13 +71,23 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
     : fechaFinUrl
     ? new Date(fechaFinUrl)
     : null;
+  
+  
+    let totalDiasRender = 1; // Valor predeterminado
 
-  let totalDiasRender = totalDias
-    ? totalDias
-    : totalDiasUrl
-    ? parseInt(totalDiasUrl, 10)
-    : 1;
-
+    // Verificar si las fechas de inicio y fin son válidas
+    if (fechaInicioRender && fechaFinRender) {
+      // Calcular la diferencia en milisegundos entre fechaFinRender y fechaInicioRender
+      const diferenciaMillis = fechaFinRender.getTime() - fechaInicioRender.getTime();
+    
+      // Convertir la diferencia en milisegundos a días (1 día = 24 * 60 * 60 * 1000 ms)
+      totalDiasRender = Math.ceil(diferenciaMillis / (24 * 60 * 60 * 1000)); // Redondear hacia arriba para incluir el último día
+    } else if (totalDiasUrl) {
+      // Si no se pueden calcular las fechas, usar totalDiasUrl si está presente
+      totalDiasRender = parseInt(totalDiasUrl, 10);
+    }
+    
+    
   // Fechas por defecto
   const hoy = new Date();
   const fechaInicioPorDefecto = new Date();
@@ -83,21 +95,29 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
   const fechaFinPorDefecto = new Date();
   fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
 
-
+  
   const fechaInicioReservada = fechaInicio
   ? fechaInicio.toISOString().split('T')[0]
   : fechaInicioUrl
   ? new Date(fechaInicioUrl).toISOString().split('T')[0]
   : fechaInicioPorDefecto.toISOString().split('T')[0];
+  
 
-  const fechaFinReservada = fechaFin
+  let fechaFinReservada = fechaFin
   ? fechaFin.toISOString().split('T')[0]
   : fechaFinUrl
   ? new Date(fechaFinUrl).toISOString().split('T')[0]
   : fechaFinPorDefecto.toISOString().split('T')[0];
 
+  // Comprobar si la fechaInicioReservada es mayor que la fechaFinReservada
+  if (new Date(fechaInicioReservada) > new Date(fechaFinReservada)) {
+    const nuevaFechaFin = new Date(fechaInicioReservada);
+    nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1); // Añadir un día a la fecha de inicio
+    fechaFinReservada = nuevaFechaFin.toISOString().split('T')[0]; // Actualizar fechaFinReservada
+  }
 
-  const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
+  
+  const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioReservada ?? fechaInicioPorDefecto, fechaFinReservada ?? fechaFinPorDefecto);
   const porcentajeGlamperos = ExtraerTarifaGlamperos(precioPorNoche);
 
 
@@ -114,7 +134,16 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
 
   const TarifaGlamperos = Math.round(precioConTarifa - precioConTarifa * (1 / (1 + porcentajeGlamperos)));
 
+  useEffect(() => {
+    if (!fechaInicioConfirmado && fechaInicioUrl) {
+      setFechaInicioConfirmado(new Date(fechaInicioUrl));
+    }
+    if (!fechaFinConfirmado && fechaFinUrl) {
+      setFechaFinConfirmado(new Date(fechaFinUrl));
+    }
+  }, [fechaInicioUrl, fechaFinUrl, fechaInicioConfirmado, fechaFinConfirmado, setFechaInicioConfirmado, setFechaFinConfirmado]);
 
+  
   useEffect(() => {
     if (mostrarVisitantes) {
       document.body.classList.add("no-scroll");
@@ -128,7 +157,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
       <div className="FormularioFechas-contenedor">
         <div className="FormularioFechas-precio">
           <span className="FormularioFechas-precioNoche">
-            ${(Math.round(precioConTarifa / totalDias)).toLocaleString()} COP
+            ${(Math.round(precioConTarifa / totalDiasRender)).toLocaleString()} COP
           </span>
           <span>/ noche</span>
         </div>
@@ -164,7 +193,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
 
         {/* Usar Link para redirigir */}
         <Link        
-          to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDias}`}
+          to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDiasRender}`}
           className="FormularioFechas-botonReserva"
         >
           <GiCampingTent className="FormularioFechas-botonReserva-icono" />
@@ -176,7 +205,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
         <div className="FormularioFechas-detalleCosto">
           <div className="FormularioFechas-item">
             <span>
-              ${(Math.round((precioConTarifa / totalDias) * (1 / (1 + porcentajeGlamperos)))).toLocaleString()} COP x{" "}
+              ${(Math.round((precioConTarifa / totalDiasRender) * (1 / (1 + porcentajeGlamperos)))).toLocaleString()} COP x{" "}
               {totalDiasRender === 1 ? totalDiasRender : totalDiasRender} noche
               {totalDiasRender > 1 ? "s" : ""}
             </span>

@@ -1,118 +1,82 @@
-/* Contenedor principal: Oculto por defecto */
-.reservar-contenedor {
-  display: none; /* Oculto por defecto */
-  justify-content: space-around;
-  align-items: center;
-  padding: 15px 20px;
-  background: linear-gradient(45deg, #fff, #f8f9fa);
-  border-top: 2px solid #ccc;
+/* Contenedor del botón reservado y fechas */
+.ReservarBoton-container {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  right: 0;
+  padding: 10px;
+  background-color: white;
+  border-top: 2px solid #ccc;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row; /* Cambiado a row para alinearlos horizontalmente */
 }
 
-/* Mostrar en pantallas pequeñas */
-@media (max-width: 600px) {
-  .reservar-contenedor {
-    display: flex; /* Mostrar el contenedor */
-    height: 120px; /* Alto fijo */
-    padding: 10px 15px; /* Reducir el padding para pantallas más pequeñas */
-  }
+/* Contenedor de las fechas */
+.ReservarBoton-fechas {
+  display: flex;
+  justify-content: start; 
+  align-items: flex-start;
+  cursor: pointer;
 }
 
-/* Total y detalles de precio */
-.reservar-total {
+/* Estilo de cada fecha */
+.ReservarBoton-fecha {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  font-size: 0.7rem;
+
+  margin-right: 5px; /* Espacio entre las fechas */
 }
 
-.reservar-precio {
-  font-size: 22px;
-  font-weight: bold;
-  color: #000;
-}
-
-.reservar-detalles {
-  font-size: 14px;
-  color: #666;
-  margin-top: 5px;
-}
-
-.reservar-detalles-noche {
+.ReservarBoton-fecha-dias{
   text-decoration: underline;
-  font-weight: bold;
-  color: #333;
 }
 
-.reservar-fechas {
-  display: block;
-  margin-top: 2px;
-}
-
-/* Contenedor del botón */
-.reservar-boton-contenedor {
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* Botón interactivo con colores verdes */
-.reservar-boton {
-  background-color: #28a745; /* Verde vibrante */
+/* Botón de reserva */
+.ReservarBoton-boton {
+  background-color: #4CAF50;
   color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 8px;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
   display: flex;
   align-items: center;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  width: auto; /* Ajuste para que el botón no ocupe todo el ancho */
   justify-content: center;
-  position: relative; /* Necesario para el brillo */
-  overflow: hidden; /* Ocultar el brillo fuera del botón */
-  transition: transform 0.3s ease, background-color 0.2s ease; /* Transición suave */
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0); /* Sin brillo por defecto */
+  transition: box-shadow 0.3s ease; /* Transición suave */
 }
 
-/* Hover e interacción */
-.reservar-boton:hover {
-  background-color: #218838; /* Verde más oscuro */
-  transform: scale(1.05); /* Agrandar ligeramente */
+.ReservarBoton-boton:hover {
+  background-color: #45a049;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.7); /* Efecto de brillo */
 }
 
-/* Efecto de brillo */
-.reservar-boton::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%; /* Para cubrir todo el botón */
-  height: 100%;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent); /* Gradiente ajustado al verde */
-  transform: skewX(-45deg); /* Inclina el brillo */
-  animation: brillo-deslizar 3s infinite; /* Repetición infinita */
+.ReservarBoton-boton-icono {
+  margin-right: 10px;
 }
 
-/* Animación del brillo */
-@keyframes brillo-deslizar {
-  0% {
-    left: -100%;
+/* Total */
+.ReservarBoton-total {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center; /* Alinea el total a la izquierda */
+  margin-right: 15px; /* Espacio entre el total y el botón */
+}
+
+/* Ocultar en pantallas menores a 600px */
+@media (min-width: 600px) {
+  .ReservarBoton-container {
+    display: none;
   }
-  50% {
-    left: 0%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-/* Ícono dentro del botón */
-.reservar-boton-icono {
-  margin-right: 8px; /* Espaciado entre el ícono y el texto */
-  font-size: 24px; /* Tamaño del ícono */
-  vertical-align: middle;
-  color: white;
 }

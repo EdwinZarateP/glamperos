@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiTwotoneHeart } from "react-icons/ai";
 import { BsBalloonHeartFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
@@ -187,69 +187,94 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
 
 // Nuevo manejador de redirección
-const handleRedireccion = (
-  e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-  url: string
-) => {
-  e.preventDefault();
-  if (window.innerWidth > 600) {
-    // Abrir en una nueva pestaña si la pantalla es mayor a 600px
-    window.open(url, "_blank");
-  } else {
-    // Redirección normal
-    window.location.href = url;
-  }
-};
-  
+const esPantallaPequena = window.innerWidth <= 600;
+const urlDestino = `/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`;
+
 return (
   <div className="tarjeta">
-    <a
-      href={`/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`}
-      className="tarjeta-link"
-      onClick={(e) =>
-        handleRedireccion(
-          e,
-          `/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`
-        )
-      }
-    >
-      <div
-        className="tarjeta-imagen-container"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
+    {esPantallaPequena ? (
+      // Uso de <Link> si la pantalla es menor o igual a 600px
+      <Link to={urlDestino} className="tarjeta-link">
         <div
-          className="carrusel"
-          style={{
-            transform: `translateX(-${imagenActual * 100}%)`,
-          }}
+          className="tarjeta-imagen-container"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
-          {imagenes.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              alt={`Glamping ${nombreGlamping}`}
-              className="tarjeta-imagen visible"
-            />
-          ))}
-        </div>
+          <div
+            className="carrusel"
+            style={{
+              transform: `translateX(-${imagenActual * 100}%)`,
+            }}
+          >
+            {imagenes.map((url, index) => (
+              <img
+                key={index}
+                src={url}
+                alt={`Glamping ${nombreGlamping}`}
+                className="tarjeta-imagen visible"
+              />
+            ))}
+          </div>
 
-        {/* Icono de mascota */}
-        {Acepta_Mascotas && (
-          <MdOutlinePets className="tarjeta-icono-mascota" />
-        )}
+          {/* Icono de mascota */}
+          {Acepta_Mascotas && (
+            <MdOutlinePets className="tarjeta-icono-mascota" />
+          )}
 
-        <div className="puntos">
-          {puntosVisibles.map((_, index) => (
-            <span
-              key={start + index}
-              className={`punto ${start + index === imagenActual ? "activo" : ""}`}
-              onClick={() => setImagenActual(start + index)}
-            />
-          ))}
+          <div className="puntos">
+            {puntosVisibles.map((_, index) => (
+              <span
+                key={start + index}
+                className={`punto ${start + index === imagenActual ? "activo" : ""}`}
+                onClick={() => setImagenActual(start + index)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </a>
+      </Link>
+    ) : (
+      // Uso de <a> si la pantalla es mayor a 600px
+      <a href={urlDestino} className="tarjeta-link" target="_blank" rel="noopener noreferrer">
+        <div
+          className="tarjeta-imagen-container"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div
+            className="carrusel"
+            style={{
+              transform: `translateX(-${imagenActual * 100}%)`,
+            }}
+          >
+            {imagenes.map((url, index) => (
+              <img
+                key={index}
+                src={url}
+                alt={`Glamping ${nombreGlamping}`}
+                className="tarjeta-imagen visible"
+              />
+            ))}
+          </div>
+
+          {/* Icono de mascota */}
+          {Acepta_Mascotas && (
+            <MdOutlinePets className="tarjeta-icono-mascota" />
+          )}
+
+          <div className="puntos">
+            {puntosVisibles.map((_, index) => (
+              <span
+                key={start + index}
+                className={`punto ${start + index === imagenActual ? "activo" : ""}`}
+                onClick={() => setImagenActual(start + index)}
+              />
+            ))}
+          </div>
+        </div>
+      </a>
+    )}
+
+    {/* Icono de favorito */}
     <div
       className="tarjeta-favorito"
       onClick={(e) => {
@@ -264,6 +289,7 @@ return (
       )}
     </div>
 
+    {/* Botones de navegación en el carrusel */}
     <div
       className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}
       onClick={anteriorImagen}
@@ -277,6 +303,7 @@ return (
       <MdOutlineKeyboardArrowRight />
     </div>
 
+    {/* Información del glamping */}
     <div className="tarjeta-info">
       <div className="tarjeta-contenido">
         <span className="tarjeta-nombre">
@@ -292,6 +319,6 @@ return (
     </div>
   </div>
 );
-};
+}
 
 export default Tarjeta;

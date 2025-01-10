@@ -1,165 +1,137 @@
-/* Estilo para el título principal */
-.reservacion-titulo {
-  font-size: 1.5rem;
-  color: #333;
-  font-weight: bold;
+/* Estilo general para la página */
+.reservacion-container {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 70px; /* Evita que el contenido quede cubierto por la barra fija */
+}
+
+.reservacion-loading-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+h1.reservacion-titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #000000;
   margin-bottom: 10px;
 }
 
-/* Estilo para el subtítulo */
-.reservacion-subtitulo {
+h2.reservacion-subtitulo {
+  text-align: center;
   font-size: 1.2rem;
-  color: #777; /* Color más suave para el subtítulo */
-  font-weight: normal;
+  color: #818281;
   margin-bottom: 20px;
 }
 
-.reservacion-container {
+/* Contenedor de la información del glamping */
+.reservacion-glamping-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+
+}
+
+.reservacion-glamping-photo-container {
+  flex: 1;
+  max-width: 550px;
+  margin-right: 20px;
+}
+
+.reservacion-glamping-photo {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reservacion-details {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 100%;
-  width: 100%;
-  margin-top: 130px;
-  border-radius: 12px;
   padding: 20px;
-}
-
-.glamping-info {
-  display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en dispositivos pequeños */
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
-  width: 100%;
-
-}
-
-.glamping-info h1 {
-  font-size: 1.5rem;
-  color: #333;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center; /* Centrado en dispositivos pequeños */
-}
-
-.glamping-photo-container {
-  width: 100%;
-  max-width: 320px;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.glamping-photo {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+  background-color: #ffffff;
   border-radius: 8px;
-}
-
-.reservacion-details {
-  border-radius: 12px;
 }
 
 .reservacion-details p {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 18px;
-  line-height: 1.5;
+  margin-bottom: 15px;
 }
 
-.reservacion-details p strong {
-  color: #333;
-  font-weight: bold;
+.reservacion-details strong {
+  color: #000000;
 }
 
-.reservacion-details .total {
+.reservacion-total {
   font-size: 1.4rem;
-  color: #000000; /* Color oscuro para el total */
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: center;
-  border-top: 3px solid #eee;
-  padding-top: 15px;
-  background-color: #f9f9f9; /* Fondo suave para el total */
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #2F6B3E;
 }
 
-.payment-button-container {
-  text-align: center;
-  width: 100%;
+/* Botón de confirmación */
+.reservacion-payment-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }
 
-.payment-button {
-  background-color: #28a745;
-  color: #fff;
-  font-size: 1.3rem;
+.reservacion-payment-button {
+  background-color: #2F6B3E;
+  color: white;
   padding: 15px 30px;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
+  font-size: 1.2rem;
   cursor: pointer;
-  width: 100%;
-  max-width: 400px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
-.payment-button:hover {
-  background-color: #218838;
+.reservacion-payment-button:hover {
+  background-color: #1f4a2a;
 }
 
-.payment-button:focus {
-  outline: none;
-}
-
-.payment-button:active {
-  transform: scale(0.98);
-}
-
-.payment-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Media Queries para dispositivos más pequeños */
+/* Media Queries para hacerlo responsive */
 @media (max-width: 600px) {
-
-  .reservacion-container {
-    margin-top: 5px;
-
-  }
-
-  .glamping-info {
+  .reservacion-glamping-info {
     flex-direction: column;
+    align-items: center;
   }
 
-  .glamping-info h1 {
-    font-size: 1.4rem;
-    text-align: center;
-  }
-
-  .glamping-photo-container {
-    max-width: 90%;
+  .reservacion-glamping-photo-container {
+    margin-right: 0;
     margin-bottom: 20px;
   }
 
-  .reservacion-details {
-    max-width: 90%;
+  .reservacion-glamping-photo {
+    max-height: 300px;
+    object-fit: cover;
   }
 
-  .reservacion-details p {
+  .reservacion-details {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  h1.reservacion-titulo {
     font-size: 1rem;
   }
 
-  .reservacion-details .total {
-    font-size: 1.3rem;
+  h2.reservacion-subtitulo {
+    font-size: 1rem;
   }
 
-  .payment-button {
-    font-size: 1.2rem;
-    padding: 12px 24px;
+  .reservacion-total {
+    font-size: 1.5rem;
+  }
+
+  .reservacion-payment-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
   }
 }

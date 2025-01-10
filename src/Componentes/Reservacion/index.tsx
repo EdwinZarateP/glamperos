@@ -180,8 +180,11 @@ const Reservacion: React.FC = () => {
   return (
     <div className="reservacion-container">
       {isLoading ? (
-        <div className="loading-animation">
-          <Lottie animationData={animationData} loop={true} />
+        <div className="reservacion-loading-animation">
+          <Lottie 
+            animationData={animationData} 
+            style={{ height: 200, width: '100%', margin: 'auto' }} 
+          />
         </div>
       ) : (
         <>
@@ -189,49 +192,47 @@ const Reservacion: React.FC = () => {
           <h2 className="reservacion-subtitulo">{glampingData?.ciudad_departamento}</h2>
 
           {glampingData && (
-            <div className="glamping-info">
+            <div className="reservacion-glamping-info">
               {glampingData.imagen && (
-                <div className="glamping-photo-container">
+                <div className="reservacion-glamping-photo-container">
                   <img
                     src={glampingData.imagen}
                     alt="Foto del glamping"
-                    className="glamping-photo"
+                    className="reservacion-glamping-photo"
                   />
                 </div>
               )}
               <div className="reservacion-details">
                 <p>
-                  <strong>{formatoPesos(precioConTarifaNum / totalDiasNum)} / noche</strong>
+                  <strong>{formatoPesos(Math.round(precioConTarifaNum / totalDiasNum))} / noche</strong>
                 </p>
                 <p>
                   Desde el {fechaInicio?.toLocaleDateString()} al{" "}
                   {fechaFin?.toLocaleDateString()}
                 </p>
                 <p>
-                  <strong>
                     Precio por {totalDiasNum} {totalDiasNum === 1 ? "noche" : "noches"}: {" "}
                     {formatoPesos(precioConTarifaNum - TarifaGlamperosNum)}
-                  </strong>
                 </p>
 
                 <p>
-                  <strong>Tarifa de Glamperos:</strong> {formatoPesos(TarifaGlamperosNum)}
+                  Tarifa de Glamperos: {formatoPesos(TarifaGlamperosNum)}
                 </p>
-                <p className="total">
-                  <strong>Total:</strong> {formatoPesos(precioConTarifaNum)}
+                <p className="reservacion-total">
+                  <strong>Total: {formatoPesos(precioConTarifaNum)}</strong>
                 </p>
               </div>
             </div>
           )}
 
-          <div className="payment-button-container">
-            <button className="payment-button" onClick={enviarFechasAPI}>
+          <div className="reservacion-payment-button-container">
+            <button className="reservacion-payment-button" onClick={enviarFechasAPI}>
               Confirmar y pagar
             </button>
           </div>
 
           {loadingFechas && (
-            <div className="loading-animation">
+            <div className="reservacion-loading-animation">
               <Lottie 
                 animationData={animationData} 
                 style={{ height: 200, width: '100%', margin: 'auto' }} 

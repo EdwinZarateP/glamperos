@@ -18,8 +18,16 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     );
   }
 
-  const { fechaInicio, setFechaInicio, fechaFin, setFechaFin, setTotalDias,
-    setFechaInicioConfirmado, setFechaFinConfirmado, FechasSeparadas } = almacenVariables;
+  const { 
+    fechaInicio, 
+    setFechaInicio, 
+    fechaFin, 
+    setFechaFin, 
+    setTotalDias, 
+    setFechaInicioConfirmado, 
+    setFechaFinConfirmado, 
+    FechasSeparadas 
+  } = almacenVariables;
 
   const [mesesVisibles, setMesesVisibles] = useState<{ mes: number; anio: number }[]>([]);
 
@@ -61,6 +69,19 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
     }
   }, [fechaInicio, fechaFin, FechasSeparadas, setTotalDias]);
 
+  // Validación para evitar fecha de inicio posterior a fecha de fin
+  const validarFechas = () => {
+    if (fechaInicio && fechaFin && fechaInicio > fechaFin) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el rango de fechas',
+        text: 'La fecha de inicio no puede ser posterior a la fecha de fin.',
+      });
+      return false;
+    }
+    return true;
+  };
+
   const manejarClickFecha = (fecha: Date) => {
     if (esFechaReservada(fecha)) return;
 
@@ -80,6 +101,12 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       }
     } else {
       setFechaInicio(fecha);
+      setFechaFin(null);
+    }
+
+    // Validamos las fechas después de hacer la selección
+    if (!validarFechas()) {
+      setFechaInicio(null);
       setFechaFin(null);
     }
   };
@@ -208,14 +235,16 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
           </button>
           <button
             onClick={() => {
-              cerrarCalendario(); 
-              setFechaInicioConfirmado(fechaInicio);
-              setFechaFinConfirmado(fechaFin);       
+              if (validarFechas()) {
+                cerrarCalendario(); 
+                setFechaInicioConfirmado(fechaInicio);
+                setFechaFinConfirmado(fechaFin);       
+              }
             }}            
             className="CalendarioGeneral-boton-siguiente"
-            disabled={!fechaFin} 
+            disabled={!fechaInicio || !fechaFin}
           >
-            Quiero estas Fechas
+            Confirmar fechas
           </button>
         </div>
       </div>

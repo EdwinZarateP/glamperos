@@ -1,144 +1,171 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ContextoApp } from '../../Contexto/index';
-import { GiCampingTent } from 'react-icons/gi';
+import React, { useContext, useEffect } from "react";
+import { ContextoApp } from "../../Contexto/index";
+import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
-import { useParams } from "react-router-dom";
-import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
+import { useParams, Link } from "react-router-dom";
 import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
-import './estilos.css';
+import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
+import { ExtraerTarifaGlamperos } from "../../Funciones/ExtraerTarifaGlamperos";
+import "./estilos.css";
 
-// Cambié Promise<number> por number
-interface ReservarBotonProps {
-  precioPorNoche: number; 
+interface BotonReservaProps {
+  precioPorNoche: number;
   descuento: number;
 }
 
-const ReservarBoton: React.FC<ReservarBotonProps> = ({ precioPorNoche, descuento }) => {
+const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, descuento }) => {
   const almacenVariables = useContext(ContextoApp);
-  
+
   if (!almacenVariables) {
-    throw new Error('ReservarBoton debe ser usado dentro de un proveedor de ContextoApp');
+    throw new Error(
+      "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
+    );
   }
 
   const {
     fechaInicio,
+    setFechaInicio,
     fechaFin,
+    setFechaFin,
     totalDias,
-    setMostrarCalendario,
+    setTotalDias,
     mostrarCalendario,
-    fechaInicioConfirmado,
-    fechaFinConfirmado
+    setMostrarCalendario,
   } = almacenVariables;
 
-   const {fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{glampingId: string, fechaInicioUrl: string; fechaFinUrl: string; totalDiasUrl:string }>();
-   
-  // Prioridad: primero usar el contexto si existe, de lo contrario usar la URL.
-  const fechaInicioRender = fechaInicio
-  ? fechaInicio
-  : fechaInicioUrl
-  ? new Date(fechaInicioUrl)
-  : null; // Si no hay fechas en el contexto, se toma de la URL
+  let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{
+    glampingId: string;
+    fechaInicioUrl: string;
+    fechaFinUrl: string;
+    totalDiasUrl: string;
+  }>();
 
-  const fechaFinRender = fechaFin
-  ? fechaFin
-  : fechaFinUrl
-  ? new Date(fechaFinUrl)
-  : null; // Si no hay fechas en el contexto, se toma de la URL
-
-    
-  let totalDiasRender = totalDias 
-  ? totalDias
-  : totalDiasUrl
-  ? parseInt(totalDiasUrl, 10)
-  : 1;
-
-  //fechas por defecto
-  const hoy = new Date();
-  const fechaInicioPorDefecto = new Date();
-  fechaInicioPorDefecto.setDate(hoy.getDate() + 1); // Día de mañana
-  const fechaFinPorDefecto = new Date();
-  fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
-
-  const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
-
-   const [precioBase, setPrecioBase] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const actualizarUrl = (fechaInicioParam: Date, fechaFinParam: Date, totalDias: number) => {
+    const fechaInicioStr = fechaInicioParam.toISOString().split("T")[0];
+    const fechaFinStr = fechaFinParam.toISOString().split("T")[0];
+    const totalDiasStr = totalDias.toString();
+    const nuevaUrl = `/ExplorarGlamping/${glampingId}/${fechaInicioStr}/${fechaFinStr}/${totalDiasStr}`;
+    window.history.replaceState(null, "", nuevaUrl);
+  };
 
   useEffect(() => {
-    const nuevoPrecio = precioConTarifa ;
-    setPrecioBase(Math.round(nuevoPrecio));
-    setIsLoading(false);
-  }, [precioConTarifa, totalDiasRender]);
+    if (fechaInicio && fechaFin && totalDias) {
+      actualizarUrl(fechaInicio, fechaFin, totalDias);
+    }
+  }, [fechaInicio, fechaFin, totalDias]);
 
-  const precioFormateado = precioBase.toLocaleString('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  });
+  const fechaInicioRender = fechaInicio
+    ? fechaInicio
+    : fechaInicioUrl
+    ? new Date(fechaInicioUrl)
+    : null;
+
+  const fechaFinRender = fechaFin
+    ? fechaFin
+    : fechaFinUrl
+    ? new Date(fechaFinUrl)
+    : null;
+
+  let totalDiasRender = 1;
+  if (fechaInicioRender && fechaFinRender) {
+    const diferenciaMillis = fechaFinRender.getTime() - fechaInicioRender.getTime();
+    totalDiasRender = Math.ceil(diferenciaMillis / (24 * 60 * 60 * 1000));
+  } else if (totalDiasUrl) {
+    totalDiasRender = parseInt(totalDiasUrl, 10);
+  }
+
+  const hoy = new Date();
+  const fechaInicioPorDefecto = new Date();
+  fechaInicioPorDefecto.setDate(hoy.getDate() + 1);
+  const fechaFinPorDefecto = new Date();
+  fechaFinPorDefecto.setDate(hoy.getDate() + 2);
+
+  const fechaInicioReservada = fechaInicio
+    ? fechaInicio.toISOString().split("T")[0]
+    : fechaInicioUrl
+    ? new Date(fechaInicioUrl).toISOString().split("T")[0]
+    : fechaInicioPorDefecto.toISOString().split("T")[0];
+
+    let fechaFinReservada = fechaFin
+    ? fechaFin.toISOString().split('T')[0]
+    : fechaFinUrl
+    ? new Date(fechaFinUrl).toISOString().split('T')[0]
+    : fechaFinPorDefecto.toISOString().split('T')[0];
+  
+    // Comprobar si la fechaInicioReservada es mayor que la fechaFinReservada
+    if (new Date(fechaInicioReservada) > new Date(fechaFinReservada)) {
+      const nuevaFechaFin = new Date(fechaInicioReservada);
+      nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1); // Añadir un día a la fecha de inicio
+      fechaFinReservada = nuevaFechaFin.toISOString().split('T')[0]; // Actualizar fechaFinReservada
+    }
+  
+
+    const precioConTarifa = Math.round(calcularTarifaServicio(
+      precioPorNoche,
+      viernesysabadosyfestivos,
+      descuento,
+      fechaInicioReservada,
+      fechaFinReservada
+    ));
+    
+  const porcentajeGlamperos = ExtraerTarifaGlamperos(precioPorNoche);
 
   const formatearFecha = (fecha: Date | null): string => {
     if (!fecha) return "-";
-    const opciones: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
-    return new Intl.DateTimeFormat('es-ES', opciones).format(fecha);
+    const opciones: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    };
+    return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
   };
 
-  const manejarReserva = () => {
-    const mensaje = totalDiasRender > 0
-      ? `Estás reservando por ${precioFormateado}.
-        - Noches: ${totalDiasRender}
-        - Desde: ${formatearFecha(fechaInicio)}
-        - Hasta: ${formatearFecha(fechaFin)}`
-      : `Estás reservando por ${precioFormateado} por noche.`;
-    alert(mensaje);
-  };
+  const TarifaGlamperos = Math.round(
+    precioConTarifa - precioConTarifa * (1 / (1 + porcentajeGlamperos))
+  );
 
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
+  useEffect(() => {
+    if (!fechaInicio && fechaInicioUrl) setFechaInicio(new Date(fechaInicioUrl));
+    if (!fechaFin && fechaFinUrl) setFechaFin(new Date(fechaFinUrl));
+  }, [fechaInicioUrl, fechaFinUrl, setFechaInicio, setFechaFin]);
 
   return (
-    <>
-      <div className="reservar-contenedor">
+    <div className="ReservarBoton-container">
+
+      <div className="ReservarBoton-total">
+        <span>${precioConTarifa.toLocaleString()} COP</span>
         <div
-          className="reservar-total"
-          onClick={() =>{ 
-            setMostrarCalendario(true);
-          }} 
-        >
-          <div className="reservar-precio">{precioFormateado}</div>
-          {totalDiasRender > 0 ? (
-            <div className="reservar-detalles">
-              <span className="reservar-detalles-noche">
-                {totalDiasRender} {totalDiasRender === 1 ? "noche" : "noches"}
-              </span>
-              <span className="reservar-fechas">
-                {formatearFecha(fechaInicioRender)} – {formatearFecha(fechaFinRender)}
-              </span>
-            </div>
-          ) : (
-            <div className="reservar-detalles">
-              <span className="reservar-fechas">por noche</span>
-            </div>
-          )}
+        className="ReservarBoton-fechas"
+        onClick={() => {
+          setFechaInicio(fechaInicioRender);
+          setFechaFin(fechaFinRender);
+          setTotalDias(totalDiasRender);
+          setMostrarCalendario(true);
+        }}
+      >
+        <div className="ReservarBoton-fecha">
+           <span className="ReservarBoton-fecha-dias">
+              {totalDiasRender === 1 ? totalDiasRender : totalDiasRender} noche
+              {totalDiasRender > 1 ? "s" : ""}
+            </span>
+          <span>{formatearFecha(fechaInicioRender)}-{formatearFecha(fechaFinRender)}</span>
         </div>
-        <div className="reservar-boton-contenedor">
-          <button
-            className="reservar-boton"
-            onClick={manejarReserva}
-            aria-label={`Reservar por ${precioFormateado}`}
-          >
-            <GiCampingTent className="reservar-boton-icono" /> Reservar
-          </button>
-        </div>
+      </div>
+      
       </div>
 
       {mostrarCalendario && (
-        <CalendarioGeneral
-          cerrarCalendario={() => setMostrarCalendario(false)}
-        />
+        <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} />
       )}
-    </>
+            <Link
+        to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDiasRender}`}
+        className="ReservarBoton-boton"
+      >
+        <GiCampingTent className="ReservarBoton-boton-icono" />
+        Reservar
+      </Link>
+    </div>
   );
 };
 
