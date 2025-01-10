@@ -154,7 +154,9 @@
   
   .fotosCollage-contenedor {
     width: 95%;
+    margin-top: 0;
   }
+
   .fotosCollage-grid {
     display: flex;
     flex-direction: column;
