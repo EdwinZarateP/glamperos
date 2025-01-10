@@ -68,7 +68,7 @@
     rgba(255, 255, 255, 0.1) 100%
   );
   transform: skewX(-45deg); /* Inclinar el efecto */
-  animation: mirrorEffect 7s ease-in-out 7s infinite; /* Animación infinita */
+  animation: mirrorEffect 4s ease-in-out 6s infinite; /* Animación infinita */
 }
 
 /* Animación del efecto espejo */
