@@ -2,12 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { ContextoApp } from "../../Contexto/index";
 import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Visitantes from "../Visitantes";
 import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import { ExtraerTarifaGlamperos } from "../../Funciones/ExtraerTarifaGlamperos";
-import Swal from 'sweetalert2';
 import "./estilos.css";
 
 interface FormularioFechasProps {
@@ -84,6 +83,20 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
   const fechaFinPorDefecto = new Date();
   fechaFinPorDefecto.setDate(hoy.getDate() + 2); // Pasado mañana
 
+
+  const fechaInicioReservada = fechaInicio
+  ? fechaInicio.toISOString().split('T')[0]
+  : fechaInicioUrl
+  ? new Date(fechaInicioUrl).toISOString().split('T')[0]
+  : fechaInicioPorDefecto.toISOString().split('T')[0];
+
+  const fechaFinReservada = fechaFin
+  ? fechaFin.toISOString().split('T')[0]
+  : fechaFinUrl
+  ? new Date(fechaFinUrl).toISOString().split('T')[0]
+  : fechaFinPorDefecto.toISOString().split('T')[0];
+
+
   const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
   const porcentajeGlamperos = ExtraerTarifaGlamperos(precioPorNoche);
 
@@ -99,51 +112,8 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
     return new Intl.DateTimeFormat("es-ES", opciones).format(fecha);
   };
 
-  const enviarFechasAPI = async () => {
-    try {
-      const inicio = fechaInicioRender || fechaInicioPorDefecto;
-      const fin = fechaFinRender || fechaFinPorDefecto;
-  
-      // Generar array de fechas restando un día a cada una
-      const fechasArray: string[] = [];
-      let fechaActual = new Date(inicio);
-  
-      while (fechaActual < fin) {
-        fechasArray.push(new Date(fechaActual).toISOString().split("T")[0]);
-        fechaActual.setDate(fechaActual.getDate() + 1);
-      }
-  
-      const response = await fetch(`https://glamperosapi.onrender.com/glampings/${glampingId}/fechasReservadas`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fechas: fechasArray }),
-      });
-  
-      if (!response.ok) {
-        throw new Error("Error al actualizar las fechas reservadas");
-      }
-  
-      // Mostrar mensaje con SweetAlert2
-      Swal.fire({
-        title: '¡Reservado!',
-        text: `Las fechas del ${formatearFecha(inicio)} al ${formatearFecha(fin)} se han reservado correctamente.`,
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-      });
-    } catch (error) {
-      console.error("Error al enviar fechas a la API:", error);
-  
-      // Mostrar error con SweetAlert2
-      Swal.fire({
-        title: 'Error',
-        text: 'Hubo un problema al intentar reservar las fechas. Por favor, inténtalo de nuevo.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-      });
-    }
-  };
+  const TarifaGlamperos = Math.round(precioConTarifa - precioConTarifa * (1 / (1 + porcentajeGlamperos)));
+
 
   useEffect(() => {
     if (mostrarVisitantes) {
@@ -170,11 +140,6 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
             setFechaFin(fechaFinRender);
             setTotalDias(totalDiasRender);
             setMostrarCalendario(true);
-            // setFechasSeparadas( [
-            //   new Date(2025, 1, 2),
-            //   new Date(2025, 1, 3),
-            //   new Date(2025, 1, 8),
-            // ])
           }}
         >
           <div className="FormularioFechas-fecha">
@@ -197,13 +162,14 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
           </span>
         </div>
 
-        <button
+        {/* Usar Link para redirigir */}
+        <Link        
+          to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDias}`}
           className="FormularioFechas-botonReserva"
-          onClick={enviarFechasAPI}
         >
           <GiCampingTent className="FormularioFechas-botonReserva-icono" />
-          Reserva
-        </button>
+          Reservar
+        </Link>
 
         <p className="FormularioFechas-info">No se hará ningún cargo por ahora</p>
 
@@ -221,7 +187,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
           <div className="FormularioFechas-item">
             <span>Tarifa por servicio Glamperos</span>
             <span>
-              ${Math.round(precioConTarifa - precioConTarifa * (1 / (1 + porcentajeGlamperos))).toLocaleString()} COP
+              ${TarifaGlamperos.toLocaleString()} COP
             </span>
           </div>
         </div>

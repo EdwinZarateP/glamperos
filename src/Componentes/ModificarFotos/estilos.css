@@ -1,187 +1,98 @@
+/* Estilos principales del contenedor */
 .ModificarFotos-contenedor {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f4f4f9;
-  margin-bottom: 50px;
   width: 80%;
-  border-radius: 14px;
-  /* padding: 10px; */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos de la lista de imágenes */
 .ModificarFotos-lista {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-bottom: 30px;
-  justify-content: center;
+  justify-content: space-between;
 }
 
+/* Estilo de cada item en la lista */
 .ModificarFotos-item {
   position: relative;
-  cursor: pointer;
-  width: 200px; /* Ajusta según lo que necesites */
-  height: 200px; /* Ajusta según lo que necesites */
-  border: 2px solid #ddd;
-  border-radius: 10px;
+  width: calc(33.33% - 10px);
+  height: auto;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-  /* Asegúrate que el contenedor se adapte */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: grab;
 }
 
+.ModificarFotos-item:active {
+  cursor: grabbing;
+}
 
+/* Contenedor de la imagen */
 .ModificarFotos-imagen-contenedor {
+  position: relative;
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
-
-.ModificarFotos-imagen {
+.ModificarFotos-imagen-contenedor img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 8px;
 }
 
-.ModificarFotos-item:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-
+/* Botón de eliminar imagen */
 .ModificarFotos-boton-eliminar {
-
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: rgba(255, 0, 0, 0.7);
-  color: white;
+  background-color: rgba(255, 255, 255, 0.8);
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 20px;
+  color: #f44336;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.3s ease;
+  padding: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .ModificarFotos-boton-eliminar:hover {
-  background-color: rgba(255, 0, 0, 1);
-  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 1);
 }
 
+/* Estilo del área para agregar nuevas imágenes */
 .ModificarFotos-agregar {
+  margin-top: 20px;
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
-  margin-top: 30px;
-  width: 100%;
-  max-width: 600px;  
 }
 
-.ModificarFotos-agregar input[type="file"] {
-  padding: 10px;
-  background-color: #fff;
-  border: 2px solid #ddd;
-  border-radius: 5px;
+/* Texto de información */
+.ModificarFotos-contenedor p {
   font-size: 16px;
-  transition: border-color 0.2s ease;
-}
-
-.ModificarFotos-agregar input[type="file"]:hover {
-  border-color: #007bff;
-}
-
-.ModificarFotos-boton-subir,
-.ModificarFotos-boton-guardar {
-  padding: 12px 25px;
-  font-size: 16px;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.ModificarFotos-boton-subir {
-  background-color: #007bff;
-}
-
-.ModificarFotos-boton-subir:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
-
-.ModificarFotos-boton-guardar {
-  background-color: #28a745;
-}
-
-.ModificarFotos-boton-guardar:hover {
-  background-color: #218838;
-  transform: scale(1.05);
-}
-
-.ModificarFotos-contenedor h2 {
-  font-size: 24px;
   color: #333;
-  margin-bottom: 30px;
-}
-
-.ModificarFotos-lista p {
-  font-size: 16px;
-  color: #888;
   margin-top: 10px;
+  text-align: center;
 }
 
+/* Estilo cuando no hay imágenes */
+.ModificarFotos-contenedor p {
+  color: #999;
+  font-style: italic;
+}
+
+/* Cargando imágenes */
 .ModificarFotos-agregar p {
+  color: #007bff;
+  font-weight: bold;
   font-size: 14px;
-  color: #666;
-}
-
-.ModificarFotos-lista {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  width: 100%;
-
-  margin-bottom: 30px;
-}
-
-.ModificarFotos-contenedor .swal2-popup {
-  font-family: 'Arial', sans-serif;
-  font-size: 16px;
-  padding: 25px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.ModificarFotos-contenedor .swal2-confirm {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.ModificarFotos-contenedor .swal2-confirm:hover {
-  background-color: #218838;
-}
-
-.ModificarFotos-botonCargar{
-  cursor: pointer;
+  margin-top: 10px;
 }

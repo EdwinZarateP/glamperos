@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { AiTwotoneHeart } from "react-icons/ai";
 import { BsBalloonHeartFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
@@ -186,96 +186,112 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   };
 
 
+// Nuevo manejador de redirección
+const handleRedireccion = (
+  e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  url: string
+) => {
+  e.preventDefault();
+  if (window.innerWidth > 600) {
+    // Abrir en una nueva pestaña si la pantalla es mayor a 600px
+    window.open(url, "_blank");
+  } else {
+    // Redirección normal
+    window.location.href = url;
+  }
+};
   
-
-
-  return (
-    <div className="tarjeta">
-      <Link
-        to={`/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`}
-        className="tarjeta-link"
+return (
+  <div className="tarjeta">
+    <a
+      href={`/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`}
+      className="tarjeta-link"
+      onClick={(e) =>
+        handleRedireccion(
+          e,
+          `/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`
+        )
+      }
+    >
+      <div
+        className="tarjeta-imagen-container"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div
-          className="tarjeta-imagen-container"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
+          className="carrusel"
+          style={{
+            transform: `translateX(-${imagenActual * 100}%)`,
+          }}
         >
-          <div
-            className="carrusel"
-            style={{
-              transform: `translateX(-${imagenActual * 100}%)`,
-            }}
-          >
-            {imagenes.map((url, index) => (
-              <img
-                key={index}
-                src={url}
-                alt={`Glamping ${nombreGlamping}`}
-                className="tarjeta-imagen visible"
-              />
-            ))}
-          </div>
-
-          {/* Aquí agregamos el ícono de mascota, condicionado a Acepta_Mascotas */}
-          {Acepta_Mascotas && (
-            <MdOutlinePets className="tarjeta-icono-mascota" />
-          )}
-
-          <div className="puntos">
-            {puntosVisibles.map((_, index) => (
-              <span
-                key={start + index}
-                className={`punto ${start + index === imagenActual ? "activo" : ""}`}
-                onClick={() => setImagenActual(start + index)}
-              />
-            ))}
-          </div>
+          {imagenes.map((url, index) => (
+            <img
+              key={index}
+              src={url}
+              alt={`Glamping ${nombreGlamping}`}
+              className="tarjeta-imagen visible"
+            />
+          ))}
         </div>
-      </Link>
-      <div
-        className="tarjeta-favorito"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleFavoritoChange();
-        }}
-      >
-        {esFavorito ? (
-          <BsBalloonHeartFill className="corazon activo" />
-        ) : (
-          <AiTwotoneHeart className="corazon" />
+
+        {/* Icono de mascota */}
+        {Acepta_Mascotas && (
+          <MdOutlinePets className="tarjeta-icono-mascota" />
         )}
-      </div>
 
-      <div
-        className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}
-        onClick={anteriorImagen}
-      >
-        <MdOutlineKeyboardArrowLeft />
-      </div>
-      <div
-        className={`flecha derecha ${
-          imagenActual === imagenes.length - 1 ? "oculta" : ""
-        }`}
-        onClick={siguienteImagen}
-      >
-        <MdOutlineKeyboardArrowRight />
-      </div>
-
-      <div className="tarjeta-info">
-        <div className="tarjeta-contenido">
-          <span className="tarjeta-nombre">
-            {nombreGlamping.toLowerCase().replace(/\b\w/, (c) => c.toUpperCase())}
-           </span>
-          <div className="tarjeta-calificacion">
-            <FaStar className="tarjeta-estrella" />
-            <span>{calificacion.toFixed(1)}</span>
-          </div>
+        <div className="puntos">
+          {puntosVisibles.map((_, index) => (
+            <span
+              key={start + index}
+              className={`punto ${start + index === imagenActual ? "activo" : ""}`}
+              onClick={() => setImagenActual(start + index)}
+            />
+          ))}
         </div>
-        <p className="tarjeta-ciudad">{ciudad}</p>
-        {renderPrecio()}
       </div>
+    </a>
+    <div
+      className="tarjeta-favorito"
+      onClick={(e) => {
+        e.stopPropagation();
+        handleFavoritoChange();
+      }}
+    >
+      {esFavorito ? (
+        <BsBalloonHeartFill className="corazon activo" />
+      ) : (
+        <AiTwotoneHeart className="corazon" />
+      )}
     </div>
-  );
+
+    <div
+      className={`flecha izquierda ${imagenActual === 0 ? "oculta" : ""}`}
+      onClick={anteriorImagen}
+    >
+      <MdOutlineKeyboardArrowLeft />
+    </div>
+    <div
+      className={`flecha derecha ${imagenActual === imagenes.length - 1 ? "oculta" : ""}`}
+      onClick={siguienteImagen}
+    >
+      <MdOutlineKeyboardArrowRight />
+    </div>
+
+    <div className="tarjeta-info">
+      <div className="tarjeta-contenido">
+        <span className="tarjeta-nombre">
+          {nombreGlamping.toLowerCase().replace(/\b\w/, (c) => c.toUpperCase())}
+        </span>
+        <div className="tarjeta-calificacion">
+          <FaStar className="tarjeta-estrella" />
+          <span>{calificacion.toFixed(1)}</span>
+        </div>
+      </div>
+      <p className="tarjeta-ciudad">{ciudad}</p>
+      {renderPrecio()}
+    </div>
+  </div>
+);
 };
 
 export default Tarjeta;

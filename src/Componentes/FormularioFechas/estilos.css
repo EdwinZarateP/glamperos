@@ -78,12 +78,14 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  text-decoration: none;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .FormularioFechas-botonReserva:hover {
   background-color: #218838;
   transform: scale(1.05);
+
 }
 
 .FormularioFechas-botonReserva-icono {

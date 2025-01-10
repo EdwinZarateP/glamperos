@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
+import Swal from "sweetalert2";  // Importar SweetAlert2
 
 interface CalendarioProps {
   nombreGlamping: string;
@@ -68,9 +69,30 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
       setFechaInicio(fecha);
       setFechaFin(null);
     } else if (fechaInicio && !fechaFin && fecha >= fechaInicio) {
-      setFechaFin(fecha);
-      setFechaInicioConfirmado(fechaInicio);
-      setFechaFinConfirmado(fecha);
+      // Comprobar si hay fechas reservadas dentro del rango
+      const fechasEnRango = [];
+      let dia = fechaInicio;
+      while (dia <= fecha) {
+        if (FechasSeparadas.some(
+            (reserva) => reserva.toDateString() === dia.toDateString()
+          )) {
+          fechasEnRango.push(dia);
+        }
+        dia = new Date(dia.getTime() + (1000 * 60 * 60 * 24)); // Avanzar un día
+      }
+
+      if (fechasEnRango.length > 0) {
+        Swal.fire({
+          title: 'Fechas reservadas',
+          text: `El rango seleccionado tiene fechas reservadas: ${fechasEnRango.map(d => formatearFecha(d)).join(", ")}`,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        setFechaFin(fecha);
+        setFechaInicioConfirmado(fechaInicio);
+        setFechaFinConfirmado(fecha);
+      }
     } else {
       setFechaInicio(fecha);
       setFechaFin(null);
@@ -232,6 +254,5 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
     </div>
   );
 };
-
 
 export default Calendario;

@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import Swal from "sweetalert2";  // Importamos SweetAlert2
 import "./estilos.css";
 import { ContextoApp } from "../../Contexto/index";
 
@@ -67,7 +68,16 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       setFechaInicio(fecha);
       setFechaFin(null);
     } else if (fechaInicio && !fechaFin && fecha >= fechaInicio) {
-      setFechaFin(fecha);
+      if (verificarRango(fechaInicio, fecha)) {
+        setFechaFin(fecha);
+      } else {
+        // Usamos Swal para mostrar el mensaje
+        Swal.fire({
+          icon: 'error',
+          title: 'Rango de fechas no disponible',
+          text: 'El rango de fechas seleccionado incluye fechas reservadas. Por favor, elige otro rango.',
+        });
+      }
     } else {
       setFechaInicio(fecha);
       setFechaFin(null);
@@ -100,26 +110,23 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       return true;
     }
 
-    if (esFechaReservada(fecha)) {
-      const fechaAnterior = new Date(fecha);
-      fechaAnterior.setDate(fecha.getDate() - 1); 
-
-      if (esFechaReservada(fechaAnterior)) {
-        return true;
-      }
-    }
-
-    if (fechaInicio) {
-      const fechaPosterior = FechasSeparadas
-        .filter((fechaSeparada) => fechaSeparada > fechaInicio) 
-        .sort((a, b) => a.getTime() - b.getTime())[0];
-
-      if (fechaPosterior && fecha >= fechaPosterior) {
-        return true;
-      }
-    }
-
     return false;
+  };
+
+  const verificarRango = (inicio: Date, fin: Date): boolean => {
+    const diferenciaTiempo = fin.getTime() - inicio.getTime();
+    const totalDiasRango = Math.ceil(diferenciaTiempo / (1000 * 60 * 60 * 24));
+
+    for (let i = 0; i <= totalDiasRango; i++) {
+      const dia = new Date(inicio.getTime() + i * (1000 * 60 * 60 * 24));
+      if (FechasSeparadas.some(
+        (fechaReservada) => fechaReservada.toDateString() === dia.toDateString()
+      )) {
+        return false; // Hay una fecha reservada dentro del rango
+      }
+    }
+
+    return true; // El rango está libre de fechas reservadas
   };
 
   const renderizarEncabezadoDias = () => {
@@ -203,8 +210,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
             onClick={() => {
               cerrarCalendario(); 
               setFechaInicioConfirmado(fechaInicio);
-              setFechaFinConfirmado(fechaFin);  
-              console.log(FechasSeparadas);          
+              setFechaFinConfirmado(fechaFin);       
             }}            
             className="CalendarioGeneral-boton-siguiente"
             disabled={!fechaFin} 

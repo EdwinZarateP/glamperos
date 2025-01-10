@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./estilos.css";
@@ -10,6 +10,7 @@ const ModificarFotos: React.FC = () => {
   const [imagenes, setImagenes] = useState<string[]>([]);
   const [imagenesArchivo, setImagenesArchivo] = useState<File[]>([]);
   const [cargando, setCargando] = useState(false);
+  const inputFileRef = useRef<HTMLInputElement | null>(null); // Ref para el input de tipo file
 
   useEffect(() => {
     const fetchImagenes = async () => {
@@ -150,6 +151,11 @@ const ModificarFotos: React.FC = () => {
     }
   };
 
+  // Función para abrir el input file cuando se hace clic en el botón
+  const seleccionarImagenes = () => {
+    inputFileRef.current?.click();
+  };
+
   return (
     <div className="ModificarFotos-contenedor">
       {imagenes.length === 0 ? (
@@ -180,10 +186,16 @@ const ModificarFotos: React.FC = () => {
       )}
       <p>{`Imágenes actuales: ${imagenes.length} / ${MAX_IMAGENES}`}</p>
       <div className="ModificarFotos-agregar">
+        <button className="ModificarFotos-boton" onClick={seleccionarImagenes}>
+          Seleccionar imágenes
+        </button>
+        {/* El input file está oculto */}
         <input
+          ref={inputFileRef}
           type="file"
           accept="image/*"
           multiple
+          style={{ display: "none" }} // Oculta el input file
           onChange={(e) => setImagenesArchivo(Array.from(e.target.files || []))}
         />
         {cargando && <p>Estamos cargando tus imágenes...</p>}
