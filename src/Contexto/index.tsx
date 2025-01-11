@@ -40,6 +40,8 @@ interface ContextProps {
   //Variables boolean
   siono: boolean;
   setSiono: Dispatch<SetStateAction<boolean>>;
+  verVideo: boolean;
+  setVerVideo: Dispatch<SetStateAction<boolean>>;
 
   // Variables de tipo string
   nombreGlamping: string;
@@ -248,6 +250,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);  // Nueva variable para cantidad de huéspedes
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
   const [siono, setSiono] = useState<boolean>(false);   
+  const [verVideo, setVerVideo] = useState<boolean>(false); 
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
   const [imagenesCargadas, setImagenesCargadas] = useState<File[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
@@ -332,7 +335,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     logueado, setLogueado,
     nombreUsuario, setNombreUsuario,
     correoUsuario, setCorreoUsuario,
-    siono, setSiono,    
+    siono, setSiono, 
+    verVideo, setVerVideo,   
     nombreGlamping, setNombreGlamping,
     descripcionGlamping, setDescripcionGlamping,
     ciudad_departamento, setCiudad_departamento,

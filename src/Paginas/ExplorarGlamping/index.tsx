@@ -18,6 +18,8 @@ import Lottie from 'lottie-react';
 import animationData from "../../Imagenes/AnimationPuntos.json";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import VerVideo from "../../Componentes/Video/index";
+import { MdOndemandVideo } from "react-icons/md"; // Importación de iconos
 import './estilos.css';
 
 interface Glamping {
@@ -33,6 +35,7 @@ interface Glamping {
   imagenes: string[];
   ubicacion: Ubicacion | null;
   amenidadesGlobal: string[];
+  video_youtube: string;
 }
 
 //para ubicacion
@@ -55,8 +58,7 @@ function ExplorarGlamping() {
   if (!almacenVariables) {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
-
-  const { setTarifaServicio, setFechasSeparadas } = almacenVariables;
+  const { setTarifaServicio, setFechasSeparadas, setVerVideo } = almacenVariables;
 
   // Establece la tarifa de servicio predeterminada
   useEffect(() => {
@@ -99,6 +101,7 @@ function ExplorarGlamping() {
             ? { lat: datos.ubicacion.lat, lng: datos.ubicacion.lng }
             : null,
           amenidadesGlobal: datos.amenidadesGlobal || [],
+          video_youtube: datos.video_youtube || "No disponible", 
         });
   
         // Convierte las fechas de string a Date y asegura que no haya problemas de husos horarios
@@ -152,6 +155,11 @@ function ExplorarGlamping() {
     };
   }, [navigate]);  
 
+  const handleVideoClick = () => {
+    // Activar el estado setVerVideo a true
+    setVerVideo(true);
+  };
+
   return (
     <div className='contenedor-principal-exploracion'>
       {informacionGlamping ? (
@@ -167,7 +175,10 @@ function ExplorarGlamping() {
             </div>
             <div className="imagenes-exploradas-container">
               {informacionGlamping?.imagenes && informacionGlamping?.imagenes.length > 0 ? (
-                <ImagenesExploradas imagenes={informacionGlamping?.imagenes} />
+                <ImagenesExploradas 
+                  imagenes={informacionGlamping?.imagenes}
+                  video_youtube={informacionGlamping?.video_youtube}
+                  Acepta_Mascotas={informacionGlamping?.Acepta_Mascotas}  />
               ) : (
                 <div className="lottie-container">
                   <Lottie 
@@ -181,10 +192,23 @@ function ExplorarGlamping() {
               {informacionGlamping?.imagenes && informacionGlamping?.imagenes.length > 0 ? (
                 <ImgExploradasIndividual imagenes={informacionGlamping?.imagenes} />
               ) : null}
+
+              {informacionGlamping && informacionGlamping.video_youtube && informacionGlamping.video_youtube.trim() !== "No disponible" && (
+              <button
+                className="ImgExploradas-iconoVideo-peque"
+                onClick={handleVideoClick}
+              >
+                <MdOndemandVideo title="Mostrar Video" />
+                Video
+              </button>
+               )}
+              <VerVideo urlVideo={informacionGlamping.video_youtube} />
+
             </div>
             <div className="nombre-glamping-container">
-              <NombreGlamping nombreGlamping={`${informacionGlamping?.nombreGlamping}  - ${informacionGlamping?.ciudad_departamento?.split(" - ")[0] || ''}`} />
+              <NombreGlamping nombreGlamping={`${informacionGlamping?.nombreGlamping}  - ${informacionGlamping?.ciudad_departamento?.split(" - ")[0] || ''}`} />              
             </div>
+
             <div className='contenedor-descripcion-glamping'>
               <div className='contenedor-descripcion-glamping-izq'>
                 <DescripcionGlamping

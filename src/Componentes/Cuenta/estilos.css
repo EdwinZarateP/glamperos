@@ -73,7 +73,7 @@
   font-size: 16px;
   text-decoration: underline;
   transition: color 0.3s ease;
-  margin-top: 40px; /* Separación desde los elementos superiores */
+  margin-top: 40px; 
   display: inline-block;
   padding: 10px 20px; /* Agregado un poco de padding */
   text-align: right;
@@ -103,7 +103,6 @@
 
 @media (max-width: 768px) {
   .Cuenta-contenedor {
-    margin-top: 160px;
     width: 95%;
 
   }
@@ -135,5 +134,12 @@
   .icono-notificaciones:before,
   .icono-glampings:before {
     font-size: 24px; /* Aumentar el tamaño del icono para pantallas pequeñas */
+  }
+}
+
+/* Media Query para pantallas menores a 600px */
+@media (max-width: 600px) {
+  .Cuenta-tarjeta:nth-child(5) {
+    display: none; /* Ocultar la tarjeta de "Editar información de tus glamping" */
   }
 }
