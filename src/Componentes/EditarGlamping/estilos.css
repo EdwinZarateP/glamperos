@@ -12,12 +12,10 @@
   }
   
   .EditarGlamping-lista {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos dentro del contenedor */
+    gap: 10px; /* Espaciado entre la etiqueta y el select */
     margin-bottom: 20px;
-  }
-  
-  .EditarGlamping-label {
-    font-size: 16px;
-    margin-right: 10px;
   }
   
   .EditarGlamping-select {
@@ -25,8 +23,17 @@
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    max-width: 100%; 
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
   }
   
+  
+  .EditarGlamping-label {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+
   .EditarGlamping-boton {
     padding: 10px 20px;
     font-size: 16px;

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './estilos.css';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const ModificarGlamping: React.FC = () => {
   const { glampingId } = useParams<{ glampingId: string }>();
-  const navigate = useNavigate(); // Usamos useNavigate para redirigir
   const [nombreGlamping, setNombreGlamping] = useState('');
   const [tipoGlamping, setTipoGlamping] = useState('');
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);
@@ -91,7 +90,7 @@ const ModificarGlamping: React.FC = () => {
     formData.append("amenidadesGlobal", amenidadesGlobal.join(","));
 
     try {
-      const response = await fetch(`https://glamperosapi.onrender.com/glampings/${glampingId}`, {
+      const response = await fetch(`https://glamperosapi.onrender.com/glampings/Datos/${glampingId}`, {
         method: 'PUT',
         body: formData,
       });
@@ -100,15 +99,21 @@ const ModificarGlamping: React.FC = () => {
         throw new Error('Error al actualizar el glamping');
       }
 
-      // SweetAlert para éxito
-      Swal.fire({
-        icon: 'success',
-        title: '¡Actualización exitosa!',
-        text: 'El Glamping se ha actualizado correctamente.',
-      });
+    Swal.fire({
+          title: "Información actualizada",
+          text: "Información actualizada con los datos suministrados.",
+          icon: "success",
+          confirmButtonText: "Aceptar",
+        }).then(() => {
+          // Forzar desplazamiento al inicio antes de recargar
+          window.scrollTo({
+            top: 0,
+            behavior: "auto", // Asegura el desplazamiento inmediato
+          });
+           // Recargar la página
+      window.location.reload();
+    }); 
 
-      // Redirigir a "/EditarFotos" después de una actualización exitosa
-      navigate("/GestionarCuenta");
     } catch (error) {
       console.error('Error:', error);
     }
@@ -175,7 +180,10 @@ const ModificarGlamping: React.FC = () => {
             id="Acepta_Mascotas"
             className="ModificarGlamping-input"
             value={Acepta_Mascotas ? 'true' : 'false'}
-            onChange={(e) => setAcepta_Mascotas(e.target.value === 'true')}
+            onChange={(e) => {
+              const newValue = e.target.value === 'true';
+              setAcepta_Mascotas(newValue);
+            }}
           >
             <option value="true">Sí</option>
             <option value="false">No</option>

@@ -13,12 +13,13 @@ import Comentarios from '../../Componentes/Comentarios/index';
 import ReservarBoton from '../../Componentes/BotonReservar/index';
 import { ContextoApp } from '../../Contexto/index';
 import ManejoErrores from '../../Funciones/ManejoErrores';
-import { obtenerGlampingPorId } from "../../Funciones/obtenerGlamping"; //para importar la funcion que obtiene de la api la info glamping
+import { obtenerGlampingPorId } from "../../Funciones/obtenerGlamping";
 import Lottie from 'lottie-react';
 import animationData from "../../Imagenes/AnimationPuntos.json";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import VerVideo from "../../Componentes/Video/index";
+import PerfilUsuario from "../../Componentes/PerfilUsuario/index";
 import { MdOndemandVideo } from "react-icons/md"; // Importación de iconos
 import './estilos.css';
 
@@ -36,6 +37,7 @@ interface Glamping {
   ubicacion: Ubicacion | null;
   amenidadesGlobal: string[];
   video_youtube: string;
+  propietario_id: string;
 }
 
 //para ubicacion
@@ -102,6 +104,7 @@ function ExplorarGlamping() {
             : null,
           amenidadesGlobal: datos.amenidadesGlobal || [],
           video_youtube: datos.video_youtube || "No disponible", 
+          propietario_id: datos.propietario_id || "No disponible",           
         });
   
         // Convierte las fechas de string a Date y asegura que no haya problemas de husos horarios
@@ -236,10 +239,15 @@ function ExplorarGlamping() {
               </div>
             </div>
   
+            <Comentarios glampingId={glampingId || ''} />
             <ManejoErrores>        
               <MapaGlampings lat={informacionGlamping?.ubicacion?.lat ?? 0 }  lng={informacionGlamping?.ubicacion?.lng ?? 0} />          
             </ManejoErrores>
-            <Comentarios glampingId={glampingId || ''} />
+            {informacionGlamping && informacionGlamping.propietario_id ? (
+            <PerfilUsuario propietario_id={informacionGlamping.propietario_id} />
+                ) : (
+              <p>El propietario no está disponible</p>
+                )}
             <ReservarBoton precioPorNoche={informacionGlamping?.precioEstandar || 0}
                   descuento={informacionGlamping?.descuento || 0} />
 

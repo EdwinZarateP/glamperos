@@ -1,0 +1,179 @@
+/* Contenedor principal del chat */
+.MensajeriaInternaContenedor {
+  width: 100%;
+  max-width: 1200px;
+  height: 85%;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-top: 0; /* Eliminar margin-top para pantallas menores a 600px */
+}
+
+/* Título de la sección de mensajería */
+.MensajeriaInternaTitulo {
+  font-size: 1.6rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Contenedor de los mensajes */
+.MensajeriaInternaMensajes {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espaciado entre mensajes */
+}
+
+/* Estilo base para todos los mensajes */
+.MensajeriaInternaMensaje {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 10px;
+  word-wrap: break-word;
+  font-size: 1rem;
+  line-height: 1.4;
+  display: inline-block;
+  clear: both;
+}
+
+/* Estilo para los mensajes enviados (de usuario actual) */
+.MensajeriaInternaMensajeEnviado {
+  background-color: #2F6B3E;
+  color: white;
+  align-self: flex-end; /* Alinea los mensajes enviados a la derecha */
+  border-radius: 10px 10px 0 10px; /* Solo la parte inferior izquierda recta */
+}
+
+/* Estilo para los mensajes recibidos */
+.MensajeriaInternaMensajeRecibido {
+  background-color: #e0e0e0;
+  color: black;
+  align-self: flex-start; /* Alinea los mensajes recibidos a la izquierda */
+  border-radius: 10px 10px 10px 0; /* Solo la parte inferior derecha recta */
+}
+
+/* Fecha de envío del mensaje */
+.MensajeriaInternaFecha {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: right;
+  margin-top: 5px;
+}
+
+/* Contenedor del campo de entrada de texto */
+.MensajeriaInternaInputContenedor {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
+}
+
+/* Estilo del input de mensaje */
+.MensajeriaInternaInput {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  margin-right: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del botón de envío */
+.MensajeriaInternaBoton {
+  padding: 12px 15px;
+  background-color: #2F6B3E;
+  color: white;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efecto hover en el botón */
+.MensajeriaInternaBoton:hover {
+  background-color: #3d9954;
+}
+
+/* Estilo del botón cuando está deshabilitado */
+.MensajeriaInternaBoton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Mensajes al cargar (loading) */
+.MensajeriaInternaLoading {
+  text-align: center;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+/* Estilos responsivos */
+
+/* Pantallas pequeñas (menores a 600px) */
+@media screen and (max-width: 600px) {
+  .MensajeriaInternaContenedor {
+    height: 100%;
+    margin-top: 0; /* Remueve el margen superior */
+    padding: 10px;
+  }
+
+  .MensajeriaInternaTitulo {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .MensajeriaInternaMensaje {
+    max-width: 90%; /* Aumenta el tamaño de los mensajes */
+    font-size: 0.9rem;
+  }
+
+  .MensajeriaInternaInput {
+    font-size: 0.9rem;
+  }
+
+  .MensajeriaInternaBoton {
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
+
+  .MensajeriaInternaBoton:disabled {
+    font-size: 1rem;
+  }
+}
+
+/* Pantallas mayores a 600px */
+@media screen and (min-width: 601px) {
+  .MensajeriaInternaContenedor {
+    margin-top: 70px; /* Mantener el margen superior en pantallas más grandes */
+    height: 85%;
+    padding: 20px;
+  }
+
+  .MensajeriaInternaMensaje {
+    max-width: 70%; /* Mantener el tamaño de los mensajes */
+    font-size: 1rem;
+  }
+
+  .MensajeriaInternaInput {
+    font-size: 1rem;
+  }
+
+  .MensajeriaInternaBoton {
+    font-size: 1.2rem;
+    padding: 12px 15px;
+  }
+}

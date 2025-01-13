@@ -4,7 +4,7 @@ import "./estilos.css";
 
 function EdicionGlamping() {
   return (
-    <div className='EvaluacionFinal-contenedor'>
+    <div className='EdicionGlamping-contenedor'>
         <HeaderIcono descripcion="Glamperos" />
         <EditarGlamping/>
     </div>

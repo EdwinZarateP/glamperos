@@ -39,7 +39,6 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
     setFechaInicioConfirmado,
     setFechaFinConfirmado,
     fechaFinConfirmado,
-    // setFechasSeparadas
   } = almacenVariables;
 
   let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{ glampingId: string; fechaInicioUrl: string; fechaFinUrl: string; totalDiasUrl: string }>();

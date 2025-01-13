@@ -39,7 +39,7 @@ const EditarGlamping = () => {
   // Función para manejar la selección del glamping y redirigir
   const manejarSeleccion = () => {
     if (selectedGlamping) {
-      navigate(`/Modificacion/${selectedGlamping}`); // Aquí pasamos el _id del glamping
+      navigate(`/Modificacion/${selectedGlamping}`); 
     }
   };
 
