@@ -38,6 +38,8 @@ const Conversaciones: React.FC = () => {
   }, [idUsuarioReceptor, idReceptor, setIdUsuarioReceptor]);
 
   useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
     if (idEmisor && idReceptorURL) {
       const obtenerMensajes = async () => {
         try {
@@ -47,16 +49,23 @@ const Conversaciones: React.FC = () => {
           if (data.mensajes) {
             const mensajesOrdenados = data.mensajes.sort((a: Message, b: Message) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
             setMensajes(mensajesOrdenados);
-          } else {
-            console.warn('No hay mensajes entre los usuarios.');
           }
         } catch (error) {
           console.error('Error al obtener los mensajes:', error);
         }
       };
 
+      // Llama a la función inicialmente
       obtenerMensajes();
+
+      // Configura un intervalo para actualizar los mensajes cada 3 segundos
+      intervalId = setInterval(obtenerMensajes, 3000);
     }
+
+    // Limpia el intervalo al desmontar el componente
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [idEmisor, idReceptorURL]);
 
   const enviarMensaje = async () => {
