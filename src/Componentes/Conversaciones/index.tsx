@@ -59,7 +59,7 @@ const Conversaciones: React.FC = () => {
       obtenerMensajes();
 
       // Configura un intervalo para actualizar los mensajes cada 3 segundos
-      intervalId = setInterval(obtenerMensajes, 3000);
+      intervalId = setInterval(obtenerMensajes, 1000);
     }
 
     // Limpia el intervalo al desmontar el componente
