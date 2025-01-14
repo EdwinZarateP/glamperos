@@ -1,0 +1,38 @@
+.ListadoConversacionesContenedor {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ListadoConversacionesTitulo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .ListadoConversacionesLista {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .ListadoConversacionesItem {
+    padding: 10px;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .ListadoConversacionesItem:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .ListadoConversacionesMensaje {
+    font-size: 18px;
+    color: #777;
+    text-align: center;
+  }
+  

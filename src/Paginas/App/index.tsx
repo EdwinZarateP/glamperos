@@ -35,7 +35,7 @@ const App: React.FC = () => {
         <Route path="/EdicionGlamping/:glampingId" element={<EdicionGlamping />} />
         <Route path="/EdicionPerfil/" element={<EdicionPerfil />} />
         <Route path="/Reservar/:glampingId/:fechaInicioReservada/:fechaFinReservada/:precioConTarifa/:TarifaGlamperos/:totalDias" element={<Reservar />} />
-        <Route path="/Mensajes/:receptor_id" element={<Mensajes />} />        
+        <Route path="/Mensajes/:idReceptor" element={<Mensajes />} />        
         <Route path="*" element={<NoEncontrado />} />
       </Routes>
     </Router>

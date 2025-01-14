@@ -1,0 +1,90 @@
+/* Contenedor principal de la conversación */
+.ConversacionesContenedor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Historial de mensajes */
+.ConversacionesHistorial {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  border-bottom: 1px solid #ddd;
+  flex-grow: 1;
+}
+
+/* Estilos de los mensajes */
+.ConversacionesMensaje {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+}
+
+.ConversacionesEmisor {
+  background-color: #d1ffd1;
+  align-self: flex-end;
+}
+
+.ConversacionesReceptor {
+  background-color: #e6e6ff;
+  align-self: flex-start;
+}
+
+/* Estilo del texto de los mensajes */
+.ConversacionesTexto {
+  display: block;
+  font-size: 14px;
+  color: #333;
+}
+
+.ConversacionesTimestamp {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Contenedor para el input y el botón */
+.ConversacionesInputContenedor {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+/* Estilo del input */
+.ConversacionesInput {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  outline: none;
+}
+
+/* Estilo del botón de enviar */
+.ConversacionesBotonEnviar {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ConversacionesBotonEnviar:hover {
+  background-color: #45a049;
+}
+
+.ConversacionesBotonEnviar:active {
+  background-color: #3e8e41;
+}

@@ -1,7 +1,9 @@
-.Mensajes-contenedor{
+/* Estilos generales para el contenedor de mensajes */
+.Mensajes-contenedor {
+  height: 100vh;
     display: flex;
-    width: 100%;
-    height: 100vh;
     justify-content: center;
     align-items: center;
-}
+  }
+
+ 
