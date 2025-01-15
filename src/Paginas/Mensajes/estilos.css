@@ -1,6 +1,8 @@
 /* Estilos generales para el contenedor de mensajes */
 .Mensajes-contenedor {
-  height: 100vh;
+  margin-top: 70px;
+    height: calc(100vh - 70px);
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;

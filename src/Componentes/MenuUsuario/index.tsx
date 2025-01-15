@@ -6,6 +6,7 @@ import "./estilos.css";
 
 const MenuUsuario: React.FC = () => {
   const navigate = useNavigate();
+  const idEmisor = Cookies.get("idUsuario");
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -62,7 +63,7 @@ const MenuUsuario: React.FC = () => {
       <ul className="MenuUsuario-lista">
         {nombreUsuarioCookie && (
           <>
-            <li className="MenuUsuario-opcion" onClick={() => navigate("/mensajes")}>
+            <li className="MenuUsuario-opcion" onClick={() => navigate(`/Mensajes/${idEmisor}`)}>
               Mensajes
             </li>
             <li className="MenuUsuario-opcion" onClick={() =>{navigate("/ListaDeseos"), setMostrarMenuUsuarios(false)}}>

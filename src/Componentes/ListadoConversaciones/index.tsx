@@ -25,15 +25,38 @@ const ListadoConversaciones: React.FC = () => {
     }
   }, [idEmisor]);
 
-  // Función para obtener las conversaciones
+  // Función para obtener las conversaciones y los datos de los receptores
   const obtenerConversaciones = async (emisor: string) => {
     try {
       const response = await axios.get(
         `https://glamperosapi.onrender.com/mensajes/conversaciones/${emisor}`
       );
-      setConversaciones(response.data.conversaciones);
+
+      const conversacionesConDatos = await Promise.all(
+        response.data.conversaciones.map(async (conversacion: any) => {
+          const receptorId = conversacion.receptor;
+          const datosReceptor = await obtenerDatosReceptor(receptorId);
+          return { ...conversacion, ...datosReceptor };
+        })
+      );
+
+      setConversaciones(conversacionesConDatos);
     } catch (error) {
       console.error("Error al obtener conversaciones:", error);
+    }
+  };
+
+  // Función para obtener los datos del receptor por su ID
+  const obtenerDatosReceptor = async (receptorId: string): Promise<{ nombre: string; foto: string | null }> => {
+    try {
+      const response = await axios.get(
+        `https://glamperosapi.onrender.com/usuarios/${receptorId}`
+      );
+      const { nombre, foto } = response.data;
+      return { nombre, foto: foto || null };
+    } catch (error) {
+      console.error(`Error al obtener los datos del receptor con ID ${receptorId}:`, error);
+      return { nombre: "Usuario desconocido", foto: null };
     }
   };
 
@@ -53,7 +76,20 @@ const ListadoConversaciones: React.FC = () => {
               className="ListadoConversacionesItem"
               onClick={() => seleccionarReceptor(conversacion.receptor)}
             >
-              Conversación con {conversacion.receptor}
+              <div className="ListadoConversacionesAvatar">
+                {conversacion.foto ? (
+                  <img
+                    src={conversacion.foto}
+                    alt={`Avatar de ${conversacion.nombre}`}
+                    className="AvatarImagen"
+                  />
+                ) : (
+                  <div className="AvatarTexto">
+                    {conversacion.nombre.charAt(0).toUpperCase()}
+                  </div>
+                )}
+              </div>
+              <span>{conversacion.nombre}</span>
             </li>
           ))}
         </ul>

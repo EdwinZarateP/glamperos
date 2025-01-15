@@ -8,8 +8,7 @@ function Mensajes() {
     <div className='Mensajes-contenedor'>
       <HeaderIcono descripcion="Glamperos" />   
       <ListadoConversaciones/>   
-      <h1 className="Mensajes-titulo">parla</h1>
-        <Conversaciones/>   
+      <Conversaciones/>   
     </div>
   );
 }
