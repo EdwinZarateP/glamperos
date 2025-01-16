@@ -51,7 +51,7 @@ const ListadoConversaciones: React.FC = () => {
       try {
         const respuesta = await fetch(`https://glamperosapi.onrender.com/mensajes/conversaciones/${idEmisor}`);
         if (!respuesta.ok) {
-          throw new Error("Error al obtener las conversaciones");
+          throw new Error("No tienes conversaciones");
         }
         const data: RespuestaConversaciones = await respuesta.json();
 
