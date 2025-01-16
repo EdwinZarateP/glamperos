@@ -91,7 +91,7 @@ const ConversacionesMoviles: React.FC = () => {
       };
 
       try {
-        await fetch('https://glamperosapi.onrender.com/mensajes/enviar_mensajes', {
+        await fetch('https://glamperosapi.onrender.com/mensajes/enviar_mensaje', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(nuevoMensaje),
