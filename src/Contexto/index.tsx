@@ -36,6 +36,10 @@ interface ContextProps {
   setLogueado: (estado: boolean) => void;
   nombreUsuario: string;
   setNombreUsuario: Dispatch<SetStateAction<string>>;
+  nombreUsuarioChat: string;
+  setNombreUsuarioChat: Dispatch<SetStateAction<string>>;
+  fotoUsuarioChat: string;
+  setFotoUsuarioChat: Dispatch<SetStateAction<string>>;
   correoUsuario: string;
   setCorreoUsuario: Dispatch<SetStateAction<string>>;
 
@@ -44,6 +48,8 @@ interface ContextProps {
   setSiono: Dispatch<SetStateAction<boolean>>;
   verVideo: boolean;
   setVerVideo: Dispatch<SetStateAction<boolean>>;
+  // activarChat: boolean;
+  // setActivarChat: Dispatch<SetStateAction<boolean>>;
 
   // Variables de tipo string
   nombreGlamping: string;
@@ -229,6 +235,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [idUsuario, setIdUsuario] = useState<string | null>(null);
   const [idUsuarioReceptor, setIdUsuarioReceptor] = useState<string | null>(null);
   const [nombreUsuario, setNombreUsuario] = useState('');
+  const [nombreUsuarioChat, setNombreUsuarioChat] = useState('');
+  const [fotoUsuarioChat, setFotoUsuarioChat] = useState('');  
   const [correoUsuario, setCorreoUsuario] = useState('');
   const [logueado, setLogueado] = useState<boolean>(false);
   const [nombreGlamping, setNombreGlamping] = useState('');
@@ -254,6 +262,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
   const [siono, setSiono] = useState<boolean>(false);   
   const [verVideo, setVerVideo] = useState<boolean>(false); 
+  // const [activarChat, setActivarChat] = useState<boolean>(false);   
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
   const [imagenesCargadas, setImagenesCargadas] = useState<File[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
@@ -338,9 +347,12 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     idUsuarioReceptor, setIdUsuarioReceptor,
     logueado, setLogueado,
     nombreUsuario, setNombreUsuario,
+    nombreUsuarioChat, setNombreUsuarioChat,
+    fotoUsuarioChat, setFotoUsuarioChat,
     correoUsuario, setCorreoUsuario,
     siono, setSiono, 
-    verVideo, setVerVideo,   
+    verVideo, setVerVideo,
+    // activarChat, setActivarChat,   
     nombreGlamping, setNombreGlamping,
     descripcionGlamping, setDescripcionGlamping,
     ciudad_departamento, setCiudad_departamento,

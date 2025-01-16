@@ -1,41 +1,40 @@
-.ListadoConversaciones-contenedor {
+.ListadoConversacionesMoviles-contenedor {
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   width: 100%;
-  height: 100%;
-  margin: auto;
+  height: calc(100vh - 70px);
   overflow-y: auto; 
 }
 
-.ListadoConversaciones-titulo {
+.ListadoConversacionesMoviles-titulo {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px;
   text-align: center;
 }
 
-.ListadoConversaciones-error {
+.ListadoConversacionesMoviles-error {
   color: red;
   font-size: 14px;
   text-align: center;
   margin-bottom: 15px;
 }
 
-.ListadoConversaciones-mensaje {
+.ListadoConversacionesMoviles-mensaje {
   font-size: 14px;
   text-align: center;
   margin-bottom: 15px;
 }
 
-.ListadoConversaciones-lista {
+.ListadoConversacionesMoviles-lista {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.ListadoConversaciones-item {
+.ListadoConversacionesMoviles-item {
   display: flex;
   align-items: center;
   padding: 10px 15px;
@@ -47,11 +46,11 @@
   transition: background-color 0.3s;
 }
 
-.ListadoConversaciones-item:hover {
+.ListadoConversacionesMoviles-item:hover {
   background-color: #f0f0f0;
 }
 
-.ListadoConversaciones-imagen {
+.ListadoConversacionesMoviles-imagen {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -59,7 +58,7 @@
   object-fit: cover;
 }
 
-.ListadoConversaciones-iniciales {
+.ListadoConversacionesMoviles-iniciales {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -73,21 +72,21 @@
   font-weight: bold;
 }
 
-.ListadoConversaciones-nombre {
+.ListadoConversacionesMoviles-nombre {
   font-size: 16px;
   font-weight: bold;
   color: #333;
 }
 
-.ListadoConversaciones-cargando {
+.ListadoConversacionesMoviles-cargando {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 200px;
 }
 
-.ListadoConversaciones-error,
-.ListadoConversaciones-mensaje {
+.ListadoConversacionesMoviles-error,
+.ListadoConversacionesMoviles-mensaje {
   font-size: 14px;
   color: #888;
   margin: 0;

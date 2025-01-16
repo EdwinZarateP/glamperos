@@ -11,7 +11,7 @@ interface Message {
   timestamp: string;
 }
 
-const Conversaciones: React.FC = () => {
+const ConversacionesMoviles: React.FC = () => {
   const { idReceptor } = useParams<{ idReceptor: string }>();
 
   const almacenVariables = useContext(ContextoApp);
@@ -26,11 +26,12 @@ const Conversaciones: React.FC = () => {
 
   const [mensaje, setMensaje] = useState('');
   const [mensajes, setMensajes] = useState<Message[]>([]);
-  const [autoScroll, setAutoScroll] = useState(true); // Controla el scroll automático
 
   const idEmisor = Cookies.get('idUsuario');
   const idReceptorURL = idUsuarioReceptor || idReceptor;
-  const historialRef = useRef<HTMLDivElement>(null);
+
+  const historialRef = useRef<HTMLDivElement>(null); // Referencia para el historial de mensajes.
+  const scrollTriggeredByUser = useRef(false); // Control para determinar si el scroll debe ejecutarse.
 
   useEffect(() => {
     if (!idUsuarioReceptor && idReceptor && setIdUsuarioReceptor) {
@@ -50,11 +51,6 @@ const Conversaciones: React.FC = () => {
           if (data.mensajes) {
             const mensajesOrdenados = data.mensajes.sort((a: Message, b: Message) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
             setMensajes(mensajesOrdenados);
-
-            // Solo hace scroll si autoScroll es true
-            if (autoScroll && historialRef.current) {
-              historialRef.current.scrollTop = historialRef.current.scrollHeight;
-            }
           }
         } catch (error) {
           console.error('Error al obtener los mensajes:', error);
@@ -62,13 +58,22 @@ const Conversaciones: React.FC = () => {
       };
 
       obtenerMensajes();
+
       intervalId = setInterval(obtenerMensajes, 1000);
     }
 
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, [idEmisor, idReceptorURL, autoScroll]);
+  }, [idEmisor, idReceptorURL]);
+
+  useEffect(() => {
+    // Ejecutar el scroll solo si fue provocado por el usuario al enviar un mensaje.
+    if (scrollTriggeredByUser.current && historialRef.current) {
+      historialRef.current.scrollTop = historialRef.current.scrollHeight;
+      scrollTriggeredByUser.current = false; // Reiniciar el control.
+    }
+  }, [mensajes]);
 
   const enviarMensaje = async () => {
     if (mensaje.trim() && idEmisor && idReceptorURL) {
@@ -88,7 +93,7 @@ const Conversaciones: React.FC = () => {
 
         setMensajes((prevMensajes) => [...prevMensajes, nuevoMensaje]);
         setMensaje('');
-        setAutoScroll(true); // Reactiva el scroll automático cuando se envía un mensaje
+        scrollTriggeredByUser.current = true; // Activar el control para ejecutar el scroll.
       } catch (error) {
         console.error('Error al enviar el mensaje:', error);
       }
@@ -101,62 +106,49 @@ const Conversaciones: React.FC = () => {
     }
   };
 
-  const manejarScroll = () => {
-    if (historialRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = historialRef.current;
-
-      // Desactiva autoScroll si el usuario ha desplazado hacia arriba
-      setAutoScroll(scrollTop + clientHeight >= scrollHeight - 10);
-    }
-  };
-
   const obtenerIniciales = (nombre: string) => {
     return nombre ? nombre.charAt(0).toUpperCase() : "";
   };
 
   return (
-    <div className="ConversacionesContenedor">
-      <div className="ConversacionesHeader">
+    <div className="ConversacionesMovilesContenedor">
+      <div className="ConversacionesMovilesHeader">
         {fotoUsuarioChat ? (
           <img 
             src={fotoUsuarioChat || "https://via.placeholder.com/50"} 
             alt={nombreUsuarioChat} 
-            className="ConversacionesFoto" 
+            className="ConversacionesMovilesFoto" 
           />
         ) : (
-          <div className="ConversacionesIniciales">
+          <div className="ConversacionesMovilesIniciales">
             {obtenerIniciales(nombreUsuarioChat)}
           </div>
         )}
-        <div className="ConversacionesNombre">{nombreUsuarioChat || "Nombre desconocido"}</div>
+        <div className="ConversacionesMovilesNombre">{nombreUsuarioChat || "Nombre desconocido"}</div>
       </div>
 
-      <div 
-        className="ConversacionesHistorial"
-        ref={historialRef}
-        onScroll={manejarScroll} // Detecta el scroll manual
-      >
+      <div className="ConversacionesMovilesHistorial" ref={historialRef}>
         {mensajes.map((msg, index) => (
-          <div key={index} className={`ConversacionesMensaje ${msg.emisor === idEmisor ? 'ConversacionesEmisor' : 'ConversacionesReceptor'}`}>
-            <span className="ConversacionesTexto">{msg.mensaje}</span>
-            <span className="ConversacionesTimestamp">{new Date(msg.timestamp).toLocaleString()}</span>
+          <div key={index} className={`ConversacionesMovilesMensaje ${msg.emisor === idEmisor ? 'ConversacionesMovilesEmisor' : 'ConversacionesMovilesReceptor'}`}>
+            <span className="ConversacionesMovilesTexto">{msg.mensaje}</span>
+            <span className="ConversacionesMovilesTimestamp">{new Date(msg.timestamp).toLocaleString()}</span>
           </div>
         ))}
       </div>
 
-      <div className="ConversacionesInputContenedor">
+      <div className="ConversacionesMovilesInputContenedor">
         <input
           type="text"
-          className="ConversacionesInput"
+          className="ConversacionesMovilesInput"
           value={mensaje}
           onChange={(e) => setMensaje(e.target.value)}
           onKeyDown={manejarTeclaEnter}
           placeholder="Escribe tu mensaje..."
         />
-        <button className="ConversacionesBotonEnviar" onClick={enviarMensaje}>Enviar</button>
+        <button className="ConversacionesMovilesBotonEnviar" onClick={enviarMensaje}>Enviar</button>
       </div>
     </div>
   );
 };
 
-export default Conversaciones;
+export default ConversacionesMoviles;

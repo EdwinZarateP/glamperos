@@ -1,5 +1,5 @@
-/* Estilos generales para el contenedor de mensajes */
-.Mensajes-contenedor {
+/* Estilos generales para el contenedor de MensajesIndividuales */
+.MensajesIndividuales-contenedor {
   margin-top: 70px;
   height: calc(100vh - 80px);
   display: grid;
@@ -12,12 +12,12 @@
 /* Estilos específicos para dispositivos menores a 900px */
 @media (max-width: 900px) {
 
-  .Mensajes-contenedor {
+  .MensajesIndividuales-contenedor {
     margin-top: 0;
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 20px;
+    padding: 0;
   }
 
   /* Ocultar Conversaciones y ListadoConversaciones en pantallas pequeñas */

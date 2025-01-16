@@ -1,19 +1,20 @@
 /* Contenedor principal de la conversación */
-.ConversacionesContenedor {
+.ConversacionesMovilesContenedor {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: calc(100vh - 120px); 
+  width: 95%;
+  height: calc(100vh - 80px); 
   margin: 0 auto;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
   position: relative;
+  margin-top: 10px;
   overflow: hidden; /* Evita que los hijos se salgan del contenedor */
 }
 
 /* Parte superior de la conversación (foto y nombre del usuario) */
-.ConversacionesEncabezado {
+.ConversacionesMovilesEncabezado {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -25,14 +26,14 @@
 }
 
 
-.ConversacionesHeader {
+.ConversacionesMovilesHeader {
 display: flex;
 justify-content: center;
 align-items: center;
 margin: 20px;
 }
 
-.ConversacionesIniciales {
+.ConversacionesMovilesIniciales {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -47,7 +48,7 @@ margin: 20px;
   text-transform: uppercase; /* Asegura que las iniciales estén en mayúsculas */
 }
 
-.ConversacionesFoto {
+.ConversacionesMovilesFoto {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -61,7 +62,7 @@ margin: 20px;
   margin-right: 10px;
 }
 
-.ConversacionesFoto img {
+.ConversacionesMovilesFoto img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -69,7 +70,7 @@ margin: 20px;
 }
 
 /* Nombre del usuario */
-.ConversacionesNombre {
+.ConversacionesMovilesNombre {
   flex-grow: 1;
   font-size: 16px;
   font-weight: bold;
@@ -77,10 +78,10 @@ margin: 20px;
 }
 
 /* Historial de mensajes */
-.ConversacionesHistorial {
+.ConversacionesMovilesHistorial {
   flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
   padding: 20px;
-  overflow-y: auto; /* Habilita el scroll vertical */
+  overflow-y: auto; 
   border-bottom: 1px solid #ddd;
   max-height: calc(100% - 120px); /* Ajusta la altura máxima restando el espacio ocupado por otros elementos */
   display: flex;
@@ -88,7 +89,7 @@ margin: 20px;
 }
 
 /* Estilos de los mensajes */
-.ConversacionesMensaje {
+.ConversacionesMovilesMensaje {
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 6px;
@@ -99,27 +100,27 @@ margin: 20px;
 }
 
 /* Mensajes enviados (alineados a la derecha) */
-.ConversacionesEmisor {
+.ConversacionesMovilesEmisor {
   background-color: #d1ffd1;
   align-self: flex-end; /* Alinea a la derecha */
   text-align: right; /* Alinea el texto dentro del mensaje a la derecha */
 }
 
 /* Mensajes recibidos (alineados a la izquierda) */
-.ConversacionesReceptor {
+.ConversacionesMovilesReceptor {
   background-color: #e6e6ff;
   align-self: flex-start; /* Alinea a la izquierda */
   text-align: left; /* Alinea el texto dentro del mensaje a la izquierda */
 }
 
 /* Estilo del texto de los mensajes */
-.ConversacionesTexto {
+.ConversacionesMovilesTexto {
   display: block;
   font-size: 14px;
   color: #333;
 }
 
-.ConversacionesTimestamp {
+.ConversacionesMovilesTimestamp {
   font-size: 12px;
   color: #888;
   text-align: right;
@@ -128,7 +129,7 @@ margin: 20px;
 }
 
 /* Contenedor para el input y el botón */
-.ConversacionesInputContenedor {
+.ConversacionesMovilesInputContenedor {
   display: flex;
   padding: 10px;
   border-top: 1px solid #ddd;
@@ -141,7 +142,7 @@ margin: 20px;
 }
 
 /* Estilo del input */
-.ConversacionesInput {
+.ConversacionesMovilesInput {
   flex-grow: 1;
   padding: 10px;
   font-size: 14px;
@@ -152,7 +153,7 @@ margin: 20px;
 }
 
 /* Estilo del botón de enviar */
-.ConversacionesBotonEnviar {
+.ConversacionesMovilesBotonEnviar {
   padding: 10px 20px;
   font-size: 14px;
   background-color: #4CAF50;
@@ -162,11 +163,11 @@ margin: 20px;
   cursor: pointer;
 }
 
-.ConversacionesBotonEnviar:hover {
+.ConversacionesMovilesBotonEnviar:hover {
   background-color: #45a049;
 }
 
-.ConversacionesBotonEnviar:active {
+.ConversacionesMovilesBotonEnviar:active {
   background-color: #3e8e41;
 }
 

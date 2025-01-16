@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
+import { useNavigate } from 'react-router-dom';
 import Lottie from "lottie-react";
 import animationData from "../../Imagenes/AnimationPuntos.json"; // Asegúrate de que la ruta sea correcta
 import { ContextoApp } from "../../Contexto/index";
@@ -23,7 +24,7 @@ interface Usuario {
   foto: string;
 }
 
-const ListadoConversaciones: React.FC = () => {
+const ListadoConversacionesMoviles: React.FC = () => {
   const [conversaciones, setConversaciones] = useState<(Conversacion & Usuario)[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [cargando, setCargando] = useState<boolean>(true);
@@ -100,13 +101,15 @@ const ListadoConversaciones: React.FC = () => {
 
     obtenerConversaciones();
   }, [idEmisor, setIdUsuarioReceptor, setNombreUsuarioChat, setFotoUsuarioChat]);
-
   
+  const navigate = useNavigate();
 
   const manejarClick = (conversacion: Conversacion & Usuario) => {
     setIdUsuarioReceptor(conversacion.contacto);
     setNombreUsuarioChat(conversacion.nombre);
     setFotoUsuarioChat(conversacion.foto);
+    navigate(`/MensajesIndividuales/${conversacion.contacto}`);
+    console.log("Edw")
   };
 
   // Función para obtener la primera letra del nombre
@@ -115,39 +118,39 @@ const ListadoConversaciones: React.FC = () => {
   };
 
   return (
-    <div className="ListadoConversaciones-contenedor">
-      <h2 className="ListadoConversaciones-titulo">Conversaciones</h2>
+    <div className="ListadoConversacionesMoviles-contenedor">
+      <h2 className="ListadoConversacionesMoviles-titulo">Conversaciones</h2>
       {cargando ? (
         <Lottie
           animationData={animationData}
           style={{ height: 200, width: 200, margin: "auto" }}
         />
       ) : error ? (
-        <p className="ListadoConversaciones-error">{error}</p>
+        <p className="ListadoConversacionesMoviles-error">{error}</p>
       ) : conversaciones.length === 0 ? (
-        <p className="ListadoConversaciones-mensaje">
+        <p className="ListadoConversacionesMoviles-mensaje">
           No hay conversaciones disponibles.
         </p>
       ) : (
-        <ul className="ListadoConversaciones-lista">
+        <ul className="ListadoConversacionesMoviles-lista">
           {conversaciones.map((conversacion, index) => (
             <li
               key={index}
-              className="ListadoConversaciones-item"
+              className="ListadoConversacionesMoviles-item"
               onClick={() => manejarClick(conversacion)}
             >
               {conversacion.foto ? (
                 <img
                   src={conversacion.foto || "https://via.placeholder.com/50"}
                   alt={conversacion.nombre}
-                  className="ListadoConversaciones-imagen"
+                  className="ListadoConversacionesMoviles-imagen"
                 />
               ) : (
-                <div className="ListadoConversaciones-iniciales">
+                <div className="ListadoConversacionesMoviles-iniciales">
                   {obtenerIniciales(conversacion.nombre)}
                 </div>
               )}
-              <span className="ListadoConversaciones-nombre">{conversacion.nombre}</span>
+              <span className="ListadoConversacionesMoviles-nombre">{conversacion.nombre}</span>
             </li>
           ))}
         </ul>
@@ -156,4 +159,4 @@ const ListadoConversaciones: React.FC = () => {
   );
 };
 
-export default ListadoConversaciones;
+export default ListadoConversacionesMoviles;

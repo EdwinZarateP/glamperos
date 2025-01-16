@@ -44,7 +44,7 @@
 /* Responsividad */
 
 /* Pantallas pequeñas (máximo ancho: 900px) */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .HeaderIcono-contenedor {
     display: none; /* Asegura que ocupe todo el ancho */
   }

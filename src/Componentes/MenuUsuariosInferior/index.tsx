@@ -8,7 +8,7 @@ import './estilos.css';
 
 const MenuUsuariosInferior: React.FC = () => {
   const correoUsuario = Cookies.get("correoUsuario");
-  const navigate = useNavigate();  // Usamos useNavigate para redirigir sin recargar la página
+  const navigate = useNavigate();  
 
   const redirigir = (ruta: string) => {
     if (!correoUsuario) {
@@ -30,7 +30,7 @@ const MenuUsuariosInferior: React.FC = () => {
         <FaRegHeart className="MenuUsuariosInferior-iconoImagen" />
         <span className="MenuUsuariosInferior-texto">Favoritos</span>
       </div>
-      <div className="MenuUsuariosInferior-icono" onClick={() => redirigir("/")}>
+      <div className="MenuUsuariosInferior-icono" onClick={() => redirigir("/Mensajes/${idEmisor}")}>
         <TiMessage className="MenuUsuariosInferior-iconoImagen" />
         <span className="MenuUsuariosInferior-texto">Mensajes</span>
       </div>
