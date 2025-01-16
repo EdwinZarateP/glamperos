@@ -19,6 +19,8 @@
   overflow-y: auto; /* Habilita el scroll vertical */
   border-bottom: 1px solid #ddd;
   max-height: calc(100% - 60px); /* Ajusta la altura máxima restando el espacio ocupado por otros elementos */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Estilos de los mensajes */
@@ -26,17 +28,24 @@
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 6px;
-  background-color: #f1f1f1;
+  max-width: 50%; /* Limita el ancho máximo al 50% del contenedor */
+  word-wrap: break-word; /* Permite el salto de línea si el texto es muy largo */
+  display: flex;
+  flex-direction: column;
 }
 
+/* Mensajes enviados (alineados a la derecha) */
 .ConversacionesEmisor {
   background-color: #d1ffd1;
-  align-self: flex-end;
+  align-self: flex-end; /* Alinea a la derecha */
+  text-align: right; /* Alinea el texto dentro del mensaje a la derecha */
 }
 
+/* Mensajes recibidos (alineados a la izquierda) */
 .ConversacionesReceptor {
   background-color: #e6e6ff;
-  align-self: flex-start;
+  align-self: flex-start; /* Alinea a la izquierda */
+  text-align: left; /* Alinea el texto dentro del mensaje a la izquierda */
 }
 
 /* Estilo del texto de los mensajes */
