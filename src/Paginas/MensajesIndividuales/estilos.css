@@ -1,7 +1,7 @@
 /* Estilos generales para el contenedor de MensajesIndividuales */
 .MensajesIndividuales-contenedor {
   margin-top: 70px;
-  height: calc(100vh - 80px);
+  /* height: calc(100vh - 80px); */
   display: grid;
   grid-template-columns: 1fr 2fr; 
   gap: 20px; /* Espacio entre las columnas */

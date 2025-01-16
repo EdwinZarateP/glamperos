@@ -72,7 +72,13 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
           body: JSON.stringify(nuevoMensaje),
         });
 
-        navigate(`/Mensajes/${propietario_id}`);
+        // Navegación condicional según el tamaño de la pantalla
+        if (window.innerWidth < 900) {
+          navigate(`/MensajesIndividuales/${propietario_id}`);
+        } else {
+          navigate(`/Mensajes/${propietario_id}`);
+        }
+
         setMensaje('');
       } catch (error) {
         console.error('Error al enviar el mensaje:', error);
