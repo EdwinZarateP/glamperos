@@ -1,73 +1,94 @@
-.ListadoConversacionesContenedor {
-  height: 100%;
+.ListadoConversaciones-contenedor {
   padding: 20px;
   background-color: #f9f9f9;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
 }
 
-.ListadoConversacionesTitulo {
-  font-size: 24px;
+.ListadoConversaciones-titulo {
+  font-size: 20px;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
-.ListadoConversacionesLista {
-  list-style-type: none;
+.ListadoConversaciones-error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.ListadoConversaciones-mensaje {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.ListadoConversaciones-lista {
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.ListadoConversacionesItem {
+.ListadoConversaciones-item {
   display: flex;
   align-items: center;
-  padding: 10px;
-  background-color: #ffffff;
+  padding: 10px 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   margin-bottom: 10px;
-  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.ListadoConversacionesItem:hover {
+.ListadoConversaciones-item:hover {
   background-color: #f0f0f0;
 }
 
-.ListadoConversacionesAvatar {
-  width: 40px;
-  height: 40px;
+.ListadoConversaciones-imagen {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e0e0e0;
-  margin-right: 10px;
-  flex-shrink: 0;
-}
-
-.AvatarImagen {
-  width: 100%;
-  height: 100%;
+  margin-right: 15px;
   object-fit: cover;
 }
 
-.AvatarTexto {
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #007bff;
-  width: 100%;
-  height: 100%;
+.ListadoConversaciones-iniciales {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #b6b6b6;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  text-transform: uppercase;
+  margin-right: 15px;
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.ListadoConversacionesMensaje {
-  font-size: 18px;
-  color: #777;
-  text-align: center;
+.ListadoConversaciones-nombre {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.ListadoConversaciones-cargando {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.ListadoConversaciones-error,
+.ListadoConversaciones-mensaje {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+  padding: 10px 0;
 }

@@ -114,18 +114,25 @@ const EditarPerfil: React.FC = () => {
       <div className="editar-perfil-imagen">
         {cargandoFoto ? (
           <div className="editar-perfil-cargando">
-            <Lottie 
-              animationData={animationData} 
-              style={{ height: 200, width: '50%', margin: 'auto' }} 
+            <Lottie
+              animationData={animationData}
+              style={{ height: 200, width: '50%', margin: 'auto' }}
             />
           </div>
         ) : (
           <div className="editar-perfil-imagen-contenedor">
-            <img
-              src={fotoPreview ?? usuario.foto ?? 'ruta/a/imagen-predeterminada.jpg'}
+            {usuario.foto || fotoPreview ? (
+              <img
+              src={fotoPreview ?? usuario.foto ?? undefined}
               alt="Foto de perfil"
               className="editar-perfil-imagen-foto"
             />
+            
+            ) : (
+              <div className="editar-perfil-inicial">
+                {usuario.nombre.charAt(0).toUpperCase()}
+              </div>
+            )}
             <button
               onClick={() => document.getElementById('fotoInput')?.click()}
               className="editar-perfil-boton-editar"
@@ -157,6 +164,7 @@ const EditarPerfil: React.FC = () => {
         </div>
         <div className="editar-perfil-info-item">
           <div className="editar-perfil-telefono-contenedor">
+          Celular:
             {editandoTelefono ? (
               <input
                 type="text"

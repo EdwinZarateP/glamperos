@@ -1,14 +1,33 @@
 import React, { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
+import Lottie from "lottie-react";
+import animationData from "../../Imagenes/AnimationPuntos.json"; // Asegúrate de que la ruta sea correcta
 import { ContextoApp } from "../../Contexto/index";
 import "./estilos.css";
 
-const ListadoConversaciones: React.FC = () => {
-  const idEmisor = Cookies.get("idUsuario");
-  const [conversaciones, setConversaciones] = useState<any[]>([]);
+// Define el tipo para la conversación
+interface Conversacion {
+  _id: string;
+  contacto: string;
+  ultima_fecha: string;  // Asegúrate de incluir el campo 'ultima_fecha'
+}
 
-  // Acceder al contexto para actualizar el idUsuarioReceptor
+// Define la respuesta de la API
+interface RespuestaConversaciones {
+  conversaciones: Conversacion[];
+}
+
+// Define el tipo de usuario con su nombre y foto
+interface Usuario {
+  nombre: string;
+  foto: string;
+}
+
+const ListadoConversaciones: React.FC = () => {
+  const [conversaciones, setConversaciones] = useState<(Conversacion & Usuario)[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [cargando, setCargando] = useState<boolean>(true);
+
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -19,84 +38,112 @@ const ListadoConversaciones: React.FC = () => {
 
   const { setIdUsuarioReceptor } = almacenVariables;
 
+  const idEmisor = Cookies.get("idUsuario");
+
   useEffect(() => {
-    if (idEmisor) {
-      obtenerConversaciones(idEmisor);
+    if (!idEmisor) {
+      setError("No se encontró el ID del usuario en las cookies.");
+      setCargando(false);
+      return;
     }
-  }, [idEmisor]);
 
-  // Función para obtener las conversaciones y los datos de los receptores
-  const obtenerConversaciones = async (emisor: string) => {
-    try {
-      const response = await axios.get(
-        `https://glamperosapi.onrender.com/mensajes/conversaciones/${emisor}`
-      );
+    const obtenerConversaciones = async () => {
+      try {
+        const respuesta = await fetch(`https://glamperosapi.onrender.com/mensajes/conversaciones/${idEmisor}`);
+        if (!respuesta.ok) {
+          throw new Error("Error al obtener las conversaciones");
+        }
+        const data: RespuestaConversaciones = await respuesta.json();
 
-      const conversacionesConDatos = await Promise.all(
-        response.data.conversaciones.map(async (conversacion: any) => {
-          const receptorId = conversacion.receptor;
-          const datosReceptor = await obtenerDatosReceptor(receptorId);
-          return { ...conversacion, ...datosReceptor };
-        })
-      );
+        // Obtener detalles adicionales de los usuarios
+        const conversacionesConDetalles = await Promise.all(
+          data.conversaciones.map(async (conversacion) => {
+            try {
+              const usuarioRespuesta = await fetch(
+                `https://glamperosapi.onrender.com/usuarios/${conversacion.contacto}`
+              );
+              if (!usuarioRespuesta.ok) {
+                throw new Error("Error al obtener los detalles del usuario");
+              }
+              const usuario: Usuario = await usuarioRespuesta.json();
+              return { ...conversacion, ...usuario };
+            } catch (e) {
+              console.error(`Error al obtener detalles del usuario ${conversacion.contacto}`, e);
+              return { ...conversacion, nombre: "Usuario desconocido", foto: "" };
+            }
+          })
+        );
 
-      setConversaciones(conversacionesConDatos);
-    } catch (error) {
-      console.error("Error al obtener conversaciones:", error);
-    }
+        // Ordenar las conversaciones por fecha descendente (última fecha)
+        const conversacionesOrdenadas = conversacionesConDetalles.sort((a, b) => {
+          const fechaA = new Date(a.ultima_fecha).getTime();
+          const fechaB = new Date(b.ultima_fecha).getTime();
+          return fechaB - fechaA;  // Orden descendente
+        });
+
+        setConversaciones(conversacionesOrdenadas);
+
+        // Si hay conversaciones, establecer el receptor como el primero de la lista
+        if (conversacionesOrdenadas.length > 0) {
+          setIdUsuarioReceptor(conversacionesOrdenadas[0].contacto);
+        }
+
+      } catch (e: any) {
+        setError(e.message);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    obtenerConversaciones();
+  }, [idEmisor, setIdUsuarioReceptor]);
+
+  const manejarClick = (contacto: string) => {
+    setIdUsuarioReceptor(contacto);
   };
 
-  // Función para obtener los datos del receptor por su ID
-  const obtenerDatosReceptor = async (receptorId: string): Promise<{ nombre: string; foto: string | null }> => {
-    try {
-      const response = await axios.get(
-        `https://glamperosapi.onrender.com/usuarios/${receptorId}`
-      );
-      const { nombre, foto } = response.data;
-      return { nombre, foto: foto || null };
-    } catch (error) {
-      console.error(`Error al obtener los datos del receptor con ID ${receptorId}:`, error);
-      return { nombre: "Usuario desconocido", foto: null };
-    }
-  };
-
-  // Función para manejar la selección de un receptor
-  const seleccionarReceptor = (receptor: string) => {
-    setIdUsuarioReceptor(receptor);
+  // Función para obtener la primera letra del nombre
+  const obtenerIniciales = (nombre: string) => {
+    return nombre ? nombre.charAt(0).toUpperCase() : "";
   };
 
   return (
-    <div className="ListadoConversacionesContenedor">
-      <h2 className="ListadoConversacionesTitulo">Tus conversaciones</h2>
-      {conversaciones.length > 0 ? (
-        <ul className="ListadoConversacionesLista">
+    <div className="ListadoConversaciones-contenedor">
+      <h2 className="ListadoConversaciones-titulo">Conversaciones</h2>
+      {cargando ? (
+        <Lottie
+          animationData={animationData}
+          style={{ height: 200, width: 200, margin: "auto" }}
+        />
+      ) : error ? (
+        <p className="ListadoConversaciones-error">{error}</p>
+      ) : conversaciones.length === 0 ? (
+        <p className="ListadoConversaciones-mensaje">
+          No hay conversaciones disponibles.
+        </p>
+      ) : (
+        <ul className="ListadoConversaciones-lista">
           {conversaciones.map((conversacion, index) => (
             <li
               key={index}
-              className="ListadoConversacionesItem"
-              onClick={() => seleccionarReceptor(conversacion.receptor)}
+              className="ListadoConversaciones-item"
+              onClick={() => manejarClick(conversacion.contacto)}
             >
-              <div className="ListadoConversacionesAvatar">
-                {conversacion.foto ? (
-                  <img
-                    src={conversacion.foto}
-                    alt={`Avatar de ${conversacion.nombre}`}
-                    className="AvatarImagen"
-                  />
-                ) : (
-                  <div className="AvatarTexto">
-                    {conversacion.nombre.charAt(0).toUpperCase()}
-                  </div>
-                )}
-              </div>
-              <span>{conversacion.nombre}</span>
+              {conversacion.foto ? (
+                <img
+                  src={conversacion.foto || "https://via.placeholder.com/50"}
+                  alt={conversacion.nombre}
+                  className="ListadoConversaciones-imagen"
+                />
+              ) : (
+                <div className="ListadoConversaciones-iniciales">
+                  {obtenerIniciales(conversacion.nombre)}
+                </div>
+              )}
+              <span className="ListadoConversaciones-nombre">{conversacion.nombre}</span>
             </li>
           ))}
         </ul>
-      ) : (
-        <p className="ListadoConversacionesMensaje">
-          No tienes conversaciones.
-        </p>
       )}
     </div>
   );
