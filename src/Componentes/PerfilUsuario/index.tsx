@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './estilos.css';
 
@@ -13,7 +13,9 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     nombre: '',
   });
   const [mensaje, setMensaje] = useState('');
+  const [nombreGlamping, setNombreGlamping] = useState('');
   const navigate = useNavigate();
+  const { glampingId } = useParams<{ glampingId: string }>();
 
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -29,17 +31,37 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
       }
     };
 
+    const fetchGlamping = async () => {
+      try {
+        const response = await fetch(`https://glamperosapi.onrender.com/glampings/${glampingId}`);
+        const data = await response.json();
+        setNombreGlamping(data.nombreGlamping); // Asumimos que el campo es nombreGlamping
+      } catch (error) {
+        console.error('Error al obtener el glamping:', error);
+      }
+    };
+
+    if (glampingId) {
+      fetchGlamping();
+    }
+
     fetchUsuario();
-  }, [propietario_id]);
+  }, [propietario_id, glampingId]);
 
   const manejarMensaje = async () => {
     const idEmisor = Cookies.get('idUsuario');
+
+    // Si no existe idEmisor, redirige al usuario a la página de registro
+    if (!idEmisor) {
+      navigate("/Registrarse");
+      return;
+    }
 
     if (mensaje.trim() && idEmisor && propietario_id) {
       const nuevoMensaje = {
         emisor: idEmisor,
         receptor: propietario_id,
-        mensaje: mensaje,
+        mensaje: `Me interesa ${nombreGlamping}, ${mensaje}`,
         timestamp: new Date().toISOString(),
       };
 

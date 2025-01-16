@@ -63,7 +63,7 @@ const MenuUsuario: React.FC = () => {
       <ul className="MenuUsuario-lista">
         {nombreUsuarioCookie && (
           <>
-            <li className="MenuUsuario-opcion" onClick={() => navigate(`/Mensajes/${idEmisor}`)}>
+            <li className="MenuUsuario-opcion" onClick={() => { setMostrarMenuUsuarios(false); navigate(`/Mensajes/${idEmisor}`); }}>
               Mensajes
             </li>
             <li className="MenuUsuario-opcion" onClick={() =>{navigate("/ListaDeseos"), setMostrarMenuUsuarios(false)}}>
