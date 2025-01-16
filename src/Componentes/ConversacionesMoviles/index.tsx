@@ -21,7 +21,7 @@ const ConversacionesMoviles: React.FC = () => {
   const [cargando, setCargando] = useState(true);
   const idEmisor = Cookies.get('idUsuario');
   const historialRef = useRef<HTMLDivElement>(null); // Referencia para el historial de mensajes.
-  const scrollTriggeredByUser = useRef(false); // Control para determinar si el scroll debe ejecutarse.
+  const [inicializado, setInicializado] = useState(false); // Controla el desplazamiento inicial.
 
   // Obtener datos del usuario receptor desde la API
   useEffect(() => {
@@ -60,6 +60,12 @@ const ConversacionesMoviles: React.FC = () => {
                 new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
             );
             setMensajes(mensajesOrdenados);
+
+            // Desplazar hacia abajo solo la primera vez
+            if (!inicializado && historialRef.current) {
+              historialRef.current.scrollTop = historialRef.current.scrollHeight;
+              setInicializado(true);
+            }
           }
         } catch (error) {
           console.error('Error al obtener los mensajes:', error);
@@ -73,15 +79,7 @@ const ConversacionesMoviles: React.FC = () => {
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, [idEmisor, idReceptor]);
-
-  // Hacer scroll al final del historial cuando se envía un mensaje
-  useEffect(() => {
-    if (scrollTriggeredByUser.current && historialRef.current) {
-      historialRef.current.scrollTop = historialRef.current.scrollHeight;
-      scrollTriggeredByUser.current = false;
-    }
-  }, [mensajes]);
+  }, [idEmisor, idReceptor, inicializado]);
 
   const enviarMensaje = async () => {
     if (mensaje.trim() && idEmisor && idReceptor) {
@@ -93,7 +91,7 @@ const ConversacionesMoviles: React.FC = () => {
       };
 
       try {
-        await fetch('https://glamperosapi.onrender.com/mensajes/enviar_mensaje', {
+        await fetch('https://glamperosapi.onrender.com/mensajes/enviar_mensajes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(nuevoMensaje),
@@ -101,7 +99,6 @@ const ConversacionesMoviles: React.FC = () => {
 
         setMensajes((prevMensajes) => [...prevMensajes, nuevoMensaje]);
         setMensaje('');
-        scrollTriggeredByUser.current = true;
       } catch (error) {
         console.error('Error al enviar el mensaje:', error);
       }
