@@ -53,12 +53,15 @@
   }
 
   .ConversacionesMovilesMensaje {
-    padding: 12px;
+    padding: 9px;
     border-radius: 16px;
     font-size: 15px;
     max-width: 80%;
     word-wrap: break-word;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    
   }
 
   .ConversacionesMovilesEmisor {
@@ -74,9 +77,22 @@
   }
 
   .ConversacionesMovilesTexto {
-    margin-bottom: 6px;
     line-height: 1.4;
     color: #333;
+  }
+
+  .ConversacionesMovilesFecha {
+    font-size: 12px;
+    color: #aaa; /* Gris para la fecha */
+    text-align: center;
+    margin-bottom: 4px; /* Espacio entre fecha y mensaje */
+  }
+
+  .ConversacionesMovilesHora {
+    font-size: 10px;
+    color: #ccc; /* Gris más suave para la hora */
+    text-align: center;
+    margin-top: 4px; /* Espacio entre mensaje y hora */
   }
 
   .ConversacionesMovilesTimestamp {

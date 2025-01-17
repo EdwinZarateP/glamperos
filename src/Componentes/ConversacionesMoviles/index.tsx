@@ -23,6 +23,8 @@ const ConversacionesMoviles: React.FC = () => {
   const historialRef = useRef<HTMLDivElement>(null); // Referencia para el historial de mensajes.
   const [inicializado, setInicializado] = useState(false); // Controla el desplazamiento inicial.
 
+  const [ultimaFecha, setUltimaFecha] = useState<string>(''); // Guardar la última fecha mostrada
+
   // Obtener datos del usuario receptor desde la API
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -115,6 +117,25 @@ const ConversacionesMoviles: React.FC = () => {
     return nombre ? nombre.charAt(0).toUpperCase() : '';
   };
 
+  const formatearFecha = (timestamp: string) => {
+    const mensajeFecha = new Date(timestamp);
+    const mensajeFechaString = mensajeFecha.toLocaleDateString(); // La fecha en formato local.
+
+    // Si la fecha del mensaje es diferente a la última fecha mostrada, mostrarla.
+    if (mensajeFechaString !== ultimaFecha) {
+      setUltimaFecha(mensajeFechaString); // Actualizamos la última fecha mostrada
+      return mensajeFechaString; // Retornamos la fecha
+    }
+    return ''; // Si es el mismo día, retornamos una cadena vacía para no mostrar la fecha
+  };
+
+  const formatearHora = (timestamp: string) => {
+    return new Date(timestamp).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   if (cargando) {
     return (
       <div className="CargandoContenedor">
@@ -152,9 +173,16 @@ const ConversacionesMoviles: React.FC = () => {
             }`}
           >
             <span className="ConversacionesMovilesTexto">{msg.mensaje}</span>
-            <span className="ConversacionesMovilesTimestamp">
-              {new Date(msg.timestamp).toLocaleString()}
-            </span>
+            <div className="ConversacionesMovilesFechaHora">
+              {formatearFecha(msg.timestamp) && (
+                <span className="ConversacionesMovilesFecha">
+                  {formatearFecha(msg.timestamp)}
+                </span>
+              )}
+              <span className="ConversacionesMovilesHora">
+                {formatearHora(msg.timestamp)}
+              </span>
+            </div>
           </div>
         ))}
       </div>
