@@ -1,39 +1,48 @@
-/* Estilos generales para el contenedor de mensajes */
+/* Estilo principal */
 .Mensajes-contenedor {
-  margin-top: 70px;
-  height: calc(100vh - 80px);
+  margin-top: 80px;
   display: grid;
-  grid-template-columns: 1fr 2fr; 
-  gap: 20px; /* Espacio entre las columnas */
-  padding: 20px;
-  width: 100%;
+  grid-template-columns: 1fr; /* En pantallas pequeñas, solo una columna */
+  grid-template-rows: auto 1fr auto; /* Para el header, contenido y menú inferior */
+  height: 100vh;
+  gap: 15px;
 }
 
-/* Estilos específicos para dispositivos menores a 900px */
-@media (max-width: 900px) {
-
-  .Mensajes-contenedor {
-    margin-top: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 20px;
-  }
-
-  /* Ocultar Conversaciones y ListadoConversaciones en pantallas pequeñas */
-  .Conversaciones,
-  .ListadoConversaciones {
-    display: none;
-  }
-
-}
-
-/* Estilos específicos para dispositivos mayores a 600px */
+/* Estilo para pantallas mayores a 900px */
 @media (min-width: 901px) {
+  .Mensajes-contenedor {
+    grid-template-columns: 2fr 3fr; /* 2/5 para ListadoConversaciones y 3/5 para Conversaciones */
+  }
 
-  /* Ocultar ConversacionesMoviles y ListadoConversacionesMoviles en pantallas grandes */
-  .ConversacionesMoviles,
+  .ListadoConversaciones {
+    grid-column: 1; /* Se coloca en la primera columna */
+  }
+
+  .Conversaciones {
+    grid-column: 2; /* Se coloca en la segunda columna (a la derecha de ListadoConversaciones) */
+  }
+
   .ListadoConversacionesMoviles {
-    display: none;
+    display: none; /* Ocultar en pantallas grandes */
+  }
+}
+
+/* Estilo para pantallas menores o iguales a 900px */
+@media (max-width: 900px) {
+  .Mensajes-contenedor {
+    grid-template-columns: 1fr; 
+    margin-top: 0;
+  }
+
+  .ListadoConversaciones {
+    display: none; /* Ocultar en pantallas pequeñas */
+  }
+
+  .Conversaciones {
+    grid-column: 1; /* Ocupa toda la columna */
+  }
+
+  .ListadoConversacionesMoviles {
+    display: block; /* Mostrar en pantallas pequeñas */
   }
 }

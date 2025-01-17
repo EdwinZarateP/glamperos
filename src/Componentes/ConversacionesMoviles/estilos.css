@@ -1,174 +1,133 @@
-/* Contenedor principal de la conversación */
-.ConversacionesMovilesContenedor {
-  display: flex;
-  flex-direction: column;
-  width: 95%;
-  height: 90vh; 
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  position: relative;
-  margin-top: 10px;
-  overflow: hidden; /* Evita que los hijos se salgan del contenedor */
+/* Ajustes generales para pantallas menores a 900px */
+@media (max-width: 900px) {
+  .ConversacionesMovilesContenedor {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .ConversacionesMovilesHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f7f7f7;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  .ConversacionesMovilesFoto {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .ConversacionesMovilesNombre {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ConversacionesMovilesHistorial {
+    flex-grow: 1;
+    padding: 20px;
+    margin-top: 70px; /* Altura del header fijo */
+    margin-bottom: 70px; /* Altura del header fijo */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .ConversacionesMovilesMensaje {
+    padding: 12px;
+    border-radius: 16px;
+    font-size: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .ConversacionesMovilesEmisor {
+    background-color: #d1f7d6;
+    align-self: flex-end;
+    text-align: right;
+  }
+
+  .ConversacionesMovilesReceptor {
+    background-color: #eef1ff;
+    align-self: flex-start;
+    text-align: left;
+  }
+
+  .ConversacionesMovilesTexto {
+    margin-bottom: 6px;
+    line-height: 1.4;
+    color: #333;
+  }
+
+  .ConversacionesMovilesTimestamp {
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .ConversacionesMovilesInputContenedor {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #ffffff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .ConversacionesMovilesInput {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+  }
+
+  .ConversacionesMovilesInput:focus {
+    border-color: #2F6B3E
+  }
+
+  .ConversacionesMovilesBotonEnviar {
+    padding: 10px 16px;
+    margin-left: 10px;
+    background-color: #2F6B3E;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .ConversacionesMovilesBotonEnviar:hover {
+    background-color: #449257;
+  }
+
+  .ConversacionesMovilesBotonEnviar:active {
+    background-color: #449257;;
+  }
 }
-
-/* Parte superior de la conversación (foto y nombre del usuario) */
-.ConversacionesMovilesEncabezado {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  background-color: #f2f2f2;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-
-.ConversacionesMovilesHeader {
-display: flex;
-justify-content: center;
-align-items: center;
-margin: 20px;
-}
-
-.ConversacionesMovilesIniciales {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #b6b6b6; /* Color de fondo */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  margin-right: 10px;
-  text-transform: uppercase; /* Asegura que las iniciales estén en mayúsculas */
-}
-
-.ConversacionesMovilesFoto {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  margin-right: 10px;
-}
-
-.ConversacionesMovilesFoto img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Nombre del usuario */
-.ConversacionesMovilesNombre {
-  flex-grow: 1;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Historial de mensajes */
-.ConversacionesMovilesHistorial {
-  flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
-  padding: 20px;
-  overflow-y: auto; 
-  border-bottom: 1px solid #ddd;
-  max-height: calc(100% - 120px); /* Ajusta la altura máxima restando el espacio ocupado por otros elementos */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Estilos de los mensajes */
-.ConversacionesMovilesMensaje {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 6px;
-  max-width: 50%; /* Limita el ancho máximo al 50% del contenedor */
-  word-wrap: break-word; /* Permite el salto de línea si el texto es muy largo */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Mensajes enviados (alineados a la derecha) */
-.ConversacionesMovilesEmisor {
-  background-color: #d1ffd1;
-  align-self: flex-end; /* Alinea a la derecha */
-  text-align: right; /* Alinea el texto dentro del mensaje a la derecha */
-}
-
-/* Mensajes recibidos (alineados a la izquierda) */
-.ConversacionesMovilesReceptor {
-  background-color: #e6e6ff;
-  align-self: flex-start; /* Alinea a la izquierda */
-  text-align: left; /* Alinea el texto dentro del mensaje a la izquierda */
-}
-
-/* Estilo del texto de los mensajes */
-.ConversacionesMovilesTexto {
-  display: block;
-  font-size: 14px;
-  color: #333;
-}
-
-.ConversacionesMovilesTimestamp {
-  font-size: 12px;
-  color: #888;
-  text-align: right;
-  display: block;
-  margin-top: 5px;
-}
-
-/* Contenedor para el input y el botón */
-.ConversacionesMovilesInputContenedor {
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid #ddd;
-  background-color: #f9f9f9;
-  position: absolute; /* Fijo respecto al contenedor padre */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
-/* Estilo del input */
-.ConversacionesMovilesInput {
-  flex-grow: 1;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-  outline: none;
-}
-
-/* Estilo del botón de enviar */
-.ConversacionesMovilesBotonEnviar {
-  padding: 10px 20px;
-  font-size: 14px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.ConversacionesMovilesBotonEnviar:hover {
-  background-color: #45a049;
-}
-
-.ConversacionesMovilesBotonEnviar:active {
-  background-color: #3e8e41;
-}
-
-
