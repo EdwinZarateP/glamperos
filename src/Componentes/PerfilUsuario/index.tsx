@@ -57,7 +57,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     });
 
     if (response.ok) {
-      alert('Mensaje enviado con éxito');
+     
     } else {
       alert('Error al enviar el mensaje');
     }
