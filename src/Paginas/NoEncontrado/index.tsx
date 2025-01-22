@@ -1,5 +1,4 @@
 // import MapaGlampingsCercanos from "../../Componentes/MapaGlampingsCercanos/index";
-import Whatsapp from "../../Componentes/Whatsapp/index";
 
 const NoEncontrado: React.FC = () => {
 
@@ -15,7 +14,7 @@ const NoEncontrado: React.FC = () => {
     return (
         <div>
             No Encontrado nada
-            <Whatsapp />
+
         </div>
     );
 };
