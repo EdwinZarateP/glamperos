@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Lottie from 'lottie-react';
-import animationData from "../../Imagenes/AnimationPuntos.json"; // Asegúrate de tener la animación
+import animationData from "../../Imagenes/AnimationPuntos.json"; 
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import "./estilos.css";
 

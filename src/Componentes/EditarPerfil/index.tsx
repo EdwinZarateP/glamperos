@@ -46,26 +46,40 @@ const EditarPerfil: React.FC = () => {
   };
 
   const manejarTelefono = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTelefono(event.target.value);
+    const valor = event.target.value;
+    // Permitir solo números
+    if (/^\d*$/.test(valor)) {
+      setTelefono(valor);
+    }
   };
+  
 
   const actualizarTelefono = async () => {
+    if (telefono.length !== 10) {
+      alert('El número de teléfono debe tener exactamente 10 dígitos.');
+      return;
+    }
+  
+    const telefonoConPrefijo = telefono.startsWith('57') ? telefono : `57${telefono}`;
+  
     if (usuario) {
       setCargandoTelefono(true);
       try {
         await axios.put(
           `https://glamperosapi.onrender.com/usuarios/${emailUsuario}/telefono`,
-          { telefono }
+          { telefono: telefonoConPrefijo }
         );
         setEditandoTelefono(false);
-        setUsuario((prevUsuario) => prevUsuario ? { ...prevUsuario, telefono } : null);
+        setUsuario((prevUsuario) =>
+          prevUsuario ? { ...prevUsuario, telefono: telefonoConPrefijo } : null
+        );
       } catch (error) {
         console.error('Error al actualizar el teléfono:', error);
       } finally {
         setCargandoTelefono(false);
       }
     }
-  };
+  };  
 
   const actualizarFoto = async () => {
     if (usuario && fotoActualizada) {
@@ -164,14 +178,15 @@ const EditarPerfil: React.FC = () => {
         </div>
         <div className="editar-perfil-info-item">
           <div className="editar-perfil-telefono-contenedor">
-          Celular:
+          WhatsApp Col +57
             {editandoTelefono ? (
               <input
-                type="text"
-                id="telefono"
-                value={telefono}
-                onChange={manejarTelefono}
-              />
+              type="tel"
+              id="telefono"
+              value={telefono}
+              onChange={manejarTelefono}
+              maxLength={10} // Limitar a 10 caracteres desde el front-end
+            />            
             ) : (
               <p>{telefono}</p>
             )}

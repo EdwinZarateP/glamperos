@@ -1,0 +1,90 @@
+/* whatsapp.css */
+
+/* Contenedor principal */
+.WhatsappContenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Título */
+.WhatsappTitulo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+/* Formulario */
+.WhatsappFormulario {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Etiquetas de los campos */
+.WhatsappEtiqueta {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Campos de entrada */
+.WhatsappInput {
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.WhatsappInput:focus {
+  border-color: #007bff;
+}
+
+/* Botón de envío */
+.WhatsappBoton {
+  padding: 12px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #25d366; /* WhatsApp color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.WhatsappBoton:hover {
+  background-color: #128c7e; /* Color más oscuro al pasar el mouse */
+}
+
+/* Estilo responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .WhatsappContenedor {
+    padding: 15px;
+  }
+
+  .WhatsappTitulo {
+    font-size: 20px;
+  }
+
+  .WhatsappInput {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .WhatsappBoton {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}

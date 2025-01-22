@@ -11,11 +11,57 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
   const [usuario, setUsuario] = useState({
     foto: '',
     nombre: '',
+    whatsapp: '',
   });
   const [mensaje, setMensaje] = useState('');
   const [nombreGlamping, setNombreGlamping] = useState('');
   const navigate = useNavigate();
   const { glampingId } = useParams<{ glampingId: string }>();
+
+  const mensaje1: string = usuario.nombre;     
+  const mensaje2: string = mensaje;         
+  const mensaje3: string = '25 de enero de 2025'; 
+
+  const enviarMensaje = async (numero: string) => {
+    const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
+    const body = {
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: numero,
+      type: "template",
+      template: {
+        name: "confirmacion",
+        language: {
+          code: "es"
+        },
+        components: [
+          {
+            type: "body",
+            parameters: [
+              { type: "text", text: mensaje1 },
+              { type: "text", text: mensaje2 },
+              { type: "text", text: mensaje3 }
+            ]
+          }
+        ]
+      }
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer EAAQRcjELZCLIBO6P23Ecy5f0lsLWtD1wcAxL8e3Nghhdj9ZBVZBsO5y7kbDAkNfjFRgsXYzsUrhPiJQZAgCxe8ncmGS4o9hD7AxRdojtE7En4FljHzLttMq5ingprk2QOEdtZAgFAFH1NRHgIQrJrzHkdkdm2x8ZBAWYnSM4Gbjj5y5nSP7FnkwJBxZCYtrkgebAvg2VmuXY7C7tUJQ1696ZC3gZD`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      alert('Mensaje enviado con éxito');
+    } else {
+      alert('Error al enviar el mensaje');
+    }
+  };
 
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -25,6 +71,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
         setUsuario({
           foto: data.foto || '',
           nombre: data.nombre || 'Usuario sin nombre',
+          whatsapp: data.telefono || 'Usuario sin telefono',
         });
       } catch (error) {
         console.error('Error al cargar el perfil del usuario:', error);
@@ -35,7 +82,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
       try {
         const response = await fetch(`https://glamperosapi.onrender.com/glampings/${glampingId}`);
         const data = await response.json();
-        setNombreGlamping(data.nombreGlamping); // Asumimos que el campo es nombreGlamping
+        setNombreGlamping(data.nombreGlamping);
       } catch (error) {
         console.error('Error al obtener el glamping:', error);
       }
@@ -80,6 +127,10 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
         }
 
         setMensaje('');
+        // Si el usuario tiene WhatsApp, enviar el mensaje también por WhatsApp
+        if (usuario.whatsapp !== 'Usuario sin telefono') {
+          enviarMensaje(usuario.whatsapp);
+        }
       } catch (error) {
         console.error('Error al enviar el mensaje:', error);
       }
