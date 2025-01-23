@@ -15,14 +15,12 @@ import Paso3A from "./Paso3A/index";
 import Paso3B from "./Paso3B/index";
 import Paso4A from "./Paso4A/index";
 import Swal from "sweetalert2";
-import animal from '../../Imagenes//animal.png'
-// import Cookies from 'js-cookie';
+import animal from '../../Imagenes/animal5.jpeg'
 import { useNavigate } from 'react-router-dom';
 import "./estilos.css";
 
 
 const CreacionGlamping: React.FC = () => {
-  // const correoUsuarioCookie = Cookies.get('correoUsuario');
   const [pasoActual, setPasoActual] = useState<number>(0);
   const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal,
      imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping,

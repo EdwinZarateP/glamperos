@@ -18,7 +18,7 @@ const guardarGlampingP: React.FC = () => {
     nombreGlamping: "",
     tipoGlamping: "",
     Acepta_Mascotas: false,
-    ubicacion: "", // Ubicación se llenará automáticamente
+    ubicacion: "", 
     precioEstandar: 0,
     Cantidad_Huespedes: 1,
     descuento: 0,
@@ -283,10 +283,18 @@ const guardarGlampingP: React.FC = () => {
         <div className="popup-felicitaciones">
           <div className="popup-contenido">
             <h2>¡Felicitaciones! 🎉</h2>
-            <p>Tu glamping se registró con éxito, te enviamos un correo con algunas indicaciones</p>
-            <button className="cerrar-popup" onClick={cerrarPopup} ref={cerrarPopupRef}>
-              Cerrar
+            <p>Tu glamping se registró con éxito, no olvides 
+              <strong> registrar tu whatsApp </strong> para notificar tus reservas</p>
+               <button
+              className="cerrar-popup"
+              onClick={() => navigate("/EdicionPerfil")}
+            >
+              Registra tu WhatsApp
             </button>
+            <button className="cerrar-popup" onClick={cerrarPopup} ref={cerrarPopupRef}>
+              Ya lo tenía registrado
+            </button>
+            
           </div>
         </div>
       )}
