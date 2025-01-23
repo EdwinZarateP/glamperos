@@ -3,7 +3,7 @@ import axios from "axios";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import {jwtDecode} from "jwt-decode";
 import { ContextoApp } from '../../Contexto/index';
-import { useNavigate } from "react-router-dom"; // Importar el hook de navegación
+import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import "./estilos.css";
 

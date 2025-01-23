@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: 1fr; /* En pantallas pequeñas, solo una columna */
   grid-template-rows: auto 1fr auto; /* Para el header, contenido y menú inferior */
-  height: 100vh;
+  height: 100%;
   gap: 15px;
 }
 

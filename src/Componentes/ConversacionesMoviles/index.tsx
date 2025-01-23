@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, KeyboardEvent } from 'react';
+import React, { useState, useEffect, useRef, KeyboardEvent, useContext} from 'react';
 import Cookies from 'js-cookie';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
+import { ContextoApp } from "../../Contexto/index";
 import animationData from '../../Imagenes/AnimationPuntos.json';
 import './estilos.css';
 
@@ -14,6 +15,7 @@ interface Message {
 
 const ConversacionesMoviles: React.FC = () => {
   const { idReceptor } = useParams<{ idReceptor: string }>();
+  const navigate = useNavigate();
   const [mensaje, setMensaje] = useState('');
   const [mensajes, setMensajes] = useState<Message[]>([]);
   const [nombreUsuarioChat, setNombreUsuarioChat] = useState<string>('');
@@ -22,8 +24,44 @@ const ConversacionesMoviles: React.FC = () => {
   const idEmisor = Cookies.get('idUsuario');
   const historialRef = useRef<HTMLDivElement>(null); // Referencia para el historial de mensajes.
   const [inicializado, setInicializado] = useState(false); // Controla el desplazamiento inicial.
-
   const [ultimaFecha, setUltimaFecha] = useState<string>(''); // Guardar la última fecha mostrada
+
+  const almacenVariables = useContext(ContextoApp);
+  
+    if (!almacenVariables) {
+      throw new Error(
+        "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
+      );
+    }
+    const { setActivarChat } = almacenVariables;
+  
+  //Se redirecciona 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 900 && idReceptor) {
+        navigate(`/Mensajes/${idReceptor}`);
+      }
+    };
+  
+    // Verificar el tamaño inicial de la pantalla
+    handleResize();
+  
+    // Agregar el event listener para redimensionar
+    window.addEventListener('resize', handleResize);
+  
+    // Limpiar el event listener al desmontar el componente
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [idReceptor, navigate]);
+  
+  // Verificar si idEmisor es undefined o null
+  useEffect(() => {
+    if (!idEmisor) {
+      setActivarChat(true);
+      navigate('/Registrarse');
+    }
+  }, [idEmisor, navigate]);
 
   // Obtener datos del usuario receptor desde la API
   useEffect(() => {

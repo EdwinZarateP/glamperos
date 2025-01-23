@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, KeyboardEvent, useContext } from 'react';
 import Cookies from 'js-cookie'; 
 import { ContextoApp } from "../../Contexto/index";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './estilos.css';
 
 interface Message {
@@ -21,16 +21,25 @@ const Conversaciones: React.FC = () => {
       "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
     );
   }
-
-  const { idUsuarioReceptor, setIdUsuarioReceptor, nombreUsuarioChat, fotoUsuarioChat } = almacenVariables;
-
+  const { idUsuarioReceptor, setIdUsuarioReceptor, nombreUsuarioChat, 
+    fotoUsuarioChat, setActivarChat } = almacenVariables;
+  
+  const navigate = useNavigate();
   const [mensaje, setMensaje] = useState('');
   const [mensajes, setMensajes] = useState<Message[]>([]);
-  const [autoScroll, setAutoScroll] = useState(true); // Controla el scroll automático
+  const [autoScroll, setAutoScroll] = useState(true);
 
   const idEmisor = Cookies.get('idUsuario');
   const idReceptorURL = idUsuarioReceptor || idReceptor;
   const historialRef = useRef<HTMLDivElement>(null);
+
+  // Redirección y activación de chat al cargar el componente
+  useEffect(() => {
+    if (!idEmisor) {
+      setActivarChat(true);
+      navigate('/Registrarse');
+    }
+  }, [idEmisor, navigate, setActivarChat]);
 
   useEffect(() => {
     if (!idUsuarioReceptor && idReceptor && setIdUsuarioReceptor) {
@@ -51,7 +60,6 @@ const Conversaciones: React.FC = () => {
             const mensajesOrdenados = data.mensajes.sort((a: Message, b: Message) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
             setMensajes(mensajesOrdenados);
 
-            // Solo hace scroll si autoScroll es true
             if (autoScroll && historialRef.current) {
               historialRef.current.scrollTop = historialRef.current.scrollHeight;
             }
@@ -88,7 +96,7 @@ const Conversaciones: React.FC = () => {
 
         setMensajes((prevMensajes) => [...prevMensajes, nuevoMensaje]);
         setMensaje('');
-        setAutoScroll(true); // Reactiva el scroll automático cuando se envía un mensaje
+        setAutoScroll(true);
       } catch (error) {
         console.error('Error al enviar el mensaje:', error);
       }
@@ -104,8 +112,6 @@ const Conversaciones: React.FC = () => {
   const manejarScroll = () => {
     if (historialRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = historialRef.current;
-
-      // Desactiva autoScroll si el usuario ha desplazado hacia arriba
       setAutoScroll(scrollTop + clientHeight >= scrollHeight - 10);
     }
   };
@@ -134,7 +140,7 @@ const Conversaciones: React.FC = () => {
       <div 
         className="ConversacionesHistorial"
         ref={historialRef}
-        onScroll={manejarScroll} // Detecta el scroll manual
+        onScroll={manejarScroll}
       >
         {mensajes.map((msg, index) => (
           <div key={index} className={`ConversacionesMensaje ${msg.emisor === idEmisor ? 'ConversacionesEmisor' : 'ConversacionesReceptor'}`}>

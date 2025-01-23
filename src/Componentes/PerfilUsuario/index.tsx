@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from "sweetalert2"; 
 import Cookies from 'js-cookie';
+import { ContextoApp } from "../../Contexto/index";
 import './estilos.css';
 
 interface PerfilUsuarioProps {
@@ -9,6 +10,7 @@ interface PerfilUsuarioProps {
 }
 
 const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
+
   const [usuario, setUsuario] = useState({
     foto: '',
     nombre: '',
@@ -19,9 +21,17 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
   const navigate = useNavigate();
   const { glampingId } = useParams<{ glampingId: string }>();
 
+const almacenVariables = useContext(ContextoApp);
+
+  if (!almacenVariables) {
+    throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
+  }
+  // const { urlConversacion, setUrlConversacion } = almacenVariables;
+  
+  const idEmisor = Cookies.get('idUsuario');
   const mensaje1: string = usuario.nombre;     
   const mensaje2: string = mensaje;         
-  const mensaje3: string = '25 de enero de 2025'; 
+  const mensaje3: string = `https://glamperos.com/MensajesIndividuales/${idEmisor}`; 
   const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
 
   const enviarMensaje = async (numero: string) => {
@@ -97,8 +107,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     fetchUsuario();
   }, [propietario_id, glampingId]);
 
-  const manejarMensaje = async () => {
-    const idEmisor = Cookies.get('idUsuario');
+  const manejarMensaje = async () => { 
 
     // Si no existe idEmisor, redirige al usuario a la página de registro
     if (!idEmisor) {
@@ -130,11 +139,11 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(nuevoMensaje),
         });
-
+         
         // Navegación condicional según el tamaño de la pantalla
         if (window.innerWidth < 900) {
           navigate(`/MensajesIndividuales/${propietario_id}`);
-        } else {
+        } else {         
           navigate(`/Mensajes/${propietario_id}`);
         }
 
