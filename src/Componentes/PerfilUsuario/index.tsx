@@ -28,9 +28,11 @@ const almacenVariables = useContext(ContextoApp);
   }
   
   const idEmisor = Cookies.get('idUsuario');
-  const mensaje1: string = usuario.nombre;     
+  // const nombreEmisor = Cookies.get('nombreUsuario');
+  
+  const mensaje1: string = usuario.nombre.split(' ')[0];
   const mensaje2: string = mensaje;         
-  const mensaje3: string = `https://glamperos.com/MensajesIndividuales/${idEmisor}`; 
+  // const mensaje3: string = nombreEmisor??"";  
   const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
 
   const enviarMensaje = async (numero: string) => {
@@ -41,7 +43,7 @@ const almacenVariables = useContext(ContextoApp);
       to: numero,
       type: "template",
       template: {
-        name: "confirmacion",
+        name: "ejemplo",
         language: {
           code: "es"
         },
@@ -51,9 +53,18 @@ const almacenVariables = useContext(ContextoApp);
             parameters: [
               { type: "text", text: mensaje1 },
               { type: "text", text: mensaje2 },
-              { type: "text", text: mensaje3 }
+              // { type: "text", text: mensaje3 }
+            ]
+          },
+          {
+            type: "button",
+            sub_type: "url",
+            index: "0", 
+            parameters: [
+            { type: "text", text: idEmisor }
             ]
           }
+
         ]
       }
     };
