@@ -22,7 +22,7 @@ const Conversaciones: React.FC = () => {
     );
   }
   const { idUsuarioReceptor, setIdUsuarioReceptor, nombreUsuarioChat, 
-    fotoUsuarioChat, setActivarChat } = almacenVariables;
+    fotoUsuarioChat, setActivarChat, setIdUrlConversacion } = almacenVariables;
   
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState('');
@@ -37,6 +37,7 @@ const Conversaciones: React.FC = () => {
   useEffect(() => {
     if (!idEmisor) {
       setActivarChat(true);
+      setIdUrlConversacion(idReceptor??"")
       navigate('/Registrarse');
     }
   }, [idEmisor, navigate, setActivarChat]);

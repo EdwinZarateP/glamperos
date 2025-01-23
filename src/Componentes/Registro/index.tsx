@@ -8,7 +8,8 @@ import Cookies from 'js-cookie';
 import "./estilos.css";
 
 const Registro: React.FC = () => {
-  const { setIdUsuario, setLogueado, setNombreUsuario, setCorreoUsuario, siono } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
+  const { setIdUsuario, setLogueado, setNombreUsuario, setCorreoUsuario,
+     siono, activarChat, setActivarChat, idUrlConversacion } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
   const [mensaje, setMensaje] = useState<string | null>(null);
   const navigate = useNavigate(); // Crear la función de navegación
 
@@ -79,12 +80,16 @@ const Registro: React.FC = () => {
         setCorreoUsuario(usuario.email);
         setLogueado(true);
   
-        // Redirección según `siono`
-        if (siono) {
-          navigate("/CrearGlamping");
-        } else {
-          navigate("/");
-        }
+        // Redirección según `siono` y `activarChat`
+          if (siono) {
+            navigate("/CrearGlamping");
+          } else if (activarChat) {
+            setActivarChat(false)
+            navigate(`/MensajesIndividuales/${idUrlConversacion}`);            
+            
+          } else {
+            navigate("/");
+          }
       }
     } catch (error: any) {
       if (error.response?.status === 400) {

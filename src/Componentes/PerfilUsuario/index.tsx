@@ -26,7 +26,6 @@ const almacenVariables = useContext(ContextoApp);
   if (!almacenVariables) {
     throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
   }
-  // const { urlConversacion, setUrlConversacion } = almacenVariables;
   
   const idEmisor = Cookies.get('idUsuario');
   const mensaje1: string = usuario.nombre;     
@@ -143,7 +142,7 @@ const almacenVariables = useContext(ContextoApp);
         // Navegación condicional según el tamaño de la pantalla
         if (window.innerWidth < 900) {
           navigate(`/MensajesIndividuales/${propietario_id}`);
-        } else {         
+        } else {
           navigate(`/Mensajes/${propietario_id}`);
         }
 

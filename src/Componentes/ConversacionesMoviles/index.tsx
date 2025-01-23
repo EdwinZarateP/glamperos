@@ -33,7 +33,7 @@ const ConversacionesMoviles: React.FC = () => {
         "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
       );
     }
-    const { setActivarChat } = almacenVariables;
+    const { setActivarChat, setIdUrlConversacion } = almacenVariables;
   
   //Se redirecciona 
   useEffect(() => {
@@ -59,6 +59,7 @@ const ConversacionesMoviles: React.FC = () => {
   useEffect(() => {
     if (!idEmisor) {
       setActivarChat(true);
+      setIdUrlConversacion(idReceptor??"")
       navigate('/Registrarse');
     }
   }, [idEmisor, navigate]);
