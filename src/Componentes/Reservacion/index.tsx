@@ -46,7 +46,7 @@ const Reservacion: React.FC = () => {
         setGlampingData({
           nombreGlamping: data.nombreGlamping,
           ciudad_departamento: data.ciudad_departamento,
-          imagen: data.imagenes?.[0] || null, // Tomar solo la primera imagen
+          imagen: data.imagenes?.[0] || null,
         });
       } catch (error) {
         console.error("Error al cargar los datos del glamping:", error);
@@ -161,6 +161,7 @@ const Reservacion: React.FC = () => {
           icon: "success",
           confirmButtonText: "Aceptar",
         }).then(() => {
+          enviarMensaje("573125443396");
           navigate("/"); // Redirigir a la página principal
         });
       }
@@ -174,6 +175,51 @@ const Reservacion: React.FC = () => {
       });
     } finally {
       setLoadingFechas(false);
+    }
+  };
+
+  const mensaje1: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
+  const mensaje2: string = fechaInicio? fechaInicio.toISOString().split("T")[0] : "Fecha inicio no definida";  
+  const mensaje3: string = fechaFin? fechaFin.toISOString().split("T")[0] : "Fecha fin no definida";
+
+  const enviarMensaje = async (numero: string) => {
+    const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
+    const body = {
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: numero,
+      type: "template",
+      template: {
+        name: "confirmacion",
+        language: {
+          code: "es"
+        },
+        components: [
+          {
+            type: "body",
+            parameters: [
+              { type: "text", text: mensaje1 },
+              { type: "text", text: mensaje2 },
+              { type: "text", text: mensaje3 }
+            ]
+          }
+        ]
+      }
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+     
+    } else {
+      alert('Error al enviar el mensaje');
     }
   };
 

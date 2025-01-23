@@ -51,7 +51,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer EAAQRcjELZCLIBOzt1VXyZBCAmzndCbM5fL31duGMOtS5X4dmKgqKZAi2nOsHUKtJ3Y5oxqYQiLhmAhMG46UsMbopUkLrEXT3aeW1TI4mdHmuIy29Ly9JQU0DFm5ZBnZBEEarCxEMcxZBwgdLdfFulC8VHq1LJ9UGBNAGmlSSnpkJYgfNRSpAdV7f5B30bw8O6pywZDZD`,
+        'Authorization': `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),

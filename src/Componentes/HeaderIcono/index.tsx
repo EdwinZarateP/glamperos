@@ -1,5 +1,5 @@
 import React from "react";
-import animal from '../../Imagenes/animal.png';
+import animal from '../../Imagenes/animal5.jpeg'
 import { useNavigate } from "react-router-dom";
 import "./estilos.css";
 

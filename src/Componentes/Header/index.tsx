@@ -5,7 +5,7 @@ import PanelBusqueda from "../PanelBusqueda";
 import { ContextoApp } from "../../Contexto/index"; 
 import { evaluarVariable } from '../../Funciones/ValidarVariable';
 import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
-import animal from '../../Imagenes//animal.png'
+import animal from '../../Imagenes/animal5.jpeg'
 import { BsIncognito } from "react-icons/bs";
 import Cookies from 'js-cookie';
 import MenuUsuario from '../MenuUsuario/index'; // Ajusta la ruta si es necesario
