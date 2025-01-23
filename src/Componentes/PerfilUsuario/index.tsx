@@ -50,7 +50,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer EAAQRcjELZCLIBO6P23Ecy5f0lsLWtD1wcAxL8e3Nghhdj9ZBVZBsO5y7kbDAkNfjFRgsXYzsUrhPiJQZAgCxe8ncmGS4o9hD7AxRdojtE7En4FljHzLttMq5ingprk2QOEdtZAgFAFH1NRHgIQrJrzHkdkdm2x8ZBAWYnSM4Gbjj5y5nSP7FnkwJBxZCYtrkgebAvg2VmuXY7C7tUJQ1696ZC3gZD`,
+        'Authorization': `Bearer EAAQRcjELZCLIBOzt1VXyZBCAmzndCbM5fL31duGMOtS5X4dmKgqKZAi2nOsHUKtJ3Y5oxqYQiLhmAhMG46UsMbopUkLrEXT3aeW1TI4mdHmuIy29Ly9JQU0DFm5ZBnZBEEarCxEMcxZBwgdLdfFulC8VHq1LJ9UGBNAGmlSSnpkJYgfNRSpAdV7f5B30bw8O6pywZDZD`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
