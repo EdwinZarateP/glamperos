@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from "sweetalert2"; 
 import Cookies from 'js-cookie';
 import './estilos.css';
 
@@ -101,6 +102,16 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     // Si no existe idEmisor, redirige al usuario a la página de registro
     if (!idEmisor) {
       navigate("/Registrarse");
+      return;
+    }
+
+    // Validar si el emisor es el mismo que el propietario_id
+    if (idEmisor === propietario_id) {
+       Swal.fire({
+              icon: 'error',
+              title: 'Mensaje de dueño a dueño',
+              text: 'No puedes enviarte un mensaje a ti mismo',
+            });
       return;
     }
 
