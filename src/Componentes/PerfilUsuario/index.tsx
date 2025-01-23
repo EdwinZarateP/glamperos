@@ -22,6 +22,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
   const mensaje1: string = usuario.nombre;     
   const mensaje2: string = mensaje;         
   const mensaje3: string = '25 de enero de 2025'; 
+  const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
 
   const enviarMensaje = async (numero: string) => {
     const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
@@ -51,7 +52,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
+        'Authorization': `Bearer ${WHATSAPP_API_TOKEN}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
