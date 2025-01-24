@@ -178,13 +178,20 @@ const Reservacion: React.FC = () => {
     }
   };
 
+  //formatear fecha
+  const formatoFecha = (fecha: Date | null): string => {
+    if (!fecha) return "Fecha no definida";
+    return fecha.toLocaleDateString("es-CO", {
+      day: "numeric",
+      month: "short", // Abreviatura del mes (3 letras)
+      year: "numeric",
+    });
+  };  
+  
   const mensaje1: string = "Edwin"
-  const mensaje2: string = "A"
-  const mensaje3: string = "2025-01-02"
-  const mensaje4: string = "2025-01-03"
-  // const mensaje2: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
-  // const mensaje3: string = fechaInicio? fechaInicio.toISOString().split("T")[0] : "Fecha fin no definida";
-  // const mensaje4: string = fechaFin? fechaFin.toISOString().split("T")[0] : "Fecha fin no definida";
+  const mensaje2: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
+  const mensaje3: string = fechaInicio ? formatoFecha(fechaInicio) : "Fecha fin no definida";
+  const mensaje4: string = fechaFin ? formatoFecha(fechaFin) : "Fecha fin no definida";
   const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
 
   const enviarMensaje = async (numero: string) => {
@@ -207,7 +214,7 @@ const Reservacion: React.FC = () => {
               {
                 type: "image",
                 image: {
-                  link: "https://storage.googleapis.com/glamperos-imagenes/glampings/d7fcf38173a64c9c880f86df01551f43.webp"
+                  link: "https://storage.googleapis.com/glamperos-imagenes/Imagenes/animal1.jpeg"
                 }
               }
             ]
