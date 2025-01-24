@@ -12,8 +12,8 @@ interface Glamping {
 }
 
 const SepararFechas: React.FC = ({}) => {
-  const almacenVariables = useContext(ContextoApp);
 
+  const almacenVariables = useContext(ContextoApp);
   if (!almacenVariables) {
     throw new Error(
       "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."

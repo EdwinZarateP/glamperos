@@ -16,6 +16,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({ propietario_id }) => {
     nombre: '',
     whatsapp: '',
   });
+  
   const [mensaje, setMensaje] = useState('');
   const [nombreGlamping, setNombreGlamping] = useState('');
   const navigate = useNavigate();

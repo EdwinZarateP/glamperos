@@ -1,12 +1,35 @@
 import Lottie from 'lottie-react';
 import animationData from "../../Imagenes/AnimationPuntos.json";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { ContextoApp } from "../../Contexto/index";
+import Cookies from 'js-cookie';
 import Swal from "sweetalert2";
+import Politicas from "../../Componentes/Politica/index";
+import { crearReserva, Reserva } from "../../Funciones/CrearReserva";
 import "./estilos.css";
 
+
 const Reservacion: React.FC = () => {
-  const navigate = useNavigate(); // Hook para redirigir
+  
+  const idCliente = Cookies.get('idUsuario');
+  const almacenVariables = useContext(ContextoApp);
+    
+    if (!almacenVariables) {
+      throw new Error(
+        "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
+      );
+    }
+  
+    const {verPolitica, setVerPolitica } = almacenVariables;
+  
+  const navigate = useNavigate(); 
+
+  const [usuario, setUsuario] = useState({
+      nombreDueño: '',
+      whatsapp: '',
+    });
+
   const {
     glampingId,
     fechaInicioReservada,
@@ -24,14 +47,28 @@ const Reservacion: React.FC = () => {
   }>();
 
   const [glampingData, setGlampingData] = useState<{
+    propietario_id: string;
     nombreGlamping: string;
     ciudad_departamento: string;
     imagen: string | null;
   } | null>(null);
 
   const [fechasReservadas, setFechasReservadas] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Estado para controlar la carga
+  const [isLoading, setIsLoading] = useState<boolean>(true); 
   const [loadingFechas, setLoadingFechas] = useState<boolean>(false); // Estado de carga de fechas reservadas
+
+  const fetchUsuario = async (propietarioId: string) => {
+    try {
+      const response = await fetch(`https://glamperosapi.onrender.com/usuarios/${propietarioId}`);
+      const data = await response.json();
+      setUsuario({
+        nombreDueño: data.nombre || 'Usuario sin nombre',
+        whatsapp: data.telefono || 'Usuario sin teléfono',
+      });
+    } catch (error) {
+      console.error('Error al cargar el perfil del usuario:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchGlampingData = async () => {
@@ -44,6 +81,7 @@ const Reservacion: React.FC = () => {
         }
         const data = await response.json();
         setGlampingData({
+          propietario_id: data.propietario_id,
           nombreGlamping: data.nombreGlamping,
           ciudad_departamento: data.ciudad_departamento,
           imagen: data.imagenes?.[0] || null,
@@ -63,6 +101,14 @@ const Reservacion: React.FC = () => {
 
     fetchGlampingData();
   }, [glampingId]);
+
+  // Ejecutar fetchUsuario cuando glampingData tenga un propietario_id
+  useEffect(() => {    
+    if (glampingData?.propietario_id) {
+      fetchUsuario(glampingData.propietario_id);
+    }
+  }, [glampingData]);
+
 
   useEffect(() => {
     const fetchFechasReservadas = async () => {
@@ -161,7 +207,8 @@ const Reservacion: React.FC = () => {
           icon: "success",
           confirmButtonText: "Aceptar",
         }).then(() => {        
-          enviarMensaje("573125443396");
+          handleCrearReserva();
+          enviarMensaje( usuario?.whatsapp);
           navigate("/"); 
         });
       }
@@ -183,12 +230,12 @@ const Reservacion: React.FC = () => {
     if (!fecha) return "Fecha no definida";
     return fecha.toLocaleDateString("es-CO", {
       day: "numeric",
-      month: "short", // Abreviatura del mes (3 letras)
+      month: "short", 
       year: "numeric",
     });
   };  
   
-  const mensaje1: string = "Edwin"
+  const mensaje1: string = usuario?.nombreDueño.split(' ')[0]?? "Estimado(a)";
   const mensaje2: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
   const mensaje3: string = fechaInicio ? formatoFecha(fechaInicio) : "Fecha fin no definida";
   const mensaje4: string = fechaFin ? formatoFecha(fechaFin) : "Fecha fin no definida";
@@ -250,8 +297,30 @@ const Reservacion: React.FC = () => {
     }
   };
 
+  //Aqui ejecutamos la api para guardar la reserva
+  const handleCrearReserva = async () => {
+      const nuevaReserva: Reserva = {
+        idCliente: idCliente??"No tiene Id",
+        idPropietario: glampingData?.propietario_id??"propietario_id No registrado",
+        idGlamping: glampingId??"No tiene GlampingId",
+        FechaIngreso: fechaInicio ? fechaInicio.toISOString() : '',
+        FechaSalida: fechaFin ? fechaFin.toISOString() : '',
+        ValorReserva: precioConTarifaNum,
+        huespedes: 2,
+        mascotas: 1,
+        EstadoReserva: "Pendiente",
+      };
+  
+      try {
+        await crearReserva(nuevaReserva);
+      } catch (error) {
+        console.error("Error al crear la reserva:", error);
+      }
+    };
+
   return (
     <div className="reservacion-container">
+      
       {isLoading ? (
         <div className="reservacion-loading-animation">
           <Lottie 
@@ -263,7 +332,7 @@ const Reservacion: React.FC = () => {
         <>
           <h1 className="reservacion-titulo">{glampingData?.nombreGlamping}</h1>
           <h2 className="reservacion-subtitulo">{glampingData?.ciudad_departamento}</h2>
-
+  
           {glampingData && (
             <div className="reservacion-glamping-info">
               {glampingData.imagen && (
@@ -284,10 +353,10 @@ const Reservacion: React.FC = () => {
                   {fechaFin?.toLocaleDateString()}
                 </p>
                 <p>
-                    Precio por {totalDiasNum} {totalDiasNum === 1 ? "noche" : "noches"}: {" "}
-                    {formatoPesos(precioConTarifaNum - TarifaGlamperosNum)}
+                  Precio por {totalDiasNum} {totalDiasNum === 1 ? "noche" : "noches"}:{" "}
+                  {formatoPesos(precioConTarifaNum - TarifaGlamperosNum)}
                 </p>
-
+  
                 <p>
                   Tarifa de Glamperos: {formatoPesos(TarifaGlamperosNum)}
                 </p>
@@ -297,13 +366,20 @@ const Reservacion: React.FC = () => {
               </div>
             </div>
           )}
-
+  
           <div className="reservacion-payment-button-container">
             <button className="reservacion-payment-button" onClick={enviarFechasAPI}>
               Confirmar y pagar
             </button>
           </div>
-
+  
+          {/* Botón para mostrar políticas */}
+          <div className="Reservacion-verPoliticas">
+            <span  onClick={() => setVerPolitica(true)}>
+              Ver Políticas de Cancelación
+            </span>
+          </div>
+  
           {loadingFechas && (
             <div className="reservacion-loading-animation">
               <Lottie 
@@ -314,8 +390,17 @@ const Reservacion: React.FC = () => {
           )}
         </>
       )}
+  
+      {/* Modal emergente de Políticas */}
+      {verPolitica && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <Politicas/>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default Reservacion;

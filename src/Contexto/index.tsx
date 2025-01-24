@@ -50,6 +50,9 @@ interface ContextProps {
   setVerVideo: Dispatch<SetStateAction<boolean>>;
   activarChat: boolean;
   setActivarChat: Dispatch<SetStateAction<boolean>>;
+  verPolitica: boolean;
+  setVerPolitica: Dispatch<SetStateAction<boolean>>;
+
 
   // Variables de tipo string
   nombreGlamping: string;
@@ -265,7 +268,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
   const [siono, setSiono] = useState<boolean>(false);   
   const [verVideo, setVerVideo] = useState<boolean>(false); 
-  const [activarChat, setActivarChat] = useState<boolean>(false);   
+  const [activarChat, setActivarChat] = useState<boolean>(false);
+  const [verPolitica, setVerPolitica] = useState<boolean>(false);
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
   const [imagenesCargadas, setImagenesCargadas] = useState<File[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
@@ -356,6 +360,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     siono, setSiono, 
     verVideo, setVerVideo,
     activarChat, setActivarChat,   
+    verPolitica, setVerPolitica,
     nombreGlamping, setNombreGlamping,
     descripcionGlamping, setDescripcionGlamping,
     ciudad_departamento, setCiudad_departamento,

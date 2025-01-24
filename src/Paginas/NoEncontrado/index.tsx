@@ -1,20 +1,15 @@
-// import MapaGlampingsCercanos from "../../Componentes/MapaGlampingsCercanos/index";
+import React from "react";
+import "./estilos.css";
 
 const NoEncontrado: React.FC = () => {
-
-//     const center = { lat: 4.60971, lng: -74.08175 }; // Bogotá
-// const nearbyCoordinates = [
-//   { lat: 4.61071, lng: -74.08075 }, // 100 metros al norte
-//   { lat: 4.60871, lng: -74.08075 }, // 100 metros al sur
-//   { lat: 4.60971, lng: -74.07975 }, // 100 metros al este
-//   { lat: 4.60971, lng: -74.08375 }, // 100 metros al oeste
-//   { lat: 4.61171, lng: -74.08275 }, // 200 metros en diagonal
-// ];
-
     return (
-        <div>
-            No Encontrado nada
-
+        <div className="NoEncontrado-pagina">
+            <div className="NoEncontrado-contenido">
+                <h1 className="NoEncontrado-titulo">404</h1>
+                <p className="NoEncontrado-mensaje">¡Oops! En Glamperos la página que buscas no existe.</p>
+                <p className="NoEncontrado-submensaje">Pero no te preocupes, puedes explorar nuestras opciones de glamping y encontrar tu escapada perfecta.</p>
+                <a href="/" className="NoEncontrado-boton">Volver al inicio</a>
+            </div>
         </div>
     );
 };

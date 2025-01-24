@@ -94,6 +94,18 @@ h2.reservacion-subtitulo {
   background-color: #1f4a2a;
 }
 
+.Reservacion-verPoliticas{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #818281;
+}
+
+
 /* Media Queries para hacerlo responsive */
 @media (max-width: 600px) {
   .reservacion-glamping-info {

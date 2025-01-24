@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Lottie from 'lottie-react';
-import animationData from "../../Imagenes/AnimationPuntos.json"; 
+import animationData from "../../Imagenes/AnimationPuntos.json";
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import "./estilos.css";
 
@@ -98,32 +98,33 @@ const Cuenta: React.FC = () => {
 
         <div className="Cuenta-tarjeta">
           <i className="icono-pagos"></i>
-          <h3>Pagos</h3>
-          <p>Revisa pagos de tus reservas</p>
-        </div>
-
-        {usuario?.glampings && usuario.glampings.length > 0 && (
-          <div className="Cuenta-tarjeta">
-            <i className="icono-cobros"></i>
-            <h3>Cobros</h3>
-            <p>Revisa cobros de tus reservas</p>
-          </div>
-        )}
+          <h3>Mis reservas</h3>
+          <p>Revisa tus reservas efectuadas</p>
+        </div>        
 
         <div className="Cuenta-tarjeta">
           <i className="icono-notificaciones"></i>
           <h3>Notificaciones</h3>
           <p>Elige las preferencias de notificación y tu forma de contacto</p>
         </div>
+      </div>
 
-        {usuario?.glampings && usuario.glampings.length > 0 && (
+      {usuario?.glampings && usuario.glampings.length > 0 && (
+        <div className="Cuenta-contenedor-Propietario">
+          <h1 className="Cuenta-titulo">Propietario</h1>
+          <div className="Cuenta-tarjeta">
+            📅
+            <h3>Tus Glamping reservados</h3>
+            <p>Revisa las reservas vigentes e históricas</p>
+          </div>
+
           <div className="Cuenta-tarjeta" onClick={manejarEditarGlamping}>
             <i className="icono-glampings"></i>
             <h3>Editar información de tus glamping</h3>
             <p>Cambia información básica y fotos</p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Contenedor para el botón de Cerrar Sesión alineado a la derecha */}
       <div className="Cuenta-cerrar-sesion-container">

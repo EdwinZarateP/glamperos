@@ -1,6 +1,19 @@
 .Cuenta-contenedor {
   padding: 20px;
-  width: 80%;
+  height: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Cuenta-contenedor-Propietario {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .Cuenta-titulo {
@@ -16,7 +29,7 @@
 
 .Cuenta-tarjetas {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
@@ -27,10 +40,11 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: left;
   cursor: pointer;
+  transition: box-shadow 0.3s ease;
 }
 
 .Cuenta-tarjeta:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .Cuenta-tarjeta h3 {
@@ -47,16 +61,8 @@
   content: "📄";
 }
 
-.icono-seguridad:before {
-  content: "🔒";
-}
-
 .icono-pagos:before {
   content: "💳";
-}
-
-.icono-cobros:before {
-  content: "💵";
 }
 
 .icono-notificaciones:before {
@@ -69,77 +75,52 @@
 
 .Cuenta-cerrar-sesion {
   cursor: pointer;
-  color: #f44336; 
+  color: #f44336;
   font-size: 16px;
   text-decoration: underline;
   transition: color 0.3s ease;
-  margin-top: 40px; 
-  display: inline-block;
-  padding: 10px 20px; /* Agregado un poco de padding */
-  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .Cuenta-cerrar-sesion:hover {
-  color: #d32f2f; /* Cambiar color al pasar el mouse */
+  color: #d32f2f;
 }
 
 .Cuenta-cerrar-sesion-container {
   display: flex;
-  justify-content: flex-end; /* Mover a la derecha */
-  padding-right: 20px; /* Espacio a la derecha */
+  justify-content: flex-end;
+  padding-right: 20px;
+
 }
 
-/* Media Queries para hacer el diseño responsive */
+/* Media Queries para hacerlo más responsivo */
 
-@media (max-width: 1024px) {
+/* Pantallas medianas y mayores */
+@media (min-width: 900px) {
+  .Cuenta-contenedor{
+    padding-top: 120px;
+    width: 80%;
+  }
+  
   .Cuenta-tarjetas {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas para pantallas medianas */
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 600px) {
+
+  .Cuenta-tarjetas {
+    grid-template-columns: 1fr; 
+
   }
 
   .Cuenta-tarjeta {
-    padding: 15px; /* Menos padding en pantallas medianas */
-  }
-}
-
-@media (max-width: 768px) {
-  .Cuenta-contenedor {
-    width: 95%;
-
+    padding: 15px;
   }
 
-  .Cuenta-tarjetas {
-    grid-template-columns: 1fr; /* 1 columna para pantallas pequeñas */
-  }
-
-  .Cuenta-titulo {
-    font-size: 20px; /* Tamaño de fuente más pequeño para pantallas pequeñas */
-  }
-
-  .Cuenta-informacion {
-    font-size: 14px; /* Reduce el tamaño de fuente para pantallas pequeñas */
-  }
-
-  .Cuenta-tarjeta h3 {
-    font-size: 16px; /* Tamaño más pequeño en pantallas pequeñas */
-  }
-
-  .Cuenta-tarjeta p {
-    font-size: 12px; /* Ajuste de fuente para pantallas pequeñas */
-  }
-
-  .icono-datos-personales:before,
-  .icono-seguridad:before,
-  .icono-pagos:before,
-  .icono-cobros:before,
-  .icono-notificaciones:before,
-  .icono-glampings:before {
-    font-size: 24px; /* Aumentar el tamaño del icono para pantallas pequeñas */
-  }
-}
-
-/* Media Query para pantallas menores a 600px */
-@media (max-width: 600px) {
   .Cuenta-tarjeta:nth-child(5) {
-    display: none; /* Ocultar la tarjeta de "Editar información de tus glamping" */
+    display: none; /* Ocultar el glamping si no hay */
   }
 }
