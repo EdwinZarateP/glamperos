@@ -160,9 +160,9 @@ const Reservacion: React.FC = () => {
           } al ${fechaFin.toISOString().split("T")[0]} se han reservado correctamente.`,
           icon: "success",
           confirmButtonText: "Aceptar",
-        }).then(() => {
+        }).then(() => {        
           enviarMensaje("573125443396");
-          navigate("/"); // Redirigir a la página principal
+          navigate("/"); 
         });
       }
     } catch (error) {
@@ -178,9 +178,13 @@ const Reservacion: React.FC = () => {
     }
   };
 
-  const mensaje1: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
-  const mensaje2: string = fechaInicio? fechaInicio.toISOString().split("T")[0] : "Fecha inicio no definida";  
-  const mensaje3: string = fechaFin? fechaFin.toISOString().split("T")[0] : "Fecha fin no definida";
+  const mensaje1: string = "Edwin"
+  const mensaje2: string = "A"
+  const mensaje3: string = "2025-01-02"
+  const mensaje4: string = "2025-01-03"
+  // const mensaje2: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
+  // const mensaje3: string = fechaInicio? fechaInicio.toISOString().split("T")[0] : "Fecha fin no definida";
+  // const mensaje4: string = fechaFin? fechaFin.toISOString().split("T")[0] : "Fecha fin no definida";
   const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
 
   const enviarMensaje = async (numero: string) => {
@@ -191,19 +195,32 @@ const Reservacion: React.FC = () => {
       to: numero,
       type: "template",
       template: {
-        name: "confirmacion",
+        name: "confirmacionreserva",
         language: {
-          code: "es"
+          code: "es_CO"
         },
         components: [
+          
+          {
+            type: "header",
+            parameters: [
+              {
+                type: "image",
+                image: {
+                  link: "https://storage.googleapis.com/glamperos-imagenes/glampings/d7fcf38173a64c9c880f86df01551f43.webp"
+                }
+              }
+            ]
+          }, 
           {
             type: "body",
             parameters: [
               { type: "text", text: mensaje1 },
               { type: "text", text: mensaje2 },
-              { type: "text", text: mensaje3 }
+              { type: "text", text: mensaje3 },
+              { type: "text", text: mensaje4 }
             ]
-          }
+          }                  
         ]
       }
     };
@@ -220,7 +237,9 @@ const Reservacion: React.FC = () => {
     if (response.ok) {
      
     } else {
-      alert('Error al enviar el mensaje');
+      const errorData = await response.json();
+      console.error("Error al enviar mensaje:", errorData);
+      alert(`Error al enviar el mensaje: ${errorData.error.message}`);
     }
   };
 
