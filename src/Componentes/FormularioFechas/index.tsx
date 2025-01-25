@@ -7,6 +7,7 @@ import Visitantes from "../Visitantes";
 import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import { ExtraerTarifaGlamperos } from "../../Funciones/ExtraerTarifaGlamperos";
+import Swal from "sweetalert2";
 import "./estilos.css";
 
 interface FormularioFechasProps {
@@ -153,6 +154,26 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
     }
   }, [mostrarVisitantes]);
 
+  // Función validarFechas para evitar navegar cuando selecciona mal los rangos
+  const validarFechas = (): boolean => {
+    if (!fechaInicio || !fechaFin) {
+      Swal.fire({
+        icon: "warning",
+        title: "¡Ups! 🤔",
+        text: `La fecha de salida debe ser mayor que la fecha de llegada, da clic en el botón Borrar fechas e intenta nuevamente`,
+        confirmButtonText: "Aceptar",
+      });
+      return false;
+    }
+    return true;
+  };  
+
+  const handleReservarClick = (e: React.MouseEvent) => {
+    if (!validarFechas()) {
+      e.preventDefault(); // Evitar la navegación al enlace si no pasa la validación
+    }
+  };
+
   return (
     <>
       <div className="FormularioFechas-contenedor">
@@ -196,6 +217,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
         <Link        
           to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDiasRender}`}
           className="FormularioFechas-botonReserva"
+          onClick={handleReservarClick}
         >
           <GiCampingTent className="FormularioFechas-botonReserva-icono" />
           Reservar

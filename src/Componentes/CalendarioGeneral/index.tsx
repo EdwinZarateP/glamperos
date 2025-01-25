@@ -75,7 +75,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       Swal.fire({
         icon: 'error',
         title: 'Error en el rango de fechas',
-        text: 'La fecha de inicio no puede ser posterior a la fecha de fin.',
+        text: 'La fecha de inicio no puede ser posterior a la fecha de fin, da clic al botón Borrar fechas e intenta nuevamente.',
       });
       return false;
     }
