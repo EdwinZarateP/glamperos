@@ -9,9 +9,10 @@ interface VisitantesProps {
   max_niños: number;
   max_bebes: number;
   max_mascotas: number;
+  max_huespedes: number;
 }
 
-const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niños, max_bebes, max_mascotas }) => {
+const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niños, max_bebes, max_mascotas, max_huespedes}) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -32,7 +33,7 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niñ
     setTotalHuespedes,
   } = almacenVariables;
 
-  const MAX_HUESPEDES = 10;
+  const MAX_HUESPEDES = max_huespedes;
 
   // Calcula y actualiza el total de huéspedes
   useEffect(() => {

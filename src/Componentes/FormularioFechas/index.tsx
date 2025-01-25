@@ -13,9 +13,10 @@ interface FormularioFechasProps {
   precioPorNoche: number;
   descuento: number;
   admiteMascotas:boolean;
+  Cantidad_Huespedes: number;
 }
 
-const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, descuento, admiteMascotas }) => {
+const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, descuento, admiteMascotas, Cantidad_Huespedes }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -238,6 +239,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
         max_adultos={10}
         max_niños={10}
         max_bebes={5}
+        max_huespedes={Cantidad_Huespedes}
         max_mascotas={admiteMascotas ? 5 : 0}      
         onCerrar={() => setMostrarVisitantes(false)}
       />      

@@ -30,6 +30,7 @@ const Reservacion: React.FC = () => {
   const [usuario, setUsuario] = useState({
       nombreDueño: '',
       whatsapp: '',
+      correoPropietario: '',
     });
 
   const {
@@ -53,6 +54,10 @@ const Reservacion: React.FC = () => {
     nombreGlamping: string;
     ciudad_departamento: string;
     imagen: string | null;
+    ubicacion: {
+      lat: number;
+      lng: number;
+    };
   } | null>(null);
 
   const [fechasReservadas, setFechasReservadas] = useState<string[]>([]);
@@ -66,6 +71,7 @@ const Reservacion: React.FC = () => {
       setUsuario({
         nombreDueño: data.nombre || 'Usuario sin nombre',
         whatsapp: data.telefono || 'Usuario sin teléfono',
+        correoPropietario: data.email || 'Usuario sin teléfono',
       });
     } catch (error) {
       console.error('Error al cargar el perfil del usuario:', error);
@@ -87,6 +93,7 @@ const Reservacion: React.FC = () => {
           nombreGlamping: data.nombreGlamping,
           ciudad_departamento: data.ciudad_departamento,
           imagen: data.imagenes?.[0] || null,
+          ubicacion: data.ubicacion || null,
         });
       } catch (error) {
         console.error("Error al cargar los datos del glamping:", error);
@@ -180,11 +187,13 @@ const Reservacion: React.FC = () => {
         Swal.fire({
           title: "Fecha no disponible",
           text: `No se puede reservar las fechas del ${
-            fechaInicio.toISOString().split("T")[0]
-          } al ${fechaFin.toISOString().split("T")[0]} porque ya están reservadas.`,
+            fechaInicio.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })
+          } al ${
+            fechaFin.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })
+          } porque ya están reservadas.`,
           icon: "error",
           confirmButtonText: "Aceptar",
-        });
+        });        
       } else {
         // Actualizar las fechas reservadas
         const updateResponse = await fetch(
@@ -204,13 +213,15 @@ const Reservacion: React.FC = () => {
         Swal.fire({
           title: "¡Reservado!",
           text: `Las fechas del ${
-            fechaInicio.toISOString().split("T")[0]
-          } al ${fechaFin.toISOString().split("T")[0]} se han reservado correctamente.`,
+            fechaInicio.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })
+          } al ${fechaFin.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })} 
+           se han reservado correctamente, te enviamos un correo con la ubicación del glamping y el whatsApp de tu anfitrión`,
           icon: "success",
           confirmButtonText: "Aceptar",
         }).then(() => {        
           handleCrearReserva();
-          enviarCorreo(correoUsuarioCookie || "", nombreUsuarioCookie || "");
+          enviarCorreoPropietario(usuario?.correoPropietario || "", usuario?.nombreDueño || "");
+          enviarCorreoCliente(correoUsuarioCookie || "", nombreUsuarioCookie || "");
           enviarMensaje( usuario?.whatsapp);
           navigate("/"); 
         });
@@ -324,8 +335,60 @@ const Reservacion: React.FC = () => {
     };
 
     // envio de correo al dueño
-    const enviarCorreo = async (correo: string, nombre: string, fromEmail: string = "reservas@glamperos.com") => {
+    const enviarCorreoPropietario = async (correo: string, nombre: string, fromEmail: string = "reservaciones@glamperos.com") => {
       try {
+        const htmlContent = `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <h2 style="color: #2F6B3E;">🎉 Tienes una Reserva</h2>
+            <p>
+              Hola ${nombre.split(' ')[0]},
+            </p>
+            <p>
+              ¡Alguien reservó  ${glampingData?.nombreGlamping} con Glamperos! Aquí tienes los detalles de la reserva:              
+            </p>
+            <p>Check-In: ${fechaInicio?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>            
+            <p>Check-Out: ${fechaFin?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>
+            <p>Adultos: ${Cantidad_Adultos}</p>
+            <p>Niños: ${Cantidad_Niños}</p>
+            <p>Mascotas: ${Cantidad_Mascotas}</p>
+            <p>El correo de tu huéspeded es ${correoUsuarioCookie} para que te comuniques con él</p>
+            <p>
+              Si necesitas ayuda o tienes preguntas, nuestro equipo estará siempre aquí para ti.
+            </p>
+            <p>
+              ¡Juntos haremos que esta aventura sea inolvidable para nuestro huésped!
+            </p>
+            <p style="margin: 20px 0;">
+              El equipo de <strong style="color: #2F6B3E;">Glamperos</strong>.
+            </p>
+            <hr style="border: 1px solid #e0e0e0;">
+            <p style="font-size: 1em; color: #777;">
+              Si tienes preguntas, no dudes en ponerte en contacto con nosotros a través de nuestro portal.
+            </p>
+          </div>
+        `;
+    
+        await axios.post("https://glamperosapi.onrender.com/correos/send-email", {
+          from_email: fromEmail, // Agregar el remitente dinámico
+          email: correo,
+          name: nombre,
+          subject: `🗎 Reservaron  tu Glamping - ${glampingData?.nombreGlamping}`,
+          html_content: htmlContent, // Enviar el contenido del correo
+        });
+    
+        console.log(`Correo enviado con éxito: ${nombre}`);
+      } catch (error) {
+        console.error("Error al enviar el correo: ", error);
+      }
+    };
+    
+
+    // envio de correo al cliente
+    const enviarCorreoCliente = async (correo: string, nombre: string, fromEmail: string = "reservas@glamperos.com") => {
+      try {
+        const lat = glampingData?.ubicacion?.lat;
+        const lon = glampingData?.ubicacion?.lng;
+        const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
         const htmlContent = `
           <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
             <h2 style="color: #2F6B3E;">Confirmación Reserva </h2>
@@ -335,11 +398,16 @@ const Reservacion: React.FC = () => {
             <p>
               ¡Gracias por reservar con Glamperos! 🎉 Aquí tienes los detalles de tu reserva:              
             </p>
-            <p>CheckIn: ${fechaInicio?.toLocaleDateString()}</p>            
-            <p>CheckOut: ${fechaFin?.toLocaleDateString()}</p>
+            <p>Check-In: ${fechaInicio?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>            
+            <p>Check-Out: ${fechaFin?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>
             <p>Adultos: ${Cantidad_Adultos}</p>
             <p>Niños: ${Cantidad_Niños}</p>
-            <p>El contacto de WhatsApp de tu anfitrión es ${usuario.whatsapp}</p>
+            <p>Mascotas: ${Cantidad_Mascotas}</p>
+            <p>El contacto de WhatsApp de tu anfitrión es +57 ${usuario.whatsapp.slice(-10)}, escribele para estar en contacto</p>
+            <p>
+              La ubicación de tu glamping es la siguiente: 
+              <a href="${googleMapsLink}" target="_blank" style="color: #2F6B3E;">Ver en Google Maps</a>
+            </p>
             <p>
               Si necesitas ayuda o tienes preguntas, nuestro equipo estará siempre aquí para ti.
             </p>
@@ -369,7 +437,6 @@ const Reservacion: React.FC = () => {
         console.error("Error al enviar el correo: ", error);
       }
     };
-    
 
   return (
     <div className="reservacion-container">

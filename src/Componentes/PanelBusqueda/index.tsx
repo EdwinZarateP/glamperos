@@ -305,6 +305,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
           max_niños={10}
           max_bebes={5}
           max_mascotas={5} 
+          max_huespedes={10} 
           onCerrar={() => setMostrarVisitantes(false)}
         /> 
         </div>

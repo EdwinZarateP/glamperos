@@ -236,6 +236,7 @@ function ExplorarGlamping() {
                   precioPorNoche={informacionGlamping?.precioEstandar || 0}
                   descuento={informacionGlamping?.descuento || 0}
                   admiteMascotas={informacionGlamping?.Acepta_Mascotas || false}
+                  Cantidad_Huespedes={informacionGlamping?.Cantidad_Huespedes || 10}
                 />
               </div>
             </div>

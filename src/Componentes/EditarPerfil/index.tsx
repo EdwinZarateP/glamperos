@@ -183,12 +183,12 @@ const EditarPerfil: React.FC = () => {
               <input
               type="tel"
               id="telefono"
-              value={telefono}
+              value={telefono.slice(-10)}
               onChange={manejarTelefono}
               maxLength={10} // Limitar a 10 caracteres desde el front-end
             />            
             ) : (
-              <p>{telefono}</p>
+              <p>{telefono.slice(-10)}</p>
             )}
             <button
               onClick={() => setEditandoTelefono(!editandoTelefono)}
