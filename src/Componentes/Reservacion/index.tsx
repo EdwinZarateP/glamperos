@@ -469,8 +469,8 @@ const Reservacion: React.FC = () => {
                   <strong>{formatoPesos(Math.round(precioConTarifaNum / totalDiasNum))} / noche</strong>
                 </p>
                 <p>
-                  Desde el {fechaInicio?.toLocaleDateString()} al{" "}
-                  {fechaFin?.toLocaleDateString()}
+                  {fechaInicio?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })} - {" "}
+                  {fechaFin?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}
                 </p>
                 <p>
                   Precio por {totalDiasNum} {totalDiasNum === 1 ? "noche" : "noches"}:{" "}
