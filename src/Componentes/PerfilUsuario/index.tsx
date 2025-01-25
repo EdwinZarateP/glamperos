@@ -32,7 +32,7 @@ const almacenVariables = useContext(ContextoApp);
   const nombreEmisor = Cookies.get('nombreUsuario');
   
   const mensaje1: string = usuario.nombre.split(' ')[0];
-  const mensaje2:  string = nombreEmisor??"".split(' ')[0];      
+  const mensaje2: string = (nombreEmisor ?? "").split(' ')[0];    
   const mensaje3: string = mensaje;    
   const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
 
