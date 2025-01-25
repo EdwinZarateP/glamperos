@@ -6,7 +6,9 @@ export interface Reserva {
     FechaIngreso: string; // Formato ISO (YYYY-MM-DDTHH:mm:ss.sssZ)
     FechaSalida: string;  // Formato ISO
     ValorReserva: number;
-    huespedes: number;
+    adultos: number;
+    niños: number;
+    bebes: number;
     mascotas: number;
     EstadoReserva: string;
   }

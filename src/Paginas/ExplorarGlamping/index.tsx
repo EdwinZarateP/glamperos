@@ -235,6 +235,7 @@ function ExplorarGlamping() {
                 <FormularioFechas
                   precioPorNoche={informacionGlamping?.precioEstandar || 0}
                   descuento={informacionGlamping?.descuento || 0}
+                  admiteMascotas={informacionGlamping?.Acepta_Mascotas || false}
                 />
               </div>
             </div>

@@ -5,9 +5,13 @@ import "./estilos.css";
 
 interface VisitantesProps {
   onCerrar: () => void;
+  max_adultos: number;
+  max_niños: number;
+  max_bebes: number;
+  max_mascotas: number;
 }
 
-const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
+const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niños, max_bebes, max_mascotas }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -27,13 +31,6 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
     setCantidad_Mascotas,
     setTotalHuespedes,
   } = almacenVariables;
-
-  const limites = {
-    adultos: 10,
-    niños: 10,
-    bebes: 5,
-    mascotas: 5,
-  };
 
   const MAX_HUESPEDES = 10;
 
@@ -111,7 +108,7 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
                 incrementar(
                   setCantidad_Adultos,
                   Cantidad_Adultos,
-                  limites.adultos,
+                  max_adultos,
                   Cantidad_Adultos + Cantidad_Niños
                 )
               }
@@ -140,7 +137,7 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
                 incrementar(
                   setCantidad_Niños,
                   Cantidad_Niños,
-                  limites.niños,
+                  max_niños,
                   Cantidad_Adultos + Cantidad_Niños
                 )
               }
@@ -166,7 +163,7 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
             <button
               className="Visitantes-boton"
               onClick={() =>
-                incrementar(setCantidad_Bebes, Cantidad_Bebes, limites.bebes, 0)
+                incrementar(setCantidad_Bebes, Cantidad_Bebes, max_bebes, 0)
               }
             >
               +
@@ -177,24 +174,30 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar }) => {
         <div className="Visitantes-seccion">
           <div className="Visitantes-titulo">
             <span>Mascotas</span>
-            <small>¿Traes a un animal de servicio?</small>
+            <small>Tu fiel amigo también lo merece</small>
           </div>
           <div className="Visitantes-controles">
-            <button
-              className="Visitantes-boton"
-              onClick={() => decrementar(setCantidad_Mascotas, Cantidad_Mascotas)}
-            >
-              −
-            </button>
-            <span>{Cantidad_Mascotas}</span>
-            <button
-              className="Visitantes-boton"
-              onClick={() =>
-                incrementar(setCantidad_Mascotas, Cantidad_Mascotas, limites.mascotas, 0)
-              }
-            >
-              +
-            </button>
+            {max_mascotas === 0 ? (
+              <span>No admite mascotas</span>
+            ) : (
+              <>
+                <button
+                  className="Visitantes-boton"
+                  onClick={() => decrementar(setCantidad_Mascotas, Cantidad_Mascotas)}
+                >
+                  −
+                </button>
+                <span>{Cantidad_Mascotas}</span>
+                <button
+                  className="Visitantes-boton"
+                  onClick={() =>
+                    incrementar(setCantidad_Mascotas, Cantidad_Mascotas, max_mascotas, 0)
+                  }
+                >
+                  +
+                </button>
+              </>
+            )}
           </div>
         </div>
 

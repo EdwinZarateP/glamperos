@@ -4,6 +4,7 @@ import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ContextoApp } from "../../Contexto/index";
 import Cookies from 'js-cookie';
+import axios from "axios";
 import Swal from "sweetalert2";
 import Politicas from "../../Componentes/Politica/index";
 import { crearReserva, Reserva } from "../../Funciones/CrearReserva";
@@ -13,6 +14,8 @@ import "./estilos.css";
 const Reservacion: React.FC = () => {
   
   const idCliente = Cookies.get('idUsuario');
+  const nombreUsuarioCookie = Cookies.get('nombreUsuario'); 
+  const correoUsuarioCookie = Cookies.get('correoUsuario'); 
   const almacenVariables = useContext(ContextoApp);
     
     if (!almacenVariables) {
@@ -21,8 +24,7 @@ const Reservacion: React.FC = () => {
       );
     }
   
-    const {verPolitica, setVerPolitica } = almacenVariables;
-  
+    const {verPolitica, setVerPolitica, Cantidad_Adultos, Cantidad_Niños, Cantidad_Bebes, Cantidad_Mascotas } = almacenVariables;  
   const navigate = useNavigate(); 
 
   const [usuario, setUsuario] = useState({
@@ -208,6 +210,7 @@ const Reservacion: React.FC = () => {
           confirmButtonText: "Aceptar",
         }).then(() => {        
           handleCrearReserva();
+          enviarCorreo(correoUsuarioCookie || "", nombreUsuarioCookie || "");
           enviarMensaje( usuario?.whatsapp);
           navigate("/"); 
         });
@@ -306,8 +309,10 @@ const Reservacion: React.FC = () => {
         FechaIngreso: fechaInicio ? fechaInicio.toISOString() : '',
         FechaSalida: fechaFin ? fechaFin.toISOString() : '',
         ValorReserva: precioConTarifaNum,
-        huespedes: 2,
-        mascotas: 1,
+        adultos: Cantidad_Adultos,
+        niños: Cantidad_Niños,
+        bebes: Cantidad_Bebes,
+        mascotas: Cantidad_Mascotas,
         EstadoReserva: "Pendiente",
       };
   
@@ -317,6 +322,54 @@ const Reservacion: React.FC = () => {
         console.error("Error al crear la reserva:", error);
       }
     };
+
+    // envio de correo al dueño
+    const enviarCorreo = async (correo: string, nombre: string, fromEmail: string = "reservas@glamperos.com") => {
+      try {
+        const htmlContent = `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <h2 style="color: #2F6B3E;">Confirmación Reserva </h2>
+            <p>
+              Hola ${nombre.split(' ')[0]},
+            </p>
+            <p>
+              ¡Gracias por reservar con Glamperos! 🎉 Aquí tienes los detalles de tu reserva:              
+            </p>
+            <p>CheckIn: ${fechaInicio?.toLocaleDateString()}</p>            
+            <p>CheckOut: ${fechaFin?.toLocaleDateString()}</p>
+            <p>Adultos: ${Cantidad_Adultos}</p>
+            <p>Niños: ${Cantidad_Niños}</p>
+            <p>El contacto de WhatsApp de tu anfitrión es ${usuario.whatsapp}</p>
+            <p>
+              Si necesitas ayuda o tienes preguntas, nuestro equipo estará siempre aquí para ti.
+            </p>
+            <p>
+              ¡Juntos haremos que esta aventura sea inolvidable!
+            </p>
+            <p style="margin: 20px 0;">
+              El equipo de <strong style="color: #2F6B3E;">Glamperos</strong>.
+            </p>
+            <hr style="border: 1px solid #e0e0e0;">
+            <p style="font-size: 1em; color: #777;">
+              Si tienes preguntas, no dudes en ponerte en contacto con nosotros a través de nuestro portal.
+            </p>
+          </div>
+        `;
+    
+        await axios.post("https://glamperosapi.onrender.com/correos/send-email", {
+          from_email: fromEmail, // Agregar el remitente dinámico
+          email: correo,
+          name: nombre,
+          subject: `🧳 Reserva Glamping - ${glampingData?.nombreGlamping}`,
+          html_content: htmlContent, // Enviar el contenido del correo
+        });
+    
+        console.log(`Correo enviado con éxito: ${nombre}`);
+      } catch (error) {
+        console.error("Error al enviar el correo: ", error);
+      }
+    };
+    
 
   return (
     <div className="reservacion-container">

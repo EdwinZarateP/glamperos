@@ -43,19 +43,55 @@ const guardarGlampingP: React.FC = () => {
     animationData: animationData,
   };
 
-  const enviarCorreo = async (correo: string, nombre: string) => {
+  const enviarCorreo = async (correo: string, nombre: string, fromEmail: string = "registro@glamperos.com") => {
     try {
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+          <h1 style="color: #2F6B3E;">😀¡${nombreGlamping} será parte de Glamperos!</h1>
+          <p>
+            Hola ${nombre.split(' ')[0]},
+          </p>
+          <p>
+            Nos sentimos muy emocionados de tenerte como parte de nuestra
+            Comunidad de emprendedores de experiencias únicas. Gracias por inscribir
+            <strong style="color:#2F6B3E;">${nombreGlamping}</strong> con Glamperos, 
+            el lugar donde el glamping cobra vida.
+            Una vez verifiquemos si tu glamping cumple con nuestros requisitos, tu glamping quedará activo en la plataforma!
+          </p>
+          <p>
+            Ahora estás listo/a para conectar con cientos de personas que buscan una experiencia única, confortable y memorable en tu espacio.
+          </p>
+          <p>
+            Si necesitas ayuda o tienes preguntas, nuestro equipo estará siempre aquí para ti.
+          </p>
+          <p>
+            ¡Juntos haremos que esta aventura sea inolvidable!
+          </p>
+          <p style="margin: 20px 0;">
+            El equipo de <strong style="color: #2F6B3E;">Glamperos</strong>.
+          </p>
+          <hr style="border: 1px solid #e0e0e0;">
+          <p style="font-size: 1em; color: #777;">
+            Si tienes preguntas, no dudes en ponerte en contacto con nosotros a través de nuestro portal.
+          </p>
+        </div>
+      `;
+  
       await axios.post("https://glamperosapi.onrender.com/correos/send-email", {
+        from_email: fromEmail,
         email: correo,
         name: nombre,
+        subject: "¡Bienvenido a la familia Glamperos!",
+        html_content: htmlContent, // Enviar el contenido del correo
       });
-      console.log(`Correo enviado con éxito: ${nombreUsuario}`);
+  
+      console.log(`Correo enviado con éxito: ${nombre}`);
     } catch (error) {
       console.error("Error al enviar el correo: ", error);
     }
-  };  
+  };
+   
   
-
   // Sincroniza la idUsuario automáticamente al formulario cuando la variable global cambia
   useEffect(() => {
     if (idUsuario) {

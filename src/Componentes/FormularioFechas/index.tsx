@@ -12,9 +12,10 @@ import "./estilos.css";
 interface FormularioFechasProps {
   precioPorNoche: number;
   descuento: number;
+  admiteMascotas:boolean;
 }
 
-const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, descuento }) => {
+const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, descuento, admiteMascotas }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -233,7 +234,13 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
       )}
 
       {mostrarVisitantes && (
-        <Visitantes onCerrar={() => setMostrarVisitantes(false)} />
+        <Visitantes
+        max_adultos={10}
+        max_niños={10}
+        max_bebes={5}
+        max_mascotas={admiteMascotas ? 5 : 0}      
+        onCerrar={() => setMostrarVisitantes(false)}
+      />      
       )}
     </>
   );
