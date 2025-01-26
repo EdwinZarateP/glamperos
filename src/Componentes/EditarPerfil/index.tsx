@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Lottie from 'lottie-react';
+import { useNavigate } from "react-router-dom";
 import animationData from "../../Imagenes/AnimationPuntos.json";
 import './estilos.css';
 
@@ -13,6 +14,7 @@ interface Usuario {
 }
 
 const EditarPerfil: React.FC = () => {
+  const navigate = useNavigate(); 
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [fotoActualizada, setFotoActualizada] = useState<File | null>(null);
   const [fotoPreview, setFotoPreview] = useState<string | null>(null);
@@ -137,11 +139,10 @@ const EditarPerfil: React.FC = () => {
           <div className="editar-perfil-imagen-contenedor">
             {usuario.foto || fotoPreview ? (
               <img
-              src={fotoPreview ?? usuario.foto ?? undefined}
-              alt="Foto de perfil"
-              className="editar-perfil-imagen-foto"
-            />
-            
+                src={fotoPreview ?? usuario.foto ?? undefined}
+                alt="Foto de perfil"
+                className="editar-perfil-imagen-foto"
+              />
             ) : (
               <div className="editar-perfil-inicial">
                 {usuario.nombre.charAt(0).toUpperCase()}
@@ -181,12 +182,12 @@ const EditarPerfil: React.FC = () => {
           WhatsApp Col +57
             {editandoTelefono ? (
               <input
-              type="tel"
-              id="telefono"
-              value={telefono.slice(-10)}
-              onChange={manejarTelefono}
-              maxLength={10} // Limitar a 10 caracteres desde el front-end
-            />            
+                type="tel"
+                id="telefono"
+                value={telefono.slice(-10)}
+                onChange={manejarTelefono}
+                maxLength={10} // Limitar a 10 caracteres desde el front-end
+              />            
             ) : (
               <p>{telefono.slice(-10)}</p>
             )}
@@ -208,6 +209,11 @@ const EditarPerfil: React.FC = () => {
           )
         )}
       </div>
+
+      {/* Botón para ir a la página principal */}
+      <button onClick={() => navigate('/')} className="editar-perfil-boton-regresar">
+        Ir a la página principal
+      </button>
     </div>
   );
 };

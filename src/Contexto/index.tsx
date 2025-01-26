@@ -65,6 +65,8 @@ interface ContextProps {
   setCiudad_Elegida: Dispatch<SetStateAction<string>>;
   idUrlConversacion: string; 
   setIdUrlConversacion: Dispatch<SetStateAction<string>>; 
+  whatsapp: string; 
+  setWhatsapp: Dispatch<SetStateAction<string>>; 
 
   // Variables de tipo fecha
   fechaInicio: Date | null;
@@ -249,6 +251,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [ciudad_departamento, setCiudad_departamento] = useState('');
   const [ciudad_Elegida, setCiudad_Elegida] = useState('');
   const [idUrlConversacion, setIdUrlConversacion] = useState<string>(''); 
+  const [whatsapp, setWhatsapp] = useState<string>(''); 
   const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
   const [fechaFin, setFechaFin] = useState<Date | null>(null);
   const [fechaInicioConfirmado, setFechaInicioConfirmado] = useState<Date | null>(null);
@@ -366,6 +369,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     ciudad_departamento, setCiudad_departamento,
     ciudad_Elegida, setCiudad_Elegida,
     idUrlConversacion, setIdUrlConversacion,
+    whatsapp, setWhatsapp,
     fechaInicio,setFechaInicio,
     fechaFin, setFechaFin,
     fechaInicioConfirmado, setFechaInicioConfirmado,
