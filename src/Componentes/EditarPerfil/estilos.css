@@ -1,8 +1,9 @@
+/* General Styling */
 .editar-perfil-container {
   max-width: 500px;
   margin: 50px auto;
   padding: 20px;
-  background: #ffffff;
+  background: #f8f9fa; /* Gris claro */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -10,7 +11,7 @@
 .editar-perfil-titulo {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #333;
+  color: #4a4a4a; /* Gris oscuro */
   text-align: center;
   margin-bottom: 20px;
 }
@@ -31,16 +32,16 @@
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #2F6B3E;
-  background-color: #f0f0f0;
+  border: 3px solid #6c757d; /* Gris intermedio */
+  background-color: #dee2e6; /* Gris muy claro */
 }
 
 .editar-perfil-inicial {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: rgba(47, 107, 62, 0.7); 
-  color: #fff;
+  background: #adb5bd; /* Gris intermedio */
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +53,7 @@
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background-color: #2F6B3E;
+  background-color: #495057; /* Gris oscuro */
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -62,12 +63,11 @@
 }
 
 .editar-perfil-boton-editar:hover {
-  background-color: #449358;
+  background-color: #6c757d; /* Gris intermedio */
 }
 
 .editar-perfil-boton-guardar {
-  margin-top: 10px;
-  background-color: #28a745;
+  background-color: #868e96; /* Gris neutro */
   color: #fff;
   border: none;
   padding: 8px 12px;
@@ -78,12 +78,12 @@
 }
 
 .editar-perfil-boton-guardar:hover {
-  background-color: #218838;
+  background-color: #495057; /* Gris oscuro */
 }
 
 /* User Info Styling */
 .editar-perfil-info {
-  text-align: left;
+  text-align: center;
 }
 
 .editar-perfil-info-item {
@@ -93,31 +93,28 @@
 .editar-perfil-info-item p {
   margin: 0;
   font-size: 1rem;
-  color: #555;
+  color: #6c757d; /* Gris intermedio */
 }
 
 .editar-perfil-telefono-contenedor {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.editar-perfil-telefono-contenedor p {
-  flex: 1;
-  margin-left: 5px;
+  flex-direction: column;
+  gap: 7px;
 }
 
 .editar-perfil-telefono-contenedor input {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #adb5bd; /* Gris neutro */
   border-radius: 5px;
   font-size: 0.9rem;
 }
 
 .editar-perfil-boton-editar-tel {
   margin-left: 10px;
-  background-color: #2F6B3E;
+  background-color: #495057; /* Gris oscuro */
   color: #fff;
   border: none;
   padding: 8px 12px;
@@ -128,7 +125,7 @@
 }
 
 .editar-perfil-boton-editar-tel:hover {
-  background-color: #218838;
+  background-color: #343a40; /* Gris más oscuro */
 }
 
 /* Loading Animation Styling */
@@ -137,10 +134,10 @@
   margin-top: 50px;
 }
 
-/* New Back Button Styling */
+/* Back Button Styling */
 .editar-perfil-boton-regresar {
   margin-top: 10px;
-  background-color: #2F6B3E;
+  background-color: #495057; /* Gris oscuro */
   color: #fff;
   border: none;
   padding: 8px 15px;
@@ -155,6 +152,98 @@
 }
 
 .editar-perfil-boton-regresar:hover {
+  background-color: #343a40; /* Gris más oscuro */
+}
 
-  background-color: #449358;
+/* Responsive Styling */
+@media (max-width: 900px) {
+  .editar-perfil-container {
+    width: 90%;
+    max-width: 400px;
+    padding: 15px;
+  }
+
+  .editar-perfil-titulo {
+    font-size: 1.6rem;
+  }
+
+  .editar-perfil-imagen-foto {
+    width: 100px;
+    height: 100px;
+  }
+
+  .editar-perfil-inicial {
+    width: 100px;
+    height: 100px;
+  }
+
+  .editar-perfil-boton-editar {
+    padding: 6px;
+  }
+
+  .editar-perfil-boton-guardar {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .editar-perfil-telefono-contenedor input {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .editar-perfil-boton-editar-tel {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .editar-perfil-boton-regresar {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+}
+
+@media (min-width: 901px) {
+  .editar-perfil-container {
+    width: 100%;
+    max-width: 490px;
+    padding: 20px;
+  }
+
+  .editar-perfil-titulo {
+    font-size: 2rem;
+  }
+
+  .editar-perfil-imagen-foto {
+    width: 150px;
+    height: 150px;
+  }
+
+  .editar-perfil-inicial {
+    width: 150px;
+    height: 150px;
+  }
+
+  .editar-perfil-boton-editar {
+    padding: 8px;
+  }
+
+  .editar-perfil-boton-guardar {
+    font-size: 1rem;
+    padding: 8px 15px;
+  }
+
+  .editar-perfil-telefono-contenedor input {
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  .editar-perfil-boton-editar-tel {
+    font-size: 1rem;
+    padding: 8px 15px;
+  }
+
+  .editar-perfil-boton-regresar {
+    font-size: 1.1rem;
+    padding: 8px 15px;
+  }
 }
