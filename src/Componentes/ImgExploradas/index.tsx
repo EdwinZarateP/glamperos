@@ -9,7 +9,7 @@ import "./estilos.css";
 interface ImgExploradasProps {
   imagenes: string[];
   Acepta_Mascotas: boolean; // Indica si el glamping acepta mascotas
-  video_youtube?: string; // URL opcional del video de YouTube
+  video_youtube?: string; 
 }
 
 const ImgExploradas: React.FC<ImgExploradasProps> = ({
@@ -29,9 +29,8 @@ const ImgExploradas: React.FC<ImgExploradasProps> = ({
   };
 
   const handleVideoClick = () => {
-    // Activar el estado setVerVideo a true
     setVerVideo(true);
-    console.log(video_youtube)
+
   };
 
   return (
@@ -59,14 +58,16 @@ const ImgExploradas: React.FC<ImgExploradasProps> = ({
             title="Acepta Mascotas"
           />
         )}
-        {video_youtube && video_youtube.trim() !== "No disponible" && (
-          <button
-            className="ImgExploradas-iconoVideo"
-            onClick={handleVideoClick} // Cambié el evento onClick aquí
-          >
-            <MdOndemandVideo title="Mostrar Video" />
-            Video
-          </button>
+        {video_youtube && 
+          video_youtube.trim() !== "No disponible" && 
+          video_youtube.trim().toLowerCase() !== "sin video" && (
+            <button
+              className="ImgExploradas-iconoVideo"
+              onClick={handleVideoClick} // Cambié el evento onClick aquí
+            >
+              <MdOndemandVideo title="Mostrar Video" />
+              Video
+            </button>
         )}
       </div>
 

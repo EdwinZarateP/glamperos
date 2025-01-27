@@ -157,7 +157,7 @@
 
 /* Responsive Styling */
 @media (max-width: 900px) {
-  .editar-perfil-container {
+  .editar-perfil-container {  
     width: 90%;
     max-width: 400px;
     padding: 15px;

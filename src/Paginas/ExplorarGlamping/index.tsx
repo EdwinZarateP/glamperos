@@ -30,8 +30,10 @@ interface Glamping {
   Acepta_Mascotas: boolean;
   fechasReservadas?: string[];
   precioEstandar: number;
+  precioEstandarAdicional: number;
   descuento: number;
   Cantidad_Huespedes: number;
+  Cantidad_Huespedes_Adicionales: number;
   descripcionGlamping: string;
   imagenes: string[];
   ubicacion: Ubicacion | null;
@@ -95,8 +97,10 @@ function ExplorarGlamping() {
           Acepta_Mascotas: datos.Acepta_Mascotas ?? false,
           fechasReservadas: datos.fechasReservadas || [],
           precioEstandar: datos.precioEstandar || 0,
+          precioEstandarAdicional: datos.precioEstandarAdicional || 0,
           descuento: Number(datos.descuento) || 0,
           Cantidad_Huespedes: datos.Cantidad_Huespedes || 0,
+          Cantidad_Huespedes_Adicionales: datos.Cantidad_Huespedes_Adicionales || 0,          
           descripcionGlamping: datos.descripcionGlamping || "No disponible",
           imagenes: datos.imagenes || [],
           ubicacion: datos.ubicacion

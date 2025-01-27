@@ -108,6 +108,8 @@ interface ContextProps {
   //Paso 3 
   Cantidad_Huespedes: number;
   setCantidad_Huespedes: Dispatch<SetStateAction<number>>;
+  Cantidad_Huespedes_Adicionales: number;
+  setCantidad_Huespedes_Adicionales: Dispatch<SetStateAction<number>>;  
   Acepta_Mascotas: boolean;
   setAcepta_Mascotas: Dispatch<SetStateAction<boolean>>;
 
@@ -154,6 +156,8 @@ interface ContextProps {
   //Precios
   precioEstandar: number;
   setPrecioEstandar: React.Dispatch<React.SetStateAction<number>>;
+  precioEstandarAdicional: number;
+  setPrecioEstandarAdicional: React.Dispatch<React.SetStateAction<number>>;
   descuento: number;
   setDescuento: React.Dispatch<React.SetStateAction<number>>;
   
@@ -267,8 +271,9 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Cantidad_Bebes, setCantidad_Bebes] = useState<number>(0);
   const [Cantidad_Mascotas, setCantidad_Mascotas] = useState<number>(0);
   const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
-  const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);  // Nueva variable para cantidad de huéspedes
-  const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);  // Nueva variable para aceptar mascotas
+  const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);
+  const [Cantidad_Huespedes_Adicionales, setCantidad_Huespedes_Adicionales] = useState<number>(1);  
+  const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false); 
   const [siono, setSiono] = useState<boolean>(false);   
   const [verVideo, setVerVideo] = useState<boolean>(false); 
   const [activarChat, setActivarChat] = useState<boolean>(false);
@@ -299,6 +304,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
 
   //precios
   const [precioEstandar, setPrecioEstandar] = useState<number>(0);
+  const [precioEstandarAdicional, setPrecioEstandarAdicional] = useState<number>(0);
   const [descuento, setDescuento] = useState<number>(0);
   
   // Estado para filtros
@@ -386,6 +392,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     Cantidad_Mascotas,setCantidad_Mascotas,
     totalHuespedes, setTotalHuespedes,
     Cantidad_Huespedes,setCantidad_Huespedes,
+    Cantidad_Huespedes_Adicionales,setCantidad_Huespedes_Adicionales,
     Acepta_Mascotas, setAcepta_Mascotas,
     mostrarVisitantes, setMostrarVisitantes,
     mostrarCalendario,setMostrarCalendario,
@@ -401,6 +408,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     videoSeleccionado, setVideoSeleccionado,
     fotosSeleccionadas, setFotosSeleccionadas,
     precioEstandar, setPrecioEstandar,
+    precioEstandarAdicional, setPrecioEstandarAdicional,
     descuento, setDescuento,
     activarFiltros, setActivarFiltros,
     activarFiltrosUbicacion, setActivarFiltrosUbicacion,

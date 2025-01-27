@@ -8,8 +8,11 @@ const ModificarGlamping: React.FC = () => {
   const { glampingId } = useParams<{ glampingId: string }>();
   const [nombreGlamping, setNombreGlamping] = useState('');
   const [tipoGlamping, setTipoGlamping] = useState('');
+  const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(0);
+  const [Cantidad_Huespedes_Adicional, setCantidad_Huespedes_Adicional] = useState<number>(0);
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);
   const [precioEstandar, setPrecioEstandar] = useState<number>(0);
+  const [precioEstandarAdicional, setPrecioEstandarAdicional] = useState<number>(0);  
   const [descuento, setDescuento] = useState<number>(0);
   const [descripcionGlamping, setDescripcionGlamping] = useState('');
   const [video_youtube, setVideo_youtube] = useState('');
@@ -27,20 +30,25 @@ const ModificarGlamping: React.FC = () => {
   useEffect(() => {
     if (glampingId) {
       axios
-        .get(`https://glamperosapi.onrender.com/glampings/${glampingId}`)
-        .then((response) => {
-          setNombreGlamping(response.data.nombreGlamping);
-          setTipoGlamping(response.data.tipoGlamping);
-          setAcepta_Mascotas(response.data.Acepta_Mascotas);
-          setPrecioEstandar(response.data.precioEstandar);
-          setDescuento(response.data.descuento);
-          setDescripcionGlamping(response.data.descripcionGlamping);
-          setVideo_youtube(response.data.video_youtube);
-          setAmenidadesGlobal(response.data.amenidadesGlobal);
-        })
-        .catch((error) => {
-          console.error('Error al obtener los datos del glamping:', error);
-        });
+      .get(`https://glamperosapi.onrender.com/glampings/${glampingId}`)
+      .then((response) => {
+        const data = response.data || {};
+        setNombreGlamping(data.nombreGlamping || '');
+        setTipoGlamping(data.tipoGlamping || '');
+        setCantidad_Huespedes(data.Cantidad_Huespedes ?? 0);
+        setCantidad_Huespedes_Adicional(data.Cantidad_Huespedes_Adicional ?? 0);
+        setAcepta_Mascotas(data.Acepta_Mascotas || false);
+        setPrecioEstandar(data.precioEstandar ?? 0);
+        setPrecioEstandarAdicional(data.precioEstandarAdicional ?? 0);
+        setDescuento(data.descuento ?? 0);
+        setDescripcionGlamping(data.descripcionGlamping || '');
+        setVideo_youtube(data.video_youtube || '');
+        setAmenidadesGlobal(data.amenidadesGlobal || []);
+      })
+    .catch((error) => {
+    console.error('Error al obtener los datos del glamping:', error);
+  });
+
     }
   }, [glampingId]);
 
@@ -82,11 +90,14 @@ const ModificarGlamping: React.FC = () => {
     const formData = new FormData();
     formData.append("nombreGlamping", nombreGlamping);
     formData.append("tipoGlamping", tipoGlamping);
-    formData.append("Acepta_Mascotas", Acepta_Mascotas ? "true" : "false");
-    formData.append("precioEstandar", precioEstandar.toString());
-    formData.append("descuento", descuento.toString());
+    formData.append("Cantidad_Huespedes", (Cantidad_Huespedes !== undefined && Cantidad_Huespedes !== null ? Cantidad_Huespedes : 0).toString());
+    formData.append("Cantidad_Huespedes_Adicional", (Cantidad_Huespedes_Adicional !== undefined && Cantidad_Huespedes_Adicional !== null ? Cantidad_Huespedes_Adicional : 0).toString());
+    formData.append("Acepta_Mascotas", Acepta_Mascotas ? "true" : "false");    
+    formData.append("precioEstandar", (precioEstandar ?? 0).toString());
+    formData.append("precioEstandarAdicional", (precioEstandarAdicional ?? 0).toString());
+    formData.append("descuento", (descuento ?? 0).toString());
     formData.append("descripcionGlamping", descripcionGlamping);
-    formData.append("video_youtube", video_youtube);
+    formData.append("video_youtube", video_youtube || 'sin video');
     formData.append("amenidadesGlobal", amenidadesGlobal.join(","));
 
     try {
@@ -135,7 +146,7 @@ const ModificarGlamping: React.FC = () => {
           />
           
           <label className="ModificarGlamping-label" htmlFor="precioEstandar">
-            Precio:
+            Precio noche estandar:
           </label>
           <input
             id="precioEstandar"
@@ -145,7 +156,18 @@ const ModificarGlamping: React.FC = () => {
             onChange={(e) => setPrecioEstandar(Number(e.target.value))}
           />
 
-          <label className="ModificarGlamping-label" htmlFor="descuento">
+          <label className="ModificarGlamping-label" htmlFor="precioEstandarAdicional">
+            Precio noche huésped adicional:
+          </label>
+          <input
+            id="precioEstandarAdicional"
+            className="ModificarGlamping-input"
+            type="number"
+            value={precioEstandarAdicional}
+            onChange={(e) => setPrecioEstandarAdicional(Number(e.target.value))}
+          />
+
+           <label className="ModificarGlamping-label" htmlFor="descuento">
             Descuento entre semana:
           </label>
           <input
@@ -155,6 +177,28 @@ const ModificarGlamping: React.FC = () => {
             value={descuento}
             onChange={(e) => setDescuento(Number(e.target.value))}
           />
+
+          <label className="ModificarGlamping-label" htmlFor="Cantidad_Huespedes">
+            Cantidad Huespedes estandar por noche:
+          </label>
+          <input
+            id="Cantidad_Huespedes"
+            className="ModificarGlamping-input"
+            type="number"
+            value={Cantidad_Huespedes}
+            onChange={(e) => setCantidad_Huespedes(Number(e.target.value))}
+          />
+
+          <label className="ModificarGlamping-label" htmlFor="Cantidad_Huespedes_Adicional">
+            Huespedes adicionales por noche:
+          </label>
+          <input
+            id="Cantidad_Huespedes_Adicional"
+            className="ModificarGlamping-input"
+            type="number"
+            value={Cantidad_Huespedes_Adicional}
+            onChange={(e) => setCantidad_Huespedes_Adicional(Number(e.target.value))}
+          />         
 
           <label className="ModificarGlamping-label" htmlFor="tipoGlamping">
             Tipo de Glamping:

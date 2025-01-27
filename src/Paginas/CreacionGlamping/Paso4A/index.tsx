@@ -32,7 +32,8 @@ const guardarGlampingP: React.FC = () => {
 
   const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes,
      Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping,
-     precioEstandar, descuento, idUsuario, nombreUsuario } = useContext(ContextoApp)!; 
+     precioEstandar, precioEstandarAdicional, descuento, idUsuario, nombreUsuario, Cantidad_Huespedes_Adicionales,
+     } = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -101,6 +102,7 @@ const guardarGlampingP: React.FC = () => {
       }));
     }
   }, [idUsuario]);
+
 // Sincroniza nombre propietario 
   useEffect(() => {
     if (nombreUsuario) {
@@ -151,87 +153,108 @@ const guardarGlampingP: React.FC = () => {
       }
     }, [Cantidad_Huespedes]);
 
-      // Sincroniza la Acepta_Mascotas automáticamente al formulario cuando la variable global cambia
-      useEffect(() => {
-        if (Acepta_Mascotas) {
-          setFormulario((prev) => ({
-            ...prev,
-            Acepta_Mascotas, // Actualizamos la Acepta_Mascotas directamente
-          }));
-        }
-      }, [Acepta_Mascotas]);
+    // Sincroniza la Cantidad_Huespedes_Adicionales automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (Cantidad_Huespedes_Adicionales) {
+        setFormulario((prev) => ({
+          ...prev,
+          Cantidad_Huespedes_Adicionales, 
+        }));
+      }
+    }, [Cantidad_Huespedes_Adicionales]);
 
-      // Sincroniza la nombreGlamping automáticamente al formulario cuando la variable global cambia
-      useEffect(() => {
-        if (nombreGlamping) {
-          setFormulario((prev) => ({
-            ...prev,
-            nombreGlamping, // Actualizamos la nombreGlamping directamente
-          }));
-        }
-      }, [nombreGlamping]);
 
-      // Sincroniza la descripcionGlamping automáticamente al formulario cuando la variable global cambia
-      useEffect(() => {
-        if (descripcionGlamping) {
-          setFormulario((prev) => ({
-            ...prev,
-            descripcionGlamping, // Actualizamos la descripcionGlamping directamente
-          }));
-        }
-      }, [descripcionGlamping]);
+    // Sincroniza la Acepta_Mascotas automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (Acepta_Mascotas) {
+        setFormulario((prev) => ({
+          ...prev,
+          Acepta_Mascotas, // Actualizamos la Acepta_Mascotas directamente
+        }));
+      }
+    }, [Acepta_Mascotas]);
 
-      // Sincroniza la precioEstandar automáticamente al formulario cuando la variable global cambia
-      useEffect(() => {
-        if (typeof precioEstandar === 'number') {
-          setFormulario((prev) => ({
-            ...prev,
-            precioEstandar, // Actualizamos la precioEstandar directamente
-          }));
-        }
-      }, [precioEstandar]);
+    // Sincroniza la nombreGlamping automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (nombreGlamping) {
+        setFormulario((prev) => ({
+          ...prev,
+          nombreGlamping, // Actualizamos la nombreGlamping directamente
+        }));
+      }
+    }, [nombreGlamping]);
 
-      // Sincroniza la descuento automáticamente al formulario cuando la variable global cambia
-      useEffect(() => {
-        if (typeof descuento === 'number') {
-          setFormulario((prev) => ({
-            ...prev,
-            descuento, // Actualizamos la descuento directamente
-          }));
-        }
-      }, [descuento]);
-      
+    // Sincroniza la descripcionGlamping automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (descripcionGlamping) {
+        setFormulario((prev) => ({
+          ...prev,
+          descripcionGlamping, // Actualizamos la descripcionGlamping directamente
+        }));
+      }
+    }, [descripcionGlamping]);
 
-      // Añadir un nuevo useEffect para sincronizar "amenidadesGlobal" automáticamente al formulario cuando cambia
-      useEffect(() => {
-        if (amenidadesGlobal) {
-          setFormulario((prev) => ({
-            ...prev,
-            amenidadesGlobal: amenidadesGlobal.join(", "), // Actualizamos "amenidadesGlobal" como un string separado por comas
-          }));
-        }
-      }, [amenidadesGlobal]);
+    // Sincroniza la precioEstandar automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (typeof precioEstandar === 'number') {
+        setFormulario((prev) => ({
+          ...prev,
+          precioEstandar, // Actualizamos la precioEstandar directamente
+        }));
+      }
+    }, [precioEstandar]);
 
-      // Sincroniza la videoSeleccionado automáticamente al formulario cuando la variable global cambia
-      useEffect(() => {
-        if (videoSeleccionado) {
-          setFormulario((prev) => ({
-            ...prev,
-            video_youtube: videoSeleccionado|| "", // Actualizamos la videoSeleccionado directamente o lo mandamos vacio
-          }));
-        }
-      }, [videoSeleccionado]);
-  
-      // Sincroniza la Cantidad_Huespedes automáticamente al formulario cuando la variable global cambia
-      useEffect(() => {
-        if (Cantidad_Huespedes) {
-          setFormulario((prev) => ({
-            ...prev,
-            Cantidad_Huespedes, // Actualizamos la Cantidad_Huespedes directamente
-          }));
-        }
-      }, [Cantidad_Huespedes]);
-  
+    // Sincroniza la precioEstandarAdicional automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (typeof precioEstandarAdicional === 'number') {
+        setFormulario((prev) => ({
+          ...prev,
+          precioEstandarAdicional, // Actualizamos la precioEstandar directamente
+        }));
+      }
+    }, [precioEstandarAdicional]);
+
+    // Sincroniza la descuento automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (typeof descuento === 'number') {
+        setFormulario((prev) => ({
+          ...prev,
+          descuento, // Actualizamos la descuento directamente
+        }));
+      }
+    }, [descuento]);
+    
+
+    // Añadir un nuevo useEffect para sincronizar "amenidadesGlobal" automáticamente al formulario cuando cambia
+    useEffect(() => {
+      if (amenidadesGlobal) {
+        setFormulario((prev) => ({
+          ...prev,
+          amenidadesGlobal: amenidadesGlobal.join(", "), // Actualizamos "amenidadesGlobal" como un string separado por comas
+        }));
+      }
+    }, [amenidadesGlobal]);
+
+    // Sincroniza la videoSeleccionado automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (videoSeleccionado) {
+        setFormulario((prev) => ({
+          ...prev,
+          video_youtube: videoSeleccionado|| "", // Actualizamos la videoSeleccionado directamente o lo mandamos vacio
+        }));
+      }
+    }, [videoSeleccionado]);
+
+    // Sincroniza la Cantidad_Huespedes automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (Cantidad_Huespedes) {
+        setFormulario((prev) => ({
+          ...prev,
+          Cantidad_Huespedes, // Actualizamos la Cantidad_Huespedes directamente
+        }));
+      }
+    }, [Cantidad_Huespedes]);
+
     // Referencia al botón "Cerrar"
   const cerrarPopupRef = useRef<HTMLButtonElement | null>(null);
 
@@ -263,6 +286,7 @@ const guardarGlampingP: React.FC = () => {
       setMensaje("Glamping creado con éxito: " + respuesta.data.nombreGlamping);
       lanzarConfetti();
       setShowPopup(true);
+      
       // Llamar a la función para enviar correo
       enviarCorreo(correoUsuarioCookie || "", nombreUsuarioCookie || "");
     } catch (error) {
@@ -274,10 +298,11 @@ const guardarGlampingP: React.FC = () => {
 
   // Función para lanzar confetti (explosión)
   const lanzarConfetti = () => {
-    confetti({
-      particleCount: 400, // Número de piezas de confeti
-      spread: 70,         // Ángulo de dispersión
-      origin: { y: 0.6 }, // Ajuste para la altura de la explosión
+    confetti.create(undefined, { resize: true, useWorker: true })({
+      particleCount: 200,
+      spread: 120,
+      origin: { x: 0.5, y: 0.5 },
+      zIndex: 1001, // Asegúrate de usar un z-index alto
     });
   };
 
@@ -319,8 +344,8 @@ const guardarGlampingP: React.FC = () => {
         <div className="popup-felicitaciones">
           <div className="popup-contenido">
             <h2>¡Felicitaciones! 🎉</h2>
-            <p>Tu glamping se registró con éxito, no olvides 
-              <strong> registrar tu whatsApp </strong> para notificar tus reservas</p>
+            <p>Tu glamping se registró con éxito, revisa tu correo y no olvides 
+              <strong> registrar tu whatsApp </strong> para avisarte cuando tengas reservas</p>
                <button
               className="cerrar-popup"
               onClick={() => navigate("/EdicionPerfil")}
@@ -328,7 +353,7 @@ const guardarGlampingP: React.FC = () => {
               Registra tu WhatsApp
             </button>
             <button className="cerrar-popup" onClick={cerrarPopup} ref={cerrarPopupRef}>
-              Ya lo tenía registrado
+              Ya lo tengo registrado
             </button>
             
           </div>

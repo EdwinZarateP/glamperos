@@ -15,6 +15,8 @@ const Paso1D: React.FC = () => {
   const {
     Cantidad_Huespedes,
     setCantidad_Huespedes,
+    Cantidad_Huespedes_Adicionales,
+    setCantidad_Huespedes_Adicionales,
     Acepta_Mascotas,
     setAcepta_Mascotas,
   } = almacenVariables;
@@ -26,7 +28,7 @@ const Paso1D: React.FC = () => {
       <div className="paso1d-seccion">
         <div className="paso1d-titulo">
           <h2>Huéspedes</h2>
-          <p>¿Cuántos huéspedes máximo puedes alojar?</p>
+          <p>¿Cuántos huéspedes incluye tu tarifa por noche?</p>
         </div>
         <div className="paso1d-controles">
           <button
@@ -45,6 +47,29 @@ const Paso1D: React.FC = () => {
           </button>
         </div>
       </div>
+
+      <div className="paso1d-seccion">
+        <div className="paso1d-titulo">
+          <h2>Huéspedes adicionales</h2>
+          <p>¿Cuántos huéspedes adicionales aceptas por noche?</p>
+        </div>
+        <div className="paso1d-controles">
+          <button
+            className="paso1d-boton"
+            onClick={() => setCantidad_Huespedes_Adicionales(Cantidad_Huespedes_Adicionales - 1)}
+            disabled={Cantidad_Huespedes_Adicionales <= 1}
+          >
+            −
+          </button>
+          <span className="paso1d-contador">{Cantidad_Huespedes_Adicionales}</span>
+          <button
+            className="paso1d-boton"
+            onClick={() => setCantidad_Huespedes_Adicionales(Cantidad_Huespedes_Adicionales + 1)}
+          >
+            +
+          </button>
+        </div>
+      </div>      
 
       <div className="paso1d-seccion">
         <div className="paso1d-titulo">

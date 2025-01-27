@@ -3,7 +3,7 @@ import './estilos.css';
 import { ContextoApp } from '../../../Contexto/index';
 
 const Paso3B: React.FC = () => {
-  const { precioEstandar, setPrecioEstandar, descuento, setDescuento } = useContext(ContextoApp)!;
+  const { precioEstandar, setPrecioEstandar,precioEstandarAdicional, setPrecioEstandarAdicional, descuento, setDescuento } = useContext(ContextoApp)!;
 
   // Función para manejar la entrada de precios estándar
   const manejarPreciosEstandar = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,9 +14,26 @@ const Paso3B: React.FC = () => {
     }
   };
 
+    // Función para manejar la entrada de precios estándar
+    const manejarPreciosEstandarAdicional = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const valor = e.target.value.replace(/\D/g, ''); // Eliminar no numéricos
+      const valorNumerico = Number(valor);
+      if (valorNumerico <= 1000000) {
+        setPrecioEstandarAdicional(valorNumerico); 
+      }
+    };
+
   // Función para manejar el blur de precios estándar
   const manejarBlurPrecio = () => {
     setPrecioEstandar((prev) => {
+      if (prev === undefined || prev === null) return 0; 
+      return Number(prev); 
+    });
+  };
+
+  // Función para manejar el blur de precios estándar
+  const manejarBlurPrecioAdicional = () => {
+    setPrecioEstandarAdicional((prev) => {
       if (prev === undefined || prev === null) return 0; 
       return Number(prev); 
     });
@@ -52,7 +69,7 @@ const Paso3B: React.FC = () => {
       <div className="Paso3B-contenido">
         <div className="Paso3B-opcion">
           <label htmlFor="precio-estandar" className="Paso3B-etiqueta">
-            Precio Estandar
+            Precio por noche (Estandar)
           </label>
           <input
             id="precio-estandar"
@@ -62,6 +79,21 @@ const Paso3B: React.FC = () => {
             onChange={manejarPreciosEstandar}
             onBlur={manejarBlurPrecio}
             placeholder="Ej: 350.000"
+          />
+        </div>
+
+        <div className="Paso3B-opcion">
+          <label htmlFor="precio-estandar-adicional" className="Paso3B-etiqueta">
+            Precio por noche (por cada huésped adicional)
+          </label>
+          <input
+            id="precio-estandar-adicional"
+            type="text"
+            className="Paso3B-input"
+            value={precioEstandarAdicional}
+            onChange={manejarPreciosEstandarAdicional}
+            onBlur={manejarBlurPrecioAdicional}
+            placeholder="Ej: 150.000"
           />
         </div>
 
