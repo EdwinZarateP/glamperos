@@ -78,11 +78,29 @@ const ModificarGlamping: React.FC = () => {
       return;
     }
 
-    if (descuento > 100) {
+    if (precioEstandar < 60000) {
       Swal.fire({
         icon: 'error',
         title: '¡Error!',
-        text: 'El descuento no puede ser superior a 100',
+        text: 'El precio estándar no puede ser menor a $60.000',
+      });
+      return;
+    }
+
+    if (precioEstandar < precioEstandarAdicional) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'El precio estándar por noche no puede ser menor al precio de un huesped adicional',
+      });
+      return;
+    }
+
+    if (descuento > 70) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'El descuento no puede ser superior a 70%',
       });
       return;
     }

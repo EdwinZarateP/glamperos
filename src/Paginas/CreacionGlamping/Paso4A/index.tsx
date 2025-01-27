@@ -32,7 +32,7 @@ const guardarGlampingP: React.FC = () => {
 
   const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes,
      Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping,
-     precioEstandar, precioEstandarAdicional, descuento, idUsuario, nombreUsuario, Cantidad_Huespedes_Adicionales,
+     precioEstandar, precioEstandarAdicional, descuento, idUsuario, nombreUsuario, Cantidad_Huespedes_Adicional,
      } = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
@@ -153,15 +153,15 @@ const guardarGlampingP: React.FC = () => {
       }
     }, [Cantidad_Huespedes]);
 
-    // Sincroniza la Cantidad_Huespedes_Adicionales automáticamente al formulario cuando la variable global cambia
+    // Sincroniza la Cantidad_Huespedes_Adicional automáticamente al formulario cuando la variable global cambia
     useEffect(() => {
-      if (Cantidad_Huespedes_Adicionales) {
+      if (Cantidad_Huespedes_Adicional) {
         setFormulario((prev) => ({
           ...prev,
-          Cantidad_Huespedes_Adicionales, 
+          Cantidad_Huespedes_Adicional, 
         }));
       }
-    }, [Cantidad_Huespedes_Adicionales]);
+    }, [Cantidad_Huespedes_Adicional]);
 
 
     // Sincroniza la Acepta_Mascotas automáticamente al formulario cuando la variable global cambia

@@ -108,8 +108,8 @@ interface ContextProps {
   //Paso 3 
   Cantidad_Huespedes: number;
   setCantidad_Huespedes: Dispatch<SetStateAction<number>>;
-  Cantidad_Huespedes_Adicionales: number;
-  setCantidad_Huespedes_Adicionales: Dispatch<SetStateAction<number>>;  
+  Cantidad_Huespedes_Adicional: number;
+  setCantidad_Huespedes_Adicional: Dispatch<SetStateAction<number>>;  
   Acepta_Mascotas: boolean;
   setAcepta_Mascotas: Dispatch<SetStateAction<boolean>>;
 
@@ -272,7 +272,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [Cantidad_Mascotas, setCantidad_Mascotas] = useState<number>(0);
   const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
   const [Cantidad_Huespedes, setCantidad_Huespedes] = useState<number>(1);
-  const [Cantidad_Huespedes_Adicionales, setCantidad_Huespedes_Adicionales] = useState<number>(1);  
+  const [Cantidad_Huespedes_Adicional, setCantidad_Huespedes_Adicional] = useState<number>(1);  
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false); 
   const [siono, setSiono] = useState<boolean>(false);   
   const [verVideo, setVerVideo] = useState<boolean>(false); 
@@ -392,7 +392,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     Cantidad_Mascotas,setCantidad_Mascotas,
     totalHuespedes, setTotalHuespedes,
     Cantidad_Huespedes,setCantidad_Huespedes,
-    Cantidad_Huespedes_Adicionales,setCantidad_Huespedes_Adicionales,
+    Cantidad_Huespedes_Adicional,setCantidad_Huespedes_Adicional,
     Acepta_Mascotas, setAcepta_Mascotas,
     mostrarVisitantes, setMostrarVisitantes,
     mostrarCalendario,setMostrarCalendario,

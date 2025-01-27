@@ -24,7 +24,7 @@ const Header: React.FC = () => {
   const { totalHuespedes, setIdUsuario, setSiono, setLatitud,setLongitud,
      setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, 
      setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, 
-     setPrecioEstandar, setCantidad_Huespedes,setCantidad_Huespedes_Adicionales,  setDescuento, setAcepta_Mascotas,
+     setPrecioEstandar, setCantidad_Huespedes,setCantidad_Huespedes_Adicional,  setDescuento, setAcepta_Mascotas,
      setMostrarFiltros,setMostrarMenuUsuarios, cantiadfiltrosAplicados, busqueda, setBusqueda, setFechasSeparadas } = almacenVariables; 
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false);
@@ -65,7 +65,7 @@ const Header: React.FC = () => {
     setDescripcionGlamping(""); // Limpia la descripción del glamping
     setPrecioEstandar(0); // Restablece el precio estándar a 0
     setCantidad_Huespedes(1); // Restablece el precio estándar a 0
-    setCantidad_Huespedes_Adicionales(0); // Restablece el precio estándar a 0
+    setCantidad_Huespedes_Adicional(0); // Restablece el precio estándar a 0
     setDescuento(0);
     setAcepta_Mascotas(false);
   };

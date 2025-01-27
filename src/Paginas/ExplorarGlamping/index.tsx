@@ -33,7 +33,7 @@ interface Glamping {
   precioEstandarAdicional: number;
   descuento: number;
   Cantidad_Huespedes: number;
-  Cantidad_Huespedes_Adicionales: number;
+  Cantidad_Huespedes_Adicional: number;
   descripcionGlamping: string;
   imagenes: string[];
   ubicacion: Ubicacion | null;
@@ -100,7 +100,7 @@ function ExplorarGlamping() {
           precioEstandarAdicional: datos.precioEstandarAdicional || 0,
           descuento: Number(datos.descuento) || 0,
           Cantidad_Huespedes: datos.Cantidad_Huespedes || 0,
-          Cantidad_Huespedes_Adicionales: datos.Cantidad_Huespedes_Adicionales || 0,          
+          Cantidad_Huespedes_Adicional: datos.Cantidad_Huespedes_Adicional || 0,          
           descripcionGlamping: datos.descripcionGlamping || "No disponible",
           imagenes: datos.imagenes || [],
           ubicacion: datos.ubicacion
