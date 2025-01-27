@@ -30,6 +30,9 @@ interface TarjetaProps {
   };
   Acepta_Mascotas:boolean;
   fechasReservadas: string[];
+  Cantidad_Huespedes: number;
+  precioEstandarAdicional: number;
+  Cantidad_Huespedes_Adicional: number;
   onImagenCargada?: () => void;
 }
 
@@ -43,7 +46,10 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   onFavoritoChange,
   descuento,
   nombreGlamping,
-  Acepta_Mascotas,  
+  Acepta_Mascotas, 
+  Cantidad_Huespedes,
+  precioEstandarAdicional,
+  Cantidad_Huespedes_Adicional
   
 }) => {
   const [esFavorito, setEsFavorito] = useState(favorito);
@@ -167,9 +173,13 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   const renderPrecio = () => {
     if (totalDias === 0 || totalDias === 1) {
       return (
-        <span className="tarjeta-precio">
-          {precioConFormato(precioFinalNoche)} por noche
-        </span>
+        <div className="tarjeta-precio">
+        <span>{precioConFormato(precioFinalNoche)} por noche para {Cantidad_Huespedes}</span>
+        <br />
+        {Cantidad_Huespedes_Adicional > 0 && (
+          <span>{precioConFormato(precioEstandarAdicional)} por persona adicional</span>
+        )}
+      </div>              
       );
     }
 

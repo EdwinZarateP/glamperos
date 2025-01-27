@@ -71,11 +71,8 @@ const Header: React.FC = () => {
   };
 
   const irAInicio = () => {
-    navigate("/"); // Navega a la ruta "/"
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Desplazamiento suave
-    });
+    navigate("/"); 
+    window.location.reload();
   };  
 
   return (

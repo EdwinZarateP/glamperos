@@ -22,6 +22,9 @@ interface Glamping {
   };
   Acepta_Mascotas: boolean;
   fechasReservadas: string[];
+  precioEstandarAdicional: number;
+  Cantidad_Huespedes:number;
+  Cantidad_Huespedes_Adicional:number;
 }
 
 const Favoritos: React.FC = () => {
@@ -126,6 +129,9 @@ const Favoritos: React.FC = () => {
             }
             Acepta_Mascotas={glamping.Acepta_Mascotas}
             fechasReservadas={glamping.fechasReservadas}
+            Cantidad_Huespedes={glamping.Cantidad_Huespedes}
+            precioEstandarAdicional={glamping.precioEstandarAdicional}
+            Cantidad_Huespedes_Adicional={glamping.Cantidad_Huespedes_Adicional}
           />
         ))}
         

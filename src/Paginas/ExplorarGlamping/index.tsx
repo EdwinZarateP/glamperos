@@ -238,9 +238,11 @@ function ExplorarGlamping() {
               <div className='contenedor-descripcion-glamping-der'>
                 <FormularioFechas
                   precioPorNoche={informacionGlamping?.precioEstandar || 0}
+                  precioPersonaAdicional={informacionGlamping?.precioEstandarAdicional || 0}
                   descuento={informacionGlamping?.descuento || 0}
                   admiteMascotas={informacionGlamping?.Acepta_Mascotas || false}
                   Cantidad_Huespedes={informacionGlamping?.Cantidad_Huespedes || 10}
+                  Cantidad_Huespedes_Adicional={informacionGlamping?.Cantidad_Huespedes_Adicional || 0}
                 />
               </div>
             </div>
@@ -254,9 +256,12 @@ function ExplorarGlamping() {
                 ) : (
               <p>El propietario no está disponible</p>
                 )}
-            <ReservarBoton precioPorNoche={informacionGlamping?.precioEstandar || 0}
-                  descuento={informacionGlamping?.descuento || 0} />
-
+            <ReservarBoton 
+              precioPorNoche={informacionGlamping?.precioEstandar || 0}
+              descuento={informacionGlamping?.descuento || 0}
+              precioPersonaAdicional={informacionGlamping?.precioEstandarAdicional || 0}
+              Cantidad_Huespedes={informacionGlamping?.Cantidad_Huespedes || 10}
+              />
           </main>
         </>
       ) : (

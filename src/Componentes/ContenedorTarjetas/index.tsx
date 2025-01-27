@@ -23,7 +23,9 @@ interface GlampingData {
   Acepta_Mascotas: boolean;
   fechasReservadas: string[];
   amenidadesGlobal:string[];
+  precioEstandarAdicional: number;
   Cantidad_Huespedes:number;
+  Cantidad_Huespedes_Adicional:number;
   favorito?: boolean;
 }
 
@@ -99,7 +101,9 @@ const ContenedorTarjetas: React.FC = () => {
         Acepta_Mascotas: glamping.Acepta_Mascotas || false,
         fechasReservadas: glamping.fechasReservadas || [],
         amenidadesGlobal: glamping.amenidadesGlobal || [],
+        precioEstandarAdicional:glamping.precioEstandarAdicional || 0,
         Cantidad_Huespedes:glamping.Cantidad_Huespedes || 1,
+        Cantidad_Huespedes_Adicional:glamping.Cantidad_Huespedes_Adicional || 0,        
 
       }));
   
@@ -271,7 +275,7 @@ const ContenedorTarjetas: React.FC = () => {
       
     // Filtro de Huespedes
     const cumpleHuespedes = 
-    !activarFiltrosHuespedes || (huespedesConfirmado && glamping.Cantidad_Huespedes >= huespedesConfirmado);
+    !activarFiltrosHuespedes || (huespedesConfirmado && (glamping.Cantidad_Huespedes+glamping.Cantidad_Huespedes_Adicional) >= huespedesConfirmado);
         
     const filtraDomo =
     !activarFiltrosDomo || glamping.tipoGlamping === "Domo";
@@ -386,7 +390,7 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
     <div className="contenedor-tarjetas">
       {glampingsMostrados.map((glamping, index) => (
         <Tarjeta
-        key={index}
+        key={index}        
         glampingId={glamping._id}
         imagenes={glamping.imagenes}
         ciudad={glamping.ciudad_departamento}
@@ -405,6 +409,9 @@ const glampingsMostrados = glampingsOrdenados.slice(0, visibleCount);
         }
         Acepta_Mascotas={glamping.Acepta_Mascotas}
         fechasReservadas={glamping.fechasReservadas}
+        Cantidad_Huespedes={glamping.Cantidad_Huespedes}
+        precioEstandarAdicional={glamping.precioEstandarAdicional}
+        Cantidad_Huespedes_Adicional={glamping.Cantidad_Huespedes_Adicional}
       />      
       ))}
     </div>

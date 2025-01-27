@@ -69,6 +69,33 @@ const ModificarGlamping: React.FC = () => {
       return;
     }
 
+    if (Cantidad_Huespedes < 1) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'En Cantidad Huespedes estandar por noche mínimo debe ser 1',
+      });
+      return;
+    }
+
+    if (Cantidad_Huespedes_Adicional > 0 && precioEstandarAdicional<1) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Debes colocar un precio noche huésped adicional',
+      });
+      return;
+    }
+
+    if (Cantidad_Huespedes_Adicional > 0 && precioEstandarAdicional<40000) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'El Precio por noche huésped adicional no debe ser menor a $40.000',
+      });
+      return;
+    }
+
     if (precioEstandar > 2000000) {
       Swal.fire({
         icon: 'error',
@@ -175,7 +202,7 @@ const ModificarGlamping: React.FC = () => {
           />
 
           <label className="ModificarGlamping-label" htmlFor="precioEstandarAdicional">
-            Precio noche huésped adicional:
+            Precio por noche huésped adicional:
           </label>
           <input
             id="precioEstandarAdicional"

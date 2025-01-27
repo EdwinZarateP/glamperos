@@ -11,10 +11,12 @@ import "./estilos.css";
 
 interface BotonReservaProps {
   precioPorNoche: number;
+  precioPersonaAdicional: number;
   descuento: number;
+  Cantidad_Huespedes: number;
 }
 
-const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, descuento }) => {
+const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPersonaAdicional, descuento, Cantidad_Huespedes }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -32,6 +34,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, descuento 
     setTotalDias,
     mostrarCalendario,
     setMostrarCalendario,
+    totalHuespedes,
   } = almacenVariables;
 
   let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{
@@ -101,13 +104,15 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, descuento 
     }
   
 
-    const precioConTarifa = Math.round(calcularTarifaServicio(
-      precioPorNoche,
-      viernesysabadosyfestivos,
-      descuento,
-      fechaInicioReservada,
-      fechaFinReservada
-    ));
+  const precioConTarifa = Math.round(calcularTarifaServicio(
+    precioPorNoche,
+    viernesysabadosyfestivos,
+    descuento,
+    fechaInicioReservada,
+    fechaFinReservada
+  ));
+
+  const precioConTarifaAdicional = Math.round(calcularTarifaServicio(precioPersonaAdicional, viernesysabadosyfestivos, 0, fechaInicioReservada ?? fechaInicioPorDefecto, fechaFinReservada ?? fechaFinPorDefecto));
     
   const porcentajeGlamperos = ExtraerTarifaGlamperos(precioPorNoche);
 
@@ -155,7 +160,12 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, descuento 
     <div className="ReservarBoton-container">
 
       <div className="ReservarBoton-total">
-        <span>${precioConTarifa.toLocaleString()} COP</span>
+        <span className="FormularioFechas-precioNoche">
+          {(totalHuespedes - Cantidad_Huespedes) > 0
+            ? `${(precioConTarifa+precioConTarifaAdicional).toLocaleString()} COP`
+            : `${(precioConTarifa).toLocaleString()} COP`}
+        </span> 
+
         <div
         className="ReservarBoton-fechas"
         onClick={() => {

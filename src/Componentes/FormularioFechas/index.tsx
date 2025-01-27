@@ -12,12 +12,14 @@ import "./estilos.css";
 
 interface FormularioFechasProps {
   precioPorNoche: number;
+  precioPersonaAdicional: number;
   descuento: number;
   admiteMascotas:boolean;
   Cantidad_Huespedes: number;
+  Cantidad_Huespedes_Adicional: number;
 }
 
-const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, descuento, admiteMascotas, Cantidad_Huespedes }) => {
+const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, precioPersonaAdicional, descuento, admiteMascotas, Cantidad_Huespedes, Cantidad_Huespedes_Adicional }) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -120,6 +122,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
 
   
   const precioConTarifa = calcularTarifaServicio(precioPorNoche, viernesysabadosyfestivos, descuento, fechaInicioReservada ?? fechaInicioPorDefecto, fechaFinReservada ?? fechaFinPorDefecto);
+  const precioConTarifaAdicional = calcularTarifaServicio(precioPersonaAdicional, viernesysabadosyfestivos, 0, fechaInicioReservada ?? fechaInicioPorDefecto, fechaFinReservada ?? fechaFinPorDefecto);
   const porcentajeGlamperos = ExtraerTarifaGlamperos(precioPorNoche);
 
 
@@ -135,6 +138,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
   };
 
   const TarifaGlamperos = Math.round(precioConTarifa - precioConTarifa * (1 / (1 + porcentajeGlamperos)));
+  const TarifaGlamperosAdicional = Math.round(precioConTarifaAdicional - precioConTarifaAdicional * (1 / (1 + porcentajeGlamperos)));
 
   useEffect(() => {
     if (!fechaInicioConfirmado && fechaInicioUrl) {
@@ -178,9 +182,12 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
     <>
       <div className="FormularioFechas-contenedor">
         <div className="FormularioFechas-precio">
-          <span className="FormularioFechas-precioNoche">
-            ${(Math.round(precioConTarifa / totalDiasRender)).toLocaleString()} COP
-          </span>
+
+         <span className="FormularioFechas-precioNoche">
+          {(totalHuespedes - Cantidad_Huespedes) > 0
+            ? `${((Math.round(precioConTarifa * (1 / (1 + porcentajeGlamperos)))+(precioPersonaAdicional*totalDiasRender*(totalHuespedes - Cantidad_Huespedes))+(TarifaGlamperos + TarifaGlamperosAdicional *(totalHuespedes - Cantidad_Huespedes)))/totalDiasRender).toLocaleString()} COP`
+            : `${(Math.round(precioConTarifa / totalDiasRender)).toLocaleString()} COP`}
+         </span>        
           <span>/ noche</span>
         </div>
 
@@ -228,7 +235,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
         <div className="FormularioFechas-detalleCosto">
           <div className="FormularioFechas-item">
             <span>
-              ${(Math.round((precioConTarifa / totalDiasRender) * (1 / (1 + porcentajeGlamperos)))).toLocaleString()} COP x{" "}
+              ${(Math.round((precioConTarifa / totalDiasRender) * (1 / (1 + porcentajeGlamperos)))).toLocaleString()} x{" "}
               {totalDiasRender === 1 ? totalDiasRender : totalDiasRender} noche
               {totalDiasRender > 1 ? "s" : ""}
             </span>
@@ -236,17 +243,47 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
               ${Math.round(precioConTarifa * (1 / (1 + porcentajeGlamperos))).toLocaleString()} COP
             </span>
           </div>
+
+          {/* Solo  es visible si  Cantidad_Huespedes_Adicional es mayor a cero*/}
+          {(totalHuespedes-Cantidad_Huespedes)>0 && (
+            <div className="FormularioFechas-item-adicional">
+              <span>Este glamping sólo incluye {Cantidad_Huespedes} huéspedes en su tarifa;
+                 cada persona adicional tendrá un costo extra de ${(precioPersonaAdicional).toLocaleString()} COP por noche</span>
+            </div>
+          )}
+
+          {(totalHuespedes-Cantidad_Huespedes)>0 && (
+            <div className="FormularioFechas-item">
+              <span>
+                ${(precioPersonaAdicional).toLocaleString()} x {totalHuespedes - Cantidad_Huespedes}{" "}
+                {(totalHuespedes - Cantidad_Huespedes) === 1 ? "adicional" : "adicionales"} x  {totalDiasRender} noche
+                {totalDiasRender > 1 ? "s" : ""}
+              </span>
+            <span>
+              {(precioPersonaAdicional*totalDiasRender*(totalHuespedes - Cantidad_Huespedes)).toLocaleString()} COP
+            </span>
+            </div>
+          )}
+
           <div className="FormularioFechas-item">
             <span>Tarifa por servicio Glamperos</span>
             <span>
-              ${TarifaGlamperos.toLocaleString()} COP
+              {(totalHuespedes - Cantidad_Huespedes) > 0
+                ? `${(TarifaGlamperos + TarifaGlamperosAdicional *(totalHuespedes - Cantidad_Huespedes)).toLocaleString()} COP`
+                : `${TarifaGlamperos.toLocaleString()} COP`}
             </span>
           </div>
+          
         </div>
 
         <div className="FormularioFechas-total">
           <span>Total</span>
-          <span>${precioConTarifa.toLocaleString()} COP</span>
+          <span>
+              {(totalHuespedes - Cantidad_Huespedes) > 0
+                ? `${(Math.round(precioConTarifa * (1 / (1 + porcentajeGlamperos)))+(precioPersonaAdicional*totalDiasRender*(totalHuespedes - Cantidad_Huespedes))+(TarifaGlamperos + TarifaGlamperosAdicional *(totalHuespedes - Cantidad_Huespedes))).toLocaleString()} COP`
+                : `${(precioConTarifa).toLocaleString()} COP`}
+          </span>
+
         </div>
       </div>
 
@@ -261,7 +298,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, des
         max_adultos={10}
         max_niños={10}
         max_bebes={5}
-        max_huespedes={Cantidad_Huespedes}
+        max_huespedes={Cantidad_Huespedes+Cantidad_Huespedes_Adicional}
         max_mascotas={admiteMascotas ? 5 : 0}      
         onCerrar={() => setMostrarVisitantes(false)}
       />      
