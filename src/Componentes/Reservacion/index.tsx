@@ -24,7 +24,7 @@ const Reservacion: React.FC = () => {
       );
     }
   
-    const {verPolitica, setVerPolitica, Cantidad_Adultos, Cantidad_Niños, Cantidad_Bebes, Cantidad_Mascotas } = almacenVariables;  
+    const {verPolitica, setVerPolitica, Cantidad_Adultos, Cantidad_Ninos, Cantidad_Bebes, Cantidad_Mascotas } = almacenVariables;  
   const navigate = useNavigate(); 
 
   const [usuario, setUsuario] = useState({
@@ -319,9 +319,12 @@ const Reservacion: React.FC = () => {
         idGlamping: glampingId??"No tiene GlampingId",
         FechaIngreso: fechaInicio ? fechaInicio.toISOString() : '',
         FechaSalida: fechaFin ? fechaFin.toISOString() : '',
+        Noches: totalDiasNum,
         ValorReserva: precioConTarifaNum,
+        CostoGlamping: precioConTarifaNum-TarifaGlamperosNum,
+        ComisionGlamperos: TarifaGlamperosNum,
         adultos: Cantidad_Adultos,
-        niños: Cantidad_Niños,
+        Ninos: Cantidad_Ninos,
         bebes: Cantidad_Bebes,
         mascotas: Cantidad_Mascotas,
         EstadoReserva: "Pendiente",
@@ -349,7 +352,7 @@ const Reservacion: React.FC = () => {
             <p>Check-In: ${fechaInicio?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>            
             <p>Check-Out: ${fechaFin?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>
             <p>Adultos: ${Cantidad_Adultos}</p>
-            <p>Niños: ${Cantidad_Niños}</p>
+            <p>Ninos: ${Cantidad_Ninos}</p>
             <p>Mascotas: ${Cantidad_Mascotas}</p>
             <p>El correo de tu huéspeded es ${correoUsuarioCookie} para que te comuniques con él</p>
             <p>
@@ -401,7 +404,7 @@ const Reservacion: React.FC = () => {
             <p>Check-In: ${fechaInicio?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>            
             <p>Check-Out: ${fechaFin?.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}</p>
             <p>Adultos: ${Cantidad_Adultos}</p>
-            <p>Niños: ${Cantidad_Niños}</p>
+            <p>Ninos: ${Cantidad_Ninos}</p>
             <p>Mascotas: ${Cantidad_Mascotas}</p>
             <p>El contacto de WhatsApp de tu anfitrión es +57 ${usuario.whatsapp.slice(-10)}, escribele para estar en contacto</p>
             <p>

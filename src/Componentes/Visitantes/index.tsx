@@ -6,13 +6,13 @@ import "./estilos.css";
 interface VisitantesProps {
   onCerrar: () => void;
   max_adultos: number;
-  max_niños: number;
+  max_Ninos: number;
   max_bebes: number;
   max_mascotas: number;
   max_huespedes: number;
 }
 
-const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niños, max_bebes, max_mascotas, max_huespedes}) => {
+const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_Ninos, max_bebes, max_mascotas, max_huespedes}) => {
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -24,8 +24,8 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niñ
   const {
     Cantidad_Adultos,
     setCantidad_Adultos,
-    Cantidad_Niños,
-    setCantidad_Niños,
+    Cantidad_Ninos,
+    setCantidad_Ninos,
     Cantidad_Bebes,
     setCantidad_Bebes,
     Cantidad_Mascotas,
@@ -37,11 +37,11 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niñ
 
   // Calcula y actualiza el total de huéspedes
   useEffect(() => {
-    const nuevoTotal = Cantidad_Adultos + Cantidad_Niños;
+    const nuevoTotal = Cantidad_Adultos + Cantidad_Ninos;
     setTotalHuespedes(nuevoTotal);
   }, [
     Cantidad_Adultos,
-    Cantidad_Niños,
+    Cantidad_Ninos,
     Cantidad_Bebes,
     Cantidad_Mascotas,
     setTotalHuespedes,
@@ -110,7 +110,7 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niñ
                   setCantidad_Adultos,
                   Cantidad_Adultos,
                   max_adultos,
-                  Cantidad_Adultos + Cantidad_Niños
+                  Cantidad_Adultos + Cantidad_Ninos
                 )
               }
             >
@@ -121,25 +121,25 @@ const Visitantes: React.FC<VisitantesProps> = ({ onCerrar, max_adultos, max_niñ
 
         <div className="Visitantes-seccion">
           <div className="Visitantes-titulo">
-            <span>Niños</span>
+            <span>Ninos</span>
             <small>Edades 2 – 12</small>
           </div>
           <div className="Visitantes-controles">
             <button
               className="Visitantes-boton"
-              onClick={() => decrementar(setCantidad_Niños, Cantidad_Niños)}
+              onClick={() => decrementar(setCantidad_Ninos, Cantidad_Ninos)}
             >
               −
             </button>
-            <span>{Cantidad_Niños}</span>
+            <span>{Cantidad_Ninos}</span>
             <button
               className="Visitantes-boton"
               onClick={() =>
                 incrementar(
-                  setCantidad_Niños,
-                  Cantidad_Niños,
-                  max_niños,
-                  Cantidad_Adultos + Cantidad_Niños
+                  setCantidad_Ninos,
+                  Cantidad_Ninos,
+                  max_Ninos,
+                  Cantidad_Adultos + Cantidad_Ninos
                 )
               }
             >

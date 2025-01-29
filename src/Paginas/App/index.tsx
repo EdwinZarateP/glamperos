@@ -26,7 +26,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/Registrarse" element={<Registrarse />} />  
-        <Route path="/ExplorarGlamping/:glampingId/:fechaInicioUrl/:fechaFinUrl/:totalDiasUrl" element={<ExplorarGlamping />} />
+        <Route path="/ExplorarGlamping/:glampingId/:fechaInicioUrl/:fechaFinUrl/:totalDiasUrl/:totalAdultosUrl/:totalNinosUrl/:totalBebesUrl/:totalMascotasUrl" element={<ExplorarGlamping />} />
         <Route path="/ColeccionImagenes/:glampingId" element={<ColeccionImagenes />} />
         <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
         <Route path="/ListaDeseos" element={<ListaDeseos />} />          
@@ -35,7 +35,7 @@ const App: React.FC = () => {
         <Route path="/GestionarCuenta/" element={<GestionarCuenta />} />   
         <Route path="/EdicionGlamping/:glampingId" element={<EdicionGlamping />} />
         <Route path="/EdicionPerfil/" element={<EdicionPerfil />} />
-        <Route path="/Reservar/:glampingId/:fechaInicioReservada/:fechaFinReservada/:precioConTarifa/:TarifaGlamperos/:totalDias" element={<Reservar />} />
+        <Route path="/Reservar/:glampingId/:fechaInicioReservada/:fechaFinReservada/:precioConTarifa/:TarifaGlamperos/:totalDias/:totalAdultos/:totalNinos/:totalBebes/:totalMascotas" element={<Reservar />} />
         <Route path="/Mensajes/:idReceptor" element={<Mensajes />} />        
         <Route path="/MensajesIndividuales/:idReceptor" element={<MensajesIndividuales />} />        
         

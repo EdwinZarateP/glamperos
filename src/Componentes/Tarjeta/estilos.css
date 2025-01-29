@@ -241,9 +241,23 @@
   display: block;
   margin-top: 4px;
 }
+
 .tarjeta-precio :nth-child(3) {
   font-weight:400;
   color: #333;
+  font-size: 0.8em;  
+}
+
+.tarjeta-precio-variosDias {
+  font-weight: bold;
+  color: #333;
+  font-size: 1em;
+  display: block;
+  margin-top: 4px;
+}
+
+.tarjeta-precio-variosDias span{
+  font-weight:400;
   font-size: 0.8em;  
 }
 
@@ -252,6 +266,7 @@
   font-size: 0.9em;
   margin-right: 8px;
 }
+
 
 /* Botón de favorito (corazón) */
 .tarjeta-favorito {

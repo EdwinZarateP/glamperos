@@ -96,8 +96,8 @@ interface ContextProps {
   // Variables de visitantes
   Cantidad_Adultos: number;
   setCantidad_Adultos: Dispatch<SetStateAction<number>>;
-  Cantidad_Niños: number;
-  setCantidad_Niños: Dispatch<SetStateAction<number>>;
+  Cantidad_Ninos: number;
+  setCantidad_Ninos: Dispatch<SetStateAction<number>>;
   Cantidad_Bebes: number;
   setCantidad_Bebes: Dispatch<SetStateAction<number>>;
   Cantidad_Mascotas: number;
@@ -267,7 +267,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [tarifaServicio, setTarifaServicio] = useState<number | undefined>(undefined);
   const [totalSinImpuestos, setTotalSinImpuestos] = useState<number | undefined>(undefined);
   const [Cantidad_Adultos, setCantidad_Adultos] = useState<number>(1);
-  const [Cantidad_Niños, setCantidad_Niños] = useState<number>(0);
+  const [Cantidad_Ninos, setCantidad_Ninos] = useState<number>(0);
   const [Cantidad_Bebes, setCantidad_Bebes] = useState<number>(0);
   const [Cantidad_Mascotas, setCantidad_Mascotas] = useState<number>(0);
   const [totalHuespedes, setTotalHuespedes] = useState<number>(1);
@@ -387,7 +387,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     tarifaServicio,setTarifaServicio,
     totalSinImpuestos,setTotalSinImpuestos,
     Cantidad_Adultos,setCantidad_Adultos,
-    Cantidad_Niños,setCantidad_Niños,
+    Cantidad_Ninos,setCantidad_Ninos,
     Cantidad_Bebes,setCantidad_Bebes,
     Cantidad_Mascotas,setCantidad_Mascotas,
     totalHuespedes, setTotalHuespedes,

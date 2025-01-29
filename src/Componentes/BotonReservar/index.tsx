@@ -4,7 +4,7 @@ import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
 import { useParams, Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
+import viernesysabadosyfestivos from "../BaseFinesSemana/fds.json";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import { ExtraerTarifaGlamperos } from "../../Funciones/ExtraerTarifaGlamperos";
 import "./estilos.css";
@@ -34,29 +34,69 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
     setTotalDias,
     mostrarCalendario,
     setMostrarCalendario,
-    totalHuespedes,
+    Cantidad_Adultos,
+    setCantidad_Adultos,
+    Cantidad_Ninos,
+    setCantidad_Ninos,
+    Cantidad_Bebes,
+    setCantidad_Bebes,
+    Cantidad_Mascotas,
+    setCantidad_Mascotas,
   } = almacenVariables;
 
-  let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl } = useParams<{
-    glampingId: string;
-    fechaInicioUrl: string;
-    fechaFinUrl: string;
-    totalDiasUrl: string;
-  }>();
-
-  const actualizarUrl = (fechaInicioParam: Date, fechaFinParam: Date, totalDias: number) => {
-    const fechaInicioStr = fechaInicioParam.toISOString().split("T")[0];
-    const fechaFinStr = fechaFinParam.toISOString().split("T")[0];
-    const totalDiasStr = totalDias.toString();
-    const nuevaUrl = `/ExplorarGlamping/${glampingId}/${fechaInicioStr}/${fechaFinStr}/${totalDiasStr}`;
-    window.history.replaceState(null, "", nuevaUrl);
-  };
-
-  useEffect(() => {
-    if (fechaInicio && fechaFin && totalDias) {
-      actualizarUrl(fechaInicio, fechaFin, totalDias);
-    }
-  }, [fechaInicio, fechaFin, totalDias]);
+  let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl, totalAdultosUrl, totalNinosUrl, totalBebesUrl, totalMascotasUrl } = useParams<{
+        glampingId: string;
+        fechaInicioUrl: string;
+        fechaFinUrl: string;
+        totalDiasUrl: string;
+        totalAdultosUrl: string;
+        totalNinosUrl: string;
+        totalBebesUrl: string;
+        totalMascotasUrl: string;
+      }>();
+      
+    // hace que se tomen los valores url cuando es la primer vez que se inicia el componente
+     useEffect(() => {
+       const adultos = parseInt(totalAdultosUrl || "0", 1);
+       const ninos = parseInt(totalNinosUrl || "0", 0);
+       const bebes = parseInt(totalBebesUrl || "0", 0);
+       const mascotas = parseInt(totalMascotasUrl || "0", 0);     
+       setCantidad_Adultos(isNaN(adultos) ? 0 : adultos);
+       setCantidad_Ninos(isNaN(ninos) ? 0 : ninos);
+       setCantidad_Bebes(isNaN(bebes) ? 0 : bebes);
+       setCantidad_Mascotas(isNaN(mascotas) ? 0 : mascotas);     
+     }, []);
+   
+   
+     const actualizarUrl = (fechaInicioParam: Date, fechaFinParam: Date, totalDias: number, Cantidad_Adultos: number, Cantidad_Ninos: number, Cantidad_Bebes: number, Cantidad_Mascotas: number) => {
+       const fechaInicioStr = fechaInicioParam.toISOString().split("T")[0];
+       const fechaFinStr = fechaFinParam.toISOString().split("T")[0];
+       const totalDiasStr = totalDias.toString();
+       const totalAdultosStr = Cantidad_Adultos.toString();    
+       const totalNinosStr = Cantidad_Ninos.toString(); 
+       const totalBebesStr = Cantidad_Bebes.toString(); 
+       const totalMascotasStr = Cantidad_Mascotas.toString();
+       const nuevaUrl = `/ExplorarGlamping/${glampingId}/${fechaInicioStr}/${fechaFinStr}/${totalDiasStr}/${totalAdultosStr}/${totalNinosStr}/${totalBebesStr}/${totalMascotasStr}`;
+       window.history.replaceState(null, "", nuevaUrl);
+     };
+   
+     useEffect(() => {
+      if (
+        fechaInicio &&
+        fechaFin &&
+        totalDias &&
+        Cantidad_Adultos &&
+        Cantidad_Ninos !== null &&
+        Cantidad_Ninos !== undefined &&
+        Cantidad_Bebes !== null &&
+        Cantidad_Bebes !== undefined &&
+        Cantidad_Mascotas !== null &&
+        Cantidad_Mascotas !== undefined
+      ) {
+        actualizarUrl(fechaInicio, fechaFin, totalDias, Cantidad_Adultos, Cantidad_Ninos, Cantidad_Bebes, Cantidad_Mascotas);
+      }
+    }, [fechaInicio, fechaFin, totalDias, Cantidad_Adultos, Cantidad_Ninos, Cantidad_Bebes, Cantidad_Mascotas]);
+    
 
   const fechaInicioRender = fechaInicio
     ? fechaInicio
@@ -77,6 +117,40 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
   } else if (totalDiasUrl) {
     totalDiasRender = parseInt(totalDiasUrl, 10);
   }
+
+  const adultosRender = Cantidad_Adultos 
+    ? Cantidad_Adultos 
+    : totalAdultosUrl 
+    ? parseInt(totalAdultosUrl, 10) 
+    : 1; 
+  
+    const ninosRender =
+    Cantidad_Ninos !== undefined && Cantidad_Ninos !== null
+    ? Cantidad_Ninos
+    : totalNinosUrl
+    ? parseInt(totalNinosUrl, 10)
+    : 0;
+
+    const bebesRender =
+    Cantidad_Bebes !== undefined && Cantidad_Bebes !== null
+    ? Cantidad_Bebes
+    : totalBebesUrl
+    ? parseInt(totalBebesUrl, 10)
+    : 0;
+
+    const mascotasRender =
+    Cantidad_Mascotas !== undefined && Cantidad_Mascotas !== null
+    ? Cantidad_Mascotas
+    : totalMascotasUrl
+    ? parseInt(totalMascotasUrl, 10)
+    : 0;
+    
+    const totalHuespedesRender = 
+    adultosRender !== undefined && ninosRender !== undefined 
+      ? adultosRender + ninosRender 
+      : totalAdultosUrl && totalNinosUrl 
+      ? parseInt(totalAdultosUrl, 10) + parseInt(totalNinosUrl, 10) 
+      : 1;
 
   const hoy = new Date();
   const fechaInicioPorDefecto = new Date();
@@ -112,8 +186,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
     fechaFinReservada
   ));
 
-  const precioConTarifaAdicional = Math.round(calcularTarifaServicio(precioPersonaAdicional, viernesysabadosyfestivos, 0, fechaInicioReservada ?? fechaInicioPorDefecto, fechaFinReservada ?? fechaFinPorDefecto));
-    
+  const precioConTarifaAdicional = Math.round(calcularTarifaServicio(precioPersonaAdicional, viernesysabadosyfestivos, 0, fechaInicioReservada ?? fechaInicioPorDefecto, fechaFinReservada ?? fechaFinPorDefecto));    
   const porcentajeGlamperos = ExtraerTarifaGlamperos(precioPorNoche);
 
   const formatearFecha = (fecha: Date | null): string => {
@@ -130,6 +203,8 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
   const TarifaGlamperos = Math.round(
     precioConTarifa - precioConTarifa * (1 / (1 + porcentajeGlamperos))
   );
+
+  const TarifaGlamperosAdicional = Math.round(precioConTarifaAdicional - precioConTarifaAdicional * (1 / (1 + porcentajeGlamperos)));
 
   useEffect(() => {
     if (!fechaInicio && fechaInicioUrl) setFechaInicio(new Date(fechaInicioUrl));
@@ -156,20 +231,54 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
       }
     };
 
+    // calcular la Tarifa Total
+    function calcularTotalFinal(
+      totalHuespedes: number,
+      Cantidad_Huespedes: number,
+      precioConTarifa: number,
+      porcentajeGlamperos: number,
+      precioPersonaAdicional: number,
+      totalDiasRender: number,
+      TarifaGlamperos: number,
+      TarifaGlamperosAdicional: number
+    ): number {
+      if (totalHuespedes - Cantidad_Huespedes > 0) {
+        return Math.round(
+          precioConTarifa * (1 / (1 + porcentajeGlamperos)) +
+            precioPersonaAdicional *
+              totalDiasRender *
+              (totalHuespedes - Cantidad_Huespedes) +
+            (TarifaGlamperos +
+              TarifaGlamperosAdicional * (totalHuespedes - Cantidad_Huespedes))
+        );
+      } else {
+        return precioConTarifa; // Corregido para retornar solo el número
+      }
+    }
+      
+    const TotalFinal = calcularTotalFinal(
+      totalHuespedesRender,
+      Cantidad_Huespedes,
+      precioConTarifa,
+      porcentajeGlamperos,
+      precioPersonaAdicional,
+      totalDiasRender,
+      TarifaGlamperos,
+      TarifaGlamperosAdicional
+    );
+
+
   return (
     <div className="ReservarBoton-container">
 
       <div className="ReservarBoton-total">
-        <span className="FormularioFechas-precioNoche">
-          {(totalHuespedes - Cantidad_Huespedes) > 0
-            ? `${(precioConTarifa+precioConTarifaAdicional).toLocaleString()} COP`
-            : `${(precioConTarifa).toLocaleString()} COP`}
-        </span> 
-
+        <span>
+          ${TotalFinal.toLocaleString()} COP
+        </span>
         <div
         className="ReservarBoton-fechas"
         onClick={() => {
-          setFechaInicio(fechaInicioRender);
+          setFechaInicio(fechaInicioRender);          
           setFechaFin(fechaFinRender);
           setTotalDias(totalDiasRender);
           setMostrarCalendario(true);
@@ -190,7 +299,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
         <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} />
       )}
         <Link
-        to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDiasRender}`}
+        to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`}
         className="ReservarBoton-boton"
         onClick={handleReservarClick}
         >

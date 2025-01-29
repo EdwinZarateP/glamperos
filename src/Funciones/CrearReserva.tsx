@@ -5,9 +5,12 @@ export interface Reserva {
     idGlamping: string;
     FechaIngreso: string; // Formato ISO (YYYY-MM-DDTHH:mm:ss.sssZ)
     FechaSalida: string;  // Formato ISO
+    Noches: number;
     ValorReserva: number;
+    CostoGlamping: number;
+    ComisionGlamperos: number;
     adultos: number;
-    niños: number;
+    Ninos: number;
     bebes: number;
     mascotas: number;
     EstadoReserva: string;

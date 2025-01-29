@@ -27,7 +27,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
     setTotalDias,ciudad_departamento,
     setCiudad_departamento,totalHuespedes,
     setTotalHuespedes,setCantidad_Adultos,
-    setCantidad_Niños,setCantidad_Bebes,
+    setCantidad_Ninos,setCantidad_Bebes,
     setCantidad_Mascotas, Cantidad_Mascotas,
     mostrarCalendario,setMostrarCalendario,
     mostrarVisitantes,setMostrarVisitantes,
@@ -274,7 +274,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
               setTotalDias(1);
               setTotalHuespedes(1);
               setCantidad_Adultos(1);
-              setCantidad_Niños(0);
+              setCantidad_Ninos(0);
               setCantidad_Bebes(0);
               setCantidad_Mascotas(0);
               setCordenadasElegidas([])
@@ -302,7 +302,7 @@ const PanelBusqueda: React.FC<PanelBusquedaProps> = ({ onBuscar, onCerrar }) => 
         <div>
           <Visitantes
           max_adultos={10}
-          max_niños={10}
+          max_Ninos={10}
           max_bebes={5}
           max_mascotas={5} 
           max_huespedes={10} 

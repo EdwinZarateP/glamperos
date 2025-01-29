@@ -71,7 +71,11 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     fechaInicio,
     fechaFin,
     fechaInicioConfirmado,
-    fechaFinConfirmado
+    fechaFinConfirmado,
+    Cantidad_Adultos,
+    Cantidad_Ninos,
+    Cantidad_Bebes,
+    Cantidad_Mascotas
   } = almacenVariables;
   
   if (!imagenes || imagenes.length === 0) {
@@ -96,6 +100,22 @@ const Tarjeta: React.FC<TarjetaProps> = ({
   ? totalDias
   : 1
 
+  const totalAdultosUrl = Cantidad_Adultos
+  ? Cantidad_Adultos
+  : 1
+
+  const totalNinosUrl = Cantidad_Ninos
+  ? Cantidad_Ninos
+  : 0
+
+  const totalBebesUrl = Cantidad_Bebes
+  ? Cantidad_Bebes
+  : 0
+
+  const totaMascotasUrl = Cantidad_Mascotas
+  ? Cantidad_Mascotas
+  : 0
+  
   const precioConTarifa = calcularTarifaServicio(precio, viernesysabadosyfestivos, descuento, fechaInicioConfirmado ?? fechaInicioPorDefecto, fechaFinConfirmado ?? fechaFinPorDefecto);
   const precioFinalNoche=precioConTarifa/totalDias
   
@@ -174,7 +194,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
     if (totalDias === 0 || totalDias === 1) {
       return (
         <div className="tarjeta-precio">
-        <span>{precioConFormato(precioFinalNoche)} por noche para {Cantidad_Huespedes}</span>
+        <span>{precioConFormato(precioFinalNoche)} noche para {Cantidad_Huespedes}</span>
         <br />
         {Cantidad_Huespedes_Adicional > 0 && (
           <span>{precioConFormato(precioEstandarAdicional)} por persona adicional</span>
@@ -188,9 +208,12 @@ const Tarjeta: React.FC<TarjetaProps> = ({
         <span className="tarjeta-precio-base">
           {precioConFormato(precioFinalNoche)} por noche
         </span>
-        <span className="tarjeta-precio">
-          {precioConFormato(precioConTarifa)} por {totalDias} noches
-        </span>
+        <div className="tarjeta-precio-variosDias">
+          {precioConFormato(precioConTarifa)} por {totalDias} noches <br />
+          {Cantidad_Huespedes_Adicional > 0 && (
+          <span>{precioConFormato(precioEstandarAdicional)} por persona adicional</span>
+          )}
+        </div>
       </>
     );
   };
@@ -198,7 +221,7 @@ const Tarjeta: React.FC<TarjetaProps> = ({
 
 // Nuevo manejador de redirección
 const esPantallaPequena = window.innerWidth <= 600;
-const urlDestino = `/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}`;
+const urlDestino = `/ExplorarGlamping/${glampingId}/${fechaInicioUrl}/${fechaFinUrl}/${totalDiasUrl}/${totalAdultosUrl}/${totalNinosUrl}/${totalBebesUrl}/${totaMascotasUrl}`;
 
 return (
   <div className="tarjeta">
