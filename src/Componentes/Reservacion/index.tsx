@@ -241,7 +241,7 @@ const Reservacion: React.FC = () => {
 
         Swal.fire({
           title: "¡Reserva confirmada!",
-          text:  `Tu estancia será del ${fechaInicio.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })} al ${fechaFin.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}. Hemos enviado los detalles a tu WhatsApp (${telefonoUsuarioCookie?.slice(-10)}) y correo (${correoUsuarioCookie}). En el mensaje encontrarás el código de reserva, ubicación del glamping y el contacto del anfitrión. ¡Gracias por elegirnos!`,
+          text:  `Tu estancia será del ${fechaInicio.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })} al ${fechaFin.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}.  A tu WhatsApp (${telefonoUsuarioCookie?.slice(-10)}) y correo (${correoUsuarioCookie}) enviamos el código de reserva, ubicación del glamping y el contacto del anfitrión. ¡Gracias por elegirnos!`,
           icon: "success",
           confirmButtonText: "Aceptar",
         }).then(() => {        
@@ -335,7 +335,8 @@ const Reservacion: React.FC = () => {
   };
 
   const mensaje5: string = (nombreUsuarioCookie ? nombreUsuarioCookie.split(' ')[0] : "Estimado(a)");
-  const mensaje6: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
+  // const mensaje6: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
+  const mensaje6: string = "esta es la parte donde estoy probando que al cliente le llegue el mensaje de whatsapp"
   const mensaje7: string = fechaInicio ? formatoFecha(fechaInicio) : "Fecha fin no definida";
   const mensaje8: string = fechaFin ? formatoFecha(fechaFin) : "Fecha fin no definida";
 
