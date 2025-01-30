@@ -334,6 +334,67 @@ const Reservacion: React.FC = () => {
     }
   };
 
+  const mensaje5: string = nombreUsuarioCookie||"Estimado(a)";
+  const mensaje6: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
+  const mensaje7: string = fechaInicio ? formatoFecha(fechaInicio) : "Fecha fin no definida";
+  const mensaje8: string = fechaFin ? formatoFecha(fechaFin) : "Fecha fin no definida";
+
+  const enviarMensajeCliente = async (numero: string) => {
+    const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
+    const body = {
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: numero,
+      type: "template",
+      template: {
+        name: "confirmacionreserva",
+        language: {
+          code: "es_CO"
+        },
+        components: [
+          
+          {
+            type: "header",
+            parameters: [
+              {
+                type: "image",
+                image: {
+                  link: "https://storage.googleapis.com/glamperos-imagenes/Imagenes/animal1.jpeg"
+                }
+              }
+            ]
+          }, 
+          {
+            type: "body",
+            parameters: [
+              { type: "text", text: mensaje5 },
+              { type: "text", text: mensaje6 },
+              { type: "text", text: mensaje7 },
+              { type: "text", text: mensaje8 }
+            ]
+          }                  
+        ]
+      }
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${WHATSAPP_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+     
+    } else {
+      const errorData = await response.json();
+      console.error("Error al enviar mensaje:", errorData);
+      alert(`Error al enviar el mensaje: ${errorData.error.message}`);
+    }
+  };
+
   // Aquí ejecutamos la api para guardar la reserva
   const handleCrearReserva = async () => {
     const nuevaReserva: Reserva = {
@@ -362,7 +423,8 @@ const Reservacion: React.FC = () => {
       if (respuesta?.reserva?.codigoReserva) {
         enviarCorreoPropietario(usuario?.correoPropietario || "", usuario?.nombreDueño || "",respuesta.reserva.codigoReserva);
         enviarCorreoCliente(correoUsuarioCookie || "", nombreUsuarioCookie || "",respuesta.reserva.codigoReserva);
-        enviarMensaje( usuario?.whatsapp);    
+        enviarMensaje( usuario?.whatsapp);
+        enviarMensajeCliente( telefonoUsuarioCookie|| "");    
       }
 
     } catch (error) {
