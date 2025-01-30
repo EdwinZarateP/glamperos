@@ -5,6 +5,7 @@
   justify-items: center;
   gap: 20px;
   padding: 0 4px;
+  padding-top: 10px;
   box-sizing: border-box;
   position: relative; /* Necesario para la animación global */
   overflow: hidden;
