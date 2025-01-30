@@ -334,7 +334,7 @@ const Reservacion: React.FC = () => {
     }
   };
 
-  const mensaje5: string = nombreUsuarioCookie||"Estimado(a)";
+  const mensaje5: string = (nombreUsuarioCookie ? nombreUsuarioCookie.split(' ')[0] : "Estimado(a)");
   const mensaje6: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
   const mensaje7: string = fechaInicio ? formatoFecha(fechaInicio) : "Fecha fin no definida";
   const mensaje8: string = fechaFin ? formatoFecha(fechaFin) : "Fecha fin no definida";
