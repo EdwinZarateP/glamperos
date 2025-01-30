@@ -576,7 +576,7 @@ const Reservacion: React.FC = () => {
                   </p>
                   <hr />
                   <p>
-                    {totalAdultos} Adultos
+                    {totalAdultos && `${Number(totalAdultos)} ${Number(totalAdultos) === 1 ? 'Adulto' : 'Adultos'}`}
                     {totalNinos && Number(totalNinos) > 0 && `, ${totalNinos} ${Number(totalNinos) === 1 ? 'Niño' : 'Niños'}`}
                     {totalBebes && Number(totalBebes) > 0 && `, ${totalBebes} ${Number(totalBebes) === 1 ? 'Bebé' : 'Bebés'}`}                  
                     {totalMascotas && Number(totalMascotas) > 0 && ` y ${totalMascotas} Mascota${Number(totalMascotas) > 1 ? "s" : ""}`}
