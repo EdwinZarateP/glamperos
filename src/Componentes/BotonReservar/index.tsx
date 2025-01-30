@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { ContextoApp } from "../../Contexto/index";
+import { useNavigate } from "react-router-dom";
 import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
+import Cookies from 'js-cookie';
 import { useParams, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import viernesysabadosyfestivos from "../BaseFinesSemana/fds.json";
@@ -17,6 +19,7 @@ interface BotonReservaProps {
 }
 
 const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPersonaAdicional, descuento, Cantidad_Huespedes }) => {
+  const navigate = useNavigate();
   const almacenVariables = useContext(ContextoApp);
 
   if (!almacenVariables) {
@@ -42,6 +45,8 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
     setCantidad_Bebes,
     Cantidad_Mascotas,
     setCantidad_Mascotas,
+    setUrlActual,
+    setRedirigirExplorado,
   } = almacenVariables;
 
   let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl, totalAdultosUrl, totalNinosUrl, totalBebesUrl, totalMascotasUrl } = useParams<{
@@ -224,8 +229,35 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
       }
       return true;
     };  
-  
+    
+  const ValidarSesion = (email: string) => {
+        setUrlActual(
+          `/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`
+        );
+        setRedirigirExplorado(true)      
+        
+        if (email==="sesionCerrada") {
+          // Mostrar el mensaje de advertencia antes de redirigir
+          Swal.fire({
+            title: "¡Estás muy cerca!",
+            text: "Debes iniciar sesión primero para continuar.",
+            icon: "warning",
+            confirmButtonText: "Aceptar",
+          }).then(() => {
+            // Redirigir a la página de registro después de que el usuario cierre el alert
+            navigate("/Registrarse");
+          });
+        }
+      };
+
     const handleReservarClick = (e: React.MouseEvent) => {
+      const emailUsuario = Cookies.get("correoUsuario");
+      // Validar si el email es válido
+      if (!emailUsuario) {        
+        ValidarSesion(emailUsuario || "sesionCerrada"); // Llama a validarEmail pasando el email vacío o su valor
+       e.preventDefault(); // Prevenir que continúe la ejecución si el email no está definido
+        return; // Salir de la función
+      }
       if (!validarFechas()) {
         e.preventDefault(); 
       }
@@ -252,10 +284,27 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
               TarifaGlamperosAdicional * (totalHuespedes - Cantidad_Huespedes))
         );
       } else {
-        return precioConTarifa; // Corregido para retornar solo el número
+        return precioConTarifa;
       }
     }
-      
+    
+    // calcular la tarifa de glamperos
+    function calcularTarifaGlamperos(
+      totalHuespedes: number,
+      Cantidad_Huespedes: number,
+      TarifaGlamperos: number,
+      TarifaGlamperosAdicional: number
+    ): number {
+      if (totalHuespedes - Cantidad_Huespedes > 0) {
+        return (
+          TarifaGlamperos +
+          TarifaGlamperosAdicional * (totalHuespedes - Cantidad_Huespedes)
+        );
+      } else {
+        return TarifaGlamperos;
+      }
+    }
+
     const TotalFinal = calcularTotalFinal(
       totalHuespedesRender,
       Cantidad_Huespedes,
@@ -267,6 +316,12 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
       TarifaGlamperosAdicional
     );
 
+    const tarifaFinalGlamperos = calcularTarifaGlamperos(
+      totalHuespedesRender,
+      Cantidad_Huespedes,
+      TarifaGlamperos,
+      TarifaGlamperosAdicional
+    );
 
   return (
     <div className="ReservarBoton-container">
@@ -278,6 +333,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
         <div
         className="ReservarBoton-fechas"
         onClick={() => {
+          setCantidad_Adultos(adultosRender)
           setFechaInicio(fechaInicioRender);          
           setFechaFin(fechaFinRender);
           setTotalDias(totalDiasRender);
@@ -299,7 +355,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
         <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} />
       )}
         <Link
-        to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${precioConTarifa}/${TarifaGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`}
+        to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`}
         className="ReservarBoton-boton"
         onClick={handleReservarClick}
         >

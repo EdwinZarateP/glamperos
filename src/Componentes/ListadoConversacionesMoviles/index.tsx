@@ -109,7 +109,6 @@ const ListadoConversacionesMoviles: React.FC = () => {
     setNombreUsuarioChat(conversacion.nombre);
     setFotoUsuarioChat(conversacion.foto);
     navigate(`/MensajesIndividuales/${conversacion.contacto}`);
-    console.log("Edw")
   };
 
   // Función para obtener la primera letra del nombre

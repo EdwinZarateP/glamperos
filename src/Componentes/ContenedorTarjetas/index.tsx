@@ -55,6 +55,10 @@ const ContenedorTarjetas: React.FC = () => {
   const esFavorito = (glampingId: string, favoritos: string[] = []): boolean => {
     return Array.isArray(favoritos) && favoritos.includes(glampingId);
   };  
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Obtener favoritos desde la API
   useEffect(() => {

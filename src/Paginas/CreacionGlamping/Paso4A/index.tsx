@@ -85,8 +85,7 @@ const guardarGlampingP: React.FC = () => {
         subject: "¡Bienvenido a la familia Glamperos!",
         html_content: htmlContent, // Enviar el contenido del correo
       });
-  
-      console.log(`Correo enviado con éxito: ${nombre}`);
+        
     } catch (error) {
       console.error("Error al enviar el correo: ", error);
     }

@@ -1,4 +1,9 @@
-.contenedor-principal {
+* {
+    margin: 0;
+    padding: 0;
+  }  
+
+  .contenedor-principal {
     width: 90%;    
     margin: 0 auto; 
     margin-top: 150px; /* Espacio igual a la altura del Header */

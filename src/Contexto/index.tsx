@@ -52,6 +52,8 @@ interface ContextProps {
   setActivarChat: Dispatch<SetStateAction<boolean>>;
   verPolitica: boolean;
   setVerPolitica: Dispatch<SetStateAction<boolean>>;
+  redirigirExplorado: boolean;
+  setRedirigirExplorado: Dispatch<SetStateAction<boolean>>;
 
 
   // Variables de tipo string
@@ -67,6 +69,8 @@ interface ContextProps {
   setIdUrlConversacion: Dispatch<SetStateAction<string>>; 
   whatsapp: string; 
   setWhatsapp: Dispatch<SetStateAction<string>>; 
+  UrlActual: string; 
+  setUrlActual: Dispatch<SetStateAction<string>>; 
 
   // Variables de tipo fecha
   fechaInicio: Date | null;
@@ -256,6 +260,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [ciudad_Elegida, setCiudad_Elegida] = useState('');
   const [idUrlConversacion, setIdUrlConversacion] = useState<string>(''); 
   const [whatsapp, setWhatsapp] = useState<string>(''); 
+  const [UrlActual, setUrlActual] = useState<string>('');   
   const [fechaInicio, setFechaInicio] = useState<Date | null>(null);
   const [fechaFin, setFechaFin] = useState<Date | null>(null);
   const [fechaInicioConfirmado, setFechaInicioConfirmado] = useState<Date | null>(null);
@@ -278,6 +283,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [verVideo, setVerVideo] = useState<boolean>(false); 
   const [activarChat, setActivarChat] = useState<boolean>(false);
   const [verPolitica, setVerPolitica] = useState<boolean>(false);
+  const [redirigirExplorado, setRedirigirExplorado] = useState<boolean>(false);  
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
   const [imagenesCargadas, setImagenesCargadas] = useState<File[]>([]);
   const [videoSeleccionado, setVideoSeleccionado] = useState<string>('');
@@ -370,12 +376,14 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     verVideo, setVerVideo,
     activarChat, setActivarChat,   
     verPolitica, setVerPolitica,
+    redirigirExplorado, setRedirigirExplorado,
     nombreGlamping, setNombreGlamping,
     descripcionGlamping, setDescripcionGlamping,
     ciudad_departamento, setCiudad_departamento,
     ciudad_Elegida, setCiudad_Elegida,
     idUrlConversacion, setIdUrlConversacion,
-    whatsapp, setWhatsapp,
+    whatsapp, setWhatsapp, 
+    UrlActual, setUrlActual,
     fechaInicio,setFechaInicio,
     fechaFin, setFechaFin,
     fechaInicioConfirmado, setFechaInicioConfirmado,

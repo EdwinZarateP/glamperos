@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Cookies from 'js-cookie';
+import { ContextoApp } from '../../Contexto/index';
 import axios from 'axios';
 import Lottie from 'lottie-react';
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import animationData from "../../Imagenes/AnimationPuntos.json";
 import './estilos.css';
@@ -14,7 +16,11 @@ interface Usuario {
 }
 
 const EditarPerfil: React.FC = () => {
+
   const navigate = useNavigate(); 
+
+const { redirigirExplorado, setRedirigirExplorado, UrlActual} = useContext(ContextoApp)!;
+
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [fotoActualizada, setFotoActualizada] = useState<File | null>(null);
   const [fotoPreview, setFotoPreview] = useState<string | null>(null);
@@ -58,7 +64,12 @@ const EditarPerfil: React.FC = () => {
 
   const actualizarTelefono = async () => {
     if (telefono.length !== 10) {
-      alert('El número de teléfono debe tener exactamente 10 dígitos.');
+      Swal.fire({
+        title: "Error",
+        text: "El whatsApp debe tener 10 dígitos",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
       return;
     }
   
@@ -70,7 +81,10 @@ const EditarPerfil: React.FC = () => {
         await axios.put(
           `https://glamperosapi.onrender.com/usuarios/${emailUsuario}/telefono`,
           { telefono: telefonoConPrefijo }
-        );
+        );        
+        Cookies.set('telefonoUsuario', telefonoConPrefijo, { expires: 7 });        
+        const telifi=Cookies.get("telefonoUsuario")
+        console.log(telifi)
         setEditandoTelefono(false);
         setUsuario((prevUsuario) =>
           prevUsuario ? { ...prevUsuario, telefono: telefonoConPrefijo } : null
@@ -108,6 +122,18 @@ const EditarPerfil: React.FC = () => {
       } finally {
         setCargandoFoto(false);
       }
+    }
+  };
+
+  // Validar si tiene WhatsApp
+  const validarNavegacion = (): string => {
+    if (redirigirExplorado) {
+      setRedirigirExplorado(false)
+      navigate(UrlActual);
+      return "No se ha logeado";
+    } else {
+      navigate("/");      
+      return "WhatsApp registrado, datos enviados.";  // Mensaje de éxito si tiene teléfono
     }
   };
 
@@ -211,8 +237,8 @@ const EditarPerfil: React.FC = () => {
       </div>
 
       {/* Botón para ir a la página principal */}
-      <button onClick={() => navigate('/')} className="editar-perfil-boton-regresar">
-        Ir a la página principal
+      <button onClick={validarNavegacion} className="editar-perfil-boton-regresar">
+        Continuar
       </button>
     </div>
   );

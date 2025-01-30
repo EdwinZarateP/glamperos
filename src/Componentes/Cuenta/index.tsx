@@ -48,6 +48,7 @@ const Cuenta: React.FC = () => {
     Cookies.remove('nombreUsuario');
     Cookies.remove('idUsuario');
     Cookies.remove('correoUsuario');
+    Cookies.remove('telefonoUsuario');    
 
     // Redirigir al inicio y recargar la página
     navigate("/");

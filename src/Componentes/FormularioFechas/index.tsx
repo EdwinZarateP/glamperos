@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ContextoApp } from "../../Contexto/index";
 import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
@@ -7,7 +8,9 @@ import Visitantes from "../Visitantes";
 import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import { ExtraerTarifaGlamperos } from "../../Funciones/ExtraerTarifaGlamperos";
+import Cookies from 'js-cookie';
 import Swal from "sweetalert2";
+
 import "./estilos.css";
 
 interface FormularioFechasProps {
@@ -29,28 +32,19 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
   }
 
   const {
-    fechaInicio,
-    setFechaInicio,
-    fechaFin,
-    setFechaFin,
-    totalDias,
-    setTotalDias,    
-    mostrarCalendario,
-    setMostrarCalendario,
-    mostrarVisitantes,
-    setMostrarVisitantes,
-    fechaInicioConfirmado,
-    setFechaInicioConfirmado,
-    setFechaFinConfirmado,
-    fechaFinConfirmado,
-    Cantidad_Adultos,
-    setCantidad_Adultos,
-    Cantidad_Ninos,
-    setCantidad_Ninos,
-    Cantidad_Bebes,
-    setCantidad_Bebes,
-    Cantidad_Mascotas,
-    setCantidad_Mascotas,
+    fechaInicio, setFechaInicio,
+    fechaFin, setFechaFin,
+    totalDias, setTotalDias,    
+    mostrarCalendario, setMostrarCalendario,
+    mostrarVisitantes, setMostrarVisitantes,
+    fechaInicioConfirmado, setFechaInicioConfirmado,
+    setFechaFinConfirmado, fechaFinConfirmado,
+    Cantidad_Adultos, setCantidad_Adultos,
+    Cantidad_Ninos, setCantidad_Ninos,
+    Cantidad_Bebes, setCantidad_Bebes,
+    Cantidad_Mascotas, setCantidad_Mascotas,
+    setUrlActual,
+    setRedirigirExplorado
   } = almacenVariables;
 
   let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl, totalAdultosUrl, totalNinosUrl, totalBebesUrl, totalMascotasUrl } = useParams<{
@@ -63,7 +57,9 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
       totalBebesUrl: string;
       totalMascotasUrl: string;
     }>();
-    
+  
+  const navigate = useNavigate();
+
   // hace que se tomen los valores url cuando es la primer vez que se inicia el componente
    useEffect(() => {
      const adultos = parseInt(totalAdultosUrl || "0", 1);
@@ -248,12 +244,43 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
       }
       return true;
     };  
-  
-    const handleReservarClick = (e: React.MouseEvent) => {
-      if (!validarFechas()) {
-        e.preventDefault(); 
+
+    const ValidarSesion = (email: string) => {
+      setUrlActual(
+        `/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`
+      );
+      setRedirigirExplorado(true)      
+      
+      if (email==="sesionCerrada") {
+        // Mostrar el mensaje de advertencia antes de redirigir
+        Swal.fire({
+          title: "¡Estás muy cerca!",
+          text: "Debes iniciar sesión primero para continuar.",
+          icon: "warning",
+          confirmButtonText: "Aceptar",
+        }).then(() => {
+          // Redirigir a la página de registro después de que el usuario cierre el alert
+          navigate("/Registrarse");
+        });
       }
     };
+  
+    const handleReservarClick = (e: React.MouseEvent) => {
+      const emailUsuario = Cookies.get("correoUsuario");
+    
+      // Validar si el email es válido
+       if (!emailUsuario) {        
+         ValidarSesion(emailUsuario || "sesionCerrada"); // Llama a validarEmail pasando el email vacío o su valor
+        e.preventDefault(); // Prevenir que continúe la ejecución si el email no está definido
+         return; // Salir de la función
+       }
+    
+      // Validar fechas
+      if (!validarFechas()) {
+        e.preventDefault(); // Prevenir el evento si las fechas no son válidas
+      }
+    };
+    
 
     // calcular la Tarifa Total
     function calcularTotalFinal(
@@ -338,6 +365,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
         <div
           className="FormularioFechas-fechas"
           onClick={() => {
+            setCantidad_Adultos(adultosRender)
             setFechaInicio(fechaInicioRender);
             setFechaFin(fechaFinRender);
             setTotalDias(totalDiasRender);

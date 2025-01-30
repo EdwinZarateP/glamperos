@@ -1,0 +1,76 @@
+/* Estilos generales para el contenedor del input */
+.inputTelefonoContenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  width: 100%;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el input de teléfono */
+.inputTelefonoCampo {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Estilo para cuando el input tiene el foco */
+.inputTelefonoCampo:focus {
+  border-color: #57a957;
+}
+
+/* Estilos para el botón */
+.inputTelefonoBoton {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #808080;  /* Gris */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilo para cuando el botón está en hover */
+.inputTelefonoBoton:hover {
+  background-color: #666666;  /* Gris más oscuro */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .inputTelefonoContenedor {
+    padding: 15px;
+    margin: 15px;
+    max-width: 100%;
+  }
+
+  .inputTelefonoCampo,
+  .inputTelefonoBoton {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputTelefonoContenedor {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .inputTelefonoCampo,
+  .inputTelefonoBoton {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

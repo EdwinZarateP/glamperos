@@ -9,7 +9,7 @@ import "./estilos.css";
 
 const Registro: React.FC = () => {
   const { setIdUsuario, setLogueado, setNombreUsuario, setCorreoUsuario,
-     siono, activarChat, setActivarChat, idUrlConversacion } = useContext(ContextoApp)!; // Accedemos al método para guardar en el contexto
+     siono, activarChat, setActivarChat, idUrlConversacion, UrlActual, redirigirExplorado, setRedirigirExplorado } = useContext(ContextoApp)!; 
   const [mensaje, setMensaje] = useState<string | null>(null);
   const navigate = useNavigate(); 
 
@@ -50,6 +50,10 @@ const Registro: React.FC = () => {
         Cookies.set('idUsuario', usuario._id, { expires: 7 });
         Cookies.set('nombreUsuario', usuario.nombre, { expires: 7 });
         Cookies.set('correoUsuario', usuario.email, { expires: 7 });
+        // Verificar si el teléfono viene vacío o es undefined
+        const telefono = usuario.telefono && usuario.telefono.trim() !== "" ? usuario.telefono : "sintelefono";
+        Cookies.set('telefonoUsuario', telefono, { expires: 7 });
+        
 
         setIdUsuario(usuario._id); // Actualizar estado
         setNombreUsuario(usuario.nombre);
@@ -66,7 +70,7 @@ const Registro: React.FC = () => {
           // Verificar si el usuario tiene teléfono registrado
           if (!usuarioResponse?.data?.telefono) {
             // Si tiene teléfono registrado, redirigir a la página de edición de perfil
-            navigate("/EdicionPerfil");
+            navigate("/EdicionPerfil");            
           } else {
             // Redirección según `siono` y `activarChat`
             if (siono) {
@@ -74,7 +78,11 @@ const Registro: React.FC = () => {
             } else if (activarChat) {
               setActivarChat(false)
               navigate(`/MensajesIndividuales/${idUrlConversacion}`);
-            } else {
+            } else if (redirigirExplorado) {
+              setRedirigirExplorado(false)
+              navigate(UrlActual);
+            }             
+            else {
               navigate("/");
             }
           }
@@ -89,6 +97,9 @@ const Registro: React.FC = () => {
           Cookies.set('idUsuario', usuario._id, { expires: 7 });
           Cookies.set('nombreUsuario', usuario.nombre, { expires: 7 });
           Cookies.set('correoUsuario', usuario.email, { expires: 7 });
+          // Verificar si el teléfono viene vacío o es undefined
+          const telefono = usuario.telefono && usuario.telefono.trim() !== "" ? usuario.telefono : "sintelefono";
+          Cookies.set('telefonoUsuario', telefono, { expires: 7 });
 
           setIdUsuario(usuario._id);  // Actualizar el estado con la respuesta
           setNombreUsuario(usuario.nombre);
@@ -113,6 +124,9 @@ const Registro: React.FC = () => {
               } else if (activarChat) {
                 setActivarChat(false)
                 navigate(`/MensajesIndividuales/${idUrlConversacion}`);
+              } else if (redirigirExplorado) {
+                setRedirigirExplorado(false)
+                navigate(UrlActual);
               } else {
                 navigate("/");
               }
