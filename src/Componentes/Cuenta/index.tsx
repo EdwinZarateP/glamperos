@@ -63,6 +63,12 @@ const Cuenta: React.FC = () => {
     }
   };
 
+   // Función para redirigir a la página de edición de glamping
+   const irReservarCliente = () => {    
+      navigate(`/ReservasClientes`); // Redirigir a EditarGlamping  
+  };
+
+  
   // Función para redirigir a la página de edición de perfil
   const manejarEditarPerfil = () => {
     navigate("/EdicionPerfil");
@@ -97,7 +103,7 @@ const Cuenta: React.FC = () => {
           <p>Proporciona tus datos personales e indícanos cómo podemos ponernos en contacto contigo</p>
         </div>
 
-        <div className="Cuenta-tarjeta">
+        <div className="Cuenta-tarjeta" onClick={irReservarCliente}>
           <i className="icono-pagos"></i>
           <h3>Mis reservas</h3>
           <p>Revisa tus reservas efectuadas</p>

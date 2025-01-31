@@ -13,6 +13,8 @@ import EdicionPerfil from '../EdicionPerfil/index';
 import Reservar from '../Reservar/index';
 import Mensajes from '../Mensajes/index';
 import MensajesIndividuales from '../MensajesIndividuales/index';
+import ReservasPropiedades from '../ReservasPropiedades/index';
+import ReservasClientes from '../ReservasClientes/index';
 import NoEncontrado from '../NoEncontrado/index';
 import { ProveedorVariables } from '../../Contexto/index';
 import './estilos.css';
@@ -37,8 +39,9 @@ const App: React.FC = () => {
         <Route path="/EdicionPerfil/" element={<EdicionPerfil />} />
         <Route path="/Reservar/:glampingId/:fechaInicioReservada/:fechaFinReservada/:precioConTarifa/:TarifaGlamperos/:totalDias/:totalAdultos/:totalNinos/:totalBebes/:totalMascotas" element={<Reservar />} />
         <Route path="/Mensajes/:idReceptor" element={<Mensajes />} />        
-        <Route path="/MensajesIndividuales/:idReceptor" element={<MensajesIndividuales />} />        
-        
+        <Route path="/MensajesIndividuales/:idReceptor" element={<MensajesIndividuales />} />
+        <Route path="/ReservasPropiedades" element={<ReservasPropiedades />} />
+        <Route path="/ReservasClientes" element={<ReservasClientes />} />                     
         <Route path="*" element={<NoEncontrado />} />
       </Routes>
     </Router>

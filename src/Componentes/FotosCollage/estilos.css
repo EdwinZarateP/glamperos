@@ -114,6 +114,11 @@
   border: 1px solid rgb(231, 231, 231);
 }
 
+.navegar svg {
+  width: 1em; 
+  height: 1em;
+}
+
 .navegar.izquierda {
   position: absolute;
   left: -100px;

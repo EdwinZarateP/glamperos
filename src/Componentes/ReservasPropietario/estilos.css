@@ -1,0 +1,64 @@
+.ReservasPropietario-container {
+    padding: 20px;
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ReservasPropietario-cargando,
+  .ReservasPropietario-sinReservas {
+    font-size: 18px;
+    color: #888;
+    margin-top: 20px;
+  }
+  
+  .ReservasPropietario-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .ReservasPropietario-tarjeta {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    text-align: left;
+    transition: transform 0.3s;
+  }
+  
+  .ReservasPropietario-tarjeta:hover {
+    transform: scale(1.05);
+  }
+  
+  .ReservasPropietario-titulo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .ReservasPropietario-detalle {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  .ReservasPropietario-detalle strong {
+    font-weight: bold;
+  }
+  
+  .ReservasPropietario-sinReservas {
+    font-size: 18px;
+    color: #d9534f;
+  }
+  
+  .ReservasPropietario-cargando {
+    font-size: 20px;
+    color: #5bc0de;
+  }
+  
