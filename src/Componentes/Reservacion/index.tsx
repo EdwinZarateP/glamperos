@@ -334,13 +334,13 @@ const Reservacion: React.FC = () => {
     }
   };
 
-  const mensaje5: string = (nombreUsuarioCookie ? nombreUsuarioCookie.split(' ')[0] : "Estimado(a)");
-  // const mensaje6: string = glampingData?.nombreGlamping ?? "Glamping desconocido";
-  const mensaje6: string = "esta es la parte donde estoy probando que al cliente le llegue el mensaje de whatsapp"
-  const mensaje7: string = fechaInicio ? formatoFecha(fechaInicio) : "Fecha fin no definida";
-  const mensaje8: string = fechaFin ? formatoFecha(fechaFin) : "Fecha fin no definida";
-
-  const enviarMensajeCliente = async (numero: string) => {
+  const mensaje5: string = (nombreUsuarioCookie ? nombreUsuarioCookie.split(' ')[0] : "Estimado(a)");  
+  const lat = glampingData?.ubicacion?.lat;
+  const lon = glampingData?.ubicacion?.lng;
+  const direccion= glampingData?.ciudad_departamento;
+  const nombreGlampingReservado=glampingData?.nombreGlamping;
+  
+  const enviarMensajeCliente = async (numero: string, codigoReserva: string, whatsapp: string) => {
     const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
     const body = {
       messaging_product: "whatsapp",
@@ -348,36 +348,37 @@ const Reservacion: React.FC = () => {
       to: numero,
       type: "template",
       template: {
-        name: "confirmacionreserva",
+        name: "mensajeclientereserva", 
         language: {
           code: "es_CO"
         },
         components: [
-          
           {
             type: "header",
             parameters: [
               {
-                type: "image",
-                image: {
-                  link: "https://storage.googleapis.com/glamperos-imagenes/Imagenes/animal1.jpeg"
+                type: "location",
+                location: {
+                  longitude: lon, 
+                  latitude: lat,   
+                  name: nombreGlampingReservado, 
+                  address: direccion 
                 }
               }
             ]
-          }, 
+          },
           {
             type: "body",
             parameters: [
               { type: "text", text: mensaje5 },
-              { type: "text", text: mensaje6 },
-              { type: "text", text: mensaje7 },
-              { type: "text", text: mensaje8 }
+              { type: "text", text: codigoReserva },
+              { type: "text", text: whatsapp.slice(-10) },
             ]
-          }                  
+          }
         ]
       }
     };
-
+  
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -386,9 +387,9 @@ const Reservacion: React.FC = () => {
       },
       body: JSON.stringify(body),
     });
-
+  
     if (response.ok) {
-     
+      console.log("Mensaje enviado exitosamente");
     } else {
       const errorData = await response.json();
       console.error("Error al enviar mensaje:", errorData);
@@ -396,6 +397,7 @@ const Reservacion: React.FC = () => {
     }
   };
 
+  
   // Aquí ejecutamos la api para guardar la reserva
   const handleCrearReserva = async () => {
     const nuevaReserva: Reserva = {
@@ -425,7 +427,7 @@ const Reservacion: React.FC = () => {
         enviarCorreoPropietario(usuario?.correoPropietario || "", usuario?.nombreDueño || "",respuesta.reserva.codigoReserva);
         enviarCorreoCliente(correoUsuarioCookie || "", nombreUsuarioCookie || "",respuesta.reserva.codigoReserva);
         enviarMensaje( usuario?.whatsapp);
-        enviarMensajeCliente( telefonoUsuarioCookie|| "");    
+        enviarMensajeCliente( telefonoUsuarioCookie|| "",respuesta.reserva.codigoReserva, usuario?.whatsapp);    
       }
 
     } catch (error) {
@@ -452,7 +454,7 @@ const Reservacion: React.FC = () => {
             <p>Adultos: ${Cantidad_Adultos}</p>
             <p>Ninos: ${Cantidad_Ninos}</p>
             <p>Mascotas: ${Cantidad_Mascotas}</p>
-            <p>El whatsApp de tu huésped es +57 ${telefonoUsuarioCookie?.slice(-10)} y su correo es ${correoUsuarioCookie} para que te comuniques con él</p>
+            <p>El whatsApp de tu huésped es +57 520${telefonoUsuarioCookie?.slice(-10)} y su correo es ${correoUsuarioCookie} para que te comuniques con él</p>
             <p>
               Si necesitas ayuda o tienes preguntas, nuestro equipo estará siempre aquí para ti.
             </p>
