@@ -12,7 +12,7 @@ interface Coordenadas {
 }
 
 const Paso1C: React.FC = () => {
-  const { latitud, setLatitud, longitud, setLongitud, setUbicacion} = useContext(ContextoApp)!; // Extraer las funciones del contexto
+  const { latitud, setLatitud, longitud, setLongitud, setUbicacion, direccion, setDireccion} = useContext(ContextoApp)!; // Extraer las funciones del contexto
 
   const [coordenadas, setCoordenadas] = useState<Coordenadas>({
     lat: latitud,
@@ -48,7 +48,7 @@ const Paso1C: React.FC = () => {
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
-      
+
       setCoordenadas({ lat, lng });
       setViewState((prev) => ({
         ...prev,
@@ -63,8 +63,46 @@ const Paso1C: React.FC = () => {
       const nuevaUbicacion = JSON.stringify({ lat: lat, lng: lng });
       setUbicacion(nuevaUbicacion);
 
+      // Guardar la dirección completa
+      const direccionCompleta = results[0].formatted_address;
+      setDireccion(direccionCompleta);
+
     } catch (error) {
       console.error("Error al obtener coordenadas:", error);
+    }
+  };
+
+  const handleMarkerDragEnd = async (event: any) => {
+    const { lngLat } = event;
+
+    const nuevaCoordenadas = {
+      lat: lngLat.lat,
+      lng: lngLat.lng,
+    };
+
+    setCoordenadas(nuevaCoordenadas);
+    setViewState((prev) => ({
+      ...prev,
+      latitude: lngLat.lat,
+      longitude: lngLat.lng,
+    }));
+
+    // Guardar las coordenadas en el contexto global
+    setLatitud(lngLat.lat);
+    setLongitud(lngLat.lng);
+    const nuevaUbicacion = JSON.stringify(nuevaCoordenadas);
+    setUbicacion(nuevaUbicacion);
+
+    try {
+      // Obtener la dirección completa desde las nuevas coordenadas
+      const results = await getGeocode({ location: nuevaCoordenadas });
+      const direccionCompleta = results[0].formatted_address;
+
+      // Guardar la dirección completa
+      setDireccion(direccionCompleta);
+
+    } catch (error) {
+      console.error("Error al obtener la dirección:", error);
     }
   };
 
@@ -76,26 +114,6 @@ const Paso1C: React.FC = () => {
   const clearInput = () => {
     setValue("");
     clearSuggestions();
-  };
-
-  const handleMarkerDragEnd = (event: any) => {
-    const { lngLat } = event;
-
-    setCoordenadas({
-      lat: lngLat.lat,
-      lng: lngLat.lng,
-    });
-    setViewState((prev) => ({
-      ...prev,
-      latitude: lngLat.lat,
-      longitude: lngLat.lng,
-    }));
-
-    // Guardar las coordenadas en el contexto global
-    setLatitud(lngLat.lat);
-    setLongitud(lngLat.lng);
-    const nuevaUbicacion = JSON.stringify({ lat: lngLat.lat, lng: lngLat.lng });
-    setUbicacion(nuevaUbicacion);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -155,7 +173,7 @@ const Paso1C: React.FC = () => {
         <Map
           mapboxAccessToken="pk.eyJ1IjoiZWR3aW56YXIiLCJhIjoiY200OXd3ZnF4MDFoaDJxcHpwd2lzdGM0ZSJ9.c4C1qbzuCJqKjQ01Jn-2nA"
           {...viewState}
-          style={{ width: "100%", height: "100%", borderRadius: "20px" }}  
+          style={{ width: "100%", height: "100%", borderRadius: "20px" }}
           mapStyle="mapbox://styles/mapbox/light-v10"
           onMove={(evt) => setViewState(evt.viewState)}
         >
@@ -176,7 +194,8 @@ const Paso1C: React.FC = () => {
       </div>
 
       <div className="Paso1C-coordenadas">
-        <p>"Arrastra y suelta el ícono del glamping si requieres mayor exactitud"</p>      
+        <p>"Arrastra y suelta el ícono del glamping si requieres mayor exactitud"</p>
+        <p><strong>Dirección seleccionada:</strong> {direccion}</p>
       </div>
     </div>
   );

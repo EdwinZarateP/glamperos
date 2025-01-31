@@ -136,6 +136,9 @@ interface ContextProps {
   setLongitud: Dispatch<SetStateAction<number>>;
   ubicacion: string;
   setUbicacion: Dispatch<SetStateAction<string>>;
+  direccion: string;
+  setDireccion: Dispatch<SetStateAction<string>>;
+  
 
   // Imagenes puntuales del glamping
   imagenesSeleccionadas: string[];
@@ -301,6 +304,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [latitud, setLatitud] = useState<number>(4.123456); // Estado predeterminado de latitud
   const [longitud, setLongitud] = useState<number>(-74.123456); // Estado predeterminado de longitud
   const [ubicacion, setUbicacion] = useState<string>('');
+  const [direccion, setDireccion] = useState<string>('')
 
   //amenidades elegidas por el dueño
   const [amenidadesGlobal, setAmenidadesGlobal] = useState<string[]>([]);
@@ -409,6 +413,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     latitud,setLatitud,
     longitud, setLongitud,
     ubicacion, setUbicacion,
+    direccion, setDireccion,
     imagenesSeleccionadas, setImagenesSeleccionadas,
     imagenesCargadas, setImagenesCargadas,
     libraries,

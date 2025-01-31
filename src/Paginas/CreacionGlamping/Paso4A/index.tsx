@@ -19,6 +19,7 @@ const guardarGlampingP: React.FC = () => {
     tipoGlamping: "",
     Acepta_Mascotas: false,
     ubicacion: "", 
+    direccion: "", 
     precioEstandar: 0,
     Cantidad_Huespedes: 1,
     descuento: 0,
@@ -32,7 +33,7 @@ const guardarGlampingP: React.FC = () => {
 
   const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes,
      Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping,
-     precioEstandar, precioEstandarAdicional, descuento, idUsuario, nombreUsuario, Cantidad_Huespedes_Adicional,
+     precioEstandar, precioEstandarAdicional, descuento, idUsuario, nombreUsuario, Cantidad_Huespedes_Adicional, direccion,
      } = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
@@ -120,7 +121,18 @@ const guardarGlampingP: React.FC = () => {
         ubicacion, // Actualizamos la ubicación directamente
       }));
     }
-  }, [ubicacion]);
+  }, [ubicacion]);  
+
+   // Sincroniza la direccion automáticamente al formulario cuando la variable global cambia
+   useEffect(() => {
+    if (direccion) {
+      setFormulario((prev) => ({
+        ...prev,
+        direccion, 
+      }));
+    }
+  }, [direccion]);
+
 
    // Sincroniza la ciudad_departamento automáticamente al formulario cuando la variable global cambia
    useEffect(() => {

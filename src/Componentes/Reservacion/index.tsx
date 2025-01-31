@@ -68,6 +68,7 @@ const Reservacion: React.FC = () => {
       lat: number;
       lng: number;
     };
+    direccion: string | null;
   } | null>(null);
 
   const [fechasReservadas, setFechasReservadas] = useState<string[]>([]);
@@ -104,6 +105,7 @@ const Reservacion: React.FC = () => {
           ciudad_departamento: data.ciudad_departamento,
           imagen: data.imagenes?.[0] || null,
           ubicacion: data.ubicacion || null,
+          direccion: data.direccion || null,
         });
       } catch (error) {
         console.error("Error al cargar los datos del glamping:", error);
@@ -337,8 +339,8 @@ const Reservacion: React.FC = () => {
   const mensaje5: string = (nombreUsuarioCookie ? nombreUsuarioCookie.split(' ')[0] : "Estimado(a)");  
   const lat = glampingData?.ubicacion?.lat;
   const lon = glampingData?.ubicacion?.lng;
-  const direccion= glampingData?.ciudad_departamento;
   const nombreGlampingReservado=glampingData?.nombreGlamping;
+  const direccionGlamping = glampingData?.direccion;
   
   const enviarMensajeCliente = async (numero: string, codigoReserva: string, whatsapp: string) => {
     const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
@@ -362,7 +364,7 @@ const Reservacion: React.FC = () => {
                   longitude: lon, 
                   latitude: lat,   
                   name: nombreGlampingReservado, 
-                  address: direccion 
+                  address: direccionGlamping 
                 }
               }
             ]
