@@ -178,62 +178,57 @@
   display: inline-block;
 }
 
-/* Filtro ReservasPropietario */
+/* Estilo para el contenedor del filtro */
 .ReservasPropietario-filtro {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   gap: 15px;
-  background-color: #f9f9f9;
-  padding: 10px;
+  /* margin-bottom: 20px; */
+  background: #f4f4f4;
+  padding: 10px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* margin-bottom: 10px; */
+  transition: all 0.3s ease;
 }
 
-.ReservasPropietario-filtro-titulo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #2d3436;
-  margin-bottom: 10px;
-  text-align: center;
+.ReservasPropietario-filtro:hover {
+  background-color: #e0e0e0;
 }
 
-.ReservasPropietario-filtro-opcion {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.ReservasPropietario-filtro-opcion label {
+.ReservasPropietario-filtro label {
   font-size: 1.1rem;
   color: #333;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.ReservasPropietario-filtro-opcion select,
-.ReservasPropietario-filtro-opcion input[type="date"] {
-  padding: 8px 12px;
+.ReservasPropietario-filtro select {
+  padding: 10px 15px;
   font-size: 1rem;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 250px;
-  margin-top: 5px;
-}
-
-.ReservasPropietario-filtro-boton {
-  background-color: #00aaff;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1rem;
+  color: #555;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: flex-start;
+  box-sizing: border-box;
 }
 
-.ReservasPropietario-filtro-boton:hover {
-  background-color: #0088cc;
+.ReservasPropietario-filtro select:focus {
+  border-color: #2d3436;
+  box-shadow: 0 0 5px rgba(45, 52, 54, 0.6);
+  outline: none;
+}
+
+.ReservasPropietario-filtro select option {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.ReservasPropietario-filtro select option:hover {
+  background-color: #f0f0f0;
 }
 
 /* Estilos responsivos */
@@ -252,20 +247,12 @@
   }
 
   .ReservasPropietario-filtro {
-    padding: 15px;
-  }
-
-  .ReservasPropietario-filtro-opcion {
     flex-direction: column;
     align-items: flex-start;
+    padding: 15px 20px;
   }
 
-  .ReservasPropietario-filtro-opcion label {
-    font-size: 1rem;
-  }
-
-  .ReservasPropietario-filtro-opcion select,
-  .ReservasPropietario-filtro-opcion input[type="date"] {
+  .ReservasPropietario-filtro select {
     width: 100%;
   }
 }
