@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Swal from "sweetalert2";
+import codigosPaises from "../../Componentes/IndicativosPaises/index"; // Importamos los códigos de países
 import "./estilos.css";
 
 const InputTelefono = () => {
@@ -11,11 +12,12 @@ const InputTelefono = () => {
   // Estados para manejar el teléfono y la visibilidad del input
   const [telefono, setTelefono] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [indicativo, setIndicativo] = useState("+57"); // Default indicativo de Colombia
 
   useEffect(() => {
     // Recuperar la cookie al cargar el componente
     const telefonoUsuarioCookie = Cookies.get("telefonoUsuario");  
-    if (telefonoUsuarioCookie==="sintelefono") {
+    if (telefonoUsuarioCookie === "sintelefono") {
       setIsVisible(true); // Mostrar input si no existe la cookie
     } else {
       setIsVisible(false); // Ocultar input si la cookie existe
@@ -33,20 +35,9 @@ const InputTelefono = () => {
 
   // Lógica para actualizar el teléfono del usuario
   const handleActualizarTelefono = async () => {
-    // Validamos que el teléfono tenga exactamente 10 dígitos
-    if (telefono.length !== 10 || isNaN(Number(telefono))) {
-      Swal.fire({
-        title: "Error",
-        text: "El WhatsApp debe tener 10 dígitos",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
-      return;
-    }
 
-    // Anteponemos el prefijo +57 al número de teléfono
-    const telefonoConPrefijo = "57" + telefono;
-
+    // Anteponemos el indicativo seleccionado al número de teléfono
+    const telefonoConPrefijo = `${indicativo.replace('+', '')}${telefono}`;
     try {
       // Actualizamos el teléfono del usuario en la API
       await axios.put(
@@ -76,6 +67,19 @@ const InputTelefono = () => {
   // Renderizamos el formulario de teléfono
   return (
     <div className="inputTelefonoContenedor">
+      <div className="inputTelefonoPrefijo">
+        <select 
+          value={indicativo} 
+          onChange={(e) => setIndicativo(e.target.value)}
+          className="inputTelefonoSelect"
+        >
+          {codigosPaises.map((pais) => (
+            <option key={pais.codigo} value={pais.indicativo}>
+              {pais.nombre} ({pais.indicativo})
+            </option>
+          ))}
+        </select>
+      </div>
       <input
         type="text"
         className="inputTelefonoCampo"

@@ -3,9 +3,9 @@ import Cookies from 'js-cookie';
 import { ContextoApp } from '../../Contexto/index';
 import axios from 'axios';
 import Lottie from 'lottie-react';
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import animationData from "../../Imagenes/AnimationPuntos.json";
+import codigosPaises from '../../Componentes/IndicativosPaises/index';
 import './estilos.css';
 
 interface Usuario {
@@ -28,6 +28,7 @@ const { redirigirExplorado, setRedirigirExplorado, UrlActual} = useContext(Conte
   const [editandoTelefono, setEditandoTelefono] = useState<boolean>(false);
   const [cargandoFoto, setCargandoFoto] = useState(false);
   const [cargandoTelefono, setCargandoTelefono] = useState(false);
+  const [indicativo, setIndicativo] = useState<string>('+57');
 
   const emailUsuario = Cookies.get('correoUsuario');
 
@@ -61,33 +62,26 @@ const { redirigirExplorado, setRedirigirExplorado, UrlActual} = useContext(Conte
     }
   };
   
-
   const actualizarTelefono = async () => {
-    if (telefono.length !== 10) {
-      Swal.fire({
-        title: "Error",
-        text: "El whatsApp debe tener 10 dígitos",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
-      return;
-    }
   
-    const telefonoConPrefijo = telefono.startsWith('57') ? telefono : `57${telefono}`;
-  
+    const telefonoCompleto = `${indicativo.replace('+', '')}${telefono}`;
+
     if (usuario) {
+      if (telefonoCompleto === usuario.telefono) {
+        setEditandoTelefono(false);
+        return;
+      }
+
       setCargandoTelefono(true);
       try {
         await axios.put(
           `https://glamperosapi.onrender.com/usuarios/${emailUsuario}/telefono`,
-          { telefono: telefonoConPrefijo }
-        );        
-        Cookies.set('telefonoUsuario', telefonoConPrefijo, { expires: 7 });        
-        const telifi=Cookies.get("telefonoUsuario")
-        console.log(telifi)
+          { telefono: telefonoCompleto }
+        );
+        Cookies.set('telefonoUsuario', telefonoCompleto, { expires: 7 });
         setEditandoTelefono(false);
         setUsuario((prevUsuario) =>
-          prevUsuario ? { ...prevUsuario, telefono: telefonoConPrefijo } : null
+          prevUsuario ? { ...prevUsuario, telefono: telefonoCompleto } : null
         );
       } catch (error) {
         console.error('Error al actualizar el teléfono:', error);
@@ -95,7 +89,8 @@ const { redirigirExplorado, setRedirigirExplorado, UrlActual} = useContext(Conte
         setCargandoTelefono(false);
       }
     }
-  };  
+  };
+  
 
   const actualizarFoto = async () => {
     if (usuario && fotoActualizada) {
@@ -205,17 +200,30 @@ const { redirigirExplorado, setRedirigirExplorado, UrlActual} = useContext(Conte
         </div>
         <div className="editar-perfil-info-item">
           <div className="editar-perfil-telefono-contenedor">
-          WhatsApp Col +57
-            {editandoTelefono ? (
-              <input
-                type="tel"
-                id="telefono"
-                value={telefono.slice(-10)}
-                onChange={manejarTelefono}
-                maxLength={10} // Limitar a 10 caracteres desde el front-end
-              />            
+          WhatsApp
+          {editandoTelefono ? (
+              <>
+                <select
+                  value={indicativo}
+                  onChange={(e) => setIndicativo(e.target.value)}
+                  className="editar-perfil-select"
+                >
+                  {codigosPaises.map((pais) => (
+                    <option key={pais.codigo} value={pais.indicativo}>
+                      {pais.nombre} ({pais.indicativo})
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="tel"
+                  value={telefono.slice(-10)}
+                  onChange={manejarTelefono}
+                  maxLength={10}
+                  className="editar-perfil-input"
+                />
+              </>
             ) : (
-              <p>{telefono.slice(-10)}</p>
+              <p>{`${indicativo} ${telefono.slice(-10)}`}</p>
             )}
             <button
               onClick={() => setEditandoTelefono(!editandoTelefono)}
@@ -238,7 +246,7 @@ const { redirigirExplorado, setRedirigirExplorado, UrlActual} = useContext(Conte
 
       {/* Botón para ir a la página principal */}
       <button onClick={validarNavegacion} className="editar-perfil-boton-regresar">
-        Continuar
+        Terminar edición
       </button>
     </div>
   );

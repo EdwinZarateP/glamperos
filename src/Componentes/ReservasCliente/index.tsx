@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlinePets } from "react-icons/md";
@@ -41,6 +42,7 @@ const ReservasCliente: React.FC = () => {
   const [glampingData, setGlampingData] = useState<GlampingData[]>([]);
   const [cargando, setCargando] = useState<boolean>(true);
   const [currentImageIndexes, setCurrentImageIndexes] = useState<{ [key: string]: number }>({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!idCliente) {
@@ -114,6 +116,13 @@ const ReservasCliente: React.FC = () => {
     });
   };
 
+
+  const obtenerFechaTexto = (dias: number) => {
+    const fecha = new Date();
+    fecha.setDate(fecha.getDate() + dias);
+    return fecha.toISOString().split('T')[0];
+  };
+
   return (
     <div className="ReservasCliente-container">
       {cargando ? (
@@ -151,6 +160,7 @@ const ReservasCliente: React.FC = () => {
                         className="ReservasCliente-carrusel-imagen"
                         src={glamping.imagenes[imagenIndex]}
                         alt={`Imagen del glamping ${glamping.nombreGlamping}`}
+                        onClick={() => navigate(`/ExplorarGlamping/${reserva.idGlamping}/${obtenerFechaTexto(1)}/${obtenerFechaTexto(2)}/${reserva.Noches}/${reserva.adultos}/${reserva.ninos}/${reserva.bebes}/${reserva.mascotas}`)}
                       />
                       <div className="ReservasCliente-carrusel-botones-izq">
                         <button 
