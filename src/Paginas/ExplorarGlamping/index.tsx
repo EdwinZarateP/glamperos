@@ -200,7 +200,7 @@ function ExplorarGlamping() {
                 <ImgExploradasIndividual imagenes={informacionGlamping?.imagenes} />
               ) : null}
 
-              {informacionGlamping && informacionGlamping.video_youtube && informacionGlamping.video_youtube.trim() !== "No disponible" && (
+              {informacionGlamping && informacionGlamping.video_youtube && informacionGlamping.video_youtube.trim() !== "sin video" && (
               <button
                 className="ImgExploradas-iconoVideo-peque"
                 onClick={handleVideoClick}
