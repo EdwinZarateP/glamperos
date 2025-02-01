@@ -107,7 +107,7 @@ function ExplorarGlamping() {
             ? { lat: datos.ubicacion.lat, lng: datos.ubicacion.lng }
             : null,
           amenidadesGlobal: datos.amenidadesGlobal || [],
-          video_youtube: datos.video_youtube || "No disponible", 
+          video_youtube: datos.video_youtube || "sin video", 
           propietario_id: datos.propietario_id || "No disponible",           
         });
   

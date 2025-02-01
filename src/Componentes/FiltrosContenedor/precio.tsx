@@ -3,66 +3,59 @@ import { ContextoApp } from "../../Contexto/index";
 import "./precio.css";
 
 const FiltroPrecios: React.FC = () => {
-   const almacenVariables = useContext(ContextoApp);
+  const almacenVariables = useContext(ContextoApp);
   
-      if (!almacenVariables) {
-        throw new Error(
-          "El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto."
-        );
-      }
-      const {
-        precioFiltrado,
-        setPrecioFiltrado
-      } = almacenVariables;
+  if (!almacenVariables) {
+    throw new Error("El contexto no está disponible.");
+  }
 
-  // Maneja los cambios en los rangos deslizantes
-  const handlePrecioChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const newPrecioFiltrado = [...precioFiltrado];
-    const newValue = Number(event.target.value);
+  const { precioFiltrado, setPrecioFiltrado } = almacenVariables;
+  const [min, max] = [60000, 2200000];
+  const porcentajeMin = ((precioFiltrado[0] - min) / (max - min)) * 100;
+  const porcentajeMax = ((precioFiltrado[1] - min) / (max - min)) * 100;
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const value = Number(e.target.value);
+    const newValues = [...precioFiltrado];
+    
     if (index === 0) {
-      // Si es el valor mínimo, aseguramos que no sea mayor que el valor máximo
-      if (newValue > newPrecioFiltrado[1]) {
-        newPrecioFiltrado[1] = newValue;
-      }
+      newValues[0] = Math.min(value, newValues[1]);
     } else {
-      // Si es el valor máximo, aseguramos que no sea menor que el valor mínimo
-      if (newValue < newPrecioFiltrado[0]) {
-        newPrecioFiltrado[0] = newValue;
-      }
+      newValues[1] = Math.max(value, newValues[0]);
     }
-
-    newPrecioFiltrado[index] = newValue;
-    setPrecioFiltrado(newPrecioFiltrado);
+    
+    setPrecioFiltrado(newValues);
   };
 
   return (
-    <div className="FiltroPrecios-Rango-precios">
-      <label>Rango de Precio</label>
-      <div className="FiltroPrecios-Input-Contenedor">
-        {/* Rango inferior (valor mínimo) */}
-        <input
-          type="range"
-          min="60000"
-          max="2200000"
-          step="20000"
-          value={precioFiltrado[0]}
-          onChange={(e) => handlePrecioChange(e, 0)}
-          className="FiltroPrecios-Range"
-        />
-        {/* Rango superior (valor máximo) */}
-        <input
-          type="range"
-          min="60000"
-          max="2200000"
-          step="20000"
-          value={precioFiltrado[1]}
-          onChange={(e) => handlePrecioChange(e, 1)}
-          className="FiltroPrecios-Range"
-        />
+    <div className="precio-filtro">
+      <div className="precio-header">
+        <h3>Rango de precios</h3>
+        <div className="precio-valores">
+          ${precioFiltrado[0].toLocaleString()} — ${precioFiltrado[1].toLocaleString()}
+        </div>
       </div>
-      <div className="FiltroPrecios-Display">
-        <span>{`Desde: $${precioFiltrado[0].toLocaleString()} - Hasta: $${precioFiltrado[1].toLocaleString()}`}</span>
+      
+      <div className="slider-container">
+        <div className="slider-track" 
+             style={{ background: `linear-gradient(to right, #ddd ${porcentajeMin}%, #4a90e2 ${porcentajeMin}%, #4a90e2 ${porcentajeMax}%, #ddd ${porcentajeMax}%)` }}>
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={precioFiltrado[0]}
+            onChange={(e) => handleChange(e, 0)}
+            className="slider-thumb left"
+          />
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={precioFiltrado[1]}
+            onChange={(e) => handleChange(e, 1)}
+            className="slider-thumb right"
+          />
+        </div>
       </div>
     </div>
   );

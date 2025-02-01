@@ -168,8 +168,8 @@
 
 .Header-badge {
   position: absolute;
-  top: -9px;
-  right: 2px;
+  top: 0;
+  right: 6px;
   background-color: red;
   color: white;
   border-radius: 50%;

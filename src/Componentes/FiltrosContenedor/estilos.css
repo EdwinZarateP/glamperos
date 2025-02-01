@@ -29,7 +29,9 @@
  .FiltrosContenedor-contenedor-opciones {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* padding: 20px; */
   height: 85%; 
   overflow-y: auto;
   z-index: 1000;

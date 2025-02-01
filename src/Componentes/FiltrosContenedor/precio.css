@@ -1,76 +1,125 @@
-.FiltroPrecios-Rango-precios {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0;
-    padding: 20px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 180px; /* Ajustamos la altura para que haya espacio suficiente */
-}
-
-.FiltroPrecios-Rango-precios label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.FiltroPrecios-Input-Contenedor {
-    display: flex;
-    flex-direction: column; /* Colocamos los inputs uno encima del otro */
+/* precio.css */
+.precio-filtro {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     width: 100%;
-}
-
-.FiltroPrecios-Rango-precios input[type="range"] {
+  }
+  
+  .precio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+  
+  .precio-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #2d3748;
+    font-weight: 600;
+  }
+  
+  .precio-valores {
+    background: #f7fafc;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 500;
+    color: #4a5568;
+    font-size: 0.9rem;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .slider-container {
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .slider-track {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+  }
+  
+  .slider-thumb {
+    width: 100%;
+    height: 4px;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    
+    /* Propiedades appearance para mejor compatibilidad */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 100%;
-    height: 8px;
-    background: #ddd;
-    border-radius: 4px;
-    outline: none;
-    margin: 7px 0; /* Añadimos un margen entre los inputs */
-    transition: background 0.3s ease;
-}
-
-.FiltroPrecios-Rango-precios input[type="range"]::-webkit-slider-thumb {
+  }
+  
+  .slider-thumb::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
-    height: 25px;
-    background-color: #2F6B3E;
-    border: 2px solid #fff;
-    border-radius: 15px;
+    height: 20px;
+    background: #4a90e2;
+    border: 3px solid #fff;
+    border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+    pointer-events: all;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  /* Estilos para Firefox */
+  .slider-thumb::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4a90e2;
+    border: 3px solid #fff;
+    border-radius: 50%;
     cursor: pointer;
-}
-
-.FiltroPrecios-Rango-precios input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-.FiltroPrecios-Rango-precios span {
-    font-size: 16px;
-    font-weight: bold;
-    color: #0b0c0c;
-    background-color: #eef7ff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    margin-top: 20px; /* Reducimos el margen superior */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-@media (max-width: 600px) {
-    .FiltroPrecios-Rango-precios span {
-        font-size: 12px;
-
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .slider-thumb:hover::-webkit-slider-thumb {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .slider-thumb:hover::-moz-range-thumb {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .slider-thumb.left::-webkit-slider-thumb {
+    margin-left: -1px;
+  }
+  
+  .slider-thumb.right::-webkit-slider-thumb {
+    margin-right: -1px;
+  }
+  
+  @media (max-width: 480px) {
+    .precio-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
-}
-
+    
+    .precio-valores {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  
+  .precio-marcas {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    color: #718096;
+    font-size: 0.8rem;
+  }
