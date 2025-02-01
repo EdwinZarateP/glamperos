@@ -1,64 +1,295 @@
+/* estilos.css */
 .ReservasPropietario-container {
-    padding: 20px;
-    background-color: #f4f4f9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .ReservasPropietario-cargando,
-  .ReservasPropietario-sinReservas {
-    font-size: 18px;
-    color: #888;
-    margin-top: 20px;
-  }
-  
+  width: 100%;
+  height: 100%;
+  /* padding: 0 20px; */
+}
+
+.ReservasPropietario-cargando {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.ReservasPropietario-sinReservas {
+  text-align: center;
+  padding: 20px;
+}
+
+.ReservasPropietario-imagen {
+  width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.ReservasPropietario-mensaje {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2d3436;
+  margin-top: 10px;
+}
+
+.ReservasPropietario-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+}
+
+.ReservasPropietario-tarjeta {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  position: relative;
+  transition: transform 0.3s ease;
+  border: 1px solid #e0e0e0;
+  width: 100%;
+  max-width: 300px;
+}
+
+.ReservasPropietario-titulo {
+  color: #2d3436;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 0.5rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.ReservasPropietario-detalle {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.2rem 0;
+  line-height: 1.5;
+}
+
+.ReservasPropietario-detalle strong {
+  color: #2d3436;
+  font-weight: 600;
+}
+
+.ReservasPropietario-carrusel {
+  position: relative;
+  margin-top: 1rem;
+  border-radius: 15px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+}
+
+.ReservasPropietario-carrusel-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.ReservasPropietario-carrusel-botones-izq {
+  position: absolute;
+  top: calc(50% - 24px);
+  left: 2px;
+  display: flex;
+  gap: 5px;
+}
+
+.ReservasPropietario-carrusel-botones-der {
+  position: absolute;
+  top: calc(50% - 24px);
+  right: 2px;
+  display: flex;
+  gap: 5px;
+}
+
+.ReservasPropietario-boton-carrusel-izq {
+  background: rgba(255, 255, 255, 1);
+  border: none;
+  padding: 5px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #2d3436;
+  font-weight: bold;
+  font-size: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ReservasPropietario-boton-carrusel-izq svg {
+  width: 1em;
+  height: 1em;
+}
+
+.ReservasPropietario-boton-carrusel-izq:hover {
+  scale: 1.05;
+}
+
+.ReservasPropietario-boton-carrusel-der {
+  background: rgba(255, 255, 255, 1);
+  border: none;
+  padding: 5px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #2d3436;
+  font-weight: bold;
+  font-size: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ReservasPropietario-boton-carrusel-der svg {
+  width: 2em;
+  height: 2em;
+}
+
+.ReservasPropietario-boton-carrusel-der:hover {
+  scale: 1.05;
+}
+
+.ReservasPropietario-icono-mascotas {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.8rem;
+  color: #000000;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ReservasPropietario-detalle[strong="Estado:"] {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* Filtro ReservasPropietario */
+.ReservasPropietario-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* margin-bottom: 10px; */
+}
+
+.ReservasPropietario-filtro-titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.ReservasPropietario-filtro-opcion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ReservasPropietario-filtro-opcion label {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.ReservasPropietario-filtro-opcion select,
+.ReservasPropietario-filtro-opcion input[type="date"] {
+  padding: 8px 12px;
+  font-size: 1rem;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 250px;
+  margin-top: 5px;
+}
+
+.ReservasPropietario-filtro-boton {
+  background-color: #00aaff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.ReservasPropietario-filtro-boton:hover {
+  background-color: #0088cc;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+
   .ReservasPropietario-lista {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: 1fr;
   }
-  
-  .ReservasPropietario-tarjeta {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 280px;
-    text-align: left;
-    transition: transform 0.3s;
-  }
-  
-  .ReservasPropietario-tarjeta:hover {
-    transform: scale(1.05);
-  }
-  
+
   .ReservasPropietario-titulo {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
   }
-  
+
   .ReservasPropietario-detalle {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 8px;
+    font-size: 0.9rem;
   }
-  
-  .ReservasPropietario-detalle strong {
-    font-weight: bold;
+
+  .ReservasPropietario-filtro {
+    padding: 15px;
   }
-  
-  .ReservasPropietario-sinReservas {
-    font-size: 18px;
-    color: #d9534f;
+
+  .ReservasPropietario-filtro-opcion {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .ReservasPropietario-cargando {
-    font-size: 20px;
-    color: #5bc0de;
+
+  .ReservasPropietario-filtro-opcion label {
+    font-size: 1rem;
   }
-  
+
+  .ReservasPropietario-filtro-opcion select,
+  .ReservasPropietario-filtro-opcion input[type="date"] {
+    width: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ReservasPropietario-tarjeta {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.ReservasPropietario-detalle[strong="Valor Total:"] {
+  font-size: 1.1rem;
+  color: #f8c7c7;
+  font-weight: bold;
+  margin-top: 1.2rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #eee;
+}

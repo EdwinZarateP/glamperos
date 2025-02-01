@@ -4,10 +4,9 @@ import "./estilos.css";
 
 function ReservasPropiedades() {
   return (
-    <div className='ReservasPropiedades-contenedor'>
+    <div className='ReservasClientes-contenedor'>
         <HeaderIcono descripcion="Glamperos" />
-        <ReservasPropietario idPropietario="675f27e0dfb2cf4c8c76b667" />
-
+        <ReservasPropietario />
     </div>
   );
 }

@@ -68,6 +68,11 @@ const Cuenta: React.FC = () => {
       navigate(`/ReservasClientes`); // Redirigir a EditarGlamping  
   };
 
+   // Función para redirigir a la página de edición de glamping
+   const irReservarPropiedades= () => {    
+    navigate(`/ReservasPropiedades`); // Redirigir a EditarGlamping  
+};
+
   
   // Función para redirigir a la página de edición de perfil
   const manejarEditarPerfil = () => {
@@ -108,21 +113,22 @@ const Cuenta: React.FC = () => {
           <h3>Mis reservas</h3>
           <p>Mira dónde has reservado</p>
         </div>        
-
+{/* 
         <div className="Cuenta-tarjeta">
           <i className="icono-notificaciones"></i>
           <h3>Notificaciones</h3>
           <p>Elige las preferencias de notificación y tu forma de contacto</p>
-        </div>
+        </div> */}
+
       </div>
 
       {usuario?.glampings && usuario.glampings.length > 0 && (
         <div className="Cuenta-contenedor-Propietario">
           <h1 className="Cuenta-titulo">Propietario</h1>
-          <div className="Cuenta-tarjeta">
+          <div className="Cuenta-tarjeta" onClick={irReservarPropiedades}>
             📅
-            <h3>Tus Glamping reservados</h3>
-            <p>Revisa las reservas vigentes e históricas</p>
+            <h3>Estado de tus reservas recibidas</h3>
+            <p>Revisa tus reservas vigentes e históricas</p>
           </div>
 
           <div className="Cuenta-tarjeta" onClick={manejarEditarGlamping}>
