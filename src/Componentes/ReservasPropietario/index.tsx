@@ -40,6 +40,23 @@ const ReservasPropietario: React.FC = () => {
   const [cargando, setCargando] = useState<boolean>(true);
   const [filtroEstado, setFiltroEstado] = useState<string>(''); // Estado para el filtro
 
+  // Función para formatear la fecha en UTC-5 (Colombia)
+  const formatearFechaColombia = (fechaUTC: string) => {
+    if (!fechaUTC) return "Fecha no disponible"; // Manejo de error
+  
+    const fecha = new Date(fechaUTC);
+    if (isNaN(fecha.getTime())) return "Fecha inválida"; // Validar si la fecha es válida
+  
+    // Ajustar manualmente restando 5 horas (UTC -5)
+    fecha.setHours(fecha.getHours() - 5);
+  
+    return new Intl.DateTimeFormat('es-CO', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(fecha);
+  };    
+  
   useEffect(() => {
     if (!idPropietario) {
       console.error('No se encontró el idPropietario en las cookies');
@@ -138,8 +155,8 @@ const ReservasPropietario: React.FC = () => {
               return (
                 <div key={reserva.id} className="ReservasPropietario-tarjeta" style={{ backgroundColor: colorEstado }}>
                   <h3 className="ReservasPropietario-titulo">{glamping.nombreGlamping}</h3>              
-                  <p className="ReservasPropietario-detalle"><strong>Código Reserva:</strong> {reserva.codigoReserva}</p>
-                  <p className="ReservasPropietario-detalle"><strong>La recibiste el:</strong> {new Date(reserva.fechaCreacion).toLocaleDateString()}</p>
+                  <p className="ReservasPropietario-detalle"><strong>Código Reserva:</strong> {reserva.codigoReserva}</p>                  
+                  <p className="ReservasPropietario-detalle"><strong>La recibiste el:</strong> {formatearFechaColombia(reserva.fechaCreacion)}</p>
                   <p className="ReservasPropietario-detalle"><strong>Estado Reserva:</strong> {reserva.EstadoReserva}</p>
                   <p className="ReservasPropietario-detalle"><strong>Ciudad:</strong> {reserva.ciudad_departamento}</p>
                   <p className="ReservasPropietario-detalle"><strong>Check-In:</strong> {new Date(reserva.FechaIngreso).toLocaleDateString()}</p>
