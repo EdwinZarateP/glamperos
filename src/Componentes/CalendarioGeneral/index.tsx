@@ -71,28 +71,37 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
 
   // Validación para evitar fecha de inicio posterior a fecha de fin
   const validarFechas = () => {
-    if (fechaInicio && fechaFin && fechaInicio > fechaFin) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error en el rango de fechas',
-        text: 'La fecha de inicio no puede ser posterior a la fecha de fin, da clic al botón Borrar fechas e intenta nuevamente.',
-      });
-      return false;
+    if (fechaInicio && fechaFin) {
+      // Validar si las fechas son iguales o si inicio es posterior a fin
+      if (fechaInicio.getTime() === fechaFin.getTime() || fechaInicio > fechaFin) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error en el rango de fechas',
+          text: 'La fecha de inicio no puede ser igual o posterior a la fecha de fin. Por favor, selecciona un rango válido.',
+        });
+        return false;
+      }
     }
     return true;
   };
 
   const manejarClickFecha = (fecha: Date) => {
     if (esFechaReservada(fecha)) return;
-
+  
     if (!fechaInicio || (fechaInicio && fechaFin)) {
       setFechaInicio(fecha);
       setFechaFin(null);
     } else if (fechaInicio && !fechaFin && fecha >= fechaInicio) {
-      if (verificarRango(fechaInicio, fecha)) {
-        setFechaFin(fecha);
+      // Creamos una nueva fecha para no modificar la original
+      let nuevaFechaFin = new Date(fecha);
+      // Si es la misma fecha que inicio, sumamos 1 día
+      if (nuevaFechaFin.toDateString() === fechaInicio.toDateString()) {
+        nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1);
+      }
+  
+      if (verificarRango(fechaInicio, nuevaFechaFin)) {
+        setFechaFin(nuevaFechaFin);
       } else {
-        // Usamos Swal para mostrar el mensaje
         Swal.fire({
           icon: 'error',
           title: 'Rango de fechas no disponible',
@@ -103,13 +112,7 @@ const CalendarioGeneral: React.FC<CalendarioGeneralProps> = ({
       setFechaInicio(fecha);
       setFechaFin(null);
     }
-
-    // Validamos las fechas después de hacer la selección
-    if (!validarFechas()) {
-      setFechaInicio(null);
-      setFechaFin(null);
-    }
-  };
+  }; 
 
   const manejarBorrarFechas = () => {
     setFechaInicio(null);

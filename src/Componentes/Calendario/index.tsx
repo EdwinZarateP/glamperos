@@ -69,29 +69,39 @@ const Calendario: React.FC<CalendarioProps> = ({ nombreGlamping }) => {
       setFechaInicio(fecha);
       setFechaFin(null);
     } else if (fechaInicio && !fechaFin && fecha >= fechaInicio) {
+      // Si la fecha seleccionada es igual a fechaInicio, sumamos un día
+      let nuevaFechaFin = new Date(fecha);
+      if (nuevaFechaFin.toDateString() === fechaInicio.toDateString()) {
+        nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1);
+      }
+  
       // Comprobar si hay fechas reservadas dentro del rango
       const fechasEnRango = [];
       let dia = fechaInicio;
-      while (dia <= fecha) {
-        if (FechasSeparadas.some(
+      while (dia <= nuevaFechaFin) {
+        if (
+          FechasSeparadas.some(
             (reserva) => reserva.toDateString() === dia.toDateString()
-          )) {
+          )
+        ) {
           fechasEnRango.push(dia);
         }
-        dia = new Date(dia.getTime() + (1000 * 60 * 60 * 24)); // Avanzar un día
+        dia = new Date(dia.getTime() + 1000 * 60 * 60 * 24); // Avanzar un día
       }
-
+  
       if (fechasEnRango.length > 0) {
         Swal.fire({
           title: 'Fechas reservadas',
-          text: `El rango seleccionado tiene fechas reservadas: ${fechasEnRango.map(d => formatearFecha(d)).join(", ")}`,
+          text: `El rango seleccionado tiene fechas reservadas: ${fechasEnRango
+            .map((d) => formatearFecha(d))
+            .join(", ")}`,
           icon: 'error',
-          confirmButtonText: 'Aceptar'
+          confirmButtonText: 'Aceptar',
         });
       } else {
-        setFechaFin(fecha);
+        setFechaFin(nuevaFechaFin);
         setFechaInicioConfirmado(fechaInicio);
-        setFechaFinConfirmado(fecha);
+        setFechaFinConfirmado(nuevaFechaFin);
       }
     } else {
       setFechaInicio(fecha);
