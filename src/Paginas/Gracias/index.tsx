@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import HeaderIcono from '../../Componentes/HeaderIcono/index'; 
 import './estilos.css';
@@ -8,7 +8,7 @@ const Gracias: React.FC = () => {
   const { fechaInicioUrl, fechaFinUrl } = useParams<{ fechaInicioUrl: string, fechaFinUrl: string }>();
   const [fechaInicioFormateada, setFechaInicioFormateada] = useState<string>('');
   const [fechaFinFormateada, setFechaFinFormateada] = useState<string>('');
-
+  const navigate = useNavigate(); 
   useEffect(() => {
     const fechaInicio = fechaInicioUrl ? new Date(fechaInicioUrl) : new Date();
     const fechaFin = fechaFinUrl ? new Date(fechaFinUrl) : new Date();
@@ -31,7 +31,7 @@ const Gracias: React.FC = () => {
         <span className="fecha-destacada">{fechaFinFormateada}</span>. A tu WhatsApp{' '}
         {Cookies.get('telefonoUsuario')} y correo {Cookies.get('correoUsuario')} enviamos el código de reserva, ubicación del glamping y el contacto del anfitrión. ¡Gracias por elegirnos!
       </p>
-      <img src="https://storage.googleapis.com/glamperos-imagenes/Imagenes/oso.webp" alt="Glamperos logo" className="Gracias-logo" />
+      <img src="https://storage.googleapis.com/glamperos-imagenes/Imagenes/oso.webp" alt="Glamperos logo" className="Gracias-logo" onClick={() => navigate("/")}/>
     </div>
   );
 };
