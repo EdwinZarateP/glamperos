@@ -75,7 +75,7 @@ const MenuUsuario: React.FC = () => {
             </li>
           </>
         )}
-        <li className="MenuUsuario-opcion" onClick={() => navigate("/centro-ayuda")}>
+        <li className="MenuUsuario-opcion" onClick={() => {navigate("/Ayuda"), setMostrarMenuUsuarios(false)}}>
           Centro de ayuda
         </li>
         <li

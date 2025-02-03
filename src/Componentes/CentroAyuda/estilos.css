@@ -1,0 +1,210 @@
+/* Variables de color y tipografía */
+:root {
+  --primary-color: #2A2D34;
+  --secondary-color: #5E6AD2;
+  --accent-color: #25D366;
+  --text-color: #4A4A4A;
+  --background-light: #F9FAFB;
+  --border-color: #E5E7EB;
+  --font-primary: 'Inter', Arial, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estilos base */
+.CentroAyuda-contenedor {
+  height: 100%;
+  width: 80%;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  font-family: var(--font-primary);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.CentroAyuda-titulo {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.CentroAyuda-titulo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+}
+
+/* Contenedor principal */
+.CentroAyuda-opciones {
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  padding: 1rem;
+
+
+}
+
+/* Sección de contacto */
+.CentroAyuda-lista {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.CentroAyuda-texto {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.CentroAyuda-item {
+  display: flex;
+
+  justify-content: center;
+}
+
+.CentroAyuda-boton {
+  background: var(--accent-color);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  justify-content: center;
+}
+
+.CentroAyuda-boton:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(18, 140, 126, 0.3);
+}
+
+.CentroAyuda-icono-whatsapp {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+/* Sección de correo */
+.CentroAyuda-correo {
+  /* background: var(--background-light); */
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  color: var(--secondary-color);
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.CentroAyuda-correo:hover {
+  border-color: var(--secondary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Preguntas frecuentes */
+.CentroAyuda-faq {
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.CentroAyuda-faq-titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.CentroAyuda-faq ul {
+  padding-left: 1.25rem;
+}
+
+.CentroAyuda-faq li {
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.CentroAyuda-faq li::before {
+  content: '•';
+  color: var(--secondary-color);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.CentroAyuda-faq ul ul {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.CentroAyuda-faq ul ul li::before {
+  content: '◦';
+  color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .CentroAyuda-contenedor {
+    padding: 0 1rem;
+    width: 95%;
+  }
+  
+  .CentroAyuda-titulo {
+    font-size: 2rem;
+  }
+  
+  .CentroAyuda-opciones {
+    padding: 1rem;
+  }
+  
+  .CentroAyuda-boton {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+
+
+/* Mejoras de accesibilidad */
+.CentroAyuda-boton:focus,
+.CentroAyuda-correo:focus {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.CentroAyuda-opciones {
+  animation: fadeIn 0.6s ease-out;
+}

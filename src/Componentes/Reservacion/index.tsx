@@ -241,15 +241,9 @@ const Reservacion: React.FC = () => {
           throw new Error("Error al actualizar las fechas reservadas");
         }
 
-        Swal.fire({
-          title: "¡Reserva confirmada!",
-          text:  `Tu estancia será del ${fechaInicio.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })} al ${fechaFin.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}.  A tu WhatsApp ${telefonoUsuarioCookie?.slice(-10)} y correo ${correoUsuarioCookie} enviamos el código de reserva, ubicación del glamping y el contacto del anfitrión. ¡Gracias por elegirnos!`,
-          icon: "success",
-          confirmButtonText: "Aceptar",
-        }).then(() => {        
-          handleCrearReserva();
-          navigate("/"); 
-        });
+        await handleCrearReserva();
+        navigate(`/Gracias/${fechaInicioReservada}/${fechaFinReservada}`);
+
       }
     } catch (error) {
       console.error("Error al procesar las fechas:", error);

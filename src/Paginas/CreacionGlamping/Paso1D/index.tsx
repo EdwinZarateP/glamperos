@@ -57,7 +57,7 @@ const Paso1D: React.FC = () => {
           <button
             className="paso1d-boton"
             onClick={() => setCantidad_Huespedes_Adicional(Cantidad_Huespedes_Adicional - 1)}
-            disabled={Cantidad_Huespedes_Adicional <= 1}
+            disabled={Cantidad_Huespedes_Adicional < 1}
           >
             −
           </button>

@@ -164,12 +164,13 @@ const guardarGlampingP: React.FC = () => {
       }
     }, [Cantidad_Huespedes]);
 
+
     // Sincroniza la Cantidad_Huespedes_Adicional automáticamente al formulario cuando la variable global cambia
     useEffect(() => {
-      if (Cantidad_Huespedes_Adicional) {
+      if (typeof Cantidad_Huespedes_Adicional === 'number') {
         setFormulario((prev) => ({
           ...prev,
-          Cantidad_Huespedes_Adicional, 
+          Cantidad_Huespedes_Adicional, // Actualizamos la Cantidad_Huespedes_Adicional directamente
         }));
       }
     }, [Cantidad_Huespedes_Adicional]);

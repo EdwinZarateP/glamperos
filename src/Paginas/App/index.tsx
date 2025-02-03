@@ -15,6 +15,8 @@ import Mensajes from '../Mensajes/index';
 import MensajesIndividuales from '../MensajesIndividuales/index';
 import ReservasPropiedades from '../ReservasPropiedades/index';
 import ReservasClientes from '../ReservasClientes/index';
+import Ayuda from '../Ayuda/index';
+import Gracias from '../Gracias/index';
 import NoEncontrado from '../NoEncontrado/index';
 import { ProveedorVariables } from '../../Contexto/index';
 import './estilos.css';
@@ -41,7 +43,9 @@ const App: React.FC = () => {
         <Route path="/Mensajes/:idReceptor" element={<Mensajes />} />        
         <Route path="/MensajesIndividuales/:idReceptor" element={<MensajesIndividuales />} />
         <Route path="/ReservasPropiedades" element={<ReservasPropiedades />} />
-        <Route path="/ReservasClientes" element={<ReservasClientes />} />                     
+        <Route path="/ReservasClientes" element={<ReservasClientes />} />
+        <Route path="/Ayuda" element={<Ayuda />} />
+        <Route path="/Gracias/:fechaInicioUrl/:fechaFinUrl" element={<Gracias />} />        
         <Route path="*" element={<NoEncontrado />} />
       </Routes>
     </Router>

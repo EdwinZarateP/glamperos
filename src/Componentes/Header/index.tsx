@@ -25,7 +25,7 @@ const Header: React.FC = () => {
      setCiudad_departamento, setTipoGlamping, setAmenidadesGlobal, 
      setImagenesCargadas, setNombreGlamping, setDescripcionGlamping, 
      setPrecioEstandar, setCantidad_Huespedes,setCantidad_Huespedes_Adicional,  setDescuento, setAcepta_Mascotas,
-     setMostrarFiltros,setMostrarMenuUsuarios, cantiadfiltrosAplicados, busqueda, setBusqueda, setFechasSeparadas } = almacenVariables; 
+     setMostrarFiltros,setMostrarMenuUsuarios, cantiadfiltrosAplicados, busqueda, setBusqueda, setFechasSeparadas, setPrecioEstandarAdicional } = almacenVariables; 
 
   const [mostrarPanelBusqueda, setMostrarPanelBusqueda] = useState<boolean>(false);
   const nombreUsuarioCookie = Cookies.get('nombreUsuario');
@@ -67,6 +67,7 @@ const Header: React.FC = () => {
     setCantidad_Huespedes(1); // Restablece el precio estándar a 0
     setCantidad_Huespedes_Adicional(0); // Restablece el precio estándar a 0
     setDescuento(0);
+    setPrecioEstandarAdicional(0);
     setAcepta_Mascotas(false);
   };
 
