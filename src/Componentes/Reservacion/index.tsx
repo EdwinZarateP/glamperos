@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ContextoApp } from "../../Contexto/index";
 import Cookies from 'js-cookie';
 import axios from "axios";
+import confetti from 'canvas-confetti'; 
 import Swal from "sweetalert2";
 import Politicas from "../../Componentes/Politica/index";
 import InputTelefono from "../../Componentes/InputTelefono/index";
@@ -27,6 +28,16 @@ const Reservacion: React.FC = () => {
     }
   
   const {verPolitica, setVerPolitica, Cantidad_Adultos, Cantidad_Ninos, Cantidad_Mascotas} = almacenVariables;  
+    // Función para lanzar confetti (explosión)
+  const lanzarConfetti = () => {
+    confetti.create(undefined, { resize: true, useWorker: true })({
+      particleCount: 200,
+      spread: 120,
+      origin: { x: 0.5, y: 0.5 },
+      zIndex: 1001, // Asegúrate de usar un z-index alto
+    });
+  };
+
   const navigate = useNavigate(); 
 
   const [usuario, setUsuario] = useState({
@@ -242,6 +253,7 @@ const Reservacion: React.FC = () => {
         }
 
         await handleCrearReserva();
+        lanzarConfetti();
         navigate(`/Gracias/${fechaInicioReservada}/${fechaFinReservada}`);
 
       }
