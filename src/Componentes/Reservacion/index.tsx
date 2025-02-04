@@ -434,7 +434,7 @@ const Reservacion: React.FC = () => {
       ninos: Number(ninosDesencriptados) || 0,
       bebes: Number(bebesDesencriptados) || 0,
       mascotas: Number(mascotasDesencriptadas) || 0,
-      EstadoReserva: "Pendiente",
+      EstadoReserva: "Reservada",
       ComentariosCancelacion: "Sin comentario",
     };
 

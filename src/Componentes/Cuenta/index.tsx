@@ -110,15 +110,9 @@ const Cuenta: React.FC = () => {
 
         <div className="Cuenta-tarjeta" onClick={irReservarCliente}>
           <i className="icono-pagos"></i>
-          <h3>Mis reservas</h3>
+          <h3>Mis Viajes</h3>
           <p>Mira dónde has reservado</p>
-        </div>        
-{/* 
-        <div className="Cuenta-tarjeta">
-          <i className="icono-notificaciones"></i>
-          <h3>Notificaciones</h3>
-          <p>Elige las preferencias de notificación y tu forma de contacto</p>
-        </div> */}
+        </div>
 
       </div>
 

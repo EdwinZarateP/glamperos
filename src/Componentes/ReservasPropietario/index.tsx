@@ -138,7 +138,7 @@ const ReservasPropietario: React.FC = () => {
               onChange={(e) => setFiltroEstado(e.target.value)}
             >
               <option value="">Todos</option>
-              <option value="Pendiente">Pendiente</option>
+              <option value="Reservada">Reservada</option>
               <option value="Finalizada">Finalizada</option>
               <option value="Cancelada">Cancelada</option>
             </select>
