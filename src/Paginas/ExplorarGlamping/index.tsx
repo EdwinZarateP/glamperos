@@ -40,6 +40,7 @@ interface Glamping {
   amenidadesGlobal: string[];
   video_youtube: string;
   propietario_id: string;
+  diasCancelacion: number;
 }
 
 //para ubicacion
@@ -108,7 +109,8 @@ function ExplorarGlamping() {
             : null,
           amenidadesGlobal: datos.amenidadesGlobal || [],
           video_youtube: datos.video_youtube || "sin video", 
-          propietario_id: datos.propietario_id || "No disponible",           
+          propietario_id: datos.propietario_id || "No disponible", 
+          diasCancelacion : datos.diasCancelacion || 3,         
         });
   
         // Convierte las fechas de string a Date y asegura que no haya problemas de husos horarios
@@ -242,7 +244,7 @@ function ExplorarGlamping() {
                   descuento={informacionGlamping?.descuento || 0}
                   admiteMascotas={informacionGlamping?.Acepta_Mascotas || false}
                   Cantidad_Huespedes={informacionGlamping?.Cantidad_Huespedes || 10}
-                  Cantidad_Huespedes_Adicional={informacionGlamping?.Cantidad_Huespedes_Adicional || 0}
+                  Cantidad_Huespedes_Adicional={informacionGlamping?.Cantidad_Huespedes_Adicional || 0}                  
                 />
               </div>
             </div>

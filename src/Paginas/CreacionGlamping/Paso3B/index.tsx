@@ -3,7 +3,8 @@ import './estilos.css';
 import { ContextoApp } from '../../../Contexto/index';
 
 const Paso3B: React.FC = () => {
-  const { precioEstandar, setPrecioEstandar,precioEstandarAdicional, setPrecioEstandarAdicional, descuento, setDescuento } = useContext(ContextoApp)!;
+  const { precioEstandar, setPrecioEstandar,precioEstandarAdicional,
+    setPrecioEstandarAdicional, descuento, setDescuento, diasCancelacion, setDiasCancelacion} = useContext(ContextoApp)!;
 
   // Función para manejar la entrada de precios estándar
   const manejarPreciosEstandar = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +57,25 @@ const Paso3B: React.FC = () => {
       return valorNumerico; 
     });
   };
+
+    // Función para manejar la entrada de descuento
+    const manejarDiasCancelacion = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const valor = e.target.value.replace(/\D/g, ''); // Eliminar no numéricos
+      const valorNumerico = Number(valor);
+      if (valorNumerico <= 15) {
+        setDiasCancelacion(valorNumerico); // Siempre como número
+      }
+    };
+  
+    // Función para manejar el blur de descuentos
+    const manejarBlurDiasCancelacion = () => {
+      setDiasCancelacion((prev) => {
+        if (!prev) return 0; 
+        const valorNumerico = Number(prev);
+        return valorNumerico; 
+      });
+    };
+
 
   return (
     <div className="Paso3B-contenedor">
@@ -111,6 +131,22 @@ const Paso3B: React.FC = () => {
             placeholder="Ej: 10%"
           />
         </div>
+
+        <div className="Paso3B-opcion">
+          <label htmlFor="diasCancelacion" className="Paso3B-etiqueta">
+            ¿Cuántos días de anticipación permites para que un huésped cancele su reserva?
+          </label>
+          <input
+            id="diasCancelacion"
+            type="text"
+            className="Paso3B-input"
+            value={diasCancelacion}
+            onChange={manejarDiasCancelacion}
+            onBlur={manejarBlurDiasCancelacion}
+            placeholder="Ej: 5"
+          />
+        </div>
+
       </div>
     </div>
   );

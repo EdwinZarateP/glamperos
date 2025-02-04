@@ -21,6 +21,7 @@ const guardarGlampingP: React.FC = () => {
     ubicacion: "", 
     direccion: "", 
     precioEstandar: 0,
+    diasCancelacion:1,
     Cantidad_Huespedes: 1,
     descuento: 0,
     descripcionGlamping: "",
@@ -33,7 +34,8 @@ const guardarGlampingP: React.FC = () => {
 
   const { ubicacion,ciudad_departamento, imagenesCargadas, tipoGlamping,Cantidad_Huespedes,
      Acepta_Mascotas, amenidadesGlobal, videoSeleccionado, nombreGlamping, descripcionGlamping,
-     precioEstandar, precioEstandarAdicional, descuento, idUsuario, nombreUsuario, Cantidad_Huespedes_Adicional, direccion,
+     precioEstandar, precioEstandarAdicional, descuento, idUsuario, nombreUsuario,
+      Cantidad_Huespedes_Adicional, direccion, diasCancelacion,
      } = useContext(ContextoApp)!; 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
@@ -236,7 +238,16 @@ const guardarGlampingP: React.FC = () => {
       }
     }, [descuento]);
     
-
+    // Sincroniza la diasCancelacion automáticamente al formulario cuando la variable global cambia
+    useEffect(() => {
+      if (typeof diasCancelacion === 'number') {
+        setFormulario((prev) => ({
+          ...prev,
+          diasCancelacion,
+        }));
+      }
+    }, [diasCancelacion]);
+    
     // Añadir un nuevo useEffect para sincronizar "amenidadesGlobal" automáticamente al formulario cuando cambia
     useEffect(() => {
       if (amenidadesGlobal) {

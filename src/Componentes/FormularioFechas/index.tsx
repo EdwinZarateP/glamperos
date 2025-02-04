@@ -247,7 +247,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
 
     const ValidarSesion = (email: string) => {
       setUrlActual(
-        `/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`
+        `/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}}`
       );
       setRedirigirExplorado(true)      
       

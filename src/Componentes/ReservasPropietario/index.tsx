@@ -24,6 +24,7 @@ interface Reserva {
   EstadoReserva: string;
   fechaCreacion: string;
   codigoReserva: string;
+  ComentariosCancelacion: string;
 }
 
 interface GlampingData {

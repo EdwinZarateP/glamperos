@@ -167,6 +167,8 @@ interface ContextProps {
   setPrecioEstandarAdicional: React.Dispatch<React.SetStateAction<number>>;
   descuento: number;
   setDescuento: React.Dispatch<React.SetStateAction<number>>;
+  diasCancelacion: number;
+  setDiasCancelacion: React.Dispatch<React.SetStateAction<number>>;
   
   // Busqueda del Header
   busqueda: { destino: string, fechas: string };
@@ -316,7 +318,10 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [precioEstandar, setPrecioEstandar] = useState<number>(0);
   const [precioEstandarAdicional, setPrecioEstandarAdicional] = useState<number>(0);
   const [descuento, setDescuento] = useState<number>(0);
-  
+
+  //Dias de anticipacion para aceptar reservas
+  const [diasCancelacion, setDiasCancelacion] = useState<number>(1);
+
   // Estado para filtros
   const [activarFiltros, setActivarFiltros] = useState<boolean>(false);
   const [activarFiltrosUbicacion, setActivarFiltrosUbicacion] = useState<boolean>(false);
@@ -423,6 +428,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     precioEstandar, setPrecioEstandar,
     precioEstandarAdicional, setPrecioEstandarAdicional,
     descuento, setDescuento,
+    diasCancelacion, setDiasCancelacion,
     activarFiltros, setActivarFiltros,
     activarFiltrosUbicacion, setActivarFiltrosUbicacion,
     activarFiltrosUbicacionBogota, setActivarFiltrosUbicacionBogota,

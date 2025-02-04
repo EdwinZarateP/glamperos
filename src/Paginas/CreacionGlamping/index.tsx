@@ -25,7 +25,7 @@ const CreacionGlamping: React.FC = () => {
   const {latitud, ciudad_departamento, tipoGlamping, amenidadesGlobal,
      imagenesCargadas, nombreGlamping, setNombreGlamping, descripcionGlamping,
       precioEstandar, Cantidad_Huespedes_Adicional} = useContext(ContextoApp)!;
-  const navigate = useNavigate(); // Inicializar el hook de navegación
+  const navigate = useNavigate(); 
 
   const redirigirInicio = () => {
     navigate("/");

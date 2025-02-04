@@ -16,7 +16,8 @@ export interface Reserva {
   bebes: number;
   mascotas: number;
   EstadoReserva: string;
-  codigoReserva?: string;  // Nuevo campo que se recibe desde el backend
+  codigoReserva?: string;
+  ComentariosCancelacion: string;
 }
 
 // Función para crear una nueva reserva

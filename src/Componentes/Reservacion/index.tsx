@@ -253,8 +253,6 @@ const Reservacion: React.FC = () => {
         }
 
         await handleCrearReserva();
-        lanzarConfetti();
-        navigate(`/Gracias/${fechaInicioReservada}/${fechaFinReservada}`);
 
       }
     } catch (error) {
@@ -424,18 +422,20 @@ const Reservacion: React.FC = () => {
       bebes: Number(totalBebes) || 0,
       mascotas: Number(totalMascotas) || 0,
       EstadoReserva: "Pendiente",
+      ComentariosCancelacion: "Sin comentario",
     };
 
     try {
       // Llamar a la API para crear la reserva y capturar la respuesta
       const respuesta = await crearReserva(nuevaReserva);
-
       // Aquí puedes acceder al codigoReserva
       if (respuesta?.reserva?.codigoReserva) {
         enviarCorreoPropietario(usuario?.correoPropietario || "", usuario?.nombreDueño || "",respuesta.reserva.codigoReserva);
         enviarCorreoCliente(correoUsuarioCookie || "", nombreUsuarioCookie || "",respuesta.reserva.codigoReserva);
         enviarMensaje( usuario?.whatsapp);
         enviarMensajeCliente( telefonoUsuarioCookie|| "",respuesta.reserva.codigoReserva, usuario?.whatsapp);    
+        lanzarConfetti();
+        navigate(`/Gracias/${fechaInicioReservada}/${fechaFinReservada}`);
       }
 
     } catch (error) {

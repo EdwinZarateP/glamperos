@@ -27,6 +27,7 @@ interface Reserva {
   EstadoReserva: string;
   fechaCreacion: string;
   codigoReserva: string;
+  ComentariosCancelacion: string;
 }
 
 interface GlampingData {
@@ -34,6 +35,7 @@ interface GlampingData {
   imagenes: string[];
   nombreGlamping: string;
   Acepta_Mascotas: boolean;
+  diasCancelacion: number;
 }
 
 const ReservasCliente: React.FC = () => {
@@ -116,11 +118,17 @@ const ReservasCliente: React.FC = () => {
     });
   };
 
-
-  const obtenerFechaTexto = (dias: number) => {
-    const fecha = new Date();
-    fecha.setDate(fecha.getDate() + dias);
-    return fecha.toISOString().split('T')[0];
+  const calcularFechaCancelacion = (fechaIngreso: string, diasCancelacion: number) => {
+    if (diasCancelacion <= 0) return 'No aplica';
+    
+    const fecha = new Date(fechaIngreso);
+    fecha.setDate(fecha.getDate() - diasCancelacion);
+    
+    return fecha.toLocaleDateString('es-ES', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   };
 
   return (
@@ -148,10 +156,12 @@ const ReservasCliente: React.FC = () => {
             return (
               <div key={reserva.id} className="ReservasCliente-tarjeta">
                 <h3 className="ReservasCliente-titulo">{glamping.nombreGlamping}</h3>              
-                <p className="ReservasCliente-detalle"><strong>Código Reserva:</strong> {reserva.codigoReserva}</p>                
-                <p className="ReservasCliente-detalle"><strong>Ciudad:</strong> {reserva.ciudad_departamento}</p>
-                <p className="ReservasCliente-detalle"><strong>Fechas:</strong> {new Date(reserva.FechaIngreso).toLocaleDateString()} - {new Date(reserva.FechaSalida).toLocaleDateString()}</p>          
-                <p className="ReservasCliente-detalle"><strong>Valor Total:</strong> ${reserva.ValorReserva.toLocaleString()}</p>
+                <p className="ReservasCliente-detalle" onClick={() => navigate(`/GestionarReserva/${reserva.codigoReserva}`)}><strong>Código Reserva:</strong> {reserva.codigoReserva}</p>
+                <p className="ReservasCliente-detalle" onClick={() => navigate(`/GestionarReserva/${reserva.codigoReserva}`)}><strong>Estado Reserva:</strong> {reserva.EstadoReserva}</p>                
+                <p className="ReservasCliente-detalle" onClick={() => navigate(`/GestionarReserva/${reserva.codigoReserva}`)}><strong>Ciudad:</strong> {reserva.ciudad_departamento}</p>
+                <p className="ReservasCliente-detalle" onClick={() => navigate(`/GestionarReserva/${reserva.codigoReserva}`)}><strong>Fechas:</strong> {new Date(reserva.FechaIngreso).toLocaleDateString()} - {new Date(reserva.FechaSalida).toLocaleDateString()}</p>
+                <p className="ReservasCliente-detalle" onClick={() => navigate(`/GestionarReserva/${reserva.codigoReserva}`)}><strong>Plazo para cancelar:</strong> {calcularFechaCancelacion(reserva.FechaIngreso, glamping.diasCancelacion || 0)}</p>  
+                <p className="ReservasCliente-detalle" onClick={() => navigate(`/GestionarReserva/${reserva.codigoReserva}`)}><strong>Valor Total:</strong> ${reserva.ValorReserva.toLocaleString()}</p>
 
                 {glamping.imagenes.length > 0 && (
                   <>
@@ -159,8 +169,8 @@ const ReservasCliente: React.FC = () => {
                       <img
                         className="ReservasCliente-carrusel-imagen"
                         src={glamping.imagenes[imagenIndex]}
-                        alt={`Imagen del glamping ${glamping.nombreGlamping}`}
-                        onClick={() => navigate(`/ExplorarGlamping/${reserva.idGlamping}/${obtenerFechaTexto(1)}/${obtenerFechaTexto(2)}/${reserva.Noches}/${reserva.adultos}/${reserva.ninos}/${reserva.bebes}/${reserva.mascotas}`)}
+                        onClick={() => navigate(`/GestionarReserva/${reserva.codigoReserva}`)}
+                        alt={`Imagen del glamping ${glamping.nombreGlamping}`}                        
                       />
                       <div className="ReservasCliente-carrusel-botones-izq">
                         <button 

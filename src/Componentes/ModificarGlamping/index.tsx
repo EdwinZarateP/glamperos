@@ -12,7 +12,8 @@ const ModificarGlamping: React.FC = () => {
   const [Cantidad_Huespedes_Adicional, setCantidad_Huespedes_Adicional] = useState<number>(0);
   const [Acepta_Mascotas, setAcepta_Mascotas] = useState<boolean>(false);
   const [precioEstandar, setPrecioEstandar] = useState<number>(0);
-  const [precioEstandarAdicional, setPrecioEstandarAdicional] = useState<number>(0);  
+  const [precioEstandarAdicional, setPrecioEstandarAdicional] = useState<number>(0);
+  const [diasCancelacion, setDiasCancelacion] = useState<number>(1);    
   const [descuento, setDescuento] = useState<number>(0);
   const [descripcionGlamping, setDescripcionGlamping] = useState('');
   const [video_youtube, setVideo_youtube] = useState('');
@@ -40,6 +41,7 @@ const ModificarGlamping: React.FC = () => {
         setAcepta_Mascotas(data.Acepta_Mascotas || false);
         setPrecioEstandar(data.precioEstandar ?? 0);
         setPrecioEstandarAdicional(data.precioEstandarAdicional ?? 0);
+        setDiasCancelacion(data.diasCancelacion ?? 0);
         setDescuento(data.descuento ?? 0);
         setDescripcionGlamping(data.descripcionGlamping || '');
         setVideo_youtube(data.video_youtube || '');
@@ -48,9 +50,15 @@ const ModificarGlamping: React.FC = () => {
     .catch((error) => {
     console.error('Error al obtener los datos del glamping:', error);
   });
-
     }
   }, [glampingId]);
+
+  // Resetear precio adicional cuando no hay huéspedes adicionales
+  useEffect(() => {
+    if (Cantidad_Huespedes_Adicional <= 0) {
+      setPrecioEstandarAdicional(0);
+    }
+  }, [Cantidad_Huespedes_Adicional]);
 
   const toggleAmenidad = (amenidad: string) => {
     setAmenidadesGlobal((prevState) => {
@@ -78,16 +86,7 @@ const ModificarGlamping: React.FC = () => {
       return;
     }
 
-    if (Cantidad_Huespedes_Adicional > 0 && precioEstandarAdicional<1) {
-      Swal.fire({
-        icon: 'error',
-        title: '¡Error!',
-        text: 'Debes colocar un precio noche huésped adicional',
-      });
-      return;
-    }
-
-    if (Cantidad_Huespedes_Adicional > 0 && precioEstandarAdicional<40000) {
+    if (Cantidad_Huespedes_Adicional > 0 && precioEstandarAdicional < 40000) {
       Swal.fire({
         icon: 'error',
         title: '¡Error!',
@@ -123,6 +122,24 @@ const ModificarGlamping: React.FC = () => {
       return;
     }
 
+    if (diasCancelacion < 0) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'No puedes colocar valores negativos en Días para admitir cancelaciones',
+      });
+      return;
+    }
+
+    if (diasCancelacion > 30) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'No puedes colocar valores superiores a 30 en Días para admitir cancelaciones',
+      });
+      return;
+    }
+
     if (descuento > 70) {
       Swal.fire({
         icon: 'error',
@@ -135,12 +152,13 @@ const ModificarGlamping: React.FC = () => {
     const formData = new FormData();
     formData.append("nombreGlamping", nombreGlamping);
     formData.append("tipoGlamping", tipoGlamping);
-    formData.append("Cantidad_Huespedes", (Cantidad_Huespedes !== undefined && Cantidad_Huespedes !== null ? Cantidad_Huespedes : 0).toString());
-    formData.append("Cantidad_Huespedes_Adicional", (Cantidad_Huespedes_Adicional !== undefined && Cantidad_Huespedes_Adicional !== null ? Cantidad_Huespedes_Adicional : 0).toString());
+    formData.append("Cantidad_Huespedes", Cantidad_Huespedes.toString());
+    formData.append("Cantidad_Huespedes_Adicional", Cantidad_Huespedes_Adicional.toString());
     formData.append("Acepta_Mascotas", Acepta_Mascotas ? "true" : "false");    
-    formData.append("precioEstandar", (precioEstandar ?? 0).toString());
-    formData.append("precioEstandarAdicional", (precioEstandarAdicional ?? 0).toString());
-    formData.append("descuento", (descuento ?? 0).toString());
+    formData.append("precioEstandar", precioEstandar.toString());
+    formData.append("precioEstandarAdicional", precioEstandarAdicional.toString());
+    formData.append("diasCancelacion", diasCancelacion.toString());    
+    formData.append("descuento", descuento.toString());
     formData.append("descripcionGlamping", descripcionGlamping);
     formData.append("video_youtube", video_youtube || 'sin video');
     formData.append("amenidadesGlobal", amenidadesGlobal.join(","));
@@ -161,13 +179,8 @@ const ModificarGlamping: React.FC = () => {
           icon: "success",
           confirmButtonText: "Aceptar",
         }).then(() => {
-          // Forzar desplazamiento al inicio antes de recargar
-          window.scrollTo({
-            top: 0,
-            behavior: "auto", // Asegura el desplazamiento inmediato
-          });
-           // Recargar la página
-      window.location.reload();
+          window.scrollTo({ top: 0, behavior: "auto" });
+          window.location.reload();
     }); 
 
     } catch (error) {
@@ -200,19 +213,8 @@ const ModificarGlamping: React.FC = () => {
             value={precioEstandar}
             onChange={(e) => setPrecioEstandar(Number(e.target.value))}
           />
-
-          <label className="ModificarGlamping-label" htmlFor="precioEstandarAdicional">
-            Precio por noche huésped adicional:
-          </label>
-          <input
-            id="precioEstandarAdicional"
-            className="ModificarGlamping-input"
-            type="number"
-            value={precioEstandarAdicional}
-            onChange={(e) => setPrecioEstandarAdicional(Number(e.target.value))}
-          />
-
-           <label className="ModificarGlamping-label" htmlFor="descuento">
+      
+          <label className="ModificarGlamping-label" htmlFor="descuento">
             Descuento entre semana:
           </label>
           <input
@@ -220,9 +222,16 @@ const ModificarGlamping: React.FC = () => {
             className="ModificarGlamping-input"
             type="number"
             value={descuento}
-            onChange={(e) => setDescuento(Number(e.target.value))}
-          />
-
+            min="0"
+            max="100"
+            onChange={(e) => {
+              let valor = Number(e.target.value);              
+              if (valor < 0) valor = 0; 
+              if (valor > 100) valor = 100; 
+              setDescuento(valor);
+            }}
+          />   
+         
           <label className="ModificarGlamping-label" htmlFor="Cantidad_Huespedes">
             Cantidad Huespedes estandar por noche:
           </label>
@@ -231,8 +240,15 @@ const ModificarGlamping: React.FC = () => {
             className="ModificarGlamping-input"
             type="number"
             value={Cantidad_Huespedes}
-            onChange={(e) => setCantidad_Huespedes(Number(e.target.value))}
-          />
+            min="1"
+            max="15"
+            onChange={(e) => {
+              let valor = Number(e.target.value);              
+              if (valor < 1) valor = 1;
+              if (valor > 15) valor = 15;
+              setCantidad_Huespedes(valor);
+            }}
+          />            
 
           <label className="ModificarGlamping-label" htmlFor="Cantidad_Huespedes_Adicional">
             Huespedes adicionales por noche:
@@ -242,8 +258,45 @@ const ModificarGlamping: React.FC = () => {
             className="ModificarGlamping-input"
             type="number"
             value={Cantidad_Huespedes_Adicional}
-            onChange={(e) => setCantidad_Huespedes_Adicional(Number(e.target.value))}
-          />         
+            min="0"
+            max="15"
+            onChange={(e) => {
+              let valor = Number(e.target.value);
+              if (valor < 0) valor = 0;
+              if (valor > 15) valor = 15;
+              setCantidad_Huespedes_Adicional(valor);
+            }}
+          />   
+
+          <label className="ModificarGlamping-label" htmlFor="precioEstandarAdicional">
+            Precio por noche huésped adicional:
+          </label>
+          <input
+            id="precioEstandarAdicional"
+            className={`ModificarGlamping-input ${Cantidad_Huespedes_Adicional <= 0 ? 'disabled-input' : ''}`}
+            type="number"
+            value={precioEstandarAdicional}
+            onChange={(e) => setPrecioEstandarAdicional(Number(e.target.value))}
+            disabled={Cantidad_Huespedes_Adicional <= 0}
+          />             
+
+          <label className="ModificarGlamping-label" htmlFor="diasCancelacion">
+            Días para admitir cancelaciones:
+          </label>
+          <input
+            id="diasCancelacion"
+            className="ModificarGlamping-input"
+            type="number"
+            value={diasCancelacion}
+            min="0"
+            max="30"
+            onChange={(e) => {
+              let valor = Number(e.target.value);
+              if (valor < 0) valor = 0;
+              if (valor > 30) valor = 30;
+              setDiasCancelacion(valor);
+            }}
+          />
 
           <label className="ModificarGlamping-label" htmlFor="tipoGlamping">
             Tipo de Glamping:
@@ -269,10 +322,7 @@ const ModificarGlamping: React.FC = () => {
             id="Acepta_Mascotas"
             className="ModificarGlamping-input"
             value={Acepta_Mascotas ? 'true' : 'false'}
-            onChange={(e) => {
-              const newValue = e.target.value === 'true';
-              setAcepta_Mascotas(newValue);
-            }}
+            onChange={(e) => setAcepta_Mascotas(e.target.value === 'true')}
           >
             <option value="true">Sí</option>
             <option value="false">No</option>
