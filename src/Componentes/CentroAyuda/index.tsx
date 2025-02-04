@@ -4,7 +4,7 @@ import './estilos.css';
 const CentroAyuda: React.FC = () => {
 
   const redirigirWhatsApp = () => {
-    const numeroWhatsApp = '+573125443396';
+    const numeroWhatsApp = '+573218695196';
     const mensaje = encodeURIComponent('Hola equipo Glamperos, ¡Necesito ayuda!');
     const esPantallaPequena = window.innerWidth < 600;
     const urlWhatsApp = esPantallaPequena

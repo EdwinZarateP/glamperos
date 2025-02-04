@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import Politicas from "../../Componentes/Politica/index";
 import InputTelefono from "../../Componentes/InputTelefono/index";
 import { crearReserva, Reserva } from "../../Funciones/CrearReserva";
+import { decryptData } from '../../Funciones/Encryptacion'; 
 import "./estilos.css";
 
 
@@ -44,7 +45,7 @@ const Reservacion: React.FC = () => {
       nombreDueño: '',
       whatsapp: '',
       correoPropietario: '',
-    });
+    });  
 
   const {
     glampingId,
@@ -70,6 +71,16 @@ const Reservacion: React.FC = () => {
     totalMascotas: string;
   }>();
 
+  const fechaInicioDesencriptada = fechaInicioReservada ? decryptData(decodeURIComponent(fechaInicioReservada)) : "0";
+  const fechaFinDesencriptada = fechaFinReservada ? decryptData(decodeURIComponent(fechaFinReservada)) : "0";
+  const adultosDesencriptados = totalAdultos ? decryptData(decodeURIComponent(totalAdultos)) : "0";
+  const ninosDesencriptados = totalNinos ? decryptData(decodeURIComponent(totalNinos)) : "0";
+  const bebesDesencriptados = totalBebes ? decryptData(decodeURIComponent(totalBebes)) : "0";
+  const mascotasDesencriptadas = totalMascotas ? decryptData(decodeURIComponent(totalMascotas)) : "0";
+  const totalFinalEncriptado = precioConTarifa ? decryptData(decodeURIComponent(precioConTarifa)) : "0";
+  const tarifaEncriptada = TarifaGlamperos ? decryptData(decodeURIComponent(TarifaGlamperos)) : "0";
+  
+
   const [glampingData, setGlampingData] = useState<{
     propietario_id: string;
     nombreGlamping: string;
@@ -80,6 +91,7 @@ const Reservacion: React.FC = () => {
       lng: number;
     };
     direccion: string | null;
+    diasCancelacion: number;
   } | null>(null);
 
   const [fechasReservadas, setFechasReservadas] = useState<string[]>([]);
@@ -117,6 +129,7 @@ const Reservacion: React.FC = () => {
           imagen: data.imagenes?.[0] || null,
           ubicacion: data.ubicacion || null,
           direccion: data.direccion || null,
+          diasCancelacion: data.diasCancelacion,
         });
       } catch (error) {
         console.error("Error al cargar los datos del glamping:", error);
@@ -175,15 +188,15 @@ const Reservacion: React.FC = () => {
     })}`;
   };
 
-  const fechaInicio = fechaInicioReservada
-    ? new Date(fechaInicioReservada + "T23:59:59Z")
+  const fechaInicio = fechaInicioDesencriptada
+    ? new Date(fechaInicioDesencriptada + "T23:59:59Z")
     : null;
-  const fechaFin = fechaFinReservada
-    ? new Date(fechaFinReservada + "T23:59:59Z")
+  const fechaFin = fechaFinDesencriptada
+    ? new Date(fechaFinDesencriptada + "T23:59:59Z")
     : null;
 
-  const precioConTarifaNum = Math.round(parseFloat(precioConTarifa || "0"));
-  const TarifaGlamperosNum = Math.round(parseFloat(TarifaGlamperos || "0"));
+  const precioConTarifaNum = Math.round(parseFloat(totalFinalEncriptado || "0"));
+  const TarifaGlamperosNum = Math.round(parseFloat(tarifaEncriptada || "0"));
   const totalDiasNum = parseInt(totalDias || "1");
 
   // Validar si tiene WhatsApp
@@ -417,10 +430,10 @@ const Reservacion: React.FC = () => {
       ValorReserva: precioConTarifaNum,
       CostoGlamping: precioConTarifaNum - TarifaGlamperosNum,
       ComisionGlamperos: TarifaGlamperosNum,
-      adultos: Number(totalAdultos) || 0,
-      ninos: Number(totalNinos) || 0,
-      bebes: Number(totalBebes) || 0,
-      mascotas: Number(totalMascotas) || 0,
+      adultos: Number(adultosDesencriptados) || 0,
+      ninos: Number(ninosDesencriptados) || 0,
+      bebes: Number(bebesDesencriptados) || 0,
+      mascotas: Number(mascotasDesencriptadas) || 0,
       EstadoReserva: "Pendiente",
       ComentariosCancelacion: "Sin comentario",
     };
@@ -435,7 +448,7 @@ const Reservacion: React.FC = () => {
         enviarMensaje( usuario?.whatsapp);
         enviarMensajeCliente( telefonoUsuarioCookie|| "",respuesta.reserva.codigoReserva, usuario?.whatsapp);    
         lanzarConfetti();
-        navigate(`/Gracias/${fechaInicioReservada}/${fechaFinReservada}`);
+        navigate(`/Gracias/${fechaInicioDesencriptada}/${fechaFinDesencriptada}`);
       }
 
     } catch (error) {
@@ -587,10 +600,10 @@ const Reservacion: React.FC = () => {
                   </p>
                   <hr />
                   <p>
-                    {totalAdultos && `${Number(totalAdultos)} ${Number(totalAdultos) === 1 ? 'Adulto' : 'Adultos'}`}
-                    {totalNinos && Number(totalNinos) > 0 && `, ${totalNinos} ${Number(totalNinos) === 1 ? 'Niño' : 'Niños'}`}
-                    {totalBebes && Number(totalBebes) > 0 && `, ${totalBebes} ${Number(totalBebes) === 1 ? 'Bebé' : 'Bebés'}`}                  
-                    {totalMascotas && Number(totalMascotas) > 0 && ` y ${totalMascotas} Mascota${Number(totalMascotas) > 1 ? "s" : ""}`}
+                    {adultosDesencriptados && `${Number(adultosDesencriptados)} ${Number(adultosDesencriptados) === 1 ? 'Adulto' : 'Adultos'}`}
+                    {ninosDesencriptados && Number(ninosDesencriptados) > 0 && `, ${ninosDesencriptados} ${Number(ninosDesencriptados) === 1 ? 'Niño' : 'Niños'}`}
+                    {bebesDesencriptados && Number(bebesDesencriptados) > 0 && `, ${bebesDesencriptados} ${Number(bebesDesencriptados) === 1 ? 'Bebé' : 'Bebés'}`}                  
+                    {mascotasDesencriptadas && Number(mascotasDesencriptadas) > 0 && ` y ${mascotasDesencriptadas} Mascota${Number(mascotasDesencriptadas) > 1 ? "s" : ""}`}
                   </p>
                   <hr />
                   <p>
@@ -637,7 +650,10 @@ const Reservacion: React.FC = () => {
       {verPolitica && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <Politicas/>
+          <Politicas 
+            diasCancelacion={glampingData?.diasCancelacion ?? 5} 
+            fechaInicio={fechaInicio?? new Date()} 
+          />  
           </div>
         </div>
       )}

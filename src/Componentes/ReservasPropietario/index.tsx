@@ -151,7 +151,7 @@ const ReservasPropietario: React.FC = () => {
               if (!glamping) return null; 
 
               // Determina el color de la tarjeta según el estado
-              const colorEstado = reserva.EstadoReserva === "Pendiente" ? "#f8c7c7" : reserva.EstadoReserva === "Finalizada" ? "rgba(47, 107, 62, 0.2)" : "#e0e0e0";
+              const colorEstado = reserva.EstadoReserva === "Cancelada" ? "#e0e0e0" : reserva.EstadoReserva === "Finalizada" ? "rgba(47, 107, 62, 0.2)" : "white";
 
               return (
                 <div key={reserva.id} className="ReservasPropietario-tarjeta" style={{ backgroundColor: colorEstado }}>

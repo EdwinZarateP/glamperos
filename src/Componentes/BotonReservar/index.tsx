@@ -3,6 +3,7 @@ import { ContextoApp } from "../../Contexto/index";
 import { useNavigate } from "react-router-dom";
 import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
+import { encryptData } from '../../Funciones/Encryptacion'; 
 import Cookies from 'js-cookie';
 import { useParams, Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -231,9 +232,8 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
     };  
     
   const ValidarSesion = (email: string) => {
-        setUrlActual(
-          `/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`
-        );
+        const nuevaUrl = `/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`;    
+        setUrlActual(nuevaUrl);
         setRedirigirExplorado(true)      
         
         if (email==="sesionCerrada") {
@@ -323,6 +323,16 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
       TarifaGlamperosAdicional
     );
 
+    const fechaInicioEncriptada = encodeURIComponent(encryptData(fechaInicioReservada.toString()));
+    const fechaFinEncriptada = encodeURIComponent(encryptData(fechaFinReservada.toString()));
+    const mascotasEncriptadas = encodeURIComponent(encryptData(mascotasRender.toString()));
+    const adultosEncriptados = encodeURIComponent(encryptData(adultosRender.toString()));
+    const ninosEncriptados = encodeURIComponent(encryptData(ninosRender.toString()));
+    const bebesEncriptados = encodeURIComponent(encryptData(bebesRender.toString()));
+    const totalFinalEncriptado = encodeURIComponent(encryptData(TotalFinal.toString()));
+    const tarifaEncriptada = encodeURIComponent(encryptData(tarifaFinalGlamperos.toString()));
+        
+
   return (
     <div className="ReservarBoton-container">
 
@@ -355,7 +365,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
         <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} />
       )}
         <Link
-        to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`}
+        to={`/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaEncriptada}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`}
         className="ReservarBoton-boton"
         onClick={handleReservarClick}
         >

@@ -8,6 +8,7 @@ import Visitantes from "../Visitantes";
 import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
 import { ExtraerTarifaGlamperos } from "../../Funciones/ExtraerTarifaGlamperos";
+import { encryptData } from '../../Funciones/Encryptacion'; 
 import Cookies from 'js-cookie';
 import Swal from "sweetalert2";
 
@@ -246,24 +247,24 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
     };  
 
     const ValidarSesion = (email: string) => {
-      setUrlActual(
-        `/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}}`
-      );
-      setRedirigirExplorado(true)      
       
-      if (email==="sesionCerrada") {
-        // Mostrar el mensaje de advertencia antes de redirigir
+      // Construir la URL con el valor encriptado
+      const nuevaUrl = `/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`;    
+      setUrlActual(nuevaUrl);
+      setRedirigirExplorado(true);
+    
+      if (email === "sesionCerrada") {
         Swal.fire({
           title: "¡Estás muy cerca!",
           text: "Debes iniciar sesión primero para continuar.",
           icon: "warning",
           confirmButtonText: "Aceptar",
         }).then(() => {
-          // Redirigir a la página de registro después de que el usuario cierre el alert
           navigate("/Registrarse");
         });
       }
     };
+    
   
     const handleReservarClick = (e: React.MouseEvent) => {
       const emailUsuario = Cookies.get("correoUsuario");
@@ -334,6 +335,7 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
       TarifaGlamperos,
       TarifaGlamperosAdicional
     );
+    
 
     const tarifaFinalGlamperos = calcularTarifaGlamperos(
       totalHuespedesRender,
@@ -341,6 +343,16 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
       TarifaGlamperos,
       TarifaGlamperosAdicional
     );
+
+    const fechaInicioEncriptada = encodeURIComponent(encryptData(fechaInicioReservada.toString()));
+    const fechaFinEncriptada = encodeURIComponent(encryptData(fechaFinReservada.toString()));
+    const mascotasEncriptadas = encodeURIComponent(encryptData(mascotasRender.toString()));
+    const adultosEncriptados = encodeURIComponent(encryptData(adultosRender.toString()));
+    const ninosEncriptados = encodeURIComponent(encryptData(ninosRender.toString()));
+    const bebesEncriptados = encodeURIComponent(encryptData(bebesRender.toString()));
+    const totalFinalEncriptado = encodeURIComponent(encryptData(TotalFinal.toString()));
+    const tarifaEncriptada = encodeURIComponent(encryptData(tarifaFinalGlamperos.toString()));
+    
 
   return (
     <>
@@ -399,8 +411,8 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
         </div>
 
         {/* Usar Link para redirigir */}
-        <Link        
-          to={`/Reservar/${glampingId}/${fechaInicioReservada}/${fechaFinReservada}/${TotalFinal}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosRender}/${ninosRender}/${bebesRender}/${mascotasRender}`}
+        <Link
+          to={`/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaEncriptada}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`}
           className="FormularioFechas-botonReserva"
           onClick={handleReservarClick}
         >

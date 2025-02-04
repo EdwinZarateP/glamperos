@@ -65,6 +65,14 @@ const GestionReserva: React.FC = () => {
     return hoy <= fechaLimite && reserva.EstadoReserva !== 'Cancelada';
   };
 
+  const calcularFechaLimiteCancelacion = (): string => {
+    if (!reserva || !glamping) return '';
+    const fechaIngreso = new Date(reserva.FechaIngreso);
+    const fechaLimite = new Date(fechaIngreso);
+    fechaLimite.setDate(fechaIngreso.getDate() - glamping.diasCancelacion);
+    return fechaLimite.toLocaleDateString('es-CO');
+  };
+
   const manejarCancelacion = async () => {
     if (!reserva) return;
 
@@ -187,6 +195,7 @@ const GestionReserva: React.FC = () => {
                     <p><strong>Nombre:</strong> {glamping.nombreGlamping}</p>
                     <p><strong>Ubicación:</strong> {glamping.ciudad_departamento}</p>
                     <p><strong>Política de cancelación:</strong> {glamping.diasCancelacion} días antes del check-in</p>
+                    <p><strong>Último día para cancelar:</strong> {calcularFechaLimiteCancelacion()}</p>
                   </>
                 ) : (
                   <p>Información del alojamiento no disponible</p>
@@ -196,7 +205,8 @@ const GestionReserva: React.FC = () => {
               <div className="GestionReserva-seccion">
                 <h2 className="GestionReserva-subtitulo">Detalles de la Reserva</h2>
                 <p><strong>Código:</strong> {reserva.codigoReserva}</p>
-                <p><strong>Estado:</strong> {reserva.EstadoReserva}</p>
+                <p><strong>Estado:</strong><span style={{ color: reserva.EstadoReserva === "Cancelada" ? "red" : "black" }}>{reserva.EstadoReserva}</span></p>
+
                 <p><strong>Check-in:</strong> {new Date(reserva.FechaIngreso).toLocaleDateString('es-CO')}</p>
                 <p><strong>Check-out:</strong> {new Date(reserva.FechaSalida).toLocaleDateString('es-CO')}</p>
                 <p><strong>Noches:</strong> {reserva.Noches}</p>

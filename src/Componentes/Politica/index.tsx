@@ -2,7 +2,12 @@ import React, { useContext } from "react";
 import { ContextoApp } from "../../Contexto/index";
 import "./estilos.css";
 
-const Politicas: React.FC = () => {
+interface PoliticasProps {
+  diasCancelacion: number;
+  fechaInicio: Date;
+}
+
+const Politicas: React.FC<PoliticasProps> = ({ diasCancelacion, fechaInicio }) => {
   const almacenVariables = useContext(ContextoApp);
   
   if (!almacenVariables) {
@@ -22,20 +27,38 @@ const Politicas: React.FC = () => {
     return null; // No renderiza nada si `verPolitica` es false
   }
 
+  // Calcular la última fecha en la que se puede cancelar con reembolso
+  const fechaLimiteCancelacion = new Date(fechaInicio);
+  fechaLimiteCancelacion.setDate(fechaInicio.getDate() - diasCancelacion);
+
+  // Obtener la fecha actual
+  const fechaActual = new Date();
+
+  // Validar si la cancelación ya no es posible
+  const cancelacionNoPermitida = fechaActual >= fechaLimiteCancelacion;
+
   return (
     <div className="Politicas-contenedor">
       <div className="Politicas-modal">
         <h2 className="Politicas-titulo">Políticas de Cancelación</h2>
-        <p className="Politicas-descripcion">
-          1. <b>Reembolso 100%:</b> si cancelas hasta 5 días antes del check-in.
-        </p>
-        <p className="Politicas-descripcion">
-          2. <b>Reembolso del 50%:</b> si cancelas entre 2 y 4 días antes del check-in.
-        </p>
-        <p className="Politicas-descripcion">
-          3. <b>Sin reembolso:</b> si cancelas con menos de 1 día de antelación.
-        </p>
-   
+
+        {cancelacionNoPermitida ? (
+          <p className="Politicas-advertencia">
+            Ten en cuenta que éste Glamping admite cancelaciones mínimo con {diasCancelacion} días de antelación y en éste momento no podrías cancelar tu reserva una vez realizada.             
+          </p>
+        ) : (
+          <>
+            <p className="Politicas-descripcion">
+              1. <b>Reembolso 90%:</b> si cancelas hasta{" "}
+              <b>{diasCancelacion} días antes</b> del check-in, es decir, hasta el{" "}
+              <b>{fechaLimiteCancelacion.toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" })}</b>.
+            </p>
+            <p className="Politicas-descripcion">
+              2. <b>Sin reembolso:</b> si no cancelas antes de la fecha prevista por el Glamping no aplicará el rembolso.
+            </p>
+          </>
+        )}
+
         <button className="Politicas-botonCerrar" onClick={cerrarPoliticas}>
           Cerrar
         </button>
