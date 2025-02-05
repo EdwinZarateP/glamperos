@@ -1,126 +1,187 @@
+/* Contenedor principal */
 .Cuenta-contenedor {
-  padding: 20px;
-  height: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.Cuenta-contenedor-Propietario {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 350px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
 }
 
+/* Título principal */
 .Cuenta-titulo {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: #2C3E50;
 }
 
+/* Información del usuario */
 .Cuenta-informacion {
   font-size: 16px;
   margin-bottom: 20px;
+  color: #5D6D7E;
 }
 
+/* Estilo de las tarjetas */
 .Cuenta-tarjetas {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   gap: 20px;
+  width: 100%;
+  max-width: 400px;
 }
 
+/* Tarjeta individual */
 .Cuenta-tarjeta {
-  background-color: #f8f9fa;
+  background-color: #F4F1EA;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
 }
 
 .Cuenta-tarjeta:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
 }
 
-.Cuenta-tarjeta h3 {
-  margin-top: 10px;
-  font-size: 18px;
-}
-
-.Cuenta-tarjeta p {
-  font-size: 14px;
-  color: #6c757d;
-}
-
-.icono-datos-personales:before {
-  content: "📄";
-}
-
-.icono-pagos:before {
-  content: "📅";
-}
-
-.icono-notificaciones:before {
-  content: "🔔";
-}
-
-.icono-glampings:before {
-  content: "⛺";
-}
-
+/* Cerrar sesión */
 .Cuenta-cerrar-sesion {
+  margin-top: 21px;
   cursor: pointer;
-  color: #f44336;
+  color: #E74C3C;
   font-size: 16px;
   text-decoration: underline;
-  transition: color 0.3s ease;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  transition: color 0.3s ease-in-out;
 }
 
 .Cuenta-cerrar-sesion:hover {
-  color: #d32f2f;
+  color: #C0392B;
 }
 
-.Cuenta-cerrar-sesion-container {
+/* 🌿 Toggle con Estética Glamping */
+.Cuenta-toggle-container {
   display: flex;
-  justify-content: flex-end;
-  padding-right: 20px;
-
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  background:  #F4F1EA;
+  padding: 10px;
+  border-radius: 30px;
+  box-shadow: 0 0 12px rgba(46, 125, 50, 0.3);
+  width: fit-content;
 }
 
-/* Media Queries para hacerlo más responsivo */
-
-/* Pantallas medianas y mayores */
-@media (min-width: 900px) {
-  .Cuenta-contenedor{
-    padding-top: 120px;
-    width: 80%;
-  }
-  
-  .Cuenta-tarjetas {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.Cuenta-toggle-container span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  transition: color 0.3s ease-in-out;
 }
 
-/* Pantallas pequeñas */
+.Cuenta-activo {
+  color: #FFD700; /* Dorado */
+}
+
+/* 👨🏻‍💼🌙 Diseño Exclusivo del Switch */
+.Cuenta-switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 34px;
+  cursor: pointer;
+}
+
+/* Ocultar input */
+.Cuenta-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Fondo del slider */
+.Cuenta-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #2F6B3E, #2E7D32);
+  border-radius: 50px;
+  transition: background 0.4s ease-in-out;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Efecto de cambio */
+.Cuenta-switch input:checked + .Cuenta-slider {
+  background: linear-gradient(135deg, #FFC107, #FF9800);
+  box-shadow: 0 0 12px rgba(255, 152, 0, 0.6);
+}
+
+/* 🏕 Botón circular con íconos */
+.Cuenta-slider::before {
+  content: "🏝️"; /* Icono de noche por defecto */
+  position: absolute;
+  left: 5px;
+  top: 4px;
+  width: 26px;
+  height: 26px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.4s ease-in-out, background 0.4s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Cuando está activado (modo Propietario) */
+.Cuenta-switch input:checked + .Cuenta-slider::before {
+  transform: translateX(36px);
+  background: #ffffff;
+  content: "👨🏻‍💼"; /* Cambia a icono de día */
+}
+
+.Cuenta-CentroAyuda{
+  display: none;
+}
+
+/* 📱 Corrección del problema en dispositivos pequeños */
 @media (max-width: 600px) {
-
   .Cuenta-tarjetas {
-    grid-template-columns: 1fr; 
-
+    max-width: 100%;
+    padding: 0 10px;
   }
 
-  .Cuenta-tarjeta {
-    padding: 15px;
+  .Cuenta-toggle-container {
+    padding: 10px 15px;
   }
 
-  .Cuenta-tarjeta:nth-child(5) {
-    display: none; /* Ocultar el glamping si no hay */
+  .Cuenta-switch {
+    max-width: 60px;
+    height: 30px;
+  }
+
+  .Cuenta-slider::before {
+    width: 24px;
+    height: 24px;
+    left: 4px;
+    top: 3px;
+  }
+
+  .Cuenta-switch input:checked + .Cuenta-slider::before {
+    transform: translateX(30px);
+  }
+
+  .Cuenta-CentroAyuda{
+    display: flex;
+    justify-content: center;
   }
 }
