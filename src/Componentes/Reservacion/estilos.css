@@ -39,15 +39,22 @@ h2.reservacion-subtitulo {
 .reservacion-glamping-photo-container {
   flex: 1;
   display: flex;
+  justify-content: center; /* Centrar la imagen */
+  align-items: center;
   max-width: 550px;
-  margin-right: 20px;
+  max-height: 300px;
+  overflow: hidden; /* Evitar desbordamientos */
+  border-radius: 8px; /* Mantener bordes redondeados */
 }
 
 .reservacion-glamping-photo {
   width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen al contenedor sin distorsionarla */
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .reservacion-details {
   flex: 1;
@@ -146,12 +153,9 @@ h2.reservacion-subtitulo {
   .reservacion-glamping-photo-container {
     margin-right: 0;
     margin-bottom: 20px;
+    max-height: 200px;
   }
 
-  .reservacion-glamping-photo {
-    max-height: 300px;
-    object-fit: cover;
-  }
 
   .reservacion-details {
     width: 100%;

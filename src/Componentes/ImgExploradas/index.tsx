@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ContextoApp } from "../../Contexto/index";
 import { FiGrid } from "react-icons/fi";
 import VerVideo from "../Video";
-import { MdOutlinePets, MdOndemandVideo } from "react-icons/md"; // Importación de iconos
+import { MdOutlinePets, MdOndemandVideo } from "react-icons/md";
 import { useParams, useNavigate } from "react-router-dom";
 import "./estilos.css";
 

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Lottie from 'lottie-react';
 import animationData from "../../Imagenes/AnimationPuntos.json";
+import { EliminarFechas } from "../../Funciones/EliminarFechas";
 import './estilos.css';
 
 interface Reserva {
@@ -99,6 +100,7 @@ const GestionReserva: React.FC = () => {
       });
 
       if (respuesta.ok) {
+        await eliminarFechasReservadas(reserva.idGlamping, reserva.FechaIngreso, reserva.FechaSalida);
         Swal.fire({
           title: '¡Cancelación exitosa!',
           text: 'Tu reserva ha sido cancelada correctamente',
@@ -169,6 +171,38 @@ const GestionReserva: React.FC = () => {
 
     obtenerDatos();
   }, [codigoReserva]);
+
+  const eliminarFechasReservadas = async (glampingId: string, fechaInicio: string, fechaFin: string) => {
+    const fechasAEliminar: string[] = [];
+    let fechaActual = new Date(fechaInicio);
+    let fechaFinDate = new Date(fechaFin);
+  
+    // Normalizar fechas a medianoche para evitar problemas de comparación
+    fechaActual.setHours(0, 0, 0, 0);
+    fechaFinDate.setHours(0, 0, 0, 0);
+  
+    // Iterar mientras fechaActual sea menor que fechaFin (sin incluir fechaFin)
+    while (fechaActual < fechaFinDate) { 
+      const fechaStr = fechaActual.toISOString().split("T")[0];
+  
+      if (!fechasAEliminar.includes(fechaStr)) {
+        fechasAEliminar.push(fechaStr);
+      }
+  
+      fechaActual.setDate(fechaActual.getDate() + 1);
+    }
+  
+    // **Eliminar las fechas de la API**
+    if (fechasAEliminar.length > 0) {
+      const resultado = await EliminarFechas(glampingId, fechasAEliminar);
+      if (resultado) {
+        console.log("✅ Fechas eliminadas exitosamente:", fechasAEliminar);
+      } else {
+        console.error("❌ No se pudieron eliminar las fechas.");
+      }
+    }
+  };
+  
 
   return (
     <div className="GestionReserva-contenedor">

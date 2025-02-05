@@ -15,6 +15,7 @@ import { BsFillProjectorFill } from "react-icons/bs";
 import { GiCoffeeCup, GiFishingNet} from "react-icons/gi";
 import { FaChess } from "react-icons/fa";
 import { LuRefrigerator } from "react-icons/lu";
+import { MdOutlinePets } from "react-icons/md";
 
 
 
@@ -22,7 +23,8 @@ import { LuRefrigerator } from "react-icons/lu";
 
 // Lista de opciones amenidades
 export const opcionesAmenidades = [
-  { id: 'Wifi', label: 'Wifi', icono: <IoWifi /> },  
+  { id: 'Wifi', label: 'Wifi', icono: <IoWifi /> },
+  { id: 'Mascotas', label: 'Mascotas', icono: <MdOutlinePets /> },    
   { id: 'Zona de trabajo', label: 'Zona de trabajo', icono: <FaLaptopHouse /> },
   { id: 'Desayuno', label: 'Desayuno', icono: <GiCoffeeCup /> },
   { id: 'Jacuzzi', label: 'Jacuzzi', icono: <FaHotTubPerson /> },

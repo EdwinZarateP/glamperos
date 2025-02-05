@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ContextoApp } from "../../Contexto/index";
 import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Visitantes from "../Visitantes";
 import viernesysabadosyfestivos from "../../Componentes/BaseFinesSemana/fds.json";
 import { calcularTarifaServicio } from "../../Funciones/calcularTarifaServicio";
@@ -248,8 +248,18 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
 
     const ValidarSesion = (email: string) => {
       
+      const fechaInicioEncriptada = encodeURIComponent(encryptData(fechaInicioReservada.toString()));
+      const fechaFinEncriptada = encodeURIComponent(encryptData(fechaFinReservada.toString()));
+      const mascotasEncriptadas = encodeURIComponent(encryptData(mascotasRender.toString()));
+      const adultosEncriptados = encodeURIComponent(encryptData(adultosRender.toString()));
+      const ninosEncriptados = encodeURIComponent(encryptData(ninosRender.toString()));
+      const bebesEncriptados = encodeURIComponent(encryptData(bebesRender.toString()));
+      const totalFinalEncriptado = encodeURIComponent(encryptData(TotalFinal.toString()));
+      const tarifaEncriptada = encodeURIComponent(encryptData(tarifaFinalGlamperos.toString()));
+      
+  
       // Construir la URL con el valor encriptado
-      const nuevaUrl = `/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaFinalGlamperos}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`;    
+      const nuevaUrl = `/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaEncriptada}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`;    
       setUrlActual(nuevaUrl);
       setRedirigirExplorado(true);
     
@@ -268,6 +278,16 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
   
     const handleReservarClick = (e: React.MouseEvent) => {
       const emailUsuario = Cookies.get("correoUsuario");
+      const fechaInicioEncriptada = encodeURIComponent(encryptData(fechaInicioReservada.toString()));
+      const fechaFinEncriptada = encodeURIComponent(encryptData(fechaFinReservada.toString()));
+      const mascotasEncriptadas = encodeURIComponent(encryptData(mascotasRender.toString()));
+      const adultosEncriptados = encodeURIComponent(encryptData(adultosRender.toString()));
+      const ninosEncriptados = encodeURIComponent(encryptData(ninosRender.toString()));
+      const bebesEncriptados = encodeURIComponent(encryptData(bebesRender.toString()));
+      const totalFinalEncriptado = encodeURIComponent(encryptData(TotalFinal.toString()));
+      const tarifaEncriptada = encodeURIComponent(encryptData(tarifaFinalGlamperos.toString()));
+      
+  
     
       // Validar si el email es válido
        if (!emailUsuario) {        
@@ -276,10 +296,16 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
          return; // Salir de la función
        }
     
-      // Validar fechas
-      if (!validarFechas()) {
-        e.preventDefault(); // Prevenir el evento si las fechas no son válidas
+       if (!validarFechas()) {
+        return;
       }
+    
+      // Construir la URL con valores encriptados
+      const nuevaUrl = `/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaEncriptada}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`;
+    
+      // Navegar a la nueva URL
+      navigate(nuevaUrl);
+
     };
     
 
@@ -344,14 +370,14 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
       TarifaGlamperosAdicional
     );
 
-    const fechaInicioEncriptada = encodeURIComponent(encryptData(fechaInicioReservada.toString()));
-    const fechaFinEncriptada = encodeURIComponent(encryptData(fechaFinReservada.toString()));
-    const mascotasEncriptadas = encodeURIComponent(encryptData(mascotasRender.toString()));
-    const adultosEncriptados = encodeURIComponent(encryptData(adultosRender.toString()));
-    const ninosEncriptados = encodeURIComponent(encryptData(ninosRender.toString()));
-    const bebesEncriptados = encodeURIComponent(encryptData(bebesRender.toString()));
-    const totalFinalEncriptado = encodeURIComponent(encryptData(TotalFinal.toString()));
-    const tarifaEncriptada = encodeURIComponent(encryptData(tarifaFinalGlamperos.toString()));
+    // const fechaInicioEncriptada = encodeURIComponent(encryptData(fechaInicioReservada.toString()));
+    // const fechaFinEncriptada = encodeURIComponent(encryptData(fechaFinReservada.toString()));
+    // const mascotasEncriptadas = encodeURIComponent(encryptData(mascotasRender.toString()));
+    // const adultosEncriptados = encodeURIComponent(encryptData(adultosRender.toString()));
+    // const ninosEncriptados = encodeURIComponent(encryptData(ninosRender.toString()));
+    // const bebesEncriptados = encodeURIComponent(encryptData(bebesRender.toString()));
+    // const totalFinalEncriptado = encodeURIComponent(encryptData(TotalFinal.toString()));
+    // const tarifaEncriptada = encodeURIComponent(encryptData(tarifaFinalGlamperos.toString()));
     
 
   return (
@@ -410,15 +436,10 @@ const FormularioFechas: React.FC<FormularioFechasProps> = ({ precioPorNoche, pre
           </span>
         </div>
 
-        {/* Usar Link para redirigir */}
-        <Link
-          to={`/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaEncriptada}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`}
-          className="FormularioFechas-botonReserva"
-          onClick={handleReservarClick}
-        >
+        <button className="FormularioFechas-botonReserva" onClick={handleReservarClick}>
           <GiCampingTent className="FormularioFechas-botonReserva-icono" />
           Reservar
-        </Link>
+        </button>
 
         <p className="FormularioFechas-info">No se hará ningún cargo por ahora</p>
 

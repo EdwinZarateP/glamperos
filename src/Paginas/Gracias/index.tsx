@@ -9,17 +9,19 @@ const Gracias: React.FC = () => {
   const [fechaInicioFormateada, setFechaInicioFormateada] = useState<string>('');
   const [fechaFinFormateada, setFechaFinFormateada] = useState<string>('');
   const navigate = useNavigate(); 
+  
   useEffect(() => {
-    const fechaInicio = fechaInicioUrl ? new Date(fechaInicioUrl) : new Date();
-    const fechaFin = fechaFinUrl ? new Date(fechaFinUrl) : new Date();
+    const fechaInicio = fechaInicioUrl ? new Date(`${fechaInicioUrl}T00:00:00`) : new Date();
+    const fechaFin = fechaFinUrl ? new Date(`${fechaFinUrl}T00:00:00`) : new Date();
     // Formatear las fechas
     const inicioFormateado = fechaInicio.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
     const finFormateado = fechaFin.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
-
+  
     setFechaInicioFormateada(inicioFormateado);
     setFechaFinFormateada(finFormateado);
-
+  
   }, [fechaInicioUrl, fechaFinUrl]);
+  
 
   return (
     <div className="GraciasContenedor">
