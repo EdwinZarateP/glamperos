@@ -50,10 +50,13 @@ interface ContextProps {
   setVerVideo: Dispatch<SetStateAction<boolean>>;
   activarChat: boolean;
   setActivarChat: Dispatch<SetStateAction<boolean>>;
+  activarCalificacion: boolean;
+  setActivarCalificacion: Dispatch<SetStateAction<boolean>>;
   verPolitica: boolean;
   setVerPolitica: Dispatch<SetStateAction<boolean>>;
   redirigirExplorado: boolean;
   setRedirigirExplorado: Dispatch<SetStateAction<boolean>>;
+
 
 
   // Variables de tipo string
@@ -287,6 +290,7 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
   const [siono, setSiono] = useState<boolean>(false);   
   const [verVideo, setVerVideo] = useState<boolean>(false); 
   const [activarChat, setActivarChat] = useState<boolean>(false);
+  const [activarCalificacion, setActivarCalificacion] = useState<boolean>(false);  
   const [verPolitica, setVerPolitica] = useState<boolean>(false);
   const [redirigirExplorado, setRedirigirExplorado] = useState<boolean>(false);  
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState<string[]>([]);
@@ -383,7 +387,8 @@ export const ProveedorVariables: React.FC<ProveedorVariablesProps> = ({ hijo }) 
     correoUsuario, setCorreoUsuario,
     siono, setSiono, 
     verVideo, setVerVideo,
-    activarChat, setActivarChat,   
+    activarChat, setActivarChat, 
+    activarCalificacion, setActivarCalificacion,  
     verPolitica, setVerPolitica,
     redirigirExplorado, setRedirigirExplorado,
     nombreGlamping, setNombreGlamping,

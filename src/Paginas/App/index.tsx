@@ -5,7 +5,6 @@ import CreacionGlamping from '../CreacionGlamping/index';
 import ExplorarGlamping from '../ExplorarGlamping/index';
 import ColeccionImagenes from '../ColeccionImagenes/index';
 import ListaDeseos from '../ListaDeseos/index';
-import EvaluacionFinal from '../EvaluacionFinal/index';
 import Modificacion from '../Modificacion/index';
 import GestionarCuenta from '../GestionarCuenta/index';
 import EdicionGlamping from '../EdicionGlamping/index';
@@ -36,7 +35,6 @@ const App: React.FC = () => {
         <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
         <Route path="/ListaDeseos" element={<ListaDeseos />} />          
         <Route path="/Modificacion/:glampingId" element={<Modificacion />} />            
-        <Route path="/EvaluacionFinal/:glampingId" element={<EvaluacionFinal />} />      
         <Route path="/GestionarCuenta/" element={<GestionarCuenta />} />   
         <Route path="/EdicionGlamping/:glampingId" element={<EdicionGlamping />} />
         <Route path="/EdicionPerfil/" element={<EdicionPerfil />} />

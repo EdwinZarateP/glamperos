@@ -202,6 +202,39 @@
   color: white;
 }
 
+/* Botón de Calificación Mejorado */
+.ReservasCliente-boton-calificar {
+  background: linear-gradient(135deg, #2F6B3E, #00b894);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 250px;
+  margin: auto;
+  margin-top: 10px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ReservasCliente-boton-calificar:hover {
+  background: linear-gradient(135deg, #00b894, #2F6B3E);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ReservasCliente-boton-calificar:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
 
 /* Diseño responsivo */
 @media (max-width: 768px) {

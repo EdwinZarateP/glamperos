@@ -29,7 +29,7 @@ const Comentarios: React.FC<ComentariosProps> = ({ glampingId }) => {
             nombre: comentario.nombre_usuario,
             calificacionNumero: comentario.calificacion,
             comentario: comentario.comentario,
-            fotoPerfil: comentario.fotoPerfil || '', // Si no existe fotoPerfil, usamos una cadena vacía
+            fotoPerfil: comentario.fotoPerfil || '', 
           }));
           setComentarios(comentariosMapeados);  // Establece los comentarios obtenidos
         } else {

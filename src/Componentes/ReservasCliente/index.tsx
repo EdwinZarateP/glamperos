@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ContextoApp } from "../../Contexto/index";
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
@@ -6,6 +7,7 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 import { MdOutlinePets } from "react-icons/md";
 import meme from '../../Imagenes/meme.jpg';
 import animationData from "../../Imagenes/AnimationPuntos.json";
+import EvaluarGlamping from "../../Componentes/EvaluarGlamping/index";
 import './estilos.css';
 
 interface Reserva {
@@ -38,12 +40,28 @@ interface GlampingData {
   diasCancelacion: number;
 }
 
+interface EvaluacionResponse {
+  tiene_calificacion: boolean;
+}
+
 const ReservasCliente: React.FC = () => {
   const idCliente = Cookies.get('idUsuario');
+  const nombreUsuario = Cookies.get('nombreUsuario');
   const [reservas, setReservas] = useState<Reserva[]>([]);
   const [glampingData, setGlampingData] = useState<GlampingData[]>([]);
   const [cargando, setCargando] = useState<boolean>(true);
+  const [cargandoEvaluaciones, setCargandoEvaluaciones] = useState<boolean>(true);
   const [currentImageIndexes, setCurrentImageIndexes] = useState<{ [key: string]: number }>({});
+  const [selectedReserva, setSelectedReserva] = useState<Reserva | null>(null);
+  const [evaluaciones, setEvaluaciones] = useState<{ [codigoReserva: string]: boolean }>({});
+  
+  const almacenVariables = useContext(ContextoApp);
+  
+  if (!almacenVariables) {
+    throw new Error("El contexto no está disponible. Asegúrate de envolver el componente en un proveedor de contexto.");
+  }
+  const { activarCalificacion, setActivarCalificacion } = almacenVariables;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,18 +77,44 @@ const ReservasCliente: React.FC = () => {
         const data = await response.json();
         if (response.ok) {
           setReservas(data);
+          verificarEvaluaciones(data);
         } else {
           console.error('No se pudieron obtener las reservas');
+          setCargando(false);
         }
       } catch (error) {
         console.error('Error al obtener reservas:', error);
-      } finally {
         setCargando(false);
       }
     };
-
+  
     obtenerReservas();
   }, [idCliente]);
+  
+  const verificarEvaluaciones = async (reservas: Reserva[]) => {
+    const evaluacionesTemp: { [codigoReserva: string]: boolean } = {};
+  
+    for (const reserva of reservas) {
+      try {
+        const response = await fetch(`https://glamperosapi.onrender.com/evaluaciones/codigoReserva/${reserva.codigoReserva}/tieneCalificacion`);
+        const data: EvaluacionResponse = await response.json();
+        evaluacionesTemp[reserva.codigoReserva] = data.tiene_calificacion;
+      } catch (error) {
+        console.error('Error al verificar evaluación:', error);
+        evaluacionesTemp[reserva.codigoReserva] = false;
+      }
+    }
+  
+    setEvaluaciones(evaluacionesTemp);
+    setCargandoEvaluaciones(false); // Marcar que terminó la carga de evaluaciones
+  };
+
+  // 🚀 Cuando ambas consultas han terminado, ocultamos el Lottie
+  useEffect(() => {
+  if (!cargandoEvaluaciones) {
+    setCargando(false);
+    }
+  }, [cargandoEvaluaciones]);
 
   useEffect(() => {
     if (reservas.length > 0) {
@@ -131,6 +175,28 @@ const ReservasCliente: React.FC = () => {
     });
   };
 
+  const mostrarBotonCalificar = (reserva: Reserva) => {
+    const hoy = new Date();
+    const fechaSalida = new Date(reserva.FechaSalida);
+  
+    // Permitir calificar desde un día antes de la FechaSalida
+    const fechaInicioCalificacion = new Date(fechaSalida);
+    fechaInicioCalificacion.setDate(fechaInicioCalificacion.getDate() - 1);
+  
+    // Permitir calificar hasta 15 días después de la FechaSalida
+    const fechaLimiteCalificacion = new Date(fechaSalida);
+    fechaLimiteCalificacion.setDate(fechaLimiteCalificacion.getDate() + 15);
+  
+    // No mostrar si la reserva está cancelada
+    if (reserva.EstadoReserva === 'Cancelada') return false;
+  
+    // No mostrar si ya tiene una calificación
+    if (evaluaciones[reserva.codigoReserva]) return false;
+  
+    // Mostrar solo si estamos dentro del rango de tiempo permitido
+    return hoy >= fechaInicioCalificacion && hoy <= fechaLimiteCalificacion;
+  };  
+
   return (
     <div className="ReservasCliente-container">
       {cargando ? (
@@ -187,7 +253,6 @@ const ReservasCliente: React.FC = () => {
                           onClick={() => cambiarImagen(reserva.id, 'siguiente')}
                         >
                           <MdOutlineKeyboardArrowRight/>
-                          
                         </button>
                       </div>
                     </div>
@@ -196,10 +261,31 @@ const ReservasCliente: React.FC = () => {
                     )}
                   </>
                 )}
+                
+                {mostrarBotonCalificar(reserva) && (
+                  <button 
+                    className="ReservasCliente-boton-calificar"
+                    onClick={() => {
+                      setSelectedReserva(reserva);
+                      setActivarCalificacion(true);
+                    }}
+                  >
+                    Calificar Estancia
+                  </button>
+                )}
               </div>
             );
           })}
         </div>
+      )}
+      
+      {activarCalificacion && selectedReserva && (
+        <EvaluarGlamping
+          usuario_id={selectedReserva.idCliente}
+          codigoReserva={selectedReserva.codigoReserva}
+          nombre_usuario={nombreUsuario || ''}
+          glamping_id={selectedReserva.idGlamping}
+        />
       )}
     </div>
   );
