@@ -43,7 +43,8 @@ const GestionReserva: React.FC = () => {
   const [cargando, setCargando] = useState<boolean>(false);
   const [motivoCancelacion, setMotivoCancelacion] = useState<string>('');
   const [mostrarFormularioCancelacion, setMostrarFormularioCancelacion] = useState<boolean>(false);
-  const [telefonoUsuario, setTelefonoUsuario] = useState<string>("573197862921");
+  const [telefonoAnfitrion, setTelefonoAnfitrion] = useState<string>("573197862921");
+  const [nombreAnfitrion, setNombreAnfitrion] = useState<string>("573197862921");
 
   const motivosCancelacion = [
     "Cambio de planes",
@@ -55,19 +56,20 @@ const GestionReserva: React.FC = () => {
   ];
 
   useEffect(() => {
-    const obtenerTelefonoUsuario = async () => {
+    const obtenertelefonoAnfitrion = async () => {
       if (reserva?.idCliente) {
         try {
           const respuesta = await fetch(`https://glamperosapi.onrender.com/usuarios/${reserva.idCliente}`);
           if (!respuesta.ok) throw new Error('Error al obtener datos del usuario');
           const usuario = await respuesta.json();
-          setTelefonoUsuario(usuario.telefono || "573125443396");
+          setTelefonoAnfitrion(usuario.telefono || "573125443396");
+          setNombreAnfitrion(usuario.nombre || "Anfitrión");
         } catch (error) {
           console.error("Error obteniendo teléfono:", error);
         }
       }
     };
-    obtenerTelefonoUsuario();
+    obtenertelefonoAnfitrion();
   }, [reserva]);
 
   const calcularPeriodoCancelacion = () => {
@@ -122,7 +124,7 @@ const GestionReserva: React.FC = () => {
 
       if (glamping) {
         try {
-          await enviarMensajeCancelacion(telefonoUsuario);
+          await enviarMensajeCancelacion(telefonoAnfitrion,nombreAnfitrion);
         } catch (error) {
           console.error("Error enviando mensaje:", error);
           Swal.fire({
@@ -219,11 +221,10 @@ const GestionReserva: React.FC = () => {
     }
   };
 
-  const enviarMensajeCancelacion = async (numero: string) => {
+  const enviarMensajeCancelacion = async (numero: string, nombre: string) => {
     const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
     if (!WHATSAPP_API_TOKEN) throw new Error('Token de WhatsApp no configurado');
 
-    const nombreCliente = reserva?.idCliente || "Cliente";
     const nombreGlamping = glamping?.nombreGlamping || "Glamping";
     const fechaIngreso = reserva ? new Date(reserva.FechaIngreso).toLocaleDateString('es-CO') : "";
     const fechaSalida = reserva ? new Date(reserva.FechaSalida).toLocaleDateString('es-CO') : "";
@@ -239,7 +240,7 @@ const GestionReserva: React.FC = () => {
         components: [{
           type: "body",
           parameters: [
-            { type: "text", text: nombreCliente },
+            { type: "text", text: nombre.split(' ')[0] },
             { type: "text", text: nombreGlamping },
             { type: "text", text: fechaIngreso },
             { type: "text", text: fechaSalida }
