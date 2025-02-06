@@ -21,6 +21,7 @@
   font-family: var(--font-primary);
   color: var(--text-color);
   line-height: 1.6;
+
 }
 
 .CentroAyuda-titulo {
@@ -174,7 +175,7 @@
   .CentroAyuda-contenedor {
     padding: 0 1rem;
     width: 95%;
-  }
+   }
   
   .CentroAyuda-titulo {
     font-size: 2rem;
@@ -182,6 +183,8 @@
   
   .CentroAyuda-opciones {
     padding: 1rem;
+    padding-bottom: 50px;
+
   }
   
   .CentroAyuda-boton {

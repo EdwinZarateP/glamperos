@@ -34,9 +34,6 @@ const Calificacion: React.FC<CalificacionProps> = ({ calificacionNumero, calific
         <span className="calificacion-numero">{calificacionNumero.toFixed(1)}</span>
         <div className="calificacion-estrellas">{getEstrellas()}</div>
       </div>
-      {/* <div className="calificacion-mas-alta">
-        <span>{calificacionMasAlta}</span>
-      </div> */}
       <div className="calificacion-evaluaciones">
         <span className="calificacion-numero-evaluaciones">{calificacionEvaluaciones}</span>
         <span className="calificacion-texto-evaluaciones">Evaluaciones</span>

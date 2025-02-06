@@ -237,13 +237,15 @@
 
 
 /* Diseño responsivo */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .ReservasCliente-container {
     padding: 0 15px;
+    
   }
   
   .ReservasCliente-lista {
     grid-template-columns: 1fr;
+    padding-bottom: 80px;
   }
   
   .ReservasCliente-titulo {

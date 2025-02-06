@@ -1,5 +1,6 @@
 import ReservasPropietario from '../../Componentes/ReservasPropietario/index'; 
 import HeaderIcono from '../../Componentes/HeaderIcono/index'; 
+import MenuUsuariosInferior from '../../Componentes/MenuUsuariosInferior/index'; 
 import "./estilos.css";
 
 function ReservasPropiedades() {
@@ -7,6 +8,7 @@ function ReservasPropiedades() {
     <div className='ReservasClientes-contenedor'>
         <HeaderIcono descripcion="Glamperos" />
         <ReservasPropietario />
+        <MenuUsuariosInferior/>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import CentroAyuda from '../../Componentes/CentroAyuda/index';
 import HeaderIcono from '../../Componentes/HeaderIcono/index'; 
+import MenuUsuariosInferior from '../../Componentes/MenuUsuariosInferior/index'; 
 import './estilos.css';
 
 function Ayuda() {
@@ -8,6 +9,7 @@ function Ayuda() {
       <div className='Ayuda-contenedor'>
         <HeaderIcono descripcion="Glamperos" />
         <CentroAyuda /> 
+        <MenuUsuariosInferior/>
       </div>
     );
   }

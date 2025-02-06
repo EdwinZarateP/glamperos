@@ -231,10 +231,11 @@
 }
 
 /* Estilos responsivos */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   .ReservasPropietario-lista {
     grid-template-columns: 1fr;
+    padding-bottom: 70px;
   }
 
   .ReservasPropietario-titulo {

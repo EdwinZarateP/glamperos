@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ContextoApp } from "../../Contexto/index";
+import { CalificarGlamping } from "../../Funciones/CalificarGlamping";
+import { CalificacionPromedio } from "../../Funciones/CalificacionPromedio";
 import "./estilos.css";
 
 interface EvaluarGlampingProps {
@@ -35,6 +37,7 @@ const EvaluarGlamping: React.FC<EvaluarGlampingProps> = ({
     }
 
     try {
+      // Enviar la calificación a la API
       await axios.post("https://glamperosapi.onrender.com/evaluaciones", {
         usuario_id,
         codigoReserva,
@@ -44,11 +47,32 @@ const EvaluarGlamping: React.FC<EvaluarGlampingProps> = ({
         comentario,
       });
 
+      console.log("✅ Evaluación enviada con éxito.");
+
+      // Obtener la calificación promedio actualizada
+      const calificacionData = await CalificacionPromedio(glamping_id);
+
+      if (calificacionData) {
+        const nuevaCalificacionPromedio = calificacionData.calificacion_promedio;
+        
+        // Actualizar la calificación promedio en la base de datos
+        const exito = await CalificarGlamping(glamping_id, nuevaCalificacionPromedio);
+        
+        if (exito) {
+          console.log("✅ Calificación promedio actualizada con éxito.");
+        } else {
+          console.warn("⚠️ Hubo un problema al actualizar la calificación promedio.");
+        }
+      } else {
+        console.warn("⚠️ No se pudo obtener la calificación promedio.");
+      }
+
+      // Cerrar el modal de calificación y recargar la página
       setActivarCalificacion(false);
       navigate("/ReservasClientes");
       window.location.reload();
     } catch (error) {
-      console.error("Error al enviar la evaluación:", error);
+      console.error("❌ Error al enviar la evaluación:", error);
       alert("Hubo un error al enviar tu evaluación. Inténtalo de nuevo.");
     }
   };

@@ -153,11 +153,12 @@
 
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .GestionReserva-contenedor {
     width: 95%;
     padding: 15px;
     margin-top: 15px;
+    margin-bottom: 70px;
   }
 
   .GestionReserva-titulo {

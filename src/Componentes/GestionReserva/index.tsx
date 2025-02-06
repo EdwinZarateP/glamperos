@@ -101,6 +101,12 @@ const GestionReserva: React.FC = () => {
 
       if (respuesta.ok) {
         await eliminarFechasReservadas(reserva.idGlamping, reserva.FechaIngreso, reserva.FechaSalida);
+
+        // 📲 Enviar mensaje de WhatsApp después de la cancelación
+        if (glamping) {
+          await enviarMensajeCancelacion("573125443396");
+        }
+
         Swal.fire({
           title: '¡Cancelación exitosa!',
           text: 'Tu reserva ha sido cancelada correctamente',
@@ -200,6 +206,58 @@ const GestionReserva: React.FC = () => {
       } else {
         console.error("❌ No se pudieron eliminar las fechas.");
       }
+    }
+  };
+
+
+  const mensaje1: string = "Edwin"
+  const mensaje2: string = "La caricia"
+  const mensaje3: string = "01/02/2025"
+  const mensaje4: string = "04/02/2025"
+  const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
+
+  const enviarMensajeCancelacion = async (numero: string) => {
+    const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
+    const body = {
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: numero,
+      type: "template",
+      template: {
+        name: "cancelacion_reserva_glamping",
+        language: {
+          code: "es_CO"
+        },
+        components: [
+           
+          {
+            type: "body",
+            parameters: [
+              { type: "text", text: mensaje1 },
+              { type: "text", text: mensaje2 },
+              { type: "text", text: mensaje3 },
+              { type: "text", text: mensaje4 }
+            ]
+          }                  
+        ]
+      }
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${WHATSAPP_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+     
+    } else {
+      const errorData = await response.json();
+      console.error("Error al enviar mensaje:", errorData);
+      alert(`Error al enviar el mensaje: ${errorData.error.message}`);
     }
   };
   
