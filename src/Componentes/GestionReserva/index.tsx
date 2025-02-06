@@ -43,6 +43,7 @@ const GestionReserva: React.FC = () => {
   const [cargando, setCargando] = useState<boolean>(false);
   const [motivoCancelacion, setMotivoCancelacion] = useState<string>('');
   const [mostrarFormularioCancelacion, setMostrarFormularioCancelacion] = useState<boolean>(false);
+  const [telefonoUsuario, setTelefonoUsuario] = useState<string>("573197862921");
 
   const motivosCancelacion = [
     "Cambio de planes",
@@ -52,6 +53,22 @@ const GestionReserva: React.FC = () => {
     "Emergencia familiar",
     "Otro motivo"
   ];
+
+  useEffect(() => {
+    const obtenerTelefonoUsuario = async () => {
+      if (reserva?.idCliente) {
+        try {
+          const respuesta = await fetch(`https://glamperosapi.onrender.com/usuarios/${reserva.idCliente}`);
+          if (!respuesta.ok) throw new Error('Error al obtener datos del usuario');
+          const usuario = await respuesta.json();
+          setTelefonoUsuario(usuario.telefono || "573125443396");
+        } catch (error) {
+          console.error("Error obteniendo teléfono:", error);
+        }
+      }
+    };
+    obtenerTelefonoUsuario();
+  }, [reserva]);
 
   const calcularPeriodoCancelacion = () => {
     if (!reserva || !glamping) return false;
@@ -99,26 +116,32 @@ const GestionReserva: React.FC = () => {
         })
       });
 
-      if (respuesta.ok) {
-        await eliminarFechasReservadas(reserva.idGlamping, reserva.FechaIngreso, reserva.FechaSalida);
+      if (!respuesta.ok) throw new Error('Error al actualizar la reserva');
 
-        // 📲 Enviar mensaje de WhatsApp después de la cancelación
-        if (glamping) {
-          await enviarMensajeCancelacion("573125443396");
+      await eliminarFechasReservadas(reserva.idGlamping, reserva.FechaIngreso, reserva.FechaSalida);
+
+      if (glamping) {
+        try {
+          await enviarMensajeCancelacion(telefonoUsuario);
+        } catch (error) {
+          console.error("Error enviando mensaje:", error);
+          Swal.fire({
+            title: 'Mensaje no enviado',
+            text: 'La reserva se canceló pero hubo un error enviando la notificación',
+            icon: 'warning'
+          });
         }
-
-        Swal.fire({
-          title: '¡Cancelación exitosa!',
-          text: 'Tu reserva ha sido cancelada correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        }).then(() => {
-          window.location.reload();
-        });
-      } else {
-        throw new Error('Error al actualizar la reserva');
       }
+
+      Swal.fire({
+        title: '¡Cancelación exitosa!',
+        text: 'Tu reserva ha sido cancelada correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then(() => window.location.reload());
+
     } catch (err) {
+      console.error("Error en cancelación:", err);
       Swal.fire({
         title: 'Error',
         text: 'Ocurrió un error al procesar la cancelación',
@@ -134,7 +157,7 @@ const GestionReserva: React.FC = () => {
         setError('No se proporcionó un código de reserva');
         return;
       }
-
+      
       setCargando(true);
       setError('');
 
@@ -156,9 +179,7 @@ const GestionReserva: React.FC = () => {
           `https://glamperosapi.onrender.com/glampings/${datosReserva.reserva.idGlamping}`
         );
 
-        if (!respuestaGlamping.ok) {
-          throw new Error('Error al obtener detalles del alojamiento');
-        }
+        if (!respuestaGlamping.ok) throw new Error('Error al obtener detalles del alojamiento');
 
         const datosGlamping = await respuestaGlamping.json();
         setGlamping({
@@ -181,43 +202,32 @@ const GestionReserva: React.FC = () => {
   const eliminarFechasReservadas = async (glampingId: string, fechaInicio: string, fechaFin: string) => {
     const fechasAEliminar: string[] = [];
     let fechaActual = new Date(fechaInicio);
-    let fechaFinDate = new Date(fechaFin);
-  
-    // Normalizar fechas a medianoche para evitar problemas de comparación
+    const fechaFinDate = new Date(fechaFin);
+
     fechaActual.setHours(0, 0, 0, 0);
     fechaFinDate.setHours(0, 0, 0, 0);
-  
-    // Iterar mientras fechaActual sea menor que fechaFin (sin incluir fechaFin)
+
     while (fechaActual < fechaFinDate) { 
       const fechaStr = fechaActual.toISOString().split("T")[0];
-  
-      if (!fechasAEliminar.includes(fechaStr)) {
-        fechasAEliminar.push(fechaStr);
-      }
-  
+      fechasAEliminar.push(fechaStr);
       fechaActual.setDate(fechaActual.getDate() + 1);
     }
-  
-    // **Eliminar las fechas de la API**
+
     if (fechasAEliminar.length > 0) {
       const resultado = await EliminarFechas(glampingId, fechasAEliminar);
-      if (resultado) {
-        console.log("✅ Fechas eliminadas exitosamente:", fechasAEliminar);
-      } else {
-        console.error("❌ No se pudieron eliminar las fechas.");
-      }
+      if (!resultado) console.error("❌ No se pudieron eliminar las fechas.");
     }
   };
 
-
-  const mensaje1: string = "Edwin"
-  const mensaje2: string = "La caricia"
-  const mensaje3: string = "01/02/2025"
-  const mensaje4: string = "04/02/2025"
-  const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
-
   const enviarMensajeCancelacion = async (numero: string) => {
-    const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
+    const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
+    if (!WHATSAPP_API_TOKEN) throw new Error('Token de WhatsApp no configurado');
+
+    const nombreCliente = reserva?.idCliente || "Cliente";
+    const nombreGlamping = glamping?.nombreGlamping || "Glamping";
+    const fechaIngreso = reserva ? new Date(reserva.FechaIngreso).toLocaleDateString('es-CO') : "";
+    const fechaSalida = reserva ? new Date(reserva.FechaSalida).toLocaleDateString('es-CO') : "";
+
     const body = {
       messaging_product: "whatsapp",
       recipient_type: "individual",
@@ -225,25 +235,20 @@ const GestionReserva: React.FC = () => {
       type: "template",
       template: {
         name: "cancelacion_reserva_glamping",
-        language: {
-          code: "es_CO"
-        },
-        components: [
-           
-          {
-            type: "body",
-            parameters: [
-              { type: "text", text: mensaje1 },
-              { type: "text", text: mensaje2 },
-              { type: "text", text: mensaje3 },
-              { type: "text", text: mensaje4 }
-            ]
-          }                  
-        ]
+        language: { code: "es_CO" },
+        components: [{
+          type: "body",
+          parameters: [
+            { type: "text", text: nombreCliente },
+            { type: "text", text: nombreGlamping },
+            { type: "text", text: fechaIngreso },
+            { type: "text", text: fechaSalida }
+          ]
+        }]
       }
     };
 
-    const response = await fetch(url, {
+    const response = await fetch('https://graph.facebook.com/v21.0/531912696676146/messages', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${WHATSAPP_API_TOKEN}`,
@@ -252,15 +257,11 @@ const GestionReserva: React.FC = () => {
       body: JSON.stringify(body),
     });
 
-    if (response.ok) {
-     
-    } else {
+    if (!response.ok) {
       const errorData = await response.json();
-      console.error("Error al enviar mensaje:", errorData);
-      alert(`Error al enviar el mensaje: ${errorData.error.message}`);
+      throw new Error(errorData.error.message);
     }
   };
-  
 
   return (
     <div className="GestionReserva-contenedor">
@@ -297,8 +298,11 @@ const GestionReserva: React.FC = () => {
               <div className="GestionReserva-seccion">
                 <h2 className="GestionReserva-subtitulo">Detalles de la Reserva</h2>
                 <p><strong>Código:</strong> {reserva.codigoReserva}</p>
-                <p><strong>Estado:</strong><span style={{ color: reserva.EstadoReserva === "Cancelada" ? "red" : "black" }}>{reserva.EstadoReserva}</span></p>
-
+                <p><strong>Estado:</strong> 
+                  <span style={{ color: reserva.EstadoReserva === "Cancelada" ? "red" : "black" }}>
+                    {reserva.EstadoReserva}
+                  </span>
+                </p>
                 <p><strong>Check-in:</strong> {new Date(reserva.FechaIngreso).toLocaleDateString('es-CO')}</p>
                 <p><strong>Check-out:</strong> {new Date(reserva.FechaSalida).toLocaleDateString('es-CO')}</p>
                 <p><strong>Noches:</strong> {reserva.Noches}</p>
