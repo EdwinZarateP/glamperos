@@ -131,8 +131,7 @@ const Reservacion: React.FC = () => {
           direccion: data.direccion || null,
           diasCancelacion: data.diasCancelacion,
         });
-      } catch (error) {
-        console.error("Error al cargar los datos del glamping:", error);
+      } catch (error) {        
         Swal.fire({
           title: "Error",
           text: "No se pudieron cargar los datos del glamping. Inténtalo nuevamente.",
@@ -298,6 +297,15 @@ const Reservacion: React.FC = () => {
   const WHATSAPP_API_TOKEN = import.meta.env.VITE_REACT_APP_WHATSAPP_API_TOKEN;
 
   const enviarMensaje = async (numero: string) => {
+    if (!numero) {
+      Swal.fire({
+        title: "Error",
+        text: "No has actualizado tu WhatsApp",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });      
+      return;
+    }
     const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
     const body = {
       messaging_product: "whatsapp",
@@ -360,6 +368,15 @@ const Reservacion: React.FC = () => {
   const direccionGlamping = glampingData?.direccion;
   
   const enviarMensajeCliente = async (numero: string, codigoReserva: string, whatsapp: string) => {
+    if (!numero) {
+      Swal.fire({
+        title: "Error",
+        text: "No has actualizado tu whatsApp",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
     const url = 'https://graph.facebook.com/v21.0/531912696676146/messages';
     const body = {
       messaging_product: "whatsapp",
@@ -445,8 +462,8 @@ const Reservacion: React.FC = () => {
       if (respuesta?.reserva?.codigoReserva) {
         enviarCorreoPropietario(usuario?.correoPropietario || "", usuario?.nombreDueño || "",respuesta.reserva.codigoReserva);
         enviarCorreoCliente(correoUsuarioCookie || "", nombreUsuarioCookie || "",respuesta.reserva.codigoReserva);
-        enviarMensaje( usuario?.whatsapp);
-        enviarMensajeCliente( telefonoUsuarioCookie|| "",respuesta.reserva.codigoReserva, usuario?.whatsapp);    
+        enviarMensaje( usuario?.whatsapp || "573125443396");
+        enviarMensajeCliente( telefonoUsuarioCookie|| "",respuesta.reserva.codigoReserva, usuario?.whatsapp || "573125443396");    
         lanzarConfetti();
         navigate(`/Gracias/${fechaInicioDesencriptada}/${fechaFinDesencriptada}`);
       }

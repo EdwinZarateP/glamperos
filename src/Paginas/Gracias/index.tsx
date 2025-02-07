@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import HeaderIcono from '../../Componentes/HeaderIcono/index'; 
+import MenuUsuariosInferior from '../../Componentes/MenuUsuariosInferior/index'; 
 import './estilos.css';
 
 const Gracias: React.FC = () => {
@@ -34,7 +35,9 @@ const Gracias: React.FC = () => {
         {Cookies.get('telefonoUsuario')} y correo {Cookies.get('correoUsuario')} enviamos el código de reserva, ubicación del glamping y el contacto del anfitrión. ¡Gracias por elegirnos!
       </p>
       <img src="https://storage.googleapis.com/glamperos-imagenes/Imagenes/oso.webp" alt="Glamperos logo" className="Gracias-logo" onClick={() => navigate("/")}/>
-    </div>
+      <MenuUsuariosInferior/>
+      </div>
+    
   );
 };
 
