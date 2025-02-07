@@ -57,9 +57,9 @@ const GestionReserva: React.FC = () => {
 
   useEffect(() => {
     const obtenertelefonoAnfitrion = async () => {
-      if (reserva?.idCliente) {
+      if (reserva?.idPropietario) {
         try {
-          const respuesta = await fetch(`https://glamperosapi.onrender.com/usuarios/${reserva.idCliente}`);
+          const respuesta = await fetch(`https://glamperosapi.onrender.com/usuarios/${reserva.idPropietario}`);
           if (!respuesta.ok) throw new Error('Error al obtener datos del usuario');
           const usuario = await respuesta.json();
           setTelefonoAnfitrion(usuario.telefono || "573125443396");

@@ -14,6 +14,9 @@
   
   /* Contenedor principal */
   .evaluarGlamping-contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -22,6 +25,7 @@
     width: 90%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     position: relative;
+
   }
   
   /* Título */
@@ -77,6 +81,7 @@
   }
   
   .evaluarGlamping-enviar {
+    width: 100%;
     background: #4caf50;
     color: white;
   }

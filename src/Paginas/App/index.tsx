@@ -17,6 +17,7 @@ import ReservasClientes from '../ReservasClientes/index';
 import GestionarReserva from '../GestionarReserva/index';
 import Ayuda from '../Ayuda/index';
 import Gracias from '../Gracias/index';
+import DatosEmpresariales from '../DatosEmpresariales/index';
 import NoEncontrado from '../NoEncontrado/index';
 import { ProveedorVariables } from '../../Contexto/index';
 import './estilos.css';
@@ -45,7 +46,9 @@ const App: React.FC = () => {
         <Route path="/ReservasClientes" element={<ReservasClientes />} />
         <Route path="/GestionarReserva/:codigoReserva" element={<GestionarReserva />} />        
         <Route path="/Ayuda" element={<Ayuda />} />
-        <Route path="/Gracias/:fechaInicioUrl/:fechaFinUrl" element={<Gracias />} />        
+        <Route path="/Gracias/:fechaInicioUrl/:fechaFinUrl" element={<Gracias />} />
+        <Route path="/DatosEmpresariales" element={<DatosEmpresariales />} />
+        
         <Route path="*" element={<NoEncontrado />} />
       </Routes>
     </Router>
