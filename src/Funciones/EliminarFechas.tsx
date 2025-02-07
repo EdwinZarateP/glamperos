@@ -18,8 +18,7 @@ export const EliminarFechas = async (glampingId: string, fechasAEliminar: string
 
     const response = await axios.patch(url, { fechas_a_eliminar: fechasAEliminar });
 
-    if (response.status === 200) {
-      console.log("✅ Fechas eliminadas correctamente:", fechasAEliminar);
+    if (response.status === 200) {    
       return true;
     } else {
       console.warn("⚠️ No se pudieron eliminar las fechas, respuesta del servidor:", response);
