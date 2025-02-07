@@ -67,7 +67,7 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
        const ninos = parseInt(totalNinosUrl || "0", 0);
        const bebes = parseInt(totalBebesUrl || "0", 0);
        const mascotas = parseInt(totalMascotasUrl || "0", 0);     
-       setCantidad_Adultos(isNaN(adultos) ? 0 : adultos);
+       setCantidad_Adultos(isNaN(adultos) ? 1 : adultos);
        setCantidad_Ninos(isNaN(ninos) ? 0 : ninos);
        setCantidad_Bebes(isNaN(bebes) ? 0 : bebes);
        setCantidad_Mascotas(isNaN(mascotas) ? 0 : mascotas);     
