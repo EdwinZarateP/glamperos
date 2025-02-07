@@ -447,7 +447,7 @@ const Reservacion: React.FC = () => {
       ValorReserva: precioConTarifaNum,
       CostoGlamping: precioConTarifaNum - TarifaGlamperosNum,
       ComisionGlamperos: TarifaGlamperosNum,
-      adultos: Number(adultosDesencriptados) || 0,
+      adultos: Number(adultosDesencriptados) || 1,
       ninos: Number(ninosDesencriptados) || 0,
       bebes: Number(bebesDesencriptados) || 0,
       mascotas: Number(mascotasDesencriptadas) || 0,
