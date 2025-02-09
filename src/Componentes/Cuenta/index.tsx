@@ -131,7 +131,7 @@ const Cuenta: React.FC = () => {
             <h3>🧳 Mis Viajes</h3>
             <p>Mira dónde has reservado.</p>
           </div>
-          <div className="Cuenta-tarjeta Cuenta-CentroAyuda" onClick={manejarEditarGlamping}>
+          <div className="Cuenta-tarjeta Cuenta-CentroAyuda" onClick={manejarCentroAyuda}>
               <h3>🆘 Centro de ayuda</h3>
             </div>
         </div>

@@ -15,7 +15,11 @@ import "./estilos.css";
 
 
 const Reservacion: React.FC = () => {
-  
+ 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
   const idCliente = Cookies.get('idUsuario');
   const nombreUsuarioCookie = Cookies.get('nombreUsuario'); 
   const correoUsuarioCookie = Cookies.get('correoUsuario'); 

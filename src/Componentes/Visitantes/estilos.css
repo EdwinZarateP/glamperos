@@ -25,7 +25,8 @@
   min-width: 340px;
   z-index: 1000;
   margin-top: 70px;
-  height: 410px;
+  padding-bottom: 30px;
+  /* height: 410px;  */
 }
 
 /* Secciones de visitantes */
@@ -117,6 +118,7 @@
   margin-left: 16px;
   margin-right: 16px;
   text-align: center;
+
 }
 
 .Visitantes-icono-amistad {
@@ -128,7 +130,7 @@
 .Visitantes-versiculo {
   font-size: 0.8rem;
   color: #555;
-  font-style: italic;
+  
 }
 
 /* Clase para desactivar el scroll del cuerpo */
@@ -137,10 +139,11 @@
 }
 
 /* Responsividad */
-@media (max-width: 480px) {
+@media (max-width: 900px) {
   .Visitantes-contenedor {
     width: 95%;
     min-width: unset;
+    padding-bottom: 30px;
   }
 
   .Visitantes-boton {
