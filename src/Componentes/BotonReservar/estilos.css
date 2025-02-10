@@ -18,7 +18,6 @@
 .ReservarBoton-fechas {
   display: flex;
   justify-content: start;
-
 }
 
 /* Estilo de cada fecha */
@@ -33,7 +32,15 @@
 
 .ReservarBoton-fecha-dias {
   text-decoration: underline;
+
 }
+
+.ReservarBoton-huespedes {
+  text-decoration: underline;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
 /* Botón de reserva */
 .ReservarBoton-boton {
   background-color: #4CAF50;

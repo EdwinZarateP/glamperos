@@ -72,19 +72,6 @@ const GestionReserva: React.FC = () => {
     obtenertelefonoAnfitrion();
   }, [reserva]);
 
-  const calcularPeriodoCancelacion = () => {
-    if (!reserva || !glamping) return false;
-    
-    const fechaLimite = new Date(reserva.FechaIngreso);
-    fechaLimite.setDate(fechaLimite.getDate() - glamping.diasCancelacion);
-    const hoy = new Date();
-    
-    fechaLimite.setHours(0, 0, 0, 0);
-    hoy.setHours(0, 0, 0, 0);
-
-    return hoy <= fechaLimite && reserva.EstadoReserva !== 'Cancelada';
-  };
-
   const calcularFechaLimiteCancelacion = (): string => {
     if (!reserva || !glamping) return '';
     const fechaIngreso = new Date(reserva.FechaIngreso);
@@ -94,7 +81,7 @@ const GestionReserva: React.FC = () => {
   };
 
   const manejarCancelacion = async () => {
-    if (!reserva) return;
+    if (!reserva || !glamping) return;
 
     if (!motivoCancelacion) {
       Swal.fire({
@@ -104,6 +91,27 @@ const GestionReserva: React.FC = () => {
         confirmButtonText: 'Entendido'
       });
       return;
+    }
+
+    // Verificar si está dentro del período sin reembolso
+    const fechaLimite = new Date(reserva.FechaIngreso);
+    fechaLimite.setDate(fechaLimite.getDate() - glamping.diasCancelacion);
+    const hoy = new Date();
+    
+    fechaLimite.setHours(0, 0, 0, 0);
+    hoy.setHours(0, 0, 0, 0);
+
+    if (hoy > fechaLimite) {
+      const confirmacion = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Al cancelar ahora no recibirás reembolso. ¿Deseas continuar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+        cancelButtonText: 'Cancelar'
+      });
+      
+      if (!confirmacion.isConfirmed) return;
     }
 
     try {
@@ -124,7 +132,7 @@ const GestionReserva: React.FC = () => {
 
       if (glamping) {
         try {
-          await enviarMensajeCancelacion(telefonoAnfitrion,nombreAnfitrion);
+          await enviarMensajeCancelacion(telefonoAnfitrion, nombreAnfitrion);
         } catch (error) {
           console.error("Error enviando mensaje:", error);
           Swal.fire({
@@ -264,6 +272,17 @@ const GestionReserva: React.FC = () => {
     }
   };
 
+  // Calculamos si el botón debe mostrarse
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  
+  const fechaIngreso = reserva ? new Date(reserva.FechaIngreso) : null;
+  if (fechaIngreso) fechaIngreso.setHours(0, 0, 0, 0);
+
+  const puedeCancelar = reserva?.EstadoReserva !== 'Cancelada' && 
+                       fechaIngreso && 
+                       hoy <= fechaIngreso;
+
   return (
     <div className="GestionReserva-contenedor">
       <h1 className="GestionReserva-titulo">Detalles de Reserva</h1>
@@ -318,7 +337,7 @@ const GestionReserva: React.FC = () => {
                 <p><strong>Mascotas:</strong> {reserva.mascotas}</p>
               </div>
 
-              {calcularPeriodoCancelacion() && (
+              {puedeCancelar && (
                 <>
                   {!mostrarFormularioCancelacion && (
                     <span 

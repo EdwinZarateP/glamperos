@@ -6,7 +6,6 @@
   padding: 25px;
   border-radius: 15px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-  font-family: 'Arial', sans-serif;
 }
 
 .GestionReserva-titulo {
@@ -37,7 +36,7 @@
 .GestionReserva-subtitulo {
   color: #2F6B3E;
   font-size: 1.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 2px solid #cbd5e0;
 }
@@ -69,6 +68,10 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.GestionReserva-select{
+  height: 35px;
 }
 
 .GestionReserva-textarea {
@@ -141,7 +144,7 @@
 .GestionReserva-cancelacion-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 }
 
 .GestionReserva-cancelacion-cerrar {

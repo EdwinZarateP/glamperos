@@ -3,6 +3,7 @@ import { ContextoApp } from "../../Contexto/index";
 import { useNavigate } from "react-router-dom";
 import { GiCampingTent } from "react-icons/gi";
 import CalendarioGeneral from "../CalendarioGeneral";
+import Visitantes from "../Visitantes";
 import { encryptData } from '../../Funciones/Encryptacion'; 
 import Cookies from 'js-cookie';
 import { useParams, Link } from "react-router-dom";
@@ -16,10 +17,12 @@ interface BotonReservaProps {
   precioPorNoche: number;
   precioPersonaAdicional: number;
   descuento: number;
+  admiteMascotas:boolean;
   Cantidad_Huespedes: number;
+  Cantidad_Huespedes_Adicional: number;
 }
 
-const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPersonaAdicional, descuento, Cantidad_Huespedes }) => {
+const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPersonaAdicional, descuento, Cantidad_Huespedes, Cantidad_Huespedes_Adicional, admiteMascotas }) => {
   const navigate = useNavigate();
   const almacenVariables = useContext(ContextoApp);
 
@@ -48,6 +51,8 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
     setCantidad_Mascotas,
     setUrlActual,
     setRedirigirExplorado,
+    setMostrarVisitantes,
+    mostrarVisitantes
   } = almacenVariables;
 
   let { glampingId, fechaInicioUrl, fechaFinUrl, totalDiasUrl, totalAdultosUrl, totalNinosUrl, totalBebesUrl, totalMascotasUrl } = useParams<{
@@ -341,21 +346,28 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
           ${TotalFinal.toLocaleString()} COP
         </span>
         <div
-        className="ReservarBoton-fechas"
-        onClick={() => {
-          setCantidad_Adultos(adultosRender)
-          setFechaInicio(fechaInicioRender);          
-          setFechaFin(fechaFinRender);
-          setTotalDias(totalDiasRender);
-          setMostrarCalendario(true);
-        }}
+        className="ReservarBoton-fechas"        
       >
         <div className="ReservarBoton-fecha">
-           <span className="ReservarBoton-fecha-dias">
+           {/* <span className="ReservarBoton-fecha-dias">
               {totalDiasRender === 1 ? totalDiasRender : totalDiasRender} noche
               {totalDiasRender > 1 ? "s" : ""}
+            </span> */}
+            <span className="ReservarBoton-huespedes"
+            onClick={() => {
+              setMostrarVisitantes(true);
+            }}>
+              {adultosRender+ninosRender} huésped{adultosRender+ninosRender > 1 ? "es" : ""}
             </span>
-          <span>{formatearFecha(fechaInicioRender)} - {formatearFecha(fechaFinRender)}</span>
+            
+          <span className="ReservarBoton-fecha-dias"
+          onClick={() => {
+            setCantidad_Adultos(adultosRender)
+            setFechaInicio(fechaInicioRender);          
+            setFechaFin(fechaFinRender);
+            setTotalDias(totalDiasRender);
+            setMostrarCalendario(true);
+          }}>{formatearFecha(fechaInicioRender)} - {formatearFecha(fechaFinRender)}</span>
         </div>
       </div>
       
@@ -363,6 +375,17 @@ const ReservarBoton: React.FC<BotonReservaProps> = ({ precioPorNoche, precioPers
 
       {mostrarCalendario && (
         <CalendarioGeneral cerrarCalendario={() => setMostrarCalendario(false)} />
+      )}
+      
+      {mostrarVisitantes && (
+        <Visitantes
+        max_adultos={10}
+        max_Ninos={10}
+        max_bebes={5}
+        max_huespedes={Cantidad_Huespedes+Cantidad_Huespedes_Adicional}
+        max_mascotas={admiteMascotas ? 5 : 0}      
+        onCerrar={() => setMostrarVisitantes(false)}
+      />      
       )}
         <Link
         to={`/Reservar/${glampingId}/${fechaInicioEncriptada}/${fechaFinEncriptada}/${totalFinalEncriptado}/${tarifaEncriptada}/${totalDiasRender}/${adultosEncriptados}/${ninosEncriptados}/${bebesEncriptados}/${mascotasEncriptadas}`}

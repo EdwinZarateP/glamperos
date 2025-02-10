@@ -263,6 +263,8 @@ function ExplorarGlamping() {
               descuento={informacionGlamping?.descuento || 0}
               precioPersonaAdicional={informacionGlamping?.precioEstandarAdicional || 0}
               Cantidad_Huespedes={informacionGlamping?.Cantidad_Huespedes || 10}
+              admiteMascotas={informacionGlamping?.Acepta_Mascotas || false}                  
+              Cantidad_Huespedes_Adicional={informacionGlamping?.Cantidad_Huespedes_Adicional || 0}                  
               />
           </main>
         </>
