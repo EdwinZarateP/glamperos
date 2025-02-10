@@ -72,6 +72,13 @@ const GestionReserva: React.FC = () => {
     obtenertelefonoAnfitrion();
   }, [reserva]);
 
+  // Efecto para desplazarse al final cuando se muestre el formulario
+  useEffect(() => {
+    if (mostrarFormularioCancelacion) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+  }, [mostrarFormularioCancelacion]);
+
   const calcularFechaLimiteCancelacion = (): string => {
     if (!reserva || !glamping) return '';
     const fechaIngreso = new Date(reserva.FechaIngreso);
@@ -104,7 +111,7 @@ const GestionReserva: React.FC = () => {
     if (hoy > fechaLimite) {
       const confirmacion = await Swal.fire({
         title: '¿Estás seguro?',
-        text: 'Al cancelar ahora no recibirás reembolso. ¿Deseas continuar?',
+        text: `Al cancelar ahora no recibirás reembolso, pues este glamping solo admitia cancelaciones hasta el ${fechaLimite.toLocaleDateString()}. ¿Deseas continuar?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Continuar',
