@@ -496,7 +496,7 @@ const Reservacion: React.FC = () => {
             <p>Adultos: ${Cantidad_Adultos}</p>
             <p>Ninos: ${Cantidad_Ninos}</p>
             <p>Mascotas: ${Cantidad_Mascotas}</p>
-            <p>El whatsApp de tu huésped es +57 520${telefonoUsuarioCookie?.slice(-10)} y su correo es ${correoUsuarioCookie} para que te comuniques con él</p>
+            <p>El whatsApp de tu huésped es ${telefonoUsuarioCookie?.slice(-10)} y su correo es ${correoUsuarioCookie} para que te comuniques con él</p>
             <p>
               Si necesitas ayuda o tienes preguntas, nuestro equipo estará siempre aquí para ti.
             </p>
