@@ -412,7 +412,7 @@ const Reservacion: React.FC = () => {
             parameters: [
               { type: "text", text: mensaje5 },
               { type: "text", text: codigoReserva },
-              { type: "text", text: whatsapp.slice(-10) },
+              { type: "text", text: whatsapp },
             ]
           }
         ]
@@ -496,7 +496,7 @@ const Reservacion: React.FC = () => {
             <p>Adultos: ${Cantidad_Adultos}</p>
             <p>Ninos: ${Cantidad_Ninos}</p>
             <p>Mascotas: ${Cantidad_Mascotas}</p>
-            <p>El whatsApp de tu huésped es ${telefonoUsuarioCookie?.slice(-10)} y su correo es ${correoUsuarioCookie} para que te comuniques con él</p>
+            <p>El whatsApp de tu huésped es ${telefonoUsuarioCookie} y su correo es ${correoUsuarioCookie} para que te comuniques con él</p>
             <p>
               Si necesitas ayuda o tienes preguntas, nuestro equipo estará siempre aquí para ti.
             </p>
@@ -548,7 +548,7 @@ const Reservacion: React.FC = () => {
             <p>Adultos: ${Cantidad_Adultos}</p>
             <p>Ninos: ${Cantidad_Ninos}</p>
             <p>Mascotas: ${Cantidad_Mascotas}</p>
-            <p>El contacto de WhatsApp de tu anfitrión es +57 ${usuario.whatsapp.slice(-10)}, escribele para estar en contacto</p>
+            <p>El contacto de WhatsApp de tu anfitrión es ${usuario.whatsapp}, escribele para estar en contacto</p>
             <p>
               La ubicación de tu glamping es la siguiente: 
               <a href="${googleMapsLink}" target="_blank" style="color: #2F6B3E;">Ver en Google Maps</a>
