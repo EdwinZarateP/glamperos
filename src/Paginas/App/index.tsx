@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { HelmetProvider } from "react-helmet-async"; // 👈 Importar HelmetProvider
 import Inicio from '../Inicio/index';
 import Registrarse from '../Registrarse/index';
 import CreacionGlamping from '../CreacionGlamping/index';
@@ -26,7 +25,6 @@ import './estilos.css';
 
 const App: React.FC = () => {
   return (
-    <HelmetProvider> {/* 👈 Agregar HelmetProvider aquí */}
       <ProveedorVariables 
         hijo={
           <Router basename="/">
@@ -56,7 +54,6 @@ const App: React.FC = () => {
           </Router>
         }
       />
-    </HelmetProvider>
   );
 }
 
