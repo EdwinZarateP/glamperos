@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from "react-helmet-async"; // 👈 Importar HelmetProvider
 import Inicio from '../Inicio/index';
 import Registrarse from '../Registrarse/index';
 import CreacionGlamping from '../CreacionGlamping/index';
@@ -25,36 +26,37 @@ import './estilos.css';
 
 const App: React.FC = () => {
   return (
-    // Encerramos todo en el ProveedorVariables para que puedan acceder a ellas
-    <ProveedorVariables 
-      hijo={
-    <Router basename="/">
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route path="/Registrarse" element={<Registrarse />} />  
-        <Route path="/ExplorarGlamping/:glampingId/:fechaInicioUrl/:fechaFinUrl/:totalDiasUrl/:totalAdultosUrl/:totalNinosUrl/:totalBebesUrl/:totalMascotasUrl" element={<ExplorarGlamping />} />
-        <Route path="/ColeccionImagenes/:glampingId" element={<ColeccionImagenes />} />
-        <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
-        <Route path="/ListaDeseos" element={<ListaDeseos />} />          
-        <Route path="/Modificacion/:glampingId" element={<Modificacion />} />            
-        <Route path="/GestionarCuenta/" element={<GestionarCuenta />} />   
-        <Route path="/EdicionGlamping/:glampingId" element={<EdicionGlamping />} />
-        <Route path="/EdicionPerfil/" element={<EdicionPerfil />} />
-        <Route path="/Reservar/:glampingId/:fechaInicioReservada/:fechaFinReservada/:precioConTarifa/:TarifaGlamperos/:totalDias/:totalAdultos/:totalNinos/:totalBebes/:totalMascotas" element={<Reservar />} />
-        <Route path="/Mensajes/:idReceptor" element={<Mensajes />} />        
-        <Route path="/MensajesIndividuales/:idReceptor" element={<MensajesIndividuales />} />
-        <Route path="/ReservasPropiedades" element={<ReservasPropiedades />} />
-        <Route path="/ReservasClientes" element={<ReservasClientes />} />
-        <Route path="/GestionarReserva/:codigoReserva" element={<GestionarReserva />} />        
-        <Route path="/Ayuda" element={<Ayuda />} />
-        <Route path="/Gracias/:fechaInicioUrl/:fechaFinUrl" element={<Gracias />} />
-        <Route path="/DatosEmpresariales" element={<DatosEmpresariales />} />
-        <Route path="/GestionBancos" element={<GestionBancos />} />        
-        <Route path="*" element={<NoEncontrado />} />
-      </Routes>
-    </Router>
-    }
-  />
+    <HelmetProvider> {/* 👈 Agregar HelmetProvider aquí */}
+      <ProveedorVariables 
+        hijo={
+          <Router basename="/">
+            <Routes>
+              <Route path="/" element={<Inicio />} />
+              <Route path="/Registrarse" element={<Registrarse />} />  
+              <Route path="/ExplorarGlamping/:glampingId/:fechaInicioUrl/:fechaFinUrl/:totalDiasUrl/:totalAdultosUrl/:totalNinosUrl/:totalBebesUrl/:totalMascotasUrl" element={<ExplorarGlamping />} />
+              <Route path="/ColeccionImagenes/:glampingId" element={<ColeccionImagenes />} />
+              <Route path="/CrearGlamping" element={<CreacionGlamping />} />  
+              <Route path="/ListaDeseos" element={<ListaDeseos />} />          
+              <Route path="/Modificacion/:glampingId" element={<Modificacion />} />            
+              <Route path="/GestionarCuenta/" element={<GestionarCuenta />} />   
+              <Route path="/EdicionGlamping/:glampingId" element={<EdicionGlamping />} />
+              <Route path="/EdicionPerfil/" element={<EdicionPerfil />} />
+              <Route path="/Reservar/:glampingId/:fechaInicioReservada/:fechaFinReservada/:precioConTarifa/:TarifaGlamperos/:totalDias/:totalAdultos/:totalNinos/:totalBebes/:totalMascotas" element={<Reservar />} />
+              <Route path="/Mensajes/:idReceptor" element={<Mensajes />} />        
+              <Route path="/MensajesIndividuales/:idReceptor" element={<MensajesIndividuales />} />
+              <Route path="/ReservasPropiedades" element={<ReservasPropiedades />} />
+              <Route path="/ReservasClientes" element={<ReservasClientes />} />
+              <Route path="/GestionarReserva/:codigoReserva" element={<GestionarReserva />} />        
+              <Route path="/Ayuda" element={<Ayuda />} />
+              <Route path="/Gracias/:fechaInicioUrl/:fechaFinUrl" element={<Gracias />} />
+              <Route path="/DatosEmpresariales" element={<DatosEmpresariales />} />
+              <Route path="/GestionBancos" element={<GestionBancos />} />        
+              <Route path="*" element={<NoEncontrado />} />
+            </Routes>
+          </Router>
+        }
+      />
+    </HelmetProvider>
   );
 }
 
