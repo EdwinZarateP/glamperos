@@ -243,7 +243,6 @@ const { redirigirExplorado, setRedirigirExplorado, UrlActual} = useContext(Conte
           )
         )}
       </div>
-
       {/* Botón para ir a la página principal */}
       <button onClick={validarNavegacion} className="editar-perfil-boton-regresar">
         Terminar edición

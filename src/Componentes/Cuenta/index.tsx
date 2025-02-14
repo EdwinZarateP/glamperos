@@ -74,6 +74,10 @@ const Cuenta: React.FC = () => {
       navigate("/Ayuda");
   };
 
+  const manejarBancos = () => {    
+    navigate("/GestionBancos");
+  };
+  
   
   const irReservarCliente = () => {
     navigate(`/ReservasClientes`);
@@ -130,10 +134,10 @@ const Cuenta: React.FC = () => {
           <div className="Cuenta-tarjeta" onClick={irReservarCliente}>
             <h3>🧳 Mis Viajes</h3>
             <p>Mira dónde has reservado.</p>
-          </div>
+          </div>        
           <div className="Cuenta-tarjeta Cuenta-CentroAyuda" onClick={manejarCentroAyuda}>
               <h3>🆘 Centro de ayuda</h3>
-            </div>
+          </div>
         </div>
       ) : (
         usuario?.glampings && usuario.glampings.length > 0 && (
@@ -147,6 +151,9 @@ const Cuenta: React.FC = () => {
               <h3>⛺ Editar información de tus glamping</h3>
               <p>Cambia información básica y fotos.</p>
             </div>
+            <div className="Cuenta-tarjeta" onClick={manejarBancos}>
+              <h3>💰 Pagos y datos bancarios</h3>
+          </div>
             <div className="Cuenta-tarjeta Cuenta-CentroAyuda" onClick={manejarCentroAyuda}>
               <h3>🆘 Centro de ayuda</h3>
             </div>
