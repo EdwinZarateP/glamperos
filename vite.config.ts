@@ -1,20 +1,15 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import ssr from 'vite-plugin-ssr/plugin'; // 👈 Agregar el plugin de SSR
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  plugins: [react(), ssr()], // 👈 Agregar ssr()
+  plugins: [react()],
   base: '/',
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true
+  },
   server: {
     port: 3000,
-    open: true // Abre automáticamente el navegador al iniciar el servidor
-  },
-  build: {
-    outDir: 'dist', // Asegurar que el build se genera correctamente
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
-      }
-    }
+    open: true
   }
-});
+})
