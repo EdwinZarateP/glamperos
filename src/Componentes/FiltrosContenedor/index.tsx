@@ -79,15 +79,8 @@ const FiltrosContenedor = () => {
           <div className="FiltrosContenedor-Rango-precios">
             <FiltroPrecios/>
           </div>
-          {/* <div className="FiltrosContenedor-Tipo">
-            <FiltrosTipo />
-          </div> */}
           <div className="FiltrosContenedor-Amenidades">
-            {/* <FiltrosAmenidades
-              amenidadesGlobalFiltrado={filtrosTemporales.amenidadesGlobalFiltrado}
-              setAmenidadesGlobalFiltrado={setAmenidadesGlobalFiltrado}
-              handleAmenidadesChange={handleAmenidadesChange}
-            />   */}
+
           </div>
         </div>
                   

@@ -83,7 +83,7 @@ const Header: React.FC = () => {
       <header className="Header">
         {/* Aquí agregamos el componente MenuUsuario */}
         <div className="Header-menuUsuarioLista">
-          <MenuUsuario /> {/* Usamos el componente aquí */}
+          <MenuUsuario /> 
         </div>
         {/* Reemplazo de Link con un botón de navegación */}
         <div className="Header-izquierda" onClick={irAInicio}>
