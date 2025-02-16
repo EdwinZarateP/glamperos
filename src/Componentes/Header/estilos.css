@@ -202,8 +202,8 @@
 
 .Header-menuUsuarioLista {
   position: absolute; /* Se coloca encima del header */
-  top: 600px; 
-  right: 100px;
+  top: 60px; 
+  right: 10px;
   align-items: center;
   border-radius: 50px;
   cursor: pointer;
